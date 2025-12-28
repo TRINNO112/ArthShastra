@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)",
+      "Bash(dir \"C:\\\\Users\\\\Amit Pathak\\\\Documents\\\\ArthShastra\\\\src\\\\pages\\\\Lessons\")",
+      "Bash(dir:*)",
+      "Bash(ls:*)",
+      "Bash(sort:*)",
+      "Bash(wc:*)",
+      "Bash(mkdir:*)",
+      "Bash(git init:*)",
+      "Bash(gh:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+/* =============================================
+   INDEX CSS - Minimal Reset
+   Main styles are in variables.css
+   ============================================= */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Basic Reset - Rest is handled by variables.css */
+#root {
+  min-height: 100vh;
+}
