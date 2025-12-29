@@ -12,7 +12,9 @@
       "Bash(mkdir:*)",
       "Bash(git init:*)",
       "Bash(gh:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run deploy:*)"
     ]
   }
 }

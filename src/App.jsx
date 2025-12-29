@@ -15,10 +15,13 @@ import Lesson1 from './pages/Lessons/Lesson1';
 import './styles/variables.css';
 import './App.css';
 
+// Base path for GitHub Pages deployment
+const basename = import.meta.env.BASE_URL;
+
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Router basename={basename}>
         <div className="app">
           <Navbar />
           <main className="main-content">

@@ -40,20 +40,20 @@ function Lesson1() {
   const goToPrevious = () => {
     if (currentIndex > 0) {
       setActiveSection(sections[currentIndex - 1].id);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Removed auto-scroll to top - maintains current scroll position
     }
   };
 
   const goToNext = () => {
     if (currentIndex < sections.length - 1) {
       setActiveSection(sections[currentIndex + 1].id);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Removed auto-scroll to top - maintains current scroll position
     }
   };
 
   const handleSectionChange = (sectionId) => {
     setActiveSection(sectionId);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Removed auto-scroll to top - maintains current scroll position
   };
 
   const renderActiveSection = () => {
