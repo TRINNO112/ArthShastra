@@ -21,13 +21,13 @@ import {
 
 // TODO: Replace with your Firebase config
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.firebasestorage.app",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID"
+  apiKey: "AIzaSyDNWG70YquTV8YUam83dlSLPPBUeN7Usac",
+  authDomain: "arthshastra-1256di.firebaseapp.com",
+  projectId: "arthshastra-1256di",
+  storageBucket: "arthshastra-1256di.firebasestorage.app",
+  messagingSenderId: "575831581802",
+  appId: "1:575831581802:web:19ff6f59f1813e6f61d613",
+  measurementId: "G-75QGH6QGFX"
 };
 
 // Initialize Firebase
