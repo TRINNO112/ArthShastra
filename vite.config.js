@@ -1,15 +1,17 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import react from '@vitejs/plugin-react-swc'
 
 // https://vite.dev/config/
+// Using SWC instead of Babel to avoid CSP eval() issues on GitHub Pages
 export default defineConfig({
   plugins: [react()],
   base: '/ArthShastra/',  // GitHub repository name for GitHub Pages
   build: {
     outDir: 'dist',
     sourcemap: false,
-    // Use esbuild for minification (default, no extra install needed)
     minify: 'esbuild',
+    target: 'es2015',
+    cssCodeSplit: true,
     rollupOptions: {
       output: {
         manualChunks: {
