@@ -1,5 +1,5 @@
 // Lesson 1: Economics and Economies - Main Page Component
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FaArrowLeft,
@@ -10,30 +10,50 @@ import {
   FaGlobe,
   FaClipboardList,
   FaChevronRight,
-  FaChevronLeft
+  FaChevronLeft,
+  FaFlask,
+  FaLink
 } from 'react-icons/fa';
 import {
   Introduction,
   Definitions,
   EconomicProblems,
+  PositiveNormative,
   MicroVsMacro,
   TypesOfEconomies,
+  SimpleAndComplexEconomies,
   Quiz
 } from './components';
 import { lesson1Data } from '../data/lesson1Data';
+import { logLessonProgress } from '../../../services/firebase';
 import './Lesson1.css';
 
 const sections = [
   { id: 'intro', name: 'Introduction', icon: FaBookOpen },
   { id: 'definitions', name: 'Definitions', icon: FaLightbulb },
   { id: 'problems', name: 'Economic Problems', icon: FaExclamationTriangle },
+  { id: 'positive-normative', name: 'Positive vs Normative', icon: FaFlask },
   { id: 'micro-macro', name: 'Micro vs Macro', icon: FaBalanceScale },
   { id: 'economies', name: 'Types of Economies', icon: FaGlobe },
+  { id: 'simple-complex', name: 'Simple vs Complex', icon: FaLink },
   { id: 'quiz', name: 'Quiz', icon: FaClipboardList }
 ];
 
 function Lesson1() {
   const [activeSection, setActiveSection] = useState('intro');
+  const [startTime] = useState(Date.now());
+  const lessonId = 'micro11-1';
+
+  // Track time spent and completion
+  useEffect(() => {
+    return () => {
+      const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60); // minutes
+      const completed = activeSection === 'quiz'; // Considered completed if user reached quiz
+      if (timeSpent > 0) {
+        logLessonProgress(lessonId, timeSpent, completed);
+      }
+    };
+  }, [startTime, lessonId, activeSection]);
 
   const currentIndex = sections.findIndex(s => s.id === activeSection);
 
@@ -64,10 +84,14 @@ function Lesson1() {
         return <Definitions />;
       case 'problems':
         return <EconomicProblems />;
+      case 'positive-normative':
+        return <PositiveNormative />;
       case 'micro-macro':
         return <MicroVsMacro />;
       case 'economies':
         return <TypesOfEconomies />;
+      case 'simple-complex':
+        return <SimpleAndComplexEconomies />;
       case 'quiz':
         return <Quiz mcqQuestions={lesson1Data.mcqQuestions} tfQuestions={lesson1Data.tfQuestions} />;
       default:

@@ -19,7 +19,6 @@ import {
   FaTrophy,
   FaCalendarAlt,
   FaMapMarkerAlt,
-  FaPhone,
   FaClock,
   FaFire,
   FaMedal,
@@ -56,8 +55,6 @@ function Navbar() {
     targetScore: '',
     studyHoursPerDay: '',
     examYear: new Date().getFullYear() + 1,
-    phone: '',
-    parentPhone: '',
     dateOfBirth: '',
     gender: ''
   });
@@ -75,8 +72,6 @@ function Navbar() {
         targetScore: user.targetScore || '',
         studyHoursPerDay: user.studyHoursPerDay || '',
         examYear: user.examYear || new Date().getFullYear() + 1,
-        phone: user.phone || '',
-        parentPhone: user.parentPhone || '',
         dateOfBirth: user.dateOfBirth || '',
         gender: user.gender || ''
       });
@@ -520,32 +515,6 @@ function Navbar() {
                                 <option key={state} value={state}>{state}</option>
                               ))}
                             </select>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Contact Info */}
-                      <div className="form-section">
-                        <h4 className="form-section-title">Contact (Optional)</h4>
-
-                        <div className="form-row">
-                          <div className="form-group">
-                            <label><FaPhone /> Your Phone</label>
-                            <input
-                              type="tel"
-                              value={profileData.phone}
-                              onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
-                              placeholder="+91 XXXXX XXXXX"
-                            />
-                          </div>
-                          <div className="form-group">
-                            <label><FaPhone /> Parent's Phone</label>
-                            <input
-                              type="tel"
-                              value={profileData.parentPhone}
-                              onChange={(e) => setProfileData({ ...profileData, parentPhone: e.target.value })}
-                              placeholder="+91 XXXXX XXXXX"
-                            />
                           </div>
                         </div>
                       </div>

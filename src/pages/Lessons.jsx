@@ -40,6 +40,7 @@ import {
   RiStackLine
 } from 'react-icons/ri';
 import { IoStatsChart, IoTrendingUp } from 'react-icons/io5';
+import { getUnifiedStats } from '../services/firebase';
 import './Lessons.css';
 
 // Lesson data - Class 11 & 12 Economics (TR Jain & VK Ohri CBSE 2024-25)
@@ -76,19 +77,19 @@ const lessonsData = {
     color: 'gold',
     description: 'Study individual economic units - consumers, firms & markets',
     chapters: [
-      { id: 'micro11-1', title: 'Introduction to Economics', description: 'Meaning of economy, central problems, PPC, opportunity cost', duration: '30 min', questions: 15, completed: false, difficulty: 'Easy' },
-      { id: 'micro11-2', title: 'Consumer Equilibrium - Utility Analysis', description: 'Total utility, marginal utility, law of diminishing marginal utility', duration: '35 min', questions: 18, completed: false, difficulty: 'Medium' },
-      { id: 'micro11-3', title: 'Indifference Curve Analysis', description: 'Indifference curve, budget line, consumer equilibrium using IC', duration: '40 min', questions: 20, completed: false, difficulty: 'Hard' },
-      { id: 'micro11-4', title: 'Theory of Demand', description: 'Demand, law of demand, demand curve, determinants of demand', duration: '30 min', questions: 15, completed: false, difficulty: 'Easy' },
-      { id: 'micro11-5', title: 'Price Elasticity of Demand', description: 'Meaning, types, measurement methods, factors affecting elasticity', duration: '35 min', questions: 18, completed: false, difficulty: 'Medium' },
-      { id: 'micro11-6', title: 'Production Function', description: 'Short run & long run; TP, AP, MP; Law of variable proportions', duration: '35 min', questions: 15, completed: false, difficulty: 'Medium' },
-      { id: 'micro11-7', title: 'Concepts of Cost', description: 'Short run costs - TFC, TVC, TC, AFC, AVC, AC, MC; relationship', duration: '40 min', questions: 20, completed: false, difficulty: 'Hard' },
-      { id: 'micro11-8', title: 'Concepts of Revenue', description: 'TR, AR, MR; relationship between AR and MR curves', duration: '30 min', questions: 15, completed: false, difficulty: 'Medium' },
-      { id: 'micro11-9', title: 'Producer Equilibrium', description: 'MC-MR approach; profit maximization; break-even point', duration: '30 min', questions: 15, completed: false, difficulty: 'Medium' },
-      { id: 'micro11-10', title: 'Supply & Elasticity of Supply', description: 'Law of supply, supply curve, determinants, elasticity of supply', duration: '30 min', questions: 15, completed: false, difficulty: 'Easy' },
-      { id: 'micro11-11', title: 'Forms of Market', description: 'Perfect competition, monopoly, monopolistic competition, oligopoly', duration: '35 min', questions: 18, completed: false, difficulty: 'Medium' },
-      { id: 'micro11-12', title: 'Market Equilibrium - Perfect Competition', description: 'Equilibrium price, effects of shifts in demand and supply', duration: '35 min', questions: 18, completed: false, difficulty: 'Medium' },
-      { id: 'micro11-13', title: 'Applications of Demand & Supply', description: 'Price ceiling, price floor, and their effects on market', duration: '25 min', questions: 12, completed: false, difficulty: 'Easy' },
+      { id: 'micro11-1', title: 'Economics and Economy', description: 'Meaning of economy, central problems, PPC, opportunity cost', duration: '30 min', questions: 15, completed: false, difficulty: 'Easy' },
+      { id: 'micro11-2', title: 'Central Problems of an Economy', description: 'Total utility, marginal utility, law of diminishing marginal utility', duration: '35 min', questions: 18, completed: false, difficulty: 'Medium' },
+      { id: 'micro11-3', title: 'Consumer’s Equilibrium — Utility Analysis', description: 'Indifference curve, budget line, consumer equilibrium using IC', duration: '40 min', questions: 20, completed: false, difficulty: 'Hard' },
+      { id: 'micro11-4', title: 'Consumer’s Equilibrium — Indifference Curve Analysis', description: 'Demand, law of demand, demand curve, determinants of demand', duration: '30 min', questions: 15, completed: false, difficulty: 'Easy' },
+      { id: 'micro11-5', title: 'Theory of Demand', description: 'Meaning, types, measurement methods, factors affecting elasticity', duration: '35 min', questions: 18, completed: false, difficulty: 'Medium' },
+      { id: 'micro11-6', title: 'Price Elasticity of Demand', description: 'Short run & long run; TP, AP, MP; Law of variable proportions', duration: '35 min', questions: 15, completed: false, difficulty: 'Medium' },
+      { id: 'micro11-7', title: 'Production Function and Returns to a Factor', description: 'Short run costs - TFC, TVC, TC, AFC, AVC, AC, MC; relationship', duration: '40 min', questions: 20, completed: false, difficulty: 'Hard' },
+      { id: 'micro11-8', title: 'Concepts of Cost', description: 'TR, AR, MR; relationship between AR and MR curves', duration: '30 min', questions: 15, completed: false, difficulty: 'Medium' },
+      { id: 'micro11-9', title: 'Concept of Revenue', description: 'MC-MR approach; profit maximization; break-even point', duration: '30 min', questions: 15, completed: false, difficulty: 'Medium' },
+      { id: 'micro11-10', title: 'Producer’s Equilibrium', description: 'Law of supply, supply curve, determinants, elasticity of supply', duration: '30 min', questions: 15, completed: false, difficulty: 'Easy' },
+      { id: 'micro11-11', title: 'Theory of Supply', description: 'Perfect competition, monopoly, monopolistic competition, oligopoly', duration: '35 min', questions: 18, completed: false, difficulty: 'Medium' },
+      { id: 'micro11-12', title: 'Forms of Market', description: 'Equilibrium price, effects of shifts in demand and supply', duration: '35 min', questions: 18, completed: false, difficulty: 'Medium' },
+      { id: 'micro11-13', title: 'Market Equilibrium Under Perfect Competition and Effects of Shifts in Demand and Supply', description: 'Price ceiling, price floor, and their effects on market', duration: '25 min', questions: 12, completed: false, difficulty: 'Easy' },
     ]
   },
   // ============== CLASS 12 ==============
@@ -140,6 +141,18 @@ const lessonsData = {
 
 function Lessons() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [userStats, setUserStats] = useState(null);
+
+  // Load stats from Firebase
+  useEffect(() => {
+    const fetchStats = async () => {
+      const result = await getUnifiedStats();
+      if (result.success) {
+        setUserStats(result.stats);
+      }
+    };
+    fetchStats();
+  }, []);
 
   // Load from localStorage or URL params with memory persistence
   const getInitialGrade = () => {
@@ -192,7 +205,15 @@ function Lessons() {
   // Calculate stats
   const totalQuestions = currentSubject?.chapters.reduce((acc, ch) => acc + ch.questions, 0) || 0;
   const totalDuration = currentSubject?.chapters.reduce((acc, ch) => parseInt(ch.duration) + acc, 0) || 0;
-  const completedChapters = currentSubject?.chapters.filter(ch => ch.completed).length || 0;
+
+  // Real stats from Firebase
+  const completedFromFirebase = userStats?.lessons?.completedIds || [];
+  const quizCompletedFromFirebase = userStats?.quizzes?.completedIds || [];
+
+  const completedChapters = currentSubject?.chapters.filter(ch =>
+    completedFromFirebase.includes(ch.id) || quizCompletedFromFirebase.includes(ch.id)
+  ).length || 0;
+
   const progressPercent = currentSubject ? Math.round((completedChapters / currentSubject.chapters.length) * 100) : 0;
 
   // Get difficulty color
@@ -358,57 +379,60 @@ function Lessons() {
             </div>
 
             <div className="chapters-grid">
-              {currentSubject.chapters.map((chapter, index) => (
-                <Link
-                  to={`/lesson/${chapter.id}`}
-                  key={chapter.id}
-                  className={`chapter-card ${currentSubject.color} ${chapter.completed ? 'completed' : ''}`}
-                >
-                  <div className="chapter-card-inner">
-                    {/* Chapter Number */}
-                    <div className="chapter-number-wrapper">
-                      <div className={`chapter-number ${chapter.completed ? 'done' : ''}`}>
-                        {chapter.completed ? <FaCheck /> : index + 1}
+              {currentSubject.chapters.map((chapter, index) => {
+                const isCompleted = completedFromFirebase.includes(chapter.id) || quizCompletedFromFirebase.includes(chapter.id);
+                return (
+                  <Link
+                    to={`/lesson/${chapter.id}`}
+                    key={chapter.id}
+                    className={`chapter-card ${currentSubject.color} ${isCompleted ? 'completed' : ''}`}
+                  >
+                    <div className="chapter-card-inner">
+                      {/* Chapter Number */}
+                      <div className="chapter-number-wrapper">
+                        <div className={`chapter-number ${isCompleted ? 'done' : ''}`}>
+                          {isCompleted ? <FaCheck /> : index + 1}
+                        </div>
+                        {isCompleted && <span className="completed-badge">Done</span>}
                       </div>
-                      {chapter.completed && <span className="completed-badge">Done</span>}
+
+                      {/* Chapter Content */}
+                      <div className="chapter-content">
+                        <div className="chapter-title-row">
+                          <h4>{chapter.title}</h4>
+                          <span className={`difficulty-badge ${getDifficultyColor(chapter.difficulty)}`}>
+                            {chapter.difficulty}
+                          </span>
+                        </div>
+                        <p className="chapter-description">{chapter.description}</p>
+
+                        <div className="chapter-meta">
+                          <span className="meta-item">
+                            <FaClock /> {chapter.duration}
+                          </span>
+                          <span className="meta-item">
+                            <FaQuestionCircle /> {chapter.questions} MCQs
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Action Button */}
+                      <div className="chapter-action">
+                        <div className="action-btn">
+                          {isCompleted ? (
+                            <>Review <FaArrowRight /></>
+                          ) : (
+                            <>Start <BsPlayCircleFill /></>
+                          )}
+                        </div>
+                      </div>
                     </div>
 
-                    {/* Chapter Content */}
-                    <div className="chapter-content">
-                      <div className="chapter-title-row">
-                        <h4>{chapter.title}</h4>
-                        <span className={`difficulty-badge ${getDifficultyColor(chapter.difficulty)}`}>
-                          {chapter.difficulty}
-                        </span>
-                      </div>
-                      <p className="chapter-description">{chapter.description}</p>
-
-                      <div className="chapter-meta">
-                        <span className="meta-item">
-                          <FaClock /> {chapter.duration}
-                        </span>
-                        <span className="meta-item">
-                          <FaQuestionCircle /> {chapter.questions} MCQs
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Action Button */}
-                    <div className="chapter-action">
-                      <div className="action-btn">
-                        {chapter.completed ? (
-                          <>Review <FaArrowRight /></>
-                        ) : (
-                          <>Start <BsPlayCircleFill /></>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Hover Glow Effect */}
-                  <div className="chapter-card-glow"></div>
-                </Link>
-              ))}
+                    {/* Hover Glow Effect */}
+                    <div className="chapter-card-glow"></div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </>

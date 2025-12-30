@@ -1,5 +1,5 @@
 // Definitions Module - Economics and Economies (VK Ohri Grade 11)
-import { FaQuoteLeft, FaUser, FaStar, FaExclamationCircle, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import { FaQuoteLeft, FaUser, FaStar, FaExclamationCircle, FaCheckCircle, FaTimesCircle, FaLightbulb } from 'react-icons/fa';
 
 function Definitions() {
   return (
@@ -316,6 +316,120 @@ function Definitions() {
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+
+      {/* Real-World Applications of Definitions */}
+      <div className="content-card">
+        <h3 className="card-title">
+          <FaStar className="title-icon gold" />
+          Real-World Examples: Definitions in Action
+        </h3>
+        <p>
+          Let's see how these economic definitions apply to real-life situations in India:
+        </p>
+
+        <div className="real-world-examples">
+          <div className="rw-example-card">
+            <h4>Scarcity in India's Water Crisis</h4>
+            <p>
+              <strong>The Problem:</strong> India has 18% of the world's population but only 4% of freshwater resources.
+              Cities like Chennai, Bangalore, and Delhi face severe water shortages.
+            </p>
+            <p>
+              <strong>Economic Lens:</strong> This is a classic example of <span className="highlight-cyan">Robbins' definition</span> -
+              unlimited wants (water for drinking, agriculture, industry) vs. scarce means (limited water resources)
+              with alternative uses (should water go to farmers or factories?).
+            </p>
+          </div>
+
+          <div className="rw-example-card">
+            <h4>Budget Allocation Dilemma</h4>
+            <p>
+              <strong>The Situation:</strong> In Union Budget 2023-24, the government had to decide: More money for defense
+              or healthcare? More for highways or education?
+            </p>
+            <p>
+              <strong>Economic Lens:</strong> This reflects the <span className="highlight-cyan">problem of choice</span>.
+              With limited tax revenue, government must prioritize. Every rupee spent on defense is a rupee not spent
+              on schools - demonstrating <em>opportunity cost</em>.
+            </p>
+          </div>
+
+          <div className="rw-example-card">
+            <h4>Your Smartphone Purchase Decision</h4>
+            <p>
+              <strong>The Scenario:</strong> You have Rs. 20,000 saved. Should you buy a new phone, invest in a course,
+              save for college, or go on a trip?
+            </p>
+            <p>
+              <strong>Economic Lens:</strong> This is <span className="highlight-cyan">Robbins' definition</span> at the
+              individual level - your limited money (scarce means) can be used for multiple purposes (alternative uses)
+              to satisfy your many desires (unlimited wants). You must make a choice!
+            </p>
+          </div>
+
+          <div className="rw-example-card">
+            <h4>Indian Railways: Welfare vs Profit</h4>
+            <p>
+              <strong>The Reality:</strong> Indian Railways runs at a loss on passenger services but subsidizes them
+              for public welfare, while earning profit from freight services.
+            </p>
+            <p>
+              <strong>Economic Lens:</strong> This shows <span className="highlight-green">Marshall's welfare focus</span> -
+              the government prioritizes material well-being of common people over pure profit motive. It's not just
+              about wealth creation, but welfare creation.
+            </p>
+          </div>
+
+          <div className="rw-example-card">
+            <h4>Jio's Market Disruption</h4>
+            <p>
+              <strong>The Event:</strong> In 2016, Reliance Jio launched free 4G services, disrupting the telecom market.
+              Data prices crashed from Rs. 250/GB to Rs. 10/GB.
+            </p>
+            <p>
+              <strong>Economic Lens:</strong> <span className="highlight-gold">Adam Smith's wealth definition</span> explains
+              how wealth is created through production (building telecom infrastructure), distributed (among shareholders
+              and employees), and exchanged (services sold to consumers).
+            </p>
+          </div>
+
+          <div className="rw-example-card">
+            <h4>India's GDP Growth Target</h4>
+            <p>
+              <strong>The Goal:</strong> India aims to become a $5 trillion economy and eventually $10 trillion.
+              This requires sustained 7-8% annual growth.
+            </p>
+            <p>
+              <strong>Economic Lens:</strong> This perfectly illustrates <span className="highlight-purple">Samuelson's growth definition</span> -
+              focusing on economic growth over time, ensuring resources are used for both present consumption and
+              future development. It's dynamic economics in action.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Student Activity */}
+      <div className="highlight-card green">
+        <div className="highlight-icon">
+          <FaLightbulb />
+        </div>
+        <div className="highlight-content">
+          <h3>Think About It!</h3>
+          <p>
+            Which definition would best explain these scenarios? Match them mentally:
+          </p>
+          <ul className="bullet-list">
+            <li><strong>Tata building a new factory in Gujarat:</strong> (Hint: Think about wealth creation)</li>
+            <li><strong>Government providing free ration during COVID:</strong> (Hint: Think about welfare)</li>
+            <li><strong>A family deciding between buying a car or investing in FD:</strong> (Hint: Think about scarcity and choice)</li>
+            <li><strong>RBI's 5-year plan for financial inclusion:</strong> (Hint: Think about time dimension)</li>
+          </ul>
+          <p className="note-text">
+            <strong>Tip:</strong> In exams, questions often ask you to identify which economist's definition
+            best applies to a given situation. Practice connecting real scenarios to definitions!
+          </p>
         </div>
       </div>
     </section>

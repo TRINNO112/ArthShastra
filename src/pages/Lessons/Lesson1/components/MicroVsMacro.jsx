@@ -235,62 +235,6 @@ function MicroVsMacro() {
         </div>
       </div>
 
-      {/* Positive vs Normative Economics */}
-      <div className="content-card">
-        <h3 className="card-title">
-          <FaBalanceScale className="title-icon purple" />
-          Positive vs Normative Economics
-        </h3>
-        <p>
-          Economics can also be studied from two different perspectives: <span className="highlight-gold">Positive</span> and
-          <span className="highlight-green"> Normative</span>. This distinction applies to both micro and macro economics.
-        </p>
-
-        <div className="perspective-comparison">
-          <div className="perspective-card positive">
-            <h4>Positive Economics</h4>
-            <p className="perspective-definition">"What is" - Deals with facts</p>
-            <div className="perspective-features">
-              <ul>
-                <li>Based on cause and effect relationships</li>
-                <li>Can be verified with data</li>
-                <li>Does not make value judgments</li>
-                <li>Objective and scientific</li>
-              </ul>
-            </div>
-            <div className="perspective-examples">
-              <strong>Examples:</strong>
-              <ul>
-                <li>"India's GDP grew by 7% in 2023"</li>
-                <li>"Rising prices lead to lower demand"</li>
-                <li>"Unemployment rate is 6%"</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="perspective-card normative">
-            <h4>Normative Economics</h4>
-            <p className="perspective-definition">"What ought to be" - Deals with opinions</p>
-            <div className="perspective-features">
-              <ul>
-                <li>Based on value judgments</li>
-                <li>Cannot be verified with data</li>
-                <li>Involves ethical considerations</li>
-                <li>Subjective and prescriptive</li>
-              </ul>
-            </div>
-            <div className="perspective-examples">
-              <strong>Examples:</strong>
-              <ul>
-                <li>"India should aim for 10% GDP growth"</li>
-                <li>"Government should reduce poverty"</li>
-                <li>"Unemployment should be reduced"</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Interdependence */}
       <div className="highlight-card gold">
         <div className="highlight-icon">

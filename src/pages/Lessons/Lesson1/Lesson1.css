@@ -3203,3 +3203,647 @@
     font-size: 2rem;
   }
 }
+
+/* =============================================
+   NEW COMPONENTS - REAL WORLD EXAMPLES
+   ============================================= */
+
+/* Scenario Cards - Introduction */
+.scenario-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.scenario-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  transition: all var(--transition-base);
+}
+
+.scenario-card:hover {
+  border-color: rgba(255, 215, 0, 0.3);
+  transform: translateX(5px);
+}
+
+.scenario-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.scenario-header.gold { border-left: 4px solid var(--neon-gold); padding-left: 15px; }
+.scenario-header.green { border-left: 4px solid var(--neon-green); padding-left: 15px; }
+.scenario-header.cyan { border-left: 4px solid var(--neon-cyan); padding-left: 15px; }
+.scenario-header.purple { border-left: 4px solid var(--neon-purple); padding-left: 15px; }
+
+.scenario-number {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+}
+
+.scenario-header.gold .scenario-number { background: var(--gradient-gold); color: var(--bg-primary); }
+.scenario-header.green .scenario-number { background: var(--gradient-green); color: var(--bg-primary); }
+.scenario-header.cyan .scenario-number { background: var(--gradient-cyan); color: var(--bg-primary); }
+.scenario-header.purple .scenario-number { background: linear-gradient(135deg, #9d4edd, #c77dff); color: var(--bg-primary); }
+
+.scenario-header h4 {
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  margin: 0;
+}
+
+.scenario-situation,
+.scenario-effect {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.scenario-effect {
+  margin-bottom: 0;
+}
+
+.scenario-effect em {
+  color: var(--neon-gold);
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* Real World Examples - Definitions */
+.real-world-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.rw-example-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  transition: all var(--transition-base);
+}
+
+.rw-example-card:hover {
+  border-color: rgba(0, 255, 255, 0.3);
+}
+
+.rw-example-card h4 {
+  color: var(--neon-cyan);
+  margin-bottom: 12px;
+  font-size: var(--font-size-base);
+}
+
+.rw-example-card p {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.rw-example-card p:last-child {
+  margin-bottom: 0;
+}
+
+/* India Examples Grid - Economic Problems */
+.india-examples-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.india-example {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  padding: 25px;
+}
+
+.example-problem {
+  font-size: var(--font-size-lg);
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.example-problem.gold { color: var(--neon-gold); border-bottom-color: rgba(255, 215, 0, 0.3); }
+.example-problem.green { color: var(--neon-green); border-bottom-color: rgba(0, 255, 136, 0.3); }
+.example-problem.cyan { color: var(--neon-cyan); border-bottom-color: rgba(0, 255, 255, 0.3); }
+
+.example-scenarios {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.example-scenarios .scenario {
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius-sm);
+  border-left: 3px solid var(--neon-gold);
+}
+
+.example-scenarios .scenario strong {
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.example-scenarios .scenario p {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* COVID Examples */
+.covid-examples {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.covid-example {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: var(--border-radius-sm);
+}
+
+.covid-example h4 {
+  color: var(--neon-gold);
+  font-size: var(--font-size-sm);
+  margin-bottom: 10px;
+}
+
+.covid-example p {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Student Examples */
+.student-examples {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.student-example-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  transition: all var(--transition-base);
+}
+
+.student-example-card:hover {
+  border-color: rgba(0, 255, 136, 0.3);
+}
+
+.student-example-card h4 {
+  color: var(--neon-green);
+  margin-bottom: 15px;
+  font-size: var(--font-size-base);
+}
+
+.family-decisions p {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  margin-bottom: 10px;
+  padding-left: 12px;
+  border-left: 2px solid var(--border-color);
+}
+
+.family-decisions p:last-child {
+  margin-bottom: 0;
+}
+
+.family-decisions p strong {
+  color: var(--text-primary);
+}
+
+/* =============================================
+   POSITIVE VS NORMATIVE ECONOMICS STYLES
+   ============================================= */
+
+/* Identification Tips */
+.identification-tips {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.tip-box {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: var(--border-radius-sm);
+}
+
+.tip-box h4 {
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  font-size: var(--font-size-base);
+}
+
+/* Example Comparison Grid */
+.example-comparison-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.example-pair {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  transition: all var(--transition-base);
+}
+
+.example-pair:hover {
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+.example-topic {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.topic-icon {
+  color: var(--neon-gold);
+  font-size: 1.2rem;
+}
+
+.example-topic h4 {
+  color: var(--text-primary);
+  margin: 0;
+  font-size: var(--font-size-base);
+}
+
+.example-statements {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.statement {
+  padding: 15px;
+  border-radius: var(--border-radius-sm);
+}
+
+.statement.positive {
+  background: rgba(255, 215, 0, 0.05);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.statement.normative {
+  background: rgba(0, 255, 136, 0.05);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+}
+
+.statement-label {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.statement.positive .statement-label {
+  background: var(--gradient-gold);
+  color: var(--bg-primary);
+}
+
+.statement.normative .statement-label {
+  background: var(--gradient-green);
+  color: var(--bg-primary);
+}
+
+.statement p {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Importance Grid */
+.importance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.importance-item {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: var(--border-radius-sm);
+}
+
+.importance-item h4 {
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  margin-bottom: 12px;
+}
+
+/* Debate Cards */
+.debate-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.debate-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-color);
+  padding: 20px;
+}
+
+.debate-card h4 {
+  color: var(--neon-cyan);
+  margin-bottom: 12px;
+  font-size: var(--font-size-base);
+}
+
+.debate-content p {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+.debate-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Practice Questions */
+.practice-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.practice-item {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-color);
+  padding: 20px;
+}
+
+.practice-statement {
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.answer-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.answer-tag.positive {
+  background: rgba(255, 215, 0, 0.15);
+  color: var(--neon-gold);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.answer-tag.normative {
+  background: rgba(0, 255, 136, 0.15);
+  color: var(--neon-green);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.practice-item .explanation {
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 12px;
+  border-left: 2px solid var(--border-color);
+}
+
+/* =============================================
+   SIMPLE AND COMPLEX ECONOMIES STYLES
+   ============================================= */
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.comparison-card {
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  padding: 30px;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.comparison-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+}
+
+.comparison-card.simple::before { background: var(--gradient-gold); }
+.comparison-card.complex::before { background: var(--gradient-cyan); }
+
+.comparison-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.comparison-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.comparison-icon {
+  font-size: 2rem;
+}
+
+.simple .comparison-icon { color: var(--neon-gold); }
+.complex .comparison-icon { color: var(--neon-cyan); }
+
+.comparison-header h3 {
+  color: var(--text-primary);
+  font-size: var(--font-size-xl);
+  margin: 0;
+}
+
+.comparison-desc {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.comparison-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.comparison-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+.comparison-list li svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  font-size: 1rem;
+}
+
+.simple .comparison-list li svg { color: var(--neon-gold); }
+.complex .comparison-list li svg { color: var(--neon-cyan); }
+
+/* Comparison Table */
+.table-responsive {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 15px;
+  text-align: left;
+  border: 1px solid var(--border-color);
+}
+
+.comparison-table th {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--neon-gold);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.comparison-table td {
+  color: var(--text-secondary);
+}
+
+.comparison-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.comparison-table td strong {
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-card {
+    padding: 20px;
+  }
+}
+
+/* =============================================
+   RESPONSIVE STYLES FOR NEW COMPONENTS
+   ============================================= */
+
+@media (max-width: 1024px) {
+  .covid-examples,
+  .student-examples {
+    grid-template-columns: 1fr;
+  }
+
+  .identification-tips,
+  .importance-grid,
+  .example-statements {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .scenario-card {
+    padding: 15px;
+  }
+
+  .scenario-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .scenario-header h4 {
+    margin-top: 10px;
+  }
+
+  .india-example {
+    padding: 20px;
+  }
+
+  .example-pair {
+    padding: 15px;
+  }
+
+  .example-topic {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .student-example-card {
+    padding: 15px;
+  }
+}

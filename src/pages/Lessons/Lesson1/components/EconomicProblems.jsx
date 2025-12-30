@@ -1,5 +1,5 @@
 // Economic Problems Module - Economics and Economies (VK Ohri Grade 11)
-import { FaQuestion, FaCogs, FaUsers, FaInfinity, FaExclamationTriangle, FaChartPie, FaIndustry, FaTractor } from 'react-icons/fa';
+import { FaQuestion, FaCogs, FaUsers, FaInfinity, FaExclamationTriangle, FaChartPie, FaIndustry, FaTractor, FaGlobe } from 'react-icons/fa';
 
 function EconomicProblems() {
   return (
@@ -300,6 +300,185 @@ function EconomicProblems() {
               and raise living standards.
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Real-World Examples of Central Problems in India */}
+      <div className="content-card">
+        <h3 className="card-title">
+          <FaGlobe className="title-icon purple" />
+          Central Problems in Real India
+        </h3>
+        <p>
+          Let's see how India tackles these central economic problems with real examples:
+        </p>
+
+        <div className="india-examples-grid">
+          <div className="india-example">
+            <h4 className="example-problem gold">What to Produce?</h4>
+            <div className="example-scenarios">
+              <div className="scenario">
+                <strong>Defense vs Development:</strong>
+                <p>India spends about Rs. 6 lakh crore on defense (2024-25). This money could build 60,000 schools
+                or 20,000 hospitals. The government must decide: security or social services?</p>
+              </div>
+              <div className="scenario">
+                <strong>Bullet Train vs Local Trains:</strong>
+                <p>The Mumbai-Ahmedabad bullet train project costs Rs. 1.1 lakh crore. Critics argue this money
+                could upgrade existing railways serving millions of daily commuters. This is the "what to produce" dilemma!</p>
+              </div>
+              <div className="scenario">
+                <strong>Electric vs Petrol Vehicles:</strong>
+                <p>Should India's auto industry focus on EVs (Tata Nexon EV, Ola Electric) or continue with
+                traditional vehicles? The choice affects jobs, environment, and technology investment.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="india-example">
+            <h4 className="example-problem green">How to Produce?</h4>
+            <div className="example-scenarios">
+              <div className="scenario">
+                <strong>Traditional vs Modern Farming:</strong>
+                <p>Punjab uses tractors and combine harvesters (capital-intensive), while Bihar relies on manual
+                labor (labour-intensive). Punjab produces more per hectare, but Bihar employs more people.</p>
+              </div>
+              <div className="scenario">
+                <strong>Handloom vs Power Loom:</strong>
+                <p>Varanasi silk sarees are made by hand (preserves jobs, cultural heritage but costly).
+                Surat produces synthetic sarees by machines (cheaper but displaces artisans).</p>
+              </div>
+              <div className="scenario">
+                <strong>Metro Construction:</strong>
+                <p>Delhi Metro chose advanced tunnel-boring machines (capital-intensive), while some cities use
+                more labor for construction. The choice depends on time constraints and employment goals.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="india-example">
+            <h4 className="example-problem cyan">For Whom to Produce?</h4>
+            <div className="example-scenarios">
+              <div className="scenario">
+                <strong>Luxury Cars vs Affordable Cars:</strong>
+                <p>Should Maruti make more Balenos (middle class) or should Indian factories produce more
+                Mercedes and BMWs (rich)? Market economy says: whoever can pay. Mixed economy balances both.</p>
+              </div>
+              <div className="scenario">
+                <strong>Private Hospitals vs Government Hospitals:</strong>
+                <p>Apollo and Fortis serve those who can afford premium healthcare. AIIMS and government hospitals
+                serve the masses. India must balance quality private care with accessible public healthcare.</p>
+              </div>
+              <div className="scenario">
+                <strong>PDS (Ration Shops):</strong>
+                <p>The Public Distribution System provides subsidized rice and wheat to poor families.
+                This is government intervention to ensure basic food reaches those who cannot afford market prices.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* COVID-19 Case Study */}
+      <div className="highlight-card gold">
+        <div className="highlight-icon">
+          <FaExclamationTriangle />
+        </div>
+        <div className="highlight-content">
+          <h3>Case Study: COVID-19 and Economic Problems</h3>
+          <p>
+            The COVID-19 pandemic perfectly illustrated all three central problems:
+          </p>
+          <div className="covid-examples">
+            <div className="covid-example">
+              <h4>What to Produce?</h4>
+              <p>Should factories produce PPE kits and ventilators, or continue making regular products?
+              Car companies like Mahindra started making ventilators. Textile mills shifted to making masks.</p>
+            </div>
+            <div className="covid-example">
+              <h4>How to Produce?</h4>
+              <p>Vaccines could be produced domestically (Covaxin by Bharat Biotech) or imported (Pfizer).
+              India chose to boost domestic production - supporting local manufacturing despite higher initial costs.</p>
+            </div>
+            <div className="covid-example">
+              <h4>For Whom to Produce?</h4>
+              <p>Who gets vaccines first? Healthcare workers, elderly, or general public? Government prioritized
+              frontline workers, then vulnerable groups, demonstrating distributive choices in crisis.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Everyday Examples Students Can Relate To */}
+      <div className="content-card">
+        <h3 className="card-title">
+          <FaUsers className="title-icon green" />
+          Economic Problems in Your Daily Life
+        </h3>
+        <p>
+          You face these central problems too, even as a student:
+        </p>
+
+        <div className="student-examples">
+          <div className="student-example-card">
+            <h4>Your Family's Monthly Budget</h4>
+            <div className="family-decisions">
+              <p><strong>What to "produce"?</strong> Should family income go toward a vacation, new furniture,
+              your coaching classes, or savings?</p>
+              <p><strong>How to "produce"?</strong> Should mom cook at home (time-intensive) or order food
+              (money-intensive)?</p>
+              <p><strong>For whom?</strong> Should money be spent on your education, sibling's wedding,
+              or parents' health insurance?</p>
+            </div>
+          </div>
+
+          <div className="student-example-card">
+            <h4>Your Study Time Allocation</h4>
+            <div className="family-decisions">
+              <p><strong>What to "produce"?</strong> Study Physics or Economics today? Prepare for board exams
+              or competitive entrance?</p>
+              <p><strong>How to "produce"?</strong> Self-study (more effort, less money) or take tuitions
+              (less effort, more money)?</p>
+              <p><strong>For whom?</strong> Study to please parents, for your own career, or to help your
+              future family?</p>
+            </div>
+          </div>
+
+          <div className="student-example-card">
+            <h4>School's Resource Allocation</h4>
+            <div className="family-decisions">
+              <p><strong>What to "produce"?</strong> Should school invest in a new computer lab or a sports
+              complex?</p>
+              <p><strong>How to "produce"?</strong> Hire more teachers (labour-intensive) or buy smart boards
+              (capital-intensive)?</p>
+              <p><strong>For whom?</strong> Should fees be uniform or should there be scholarships for
+              economically weaker students?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Production Possibility Curve Intro */}
+      <div className="highlight-card cyan">
+        <div className="highlight-icon">
+          <FaChartPie />
+        </div>
+        <div className="highlight-content">
+          <h3>Coming Up: Production Possibility Curve (PPC)</h3>
+          <p>
+            The central problems of an economy are often illustrated using the <strong>Production Possibility Curve</strong>
+            or <strong>Production Possibility Frontier (PPF)</strong>. This graphical tool shows:
+          </p>
+          <ul className="bullet-list">
+            <li>All possible combinations of two goods an economy can produce with given resources</li>
+            <li>The trade-offs involved in choosing between alternatives</li>
+            <li>The concept of opportunity cost visually</li>
+            <li>How economic growth shifts possibilities outward</li>
+          </ul>
+          <p className="note-text">
+            <strong>Preview:</strong> In the next chapter, you'll learn how the PPC helps visualize the "what to produce"
+            problem - showing that producing more of one good means producing less of another!
+          </p>
         </div>
       </div>
 

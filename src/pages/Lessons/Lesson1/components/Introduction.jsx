@@ -192,6 +192,100 @@ function Introduction() {
         </div>
       </div>
 
+      {/* Real-World Economic Scenarios */}
+      <div className="content-card">
+        <h3 className="card-title">
+          <FaChartLine className="title-icon cyan" />
+          Real-World Economic Scenarios
+        </h3>
+        <p>
+          Let's see how economics plays out in real situations that affect millions of Indians:
+        </p>
+
+        <div className="scenario-cards">
+          <div className="scenario-card">
+            <div className="scenario-header gold">
+              <span className="scenario-number">1</span>
+              <h4>Petrol Price Hike</h4>
+            </div>
+            <p className="scenario-situation">
+              <strong>Situation:</strong> When global crude oil prices rise, petrol prices in India increase.
+            </p>
+            <p className="scenario-effect">
+              <strong>Economic Effect:</strong> Higher petrol prices increase transportation costs, which raises prices
+              of vegetables, groceries, and manufactured goods. Your family's monthly budget gets stretched. This is an
+              example of how <em>one economic change creates a chain reaction</em>.
+            </p>
+          </div>
+
+          <div className="scenario-card">
+            <div className="scenario-header green">
+              <span className="scenario-number">2</span>
+              <h4>Festival Season Spending</h4>
+            </div>
+            <p className="scenario-situation">
+              <strong>Situation:</strong> During Diwali, people buy more clothes, electronics, gold, and sweets.
+            </p>
+            <p className="scenario-effect">
+              <strong>Economic Effect:</strong> Increased demand leads to higher sales for businesses, more jobs (temporary
+              hiring), and sometimes higher prices. Banks report record credit card spending. The GDP gets a boost from
+              this <em>consumer-driven demand</em>.
+            </p>
+          </div>
+
+          <div className="scenario-card">
+            <div className="scenario-header cyan">
+              <span className="scenario-number">3</span>
+              <h4>Monsoon Failure</h4>
+            </div>
+            <p className="scenario-situation">
+              <strong>Situation:</strong> Delayed or deficient monsoon affects crop production in India.
+            </p>
+            <p className="scenario-effect">
+              <strong>Economic Effect:</strong> Lower crop yield leads to food scarcity, higher vegetable and grain prices,
+              and farmer distress. Government may need to import food grains, affecting foreign exchange reserves. This shows
+              how <em>natural factors impact economics</em>.
+            </p>
+          </div>
+
+          <div className="scenario-card">
+            <div className="scenario-header purple">
+              <span className="scenario-number">4</span>
+              <h4>Online Shopping Revolution</h4>
+            </div>
+            <p className="scenario-situation">
+              <strong>Situation:</strong> Growth of Amazon, Flipkart, and quick-commerce apps like Zepto and Blinkit.
+            </p>
+            <p className="scenario-effect">
+              <strong>Economic Effect:</strong> Traditional retail shops face competition, delivery jobs increase,
+              consumers get more choices and lower prices. This is an example of <em>creative destruction</em> - new
+              businesses replacing old ones.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Economics Around You */}
+      <div className="highlight-card purple">
+        <div className="highlight-icon">
+          <FaLightbulb />
+        </div>
+        <div className="highlight-content">
+          <h3>Economics Around You - Student Perspective</h3>
+          <p>
+            As a student, you encounter economics every day without realizing it:
+          </p>
+          <ul className="bullet-list">
+            <li><strong>School Fees:</strong> Your family makes a trade-off - spending on education instead of other things (opportunity cost)</li>
+            <li><strong>Choosing a Stream:</strong> Science vs Commerce vs Arts - you consider future job prospects and earning potential</li>
+            <li><strong>Tuition Classes:</strong> Demand for coaching classes shows how education has become a market</li>
+            <li><strong>Mobile Data Plans:</strong> You compare Jio, Airtel, Vi plans - this is consumer choice in action</li>
+            <li><strong>Part-time Work:</strong> If you work during vacations, you're experiencing the labor market</li>
+            <li><strong>Pocket Money:</strong> How you spend or save pocket money is basic budgeting - an economic decision!</li>
+          </ul>
+        </div>
+      </div>
+
       {/* Key Concepts Preview */}
       <div className="key-concepts-card">
         <h3>Key Concepts You'll Learn</h3>

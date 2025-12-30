@@ -118,14 +118,21 @@ function Quiz({ mcqQuestions, tfQuestions, quizId = 'lesson1' }) {
     // Submit to Firebase with comprehensive analytics
     try {
       const result = await submitDetailedQuizAttempt(quizId, {
-        mcqAnswers,
-        tfAnswers,
-        mcqQuestions,
-        tfQuestions,
-        questionTimes,
+        totalScore: mcqScore + tfScore,
+        totalQuestions: mcqQuestions.length + tfQuestions.length,
         totalTimeSpent: finalTimeSpent,
-        startTime,
-        endTime
+        questionAnalytics: [
+          ...mcqQuestions.map(q => ({
+            id: q.id,
+            type: 'mcq',
+            isCorrect: mcqAnswers[q.id] === q.correct
+          })),
+          ...tfQuestions.map(q => ({
+            id: q.id,
+            type: 'tf',
+            isCorrect: tfAnswers[q.id] === q.correct
+          }))
+        ]
       });
 
       if (result.success) {
