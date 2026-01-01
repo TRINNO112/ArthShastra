@@ -14,7 +14,9 @@
       "Bash(gh:*)",
       "Bash(git add:*)",
       "Bash(npm install:*)",
-      "Bash(npm run deploy:*)"
+      "Bash(npm run deploy:*)",
+      "Bash(git mv:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
