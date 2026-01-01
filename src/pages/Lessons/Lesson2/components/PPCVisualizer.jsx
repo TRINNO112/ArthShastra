@@ -5,21 +5,42 @@ import { FaSync, FaArrowRight, FaArrowUp, FaInfoCircle } from 'react-icons/fa';
 function PPCVisualizer() {
   const [scenario, setScenario] = useState('normal'); // normal, shift-right, shift-left, rotate-x, rotate-y
 
-  // Normal PPC Points (Concave Curve)
-  // Combination: A(0,15), B(1,14), C(2,12), D(3,9), E(4,5), F(5,0)
-  const basePoints = "M 50 50 Q 50 350 350 350"; // Simplified quadratic for visualization
-  // More realistic concave points:
-  // (50, 50) -> Top (Good Y)
-  // (350, 350) -> Bottom (Good X)
-  // Control point at (50, 350) would make it a quarter circle if perfect, but we want it concave
+  // Graph boundaries - keeping everything within viewBox
+  const MARGIN = 60;
+  const MAX_X = 340;
+  const MAX_Y = 340;
+  const MIN_X = MARGIN;
+  const MIN_Y = MARGIN;
+
+  // Create a proper concave PPC curve using cubic bezier
+  // A concave curve bows away from the origin, showing increasing opportunity cost
+  const getPPCPath = (startX, startY, endX, endY) => {
+    // Control points for a realistic concave curve
+    const cp1x = startX;
+    const cp1y = startY + (endY - startY) * 0.6;
+    const cp2x = startX + (endX - startX) * 0.6;
+    const cp2y = endY;
+
+    return `M ${startX} ${startY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} ${endY}`;
+  };
 
   const getPath = () => {
     switch (scenario) {
-      case 'shift-right': return "M 80 80 Q 80 380 380 380";
-      case 'shift-left': return "M 30 30 Q 30 320 320 320";
-      case 'rotate-x': return "M 50 50 Q 50 380 380 380"; // Rotates out on X-axis (more Good X)
-      case 'rotate-y': return "M 80 80 Q 80 350 350 350"; // Rotates up on Y-axis (more Good Y)
-      default: return "M 50 50 Q 50 350 350 350";
+      case 'shift-right':
+        // Rightward shift - growth in both goods, staying within bounds
+        return getPPCPath(MIN_Y - 10, MIN_X - 10, MAX_X + 10, MAX_Y + 10);
+      case 'shift-left':
+        // Leftward shift - reduction in resources, staying within bounds
+        return getPPCPath(MIN_Y + 30, MIN_X + 30, MAX_X - 30, MAX_Y - 30);
+      case 'rotate-x':
+        // X-axis rotation - more Good X production capacity
+        return getPPCPath(MIN_Y, MIN_X, MAX_X + 20, MAX_Y);
+      case 'rotate-y':
+        // Y-axis rotation - more Good Y production capacity
+        return getPPCPath(MIN_Y - 20, MIN_X, MAX_X, MAX_Y);
+      default:
+        // Normal PPC curve
+        return getPPCPath(MIN_Y, MIN_X, MAX_X, MAX_Y);
     }
   };
 
@@ -44,17 +65,26 @@ function PPCVisualizer() {
       <div style={{ display: 'flex', gap: '30px', flexWrap: 'wrap' }}>
         {/* Graph Area */}
         <div className="graph-area" style={{ flex: '1', minWidth: '300px', position: 'relative' }}>
-          <svg viewBox="0 0 400 400" width="100%" height="auto" style={{ overflow: 'visible' }}>
-            {/* Grid Lines */}
-            <path d="M 50 0 L 50 350 L 400 350" fill="none" stroke="var(--text-muted)" strokeWidth="2" />
+          <svg viewBox="0 0 420 420" width="100%" height="auto" style={{ maxWidth: '500px', margin: '0 auto', display: 'block' }}>
+            {/* Grid Lines - Axes */}
+            <path d={`M ${MARGIN} 20 L ${MARGIN} ${MAX_Y + 10} L ${MAX_X + 20} ${MAX_Y + 10}`} fill="none" stroke="var(--text-muted)" strokeWidth="2" />
+
+            {/* Axes Arrows */}
+            <path d={`M ${MARGIN} 20 L ${MARGIN - 5} 30 L ${MARGIN + 5} 30 Z`} fill="var(--text-muted)" />
+            <path d={`M ${MAX_X + 20} ${MAX_Y + 10} L ${MAX_X + 10} ${MAX_Y + 5} L ${MAX_X + 10} ${MAX_Y + 15} Z`} fill="var(--text-muted)" />
 
             {/* Axes Labels */}
-            <text x="360" y="380" fill="white" fontSize="14">Good X (Wheat) →</text>
-            <text x="0" y="40" fill="white" fontSize="14" transform="rotate(-90, 20, 40)">Good Y (Guns) →</text>
+            <text x={MAX_X + 30} y={MAX_Y + 15} fill="white" fontSize="13" fontWeight="500">Good X</text>
+            <text x={MAX_X + 30} y={MAX_Y + 30} fill="var(--text-muted)" fontSize="11">(Wheat)</text>
+            <text x={MARGIN - 10} y="15" fill="white" fontSize="13" fontWeight="500" textAnchor="middle">Good Y</text>
+            <text x={MARGIN - 10} y="30" fill="var(--text-muted)" fontSize="11" textAnchor="middle">(Guns)</text>
 
-            {/* Curve Shadow/Base for comparison when shifted */}
+            {/* Origin Label */}
+            <text x={MARGIN - 10} y={MAX_Y + 25} fill="var(--text-muted)" fontSize="12">O</text>
+
+            {/* Reference curve when shifted (dotted) */}
             {scenario !== 'normal' && (
-              <path d="M 50 50 Q 50 350 350 350" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="2" strokeDasharray="5,5" />
+              <path d={getPPCPath(MIN_Y, MIN_X, MAX_X, MAX_Y)} fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="2" strokeDasharray="5,5" />
             )}
 
             {/* Main PPC Curve */}
@@ -62,13 +92,19 @@ function PPCVisualizer() {
               d={getPath()}
               fill="none"
               stroke="var(--neon-gold)"
-              strokeWidth="4"
-              style={{ transition: 'all 0.5s ease' }}
+              strokeWidth="3.5"
+              style={{ transition: 'all 0.5s ease', filter: 'drop-shadow(0 0 4px var(--neon-gold))' }}
             />
 
-            {/* Points on Curve */}
-            <circle cx="50" cy="50" r="4" fill="var(--neon-green)" />
-            <circle cx="350" cy="350" r="4" fill="var(--neon-green)" />
+            {/* Point markers on the curve endpoints */}
+            {scenario === 'normal' && (
+              <>
+                <circle cx={MIN_X} cy={MIN_Y} r="5" fill="var(--neon-green)" stroke="white" strokeWidth="1.5" />
+                <circle cx={MAX_X} cy={MAX_Y} r="5" fill="var(--neon-green)" stroke="white" strokeWidth="1.5" />
+                <text x={MIN_X - 15} y={MIN_Y - 10} fill="var(--neon-green)" fontSize="13" fontWeight="bold">A</text>
+                <text x={MAX_X + 10} y={MAX_Y + 15} fill="var(--neon-green)" fontSize="13" fontWeight="bold">F</text>
+              </>
+            )}
           </svg>
         </div>
 
