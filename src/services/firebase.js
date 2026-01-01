@@ -209,9 +209,65 @@ export async function logLessonProgress(lessonId, timeSpent, completed) {
   }
 }
 
-export async function signOutUser() { await signOut(auth); }
+export async function signOutUser() {
+  try {
+    await signOut(auth);
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+
+export async function logUserActivity(userId, type, details) {
+  try {
+    const userRef = doc(db, 'users', userId);
+    await updateDoc(userRef, {
+      recentActivity: arrayUnion({
+        type,
+        details,
+        timestamp: new Date().toISOString() // Using ISO string for easier client-side display if needed, or serverTimestamp()
+      })
+    });
+    return { success: true };
+  } catch (error) {
+    console.error('Log activity error:', error);
+    return { success: false };
+  }
+}
+
 export function onAuthChange(callback) { return onAuthStateChanged(auth, callback); }
 export async function getUnifiedStats() {
   const userSnap = await getDoc(doc(db, 'users', getUserId()));
   return userSnap.exists() ? { success: true, stats: userSnap.data().stats } : { success: false };
+}
+
+export async function getQuizAnalytics(quizId) {
+  try {
+    const userId = getUserId();
+    const q = query(
+      collection(db, 'quiz-history'),
+      where('userId', '==', userId),
+      where('quizId', '==', quizId)
+    );
+
+    const querySnapshot = await getDocs(q);
+    const attempts = querySnapshot.docs.map(doc => doc.data());
+
+    if (attempts.length === 0) {
+      return { success: true, data: { totalAttempts: 0, bestPercentage: 0 } };
+    }
+
+    const bestPercentage = Math.max(...attempts.map(a => a.percentage || 0));
+
+    return {
+      success: true,
+      data: {
+        totalAttempts: attempts.length,
+        bestPercentage
+      }
+    };
+  } catch (error) {
+    console.error('Get quiz analytics error:', error);
+    return { success: false, error: error.message };
+  }
 }

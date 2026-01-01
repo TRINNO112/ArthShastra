@@ -125,9 +125,11 @@ function SimpleAndComplexEconomies() {
         <div className="highlight-content">
           <h3>Relationship between Income and Multiplicity of Wants</h3>
           <p>
-            According to <strong>T.R. Jain & V.K. Ohri</strong>, the complexity of an economy is directly related to the
-            level of income. As income increases, human wants multiply, leading to a transition from a simple
-            to a complex economic structure.
+            Economists generally observe that the <strong>complexity of an economic system</strong>
+            is intrinsically linked to rising income levels. As household incomes grow,
+            individual wants expand and diversify, triggering a structural shift from
+            rudimentary production to a highly specialized and sophisticated
+            economic framework.
           </p>
         </div>
       </div>

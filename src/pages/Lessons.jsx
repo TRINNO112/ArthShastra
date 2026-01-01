@@ -78,7 +78,7 @@ const lessonsData = {
     description: 'Study individual economic units - consumers, firms & markets',
     chapters: [
       { id: 'micro11-1', title: 'Economics and Economy', description: 'Meaning of economy, central problems, PPC, opportunity cost', duration: '30 min', questions: 15, completed: false, difficulty: 'Easy' },
-      { id: 'micro11-2', title: 'Central Problems of an Economy', description: 'Total utility, marginal utility, law of diminishing marginal utility', duration: '35 min', questions: 18, completed: false, difficulty: 'Medium' },
+      { id: 'micro11-2', title: 'Central Problems of an Economy', description: 'What, How & For Whom to produce; PPC Curve and Opportunity Cost', duration: '35 min', questions: 18, completed: false, difficulty: 'Medium' },
       { id: 'micro11-3', title: 'Consumer’s Equilibrium — Utility Analysis', description: 'Indifference curve, budget line, consumer equilibrium using IC', duration: '40 min', questions: 20, completed: false, difficulty: 'Hard' },
       { id: 'micro11-4', title: 'Consumer’s Equilibrium — Indifference Curve Analysis', description: 'Demand, law of demand, demand curve, determinants of demand', duration: '30 min', questions: 15, completed: false, difficulty: 'Easy' },
       { id: 'micro11-5', title: 'Theory of Demand', description: 'Meaning, types, measurement methods, factors affecting elasticity', duration: '35 min', questions: 18, completed: false, difficulty: 'Medium' },
