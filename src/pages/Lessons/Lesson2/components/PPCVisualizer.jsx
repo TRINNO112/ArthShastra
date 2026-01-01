@@ -1,48 +1,74 @@
-// PPCVisualizer.jsx - Interactive PPC Graph Component
+// PPCVisualizer.jsx - Interactive PPC Graph Component using Recharts
 import { useState } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label, ReferenceDot } from 'recharts';
 import { FaSync, FaArrowRight, FaArrowUp, FaInfoCircle } from 'react-icons/fa';
 
 function PPCVisualizer() {
-  const [scenario, setScenario] = useState('normal'); // normal, shift-right, shift-left, rotate-x, rotate-y
+  const [scenario, setScenario] = useState('normal');
 
-  // Graph boundaries - keeping everything within viewBox
-  const MARGIN = 60;
-  const MAX_X = 340;
-  const MAX_Y = 340;
-  const MIN_X = MARGIN;
-  const MIN_Y = MARGIN;
+  // Generate concave PPC curve data points
+  // A concave PPC shows increasing opportunity cost
+  const generatePPCData = (maxX, maxY) => {
+    const points = [];
+    const numPoints = 20;
 
-  // Create a proper concave PPC curve using cubic bezier
-  // A concave curve bows away from the origin, showing increasing opportunity cost
-  const getPPCPath = (startX, startY, endX, endY) => {
-    // Control points for a realistic concave curve
-    const cp1x = startX;
-    const cp1y = startY + (endY - startY) * 0.6;
-    const cp2x = startX + (endX - startX) * 0.6;
-    const cp2y = endY;
+    for (let i = 0; i <= numPoints; i++) {
+      const t = i / numPoints; // 0 to 1
 
-    return `M ${startX} ${startY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} ${endY}`;
+      // Concave curve formula: y = maxY * (1 - t^1.5)
+      // This creates a curve that bows away from origin
+      const x = maxX * t;
+      const y = maxY * Math.pow(1 - t, 1.5);
+
+      points.push({
+        x: parseFloat(x.toFixed(1)),
+        y: parseFloat(y.toFixed(1)),
+        wheat: x,
+        guns: y
+      });
+    }
+    return points;
   };
 
-  const getPath = () => {
+  // Generate data based on scenario
+  const getCurveData = () => {
     switch (scenario) {
       case 'shift-right':
-        // Rightward shift - growth in both goods, staying within bounds
-        return getPPCPath(MIN_Y - 10, MIN_X - 10, MAX_X + 10, MAX_Y + 10);
+        return {
+          normal: generatePPCData(100, 100),
+          shifted: generatePPCData(130, 130)
+        };
       case 'shift-left':
-        // Leftward shift - reduction in resources, staying within bounds
-        return getPPCPath(MIN_Y + 30, MIN_X + 30, MAX_X - 30, MAX_Y - 30);
+        return {
+          normal: generatePPCData(100, 100),
+          shifted: generatePPCData(70, 70)
+        };
       case 'rotate-x':
-        // X-axis rotation - more Good X production capacity
-        return getPPCPath(MIN_Y, MIN_X, MAX_X + 20, MAX_Y);
+        return {
+          normal: generatePPCData(100, 100),
+          shifted: generatePPCData(130, 100)
+        };
       case 'rotate-y':
-        // Y-axis rotation - more Good Y production capacity
-        return getPPCPath(MIN_Y - 20, MIN_X, MAX_X, MAX_Y);
+        return {
+          normal: generatePPCData(100, 100),
+          shifted: generatePPCData(100, 130)
+        };
       default:
-        // Normal PPC curve
-        return getPPCPath(MIN_Y, MIN_X, MAX_X, MAX_Y);
+        return {
+          normal: generatePPCData(100, 100),
+          shifted: null
+        };
     }
   };
+
+  const curveData = getCurveData();
+
+  // Merge normal and shifted data for the chart
+  const chartData = curveData.normal.map((point, index) => ({
+    ...point,
+    shiftedY: curveData.shifted ? curveData.shifted[index]?.y : null,
+    shiftedX: curveData.shifted ? curveData.shifted[index]?.x : null
+  }));
 
   const getScenarioInfo = () => {
     switch (scenario) {
@@ -52,6 +78,28 @@ function PPCVisualizer() {
       case 'rotate-y': return "Rotation on Y-axis: Improvement in technology or increase in resources specifically for Good Y (Guns).";
       default: return "Normal PPC: Shows full and efficient utilization of given resources and constant technology.";
     }
+  };
+
+  // Custom tooltip
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div style={{
+          background: 'rgba(10, 10, 15, 0.95)',
+          border: '1px solid var(--neon-gold)',
+          padding: '10px',
+          borderRadius: '8px'
+        }}>
+          <p style={{ color: 'white', fontSize: '0.9rem', margin: '4px 0' }}>
+            <strong>Wheat:</strong> {payload[0].payload.wheat.toFixed(1)} units
+          </p>
+          <p style={{ color: 'white', fontSize: '0.9rem', margin: '4px 0' }}>
+            <strong>Guns:</strong> {payload[0].payload.guns.toFixed(1)} units
+          </p>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -64,109 +112,162 @@ function PPCVisualizer() {
     }}>
       <div style={{ display: 'flex', gap: '30px', flexWrap: 'wrap' }}>
         {/* Graph Area */}
-        <div className="graph-area" style={{ flex: '1', minWidth: '300px', position: 'relative' }}>
-          <svg viewBox="0 0 420 420" width="100%" height="auto" style={{ maxWidth: '500px', margin: '0 auto', display: 'block' }}>
-            {/* Grid Lines - Axes */}
-            <path d={`M ${MARGIN} 20 L ${MARGIN} ${MAX_Y + 10} L ${MAX_X + 20} ${MAX_Y + 10}`} fill="none" stroke="var(--text-muted)" strokeWidth="2" />
+        <div className="graph-area" style={{ flex: '1', minWidth: '350px' }}>
+          <ResponsiveContainer width="100%" height={400}>
+            <LineChart
+              data={chartData}
+              margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
 
-            {/* Axes Arrows */}
-            <path d={`M ${MARGIN} 20 L ${MARGIN - 5} 30 L ${MARGIN + 5} 30 Z`} fill="var(--text-muted)" />
-            <path d={`M ${MAX_X + 20} ${MAX_Y + 10} L ${MAX_X + 10} ${MAX_Y + 5} L ${MAX_X + 10} ${MAX_Y + 15} Z`} fill="var(--text-muted)" />
+              <XAxis
+                dataKey="x"
+                type="number"
+                domain={[0, 140]}
+                stroke="rgba(255,255,255,0.6)"
+                tick={{ fill: 'rgba(255,255,255,0.8)' }}
+              >
+                <Label value="Good X (Wheat) →" offset={-10} position="insideBottom" style={{ fill: 'white', fontWeight: '500' }} />
+              </XAxis>
 
-            {/* Axes Labels */}
-            <text x={MAX_X + 30} y={MAX_Y + 15} fill="white" fontSize="13" fontWeight="500">Good X</text>
-            <text x={MAX_X + 30} y={MAX_Y + 30} fill="var(--text-muted)" fontSize="11">(Wheat)</text>
-            <text x={MARGIN - 10} y="15" fill="white" fontSize="13" fontWeight="500" textAnchor="middle">Good Y</text>
-            <text x={MARGIN - 10} y="30" fill="var(--text-muted)" fontSize="11" textAnchor="middle">(Guns)</text>
+              <YAxis
+                dataKey="y"
+                type="number"
+                domain={[0, 140]}
+                stroke="rgba(255,255,255,0.6)"
+                tick={{ fill: 'rgba(255,255,255,0.8)' }}
+              >
+                <Label value="Good Y (Guns) →" angle={-90} position="insideLeft" style={{ fill: 'white', fontWeight: '500', textAnchor: 'middle' }} />
+              </YAxis>
 
-            {/* Origin Label */}
-            <text x={MARGIN - 10} y={MAX_Y + 25} fill="var(--text-muted)" fontSize="12">O</text>
+              <Tooltip content={<CustomTooltip />} />
 
-            {/* Reference curve when shifted (dotted) */}
-            {scenario !== 'normal' && (
-              <path d={getPPCPath(MIN_Y, MIN_X, MAX_X, MAX_Y)} fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="2" strokeDasharray="5,5" />
-            )}
+              {/* Reference dotted line when shifted */}
+              {scenario !== 'normal' && (
+                <Line
+                  type="monotone"
+                  dataKey="y"
+                  stroke="rgba(255,255,255,0.3)"
+                  strokeWidth={2}
+                  strokeDasharray="5 5"
+                  dot={false}
+                  isAnimationActive={false}
+                  name="Original PPC"
+                />
+              )}
 
-            {/* Main PPC Curve */}
-            <path
-              d={getPath()}
-              fill="none"
-              stroke="var(--neon-gold)"
-              strokeWidth="3.5"
-              style={{ transition: 'all 0.5s ease', filter: 'drop-shadow(0 0 4px var(--neon-gold))' }}
-            />
+              {/* Main PPC Curve */}
+              <Line
+                type="monotone"
+                dataKey={scenario !== 'normal' ? 'shiftedY' : 'y'}
+                stroke="#ffd700"
+                strokeWidth={3}
+                dot={false}
+                animationDuration={800}
+                animationEasing="ease-in-out"
+                name="PPC"
+                style={{ filter: 'drop-shadow(0 0 6px rgba(255, 215, 0, 0.5))' }}
+              />
 
-            {/* Point markers on the curve endpoints */}
-            {scenario === 'normal' && (
-              <>
-                <circle cx={MIN_X} cy={MIN_Y} r="5" fill="var(--neon-green)" stroke="white" strokeWidth="1.5" />
-                <circle cx={MAX_X} cy={MAX_Y} r="5" fill="var(--neon-green)" stroke="white" strokeWidth="1.5" />
-                <text x={MIN_X - 15} y={MIN_Y - 10} fill="var(--neon-green)" fontSize="13" fontWeight="bold">A</text>
-                <text x={MAX_X + 10} y={MAX_Y + 15} fill="var(--neon-green)" fontSize="13" fontWeight="bold">F</text>
-              </>
-            )}
-          </svg>
+              {/* Endpoint dots for normal scenario */}
+              {scenario === 'normal' && (
+                <>
+                  <ReferenceDot x={0} y={100} r={6} fill="#00ff88" stroke="white" strokeWidth={2} />
+                  <ReferenceDot x={100} y={0} r={6} fill="#00ff88" stroke="white" strokeWidth={2} />
+                </>
+              )}
+            </LineChart>
+          </ResponsiveContainer>
         </div>
 
         {/* Controls Area */}
         <div className="controls-area" style={{ flex: '0.8', minWidth: '250px' }}>
-          <h4 style={{ color: 'var(--text-primary)', marginBottom: '15px' }}>Simulate Changes:</h4>
+          <h4 style={{ color: 'var(--text-primary)', marginBottom: '15px', fontSize: '1.1rem' }}>Simulate Changes:</h4>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <button
               onClick={() => setScenario('normal')}
               style={{
-                padding: '10px 15px',
-                background: scenario === 'normal' ? 'var(--neon-gold)' : 'rgba(255,255,255,0.05)',
-                color: scenario === 'normal' ? 'var(--bg-primary)' : 'white',
-                border: '1px solid var(--neon-gold)',
+                padding: '12px 16px',
+                background: scenario === 'normal' ? 'linear-gradient(135deg, #ffd700, #ffed4e)' : 'rgba(255,255,255,0.05)',
+                color: scenario === 'normal' ? '#0a0a0f' : 'white',
+                border: '1px solid #ffd700',
                 borderRadius: '8px',
                 cursor: 'pointer',
-                textAlign: 'left'
+                textAlign: 'left',
+                fontWeight: scenario === 'normal' ? '600' : '400',
+                transition: 'all 0.3s ease',
+                fontSize: '0.95rem'
               }}
             >
-              Reset to Normal
+              📊 Reset to Normal
             </button>
             <button
               onClick={() => setScenario('shift-right')}
               style={{
-                padding: '10px 15px',
-                background: scenario === 'shift-right' ? 'var(--neon-gold)' : 'rgba(255,255,255,0.05)',
-                color: scenario === 'shift-right' ? 'var(--bg-primary)' : 'white',
-                border: '1px solid var(--neon-gold)',
+                padding: '12px 16px',
+                background: scenario === 'shift-right' ? 'linear-gradient(135deg, #ffd700, #ffed4e)' : 'rgba(255,255,255,0.05)',
+                color: scenario === 'shift-right' ? '#0a0a0f' : 'white',
+                border: '1px solid #ffd700',
                 borderRadius: '8px',
                 cursor: 'pointer',
-                textAlign: 'left'
+                textAlign: 'left',
+                fontWeight: scenario === 'shift-right' ? '600' : '400',
+                transition: 'all 0.3s ease',
+                fontSize: '0.95rem'
               }}
             >
-              Growth of Resources (Shift Right)
+              📈 Growth (Shift Right)
             </button>
             <button
               onClick={() => setScenario('shift-left')}
               style={{
-                padding: '10px 15px',
-                background: scenario === 'shift-left' ? 'var(--neon-gold)' : 'rgba(255,255,255,0.05)',
-                color: scenario === 'shift-left' ? 'var(--bg-primary)' : 'white',
-                border: '1px solid var(--neon-gold)',
+                padding: '12px 16px',
+                background: scenario === 'shift-left' ? 'linear-gradient(135deg, #ffd700, #ffed4e)' : 'rgba(255,255,255,0.05)',
+                color: scenario === 'shift-left' ? '#0a0a0f' : 'white',
+                border: '1px solid #ffd700',
                 borderRadius: '8px',
                 cursor: 'pointer',
-                textAlign: 'left'
+                textAlign: 'left',
+                fontWeight: scenario === 'shift-left' ? '600' : '400',
+                transition: 'all 0.3s ease',
+                fontSize: '0.95rem'
               }}
             >
-              Resource Loss (Shift Left)
+              📉 Resource Loss (Shift Left)
             </button>
             <button
               onClick={() => setScenario('rotate-x')}
               style={{
-                padding: '10px 15px',
-                background: scenario === 'rotate-x' ? 'var(--neon-gold)' : 'rgba(255,255,255,0.05)',
-                color: scenario === 'rotate-x' ? 'var(--bg-primary)' : 'white',
-                border: '1px solid var(--neon-gold)',
+                padding: '12px 16px',
+                background: scenario === 'rotate-x' ? 'linear-gradient(135deg, #ffd700, #ffed4e)' : 'rgba(255,255,255,0.05)',
+                color: scenario === 'rotate-x' ? '#0a0a0f' : 'white',
+                border: '1px solid #ffd700',
                 borderRadius: '8px',
                 cursor: 'pointer',
-                textAlign: 'left'
+                textAlign: 'left',
+                fontWeight: scenario === 'rotate-x' ? '600' : '400',
+                transition: 'all 0.3s ease',
+                fontSize: '0.95rem'
               }}
             >
-              Improved Tech for Wheat (Rotate X)
+              🌾 Tech for Wheat (Rotate X)
+            </button>
+            <button
+              onClick={() => setScenario('rotate-y')}
+              style={{
+                padding: '12px 16px',
+                background: scenario === 'rotate-y' ? 'linear-gradient(135deg, #ffd700, #ffed4e)' : 'rgba(255,255,255,0.05)',
+                color: scenario === 'rotate-y' ? '#0a0a0f' : 'white',
+                border: '1px solid #ffd700',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                textAlign: 'left',
+                fontWeight: scenario === 'rotate-y' ? '600' : '400',
+                transition: 'all 0.3s ease',
+                fontSize: '0.95rem'
+              }}
+            >
+              🔫 Tech for Guns (Rotate Y)
             </button>
           </div>
 
@@ -175,9 +276,9 @@ function PPCVisualizer() {
             padding: '15px',
             background: 'rgba(0,153,255,0.1)',
             borderLeft: '4px solid var(--neon-cyan)',
-            borderRadius: '4px'
+            borderRadius: '8px'
           }}>
-            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', margin: 0 }}>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', margin: 0, lineHeight: '1.5' }}>
               <FaInfoCircle style={{ marginRight: '8px', color: 'var(--neon-cyan)' }} />
               {getScenarioInfo()}
             </p>
