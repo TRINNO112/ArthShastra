@@ -647,3 +647,250 @@ function PPCScenario() {
                   y={currentScenarioData.ppcData.currentY}
                   r={10}
                   fill="#00d4ff"
+                  stroke="white"
+                  strokeWidth={3}
+                  label={{
+                    value: "START",
+                    position: "top",
+                    fill: "#00d4ff",
+                    fontSize: 13,
+                    fontWeight: "bold"
+                  }}
+                />
+
+                {/* User's chosen point and connection line */}
+                {userChoice && (
+                  <>
+                    {/* Connection line from current to choice */}
+                    <Line
+                      data={[
+                        { x: currentScenarioData.ppcData.currentX, y: currentScenarioData.ppcData.currentY },
+                        { x: getOptionPosition(userChoice).x, y: getOptionPosition(userChoice).y }
+                      ]}
+                      type="linear"
+                      dataKey="y"
+                      stroke={userChoice.isCorrect ? "#00ff88" : "#ff6b6b"}
+                      strokeWidth={3}
+                      strokeDasharray="6 6"
+                      dot={false}
+                      isAnimationActive={true}
+                      animationDuration={800}
+                    />
+                    <ReferenceDot
+                      x={getOptionPosition(userChoice).x}
+                      y={getOptionPosition(userChoice).y}
+                      r={12}
+                      fill={userChoice.isCorrect ? "#00ff88" : "#ff6b6b"}
+                      stroke="white"
+                      strokeWidth={3.5}
+                      label={{
+                        value: "YOUR CHOICE",
+                        position: "bottom",
+                        fill: userChoice.isCorrect ? "#00ff88" : "#ff6b6b",
+                        fontSize: 13,
+                        fontWeight: "bold"
+                      }}
+                    />
+                  </>
+                )}
+              </ComposedChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Options */}
+          {!showExplanation && (
+            <div>
+              <h4 style={{ color: 'white', marginBottom: '16px', fontSize: '1.15rem', fontWeight: '700' }}>
+                💡 Choose Your Decision:
+              </h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                {currentScenarioData.options.map((option) => (
+                  <button
+                    key={option.id}
+                    onClick={() => handleChoice(option)}
+                    style={{
+                      padding: '20px 24px',
+                      background: 'linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03))',
+                      color: 'white',
+                      border: '2px solid rgba(255,215,0,0.35)',
+                      borderRadius: '14px',
+                      cursor: 'pointer',
+                      fontSize: '1rem',
+                      textAlign: 'left',
+                      transition: 'all 0.3s ease',
+                      fontWeight: '500',
+                      lineHeight: '1.6'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,215,0,0.25), rgba(255,215,0,0.12))';
+                      e.currentTarget.style.borderColor = '#ffd700';
+                      e.currentTarget.style.transform = 'translateX(8px)';
+                      e.currentTarget.style.boxShadow = '0 4px 20px rgba(255,215,0,0.2)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03))';
+                      e.currentTarget.style.borderColor = 'rgba(255,215,0,0.35)';
+                      e.currentTarget.style.transform = 'translateX(0)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  >
+                    <strong style={{ color: '#ffd700', fontSize: '1.05rem' }}>Option {option.id}:</strong> {option.text}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Feedback */}
+          {showExplanation && userChoice && (
+            <div style={{
+              background: userChoice.isCorrect
+                ? 'linear-gradient(145deg, rgba(0,255,136,0.18), rgba(0,255,136,0.06))'
+                : 'linear-gradient(145deg, rgba(255,107,107,0.18), rgba(255,107,107,0.06))',
+              padding: '28px',
+              borderRadius: '16px',
+              border: `2px solid ${userChoice.isCorrect ? '#00ff88' : '#ff6b6b'}`,
+              marginTop: '22px'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '18px' }}>
+                {userChoice.isCorrect ? (
+                  <FaCheckCircle style={{ color: '#00ff88', fontSize: '2.2rem' }} />
+                ) : (
+                  <FaTimesCircle style={{ color: '#ff6b6b', fontSize: '2.2rem' }} />
+                )}
+                <h3 style={{
+                  color: userChoice.isCorrect ? '#00ff88' : '#ff6b6b',
+                  margin: 0,
+                  fontSize: '1.5rem',
+                  fontWeight: '700'
+                }}>
+                  {userChoice.isCorrect ? 'Correct! 🎉' : 'Not Quite! 🤔'}
+                </h3>
+              </div>
+
+              <p style={{
+                color: 'rgba(255,255,255,0.93)',
+                fontSize: '1.05rem',
+                lineHeight: '1.75',
+                marginBottom: '18px'
+              }}>
+                {userChoice.feedback}
+              </p>
+
+              <div style={{
+                background: 'rgba(0,0,0,0.35)',
+                padding: '18px',
+                borderRadius: '12px',
+                borderLeft: '4px solid #ffd700'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                  <FaLightbulb style={{ color: '#ffd700', fontSize: '1.3rem' }} />
+                  <h4 style={{ color: '#ffd700', margin: 0, fontSize: '1.05rem', fontWeight: '700' }}>
+                    Economic Concept:
+                  </h4>
+                </div>
+                <p style={{
+                  color: 'rgba(255,255,255,0.88)',
+                  fontSize: '0.95rem',
+                  lineHeight: '1.7',
+                  margin: 0
+                }}>
+                  {userChoice.explanation}
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', gap: '14px', marginTop: '22px' }}>
+                {currentScenario < scenarios.length - 1 ? (
+                  <button
+                    onClick={nextScenario}
+                    style={{
+                      flex: 1,
+                      padding: '16px',
+                      background: 'linear-gradient(135deg, #00ff88, #00ffaa)',
+                      color: '#0a0a15',
+                      border: 'none',
+                      borderRadius: '12px',
+                      cursor: 'pointer',
+                      fontSize: '1.05rem',
+                      fontWeight: '700',
+                      transition: 'transform 0.2s',
+                      boxShadow: '0 4px 15px rgba(0,255,136,0.3)'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.03)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    Next Scenario →
+                  </button>
+                ) : (
+                  <button
+                    onClick={resetGame}
+                    style={{
+                      flex: 1,
+                      padding: '16px',
+                      background: 'linear-gradient(135deg, #9d4edd, #b15ced)',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '12px',
+                      cursor: 'pointer',
+                      fontSize: '1.05rem',
+                      fontWeight: '700',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '10px',
+                      transition: 'transform 0.2s',
+                      boxShadow: '0 4px 15px rgba(157,78,221,0.3)'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.03)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    <FaRedo />
+                    Play Again
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Final Score */}
+        {currentScenario === scenarios.length - 1 && showExplanation && (
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(157,78,221,0.25), rgba(255,215,0,0.25))',
+            padding: '30px',
+            borderRadius: '20px',
+            border: '3px solid #9d4edd',
+            textAlign: 'center',
+            boxShadow: '0 8px 30px rgba(157,78,221,0.3)'
+          }}>
+            <FaTrophy style={{ fontSize: '3.5rem', color: '#ffd700', marginBottom: '18px' }} />
+            <h3 style={{ color: 'white', fontSize: '1.7rem', margin: '0 0 12px 0', fontWeight: '700' }}>
+              Game Complete!
+            </h3>
+            <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '1.3rem', margin: 0 }}>
+              Final Score: <strong style={{ color: '#00ff88', fontSize: '1.6rem' }}>{score}/{scenarios.length}</strong>
+            </p>
+            <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '1rem', marginTop: '12px', lineHeight: '1.6' }}>
+              {score === scenarios.length ? '🎉 Perfect! You mastered PPC concepts!' :
+                score >= scenarios.length * 0.75 ? '👍 Great job! You understand most concepts!' :
+                  score >= scenarios.length * 0.5 ? '📚 Good effort! Review the concepts and try again!' :
+                    '💪 Keep learning! Practice makes perfect!'}
+            </p>
+          </div>
+        )}
+      </div>
+
+      <div className="highlight-card purple" style={{ marginTop: '28px' }}>
+        <div className="highlight-content">
+          <h3 style={{ marginBottom: '14px', fontSize: '1.2rem' }}>🎯 Learning Through Real Scenarios</h3>
+          <p style={{ fontSize: '1rem', lineHeight: '1.8', margin: 0 }}>
+            These scenarios help you understand how PPC concepts apply in real business and government decisions.
+            Every choice has an opportunity cost, and understanding trade-offs is essential for effective resource allocation!
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default PPCScenario;
