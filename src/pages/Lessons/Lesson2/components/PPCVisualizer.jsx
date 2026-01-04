@@ -68,6 +68,18 @@ function PPCVisualizer() {
         transformed = generatePPC(100, 140);
         domain = 160;
         break;
+      case 'asymmetric-growth':
+        // Wheat increases, Rice decreases
+        // Realistic scenario: focus on one sector causes decline in another
+        transformed = generatePPC(130, 80);
+        domain = 150;
+        break;
+      case 'balanced-tech':
+        // Technological improvement in both goods but different rates
+        // Both goods increase but not proportionally
+        transformed = generatePPC(140, 120);
+        domain = 160;
+        break;
       default:
         domain = 120;
         break;
@@ -115,6 +127,20 @@ function PPCVisualizer() {
           description: 'Caused by: Technological improvement ONLY in Rice production, better irrigation systems, or new rice varieties.',
           effect: 'Maximum Rice production increases (100→140) while Wheat capacity remains unchanged at 100.',
           color: '#00d4ff'
+        };
+      case 'asymmetric-growth':
+        return {
+          title: '⚖️ Asymmetric Growth (Wheat Up, Rice Down)',
+          description: 'Caused by: Resource reallocation, labor migration from rice to wheat farming, degradation of rice-producing land, or policy favoring wheat sector.',
+          effect: 'Wheat capacity increases (100→130) while Rice capacity decreases (100→80). Reflects real-world trade-offs when focusing on one sector.',
+          color: '#ff9500'
+        };
+      case 'balanced-tech':
+        return {
+          title: '🚀 Balanced Technological Progress',
+          description: 'Caused by: Broad technological improvements affecting both sectors but at different rates, general education improvements, or infrastructure development.',
+          effect: 'Both Wheat (100→140) and Rice (100→120) production capacity increase, but Wheat sector benefits more from technological advancement.',
+          color: '#9d4edd'
         };
       default:
         return {
@@ -371,6 +397,18 @@ function PPCVisualizer() {
                   <ReferenceDot x={100} y={0} r={7} fill="#00ff88" stroke="white" strokeWidth={2} />
                 </>
               )}
+              {scenario === 'asymmetric-growth' && (
+                <>
+                  <ReferenceDot x={0} y={80} r={7} fill="#ff9500" stroke="white" strokeWidth={2} />
+                  <ReferenceDot x={130} y={0} r={7} fill="#ff9500" stroke="white" strokeWidth={2} />
+                </>
+              )}
+              {scenario === 'balanced-tech' && (
+                <>
+                  <ReferenceDot x={0} y={120} r={7} fill="#9d4edd" stroke="white" strokeWidth={2} />
+                  <ReferenceDot x={140} y={0} r={7} fill="#9d4edd" stroke="white" strokeWidth={2} />
+                </>
+              )}
             </ComposedChart>
           </ResponsiveContainer>
 
@@ -466,6 +504,22 @@ function PPCVisualizer() {
             >
               <span style={{ fontSize: '1.2rem' }}>🍚</span>
               <span>Rice Tech Improvement</span>
+            </button>
+
+            <button
+              onClick={() => setScenario('asymmetric-growth')}
+              style={getButtonStyle(scenario === 'asymmetric-growth', '#ff9500')}
+            >
+              <span style={{ fontSize: '1.2rem' }}>⚖️</span>
+              <span>Asymmetric Growth (Wheat ↑ Rice ↓)</span>
+            </button>
+
+            <button
+              onClick={() => setScenario('balanced-tech')}
+              style={getButtonStyle(scenario === 'balanced-tech', '#9d4edd')}
+            >
+              <span style={{ fontSize: '1.2rem' }}>🚀</span>
+              <span>Balanced Tech Progress</span>
             </button>
           </div>
 

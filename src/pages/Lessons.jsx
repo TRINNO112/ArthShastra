@@ -183,7 +183,7 @@ function Lessons() {
   // Get subjects based on active grade
   const getSubjectsForGrade = (grade) => {
     return Object.entries(lessonsData)
-      .filter(([key, value]) => value.grade === grade)
+      .filter(([, value]) => value.grade === grade)
       .map(([key, value]) => ({ key, ...value }));
   };
 

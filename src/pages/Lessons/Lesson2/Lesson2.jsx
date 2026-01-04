@@ -18,6 +18,10 @@ import {
   CentralProblems,
   OpportunityCost,
   PPC,
+  PPCAssumptions,
+  AttainableUnattainable,
+  TabularRepresentation,
+  SlopeMOC,
   Quiz
 } from './components';
 import { lesson2Data } from '../data/lesson2Data';
@@ -29,6 +33,10 @@ const sections = [
   { id: 'central-problems', name: 'Central Problems', icon: FaExclamationTriangle },
   { id: 'opportunity-cost', name: 'Opportunity Cost', icon: FaBalanceScale },
   { id: 'ppc', name: 'PPC Curve', icon: FaChartLine },
+  { id: 'ppc-assumptions', name: 'PPC Assumptions', icon: FaLightbulb },
+  { id: 'attainable-unattainable', name: 'Attainable Points', icon: FaSync },
+  { id: 'tabular-representation', name: 'Tabular Data', icon: FaClipboardList },
+  { id: 'slope-moc', name: 'Slope & MOC', icon: FaBalanceScale },
   { id: 'quiz', name: 'Quiz', icon: FaClipboardList }
 ];
 
@@ -75,6 +83,14 @@ function Lesson2() {
         return <OpportunityCost />;
       case 'ppc':
         return <PPC />;
+      case 'ppc-assumptions':
+        return <PPCAssumptions />;
+      case 'attainable-unattainable':
+        return <AttainableUnattainable />;
+      case 'tabular-representation':
+        return <TabularRepresentation />;
+      case 'slope-moc':
+        return <SlopeMOC />;
       case 'quiz':
         return <Quiz mcqQuestions={lesson2Data.mcqQuestions} tfQuestions={lesson2Data.tfQuestions} quizId="lesson2" />;
       default:
