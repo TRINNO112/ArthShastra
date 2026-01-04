@@ -17,8 +17,10 @@ import {
   Introduction,
   CentralProblems,
   OpportunityCost,
+  OpportunityCostCalculator,
   PPC,
   PPCAssumptions,
+  PPCScenario,
   AttainableUnattainable,
   TabularRepresentation,
   SlopeMOC,
@@ -32,8 +34,10 @@ const sections = [
   { id: 'intro', name: 'Scarcity & Choice', icon: FaBookOpen },
   { id: 'central-problems', name: 'Central Problems', icon: FaExclamationTriangle },
   { id: 'opportunity-cost', name: 'Opportunity Cost', icon: FaBalanceScale },
+  { id: 'oc-calculator', name: 'OC Calculator', icon: FaSync },
   { id: 'ppc', name: 'PPC Curve', icon: FaChartLine },
   { id: 'ppc-assumptions', name: 'PPC Assumptions', icon: FaLightbulb },
+  { id: 'ppc-scenario', name: 'Interactive Scenarios', icon: FaSync },
   { id: 'attainable-unattainable', name: 'Attainable Points', icon: FaSync },
   { id: 'tabular-representation', name: 'Tabular Data', icon: FaClipboardList },
   { id: 'slope-moc', name: 'Slope & MOC', icon: FaBalanceScale },
@@ -81,10 +85,14 @@ function Lesson2() {
         return <CentralProblems />;
       case 'opportunity-cost':
         return <OpportunityCost />;
+      case 'oc-calculator':
+        return <OpportunityCostCalculator />;
       case 'ppc':
         return <PPC />;
       case 'ppc-assumptions':
         return <PPCAssumptions />;
+      case 'ppc-scenario':
+        return <PPCScenario />;
       case 'attainable-unattainable':
         return <AttainableUnattainable />;
       case 'tabular-representation':
@@ -125,7 +133,7 @@ function Lesson2() {
               <span className="title-gradient">An Economy</span>
             </h1>
             <p className="lesson-meta">
-              Based on VK Ohri's Grade 11 Textbook • {lesson2Data.mcqQuestions.length + lesson2Data.tfQuestions.length} Quiz Questions
+              Comprehensive Guide for Grade 11 • {lesson2Data.mcqQuestions.length + lesson2Data.tfQuestions.length} Quiz Questions
             </p>
           </div>
         </div>
