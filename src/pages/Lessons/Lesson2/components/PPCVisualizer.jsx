@@ -284,7 +284,7 @@ function PPCVisualizer() {
                 />
               </YAxis>
 
-              <Tooltip content={<CustomTooltip />} />
+              <Tooltip content={CustomTooltip} />
 
               {/* Origin reference */}
               <ReferenceDot x={0} y={0} r={4} fill="white" stroke="none" />
@@ -332,41 +332,19 @@ function PPCVisualizer() {
                 </>
               )}
 
-              {/* Example points for normal scenario */}
-              {showExamplePoints && scenario === 'normal' && (
-                <>
-                  {/* Point A - Efficient (on curve) */}
-                  <ReferenceDot
-                    x={50}
-                    y={70.7}
-                    r={10}
-                    fill="#00ff88"
-                    stroke="white"
-                    strokeWidth={3}
-                    label={{ value: 'A', position: 'top', fill: '#00ff88', fontSize: 14, fontWeight: 'bold' }}
-                  />
-                  {/* Point B - Inefficient (inside) */}
-                  <ReferenceDot
-                    x={30}
-                    y={35}
-                    r={10}
-                    fill="#ffd700"
-                    stroke="white"
-                    strokeWidth={3}
-                    label={{ value: 'B', position: 'top', fill: '#ffd700', fontSize: 14, fontWeight: 'bold' }}
-                  />
-                  {/* Point C - Unattainable (outside) */}
-                  <ReferenceDot
-                    x={85}
-                    y={70}
-                    r={10}
-                    fill="#ff6b6b"
-                    stroke="white"
-                    strokeWidth={3}
-                    label={{ value: 'C', position: 'top', fill: '#ff6b6b', fontSize: 14, fontWeight: 'bold' }}
-                  />
-                </>
-              )}
+              {/* Example points for normal scenario (rendered from examplePoints) */}
+              {showExamplePoints && scenario === 'normal' && examplePoints.map((pt) => (
+                <ReferenceDot
+                  key={pt.label}
+                  x={pt.x}
+                  y={pt.y}
+                  r={10}
+                  fill={pt.type === 'efficient' ? '#00ff88' : pt.type === 'inefficient' ? '#ffd700' : '#ff6b6b'}
+                  stroke="white"
+                  strokeWidth={3}
+                  label={{ value: pt.label, position: 'top', fill: pt.type === 'efficient' ? '#00ff88' : pt.type === 'inefficient' ? '#ffd700' : '#ff6b6b', fontSize: 14, fontWeight: 'bold' }}
+                />
+              ))}
 
               {/* Transformation indicator points */}
               {scenario === 'shift-right' && (
