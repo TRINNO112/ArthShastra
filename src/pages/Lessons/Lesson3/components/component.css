@@ -1,0 +1,565 @@
+/**
+ * Lesson 3 Components CSS
+ * Consumer Equilibrium: Utility Analysis
+ *
+ * Contains all CSS styles for Lesson3 components.
+ * Classes follow the existing lessons.css pattern.
+ * TODO: Add specific styles as content is filled in.
+ */
+
+/* ==========================================================================
+   Section Headers & Navigation
+   ========================================================================== */
+
+.section-navigation {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.nav-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.nav-hint .separator {
+  margin: 0 1rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Two Column Layout
+   ========================================================================== */
+
+.two-column {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.column {
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+}
+
+.column h4 {
+  color: var(--neon-gold);
+  margin-bottom: 0.75rem;
+}
+
+/* ==========================================================================
+   Formula Box
+   ========================================================================== */
+
+.formula-box {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+  border: 1px solid var(--neon-gold);
+  border-radius: var(--border-radius);
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+  font-family: 'Courier New', monospace;
+  color: var(--neon-gold);
+}
+
+.formula-box strong {
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+.table-container {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+th {
+  background: var(--bg-tertiary);
+  color: var(--neon-gold);
+  font-weight: 600;
+}
+
+td {
+  color: var(--text-primary);
+}
+
+tr:hover {
+  background: rgba(255, 215, 0, 0.05);
+}
+
+.table-note {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* Utility Table Styles */
+.utility-table,
+.dmu-table,
+.equilibrium-table,
+.comparison-table,
+.limitations-table,
+.case-table {
+  min-width: 500px;
+}
+
+.utility-table th:nth-child(2),
+.utility-table th:nth-child(3),
+.dmu-table th:nth-child(2),
+.dmu-table th:nth-child(3) {
+  text-align: center;
+}
+
+/* ==========================================================================
+   Assumptions List
+   ========================================================================== */
+
+.assumptions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.assumption-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  border-left: 3px solid var(--neon-cyan);
+}
+
+.assumption-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: var(--neon-cyan);
+  color: var(--bg-primary);
+  border-radius: 50%;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.assumption-content h4 {
+  color: var(--neon-cyan);
+  margin: 0 0 0.5rem 0;
+}
+
+.assumption-content p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Reason Cards
+   ========================================================================== */
+
+.reason-card {
+  background: var(--bg-secondary);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  height: 100%;
+}
+
+.reason-card h4 {
+  color: var(--neon-green);
+  margin-bottom: 0.5rem;
+}
+
+.reason-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Example Box
+   ========================================================================== */
+
+.example-box {
+  background: var(--bg-secondary);
+  border: 1px solid var(--neon-gold);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.example-box h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--neon-gold);
+  margin-bottom: 1rem;
+}
+
+.example-content p {
+  margin: 0.5rem 0;
+}
+
+.example-box-small {
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid var(--neon-green);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+}
+
+.example-box-small h5 {
+  color: var(--neon-green);
+  margin: 0 0 0.5rem 0;
+}
+
+.example-box-small p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   Limitations Styles
+   ========================================================================== */
+
+.limitation-item {
+  margin: 1.5rem 0;
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.limitation-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(255, 0, 0, 0.1);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.limitation-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: #ff4444;
+  color: white;
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.limitation-header h4 {
+  margin: 0;
+  color: #ff6b6b;
+}
+
+.limitation-content {
+  padding: 1.5rem;
+}
+
+.limitation-content p {
+  margin: 0.75rem 0;
+}
+
+/* ==========================================================================
+   Placeholder Styles
+   ========================================================================== */
+
+.content-card.placeholder {
+  border: 2px dashed var(--text-muted);
+  opacity: 0.7;
+}
+
+.placeholder-message {
+  text-align: center;
+  padding: 2rem;
+}
+
+.placeholder-message h3 {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.placeholder-message p {
+  color: var(--text-secondary);
+}
+
+.placeholder-message ul {
+  text-align: left;
+  max-width: 400px;
+  margin: 1rem auto;
+  color: var(--text-secondary);
+}
+
+.placeholder-message li {
+  margin: 0.5rem 0;
+}
+
+/* ==========================================================================
+   Diagram Placeholder
+   ========================================================================== */
+
+.diagram-placeholder {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+}
+
+.diagram-placeholder h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--neon-cyan);
+  margin-bottom: 1rem;
+}
+
+.placeholder-image {
+  background: var(--bg-tertiary);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  text-align: center;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.placeholder-image p {
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.placeholder-image ul {
+  text-align: left;
+  color: var(--text-secondary);
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.placeholder-image li {
+  margin: 0.25rem 0;
+}
+
+/* ==========================================================================
+   Case Header Styles
+   ========================================================================== */
+
+.case-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+}
+
+.case-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: var(--neon-gold);
+  color: var(--bg-primary);
+  border-radius: var(--border-radius);
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.case-info h4 {
+  color: var(--neon-gold);
+  margin: 0 0 0.5rem 0;
+}
+
+.case-info ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.case-info li {
+  margin: 0.25rem 0;
+}
+
+/* ==========================================================================
+   Highlight Card Variants
+   ========================================================================== */
+
+.highlight-card.gold {
+  border-color: var(--neon-gold);
+}
+
+.highlight-card.gold .highlight-icon {
+  background: var(--neon-gold);
+  color: var(--bg-primary);
+}
+
+.highlight-card.green {
+  border-color: var(--neon-green);
+}
+
+.highlight-card.green .highlight-icon {
+  background: var(--neon-green);
+  color: var(--bg-primary);
+}
+
+.highlight-card.cyan {
+  border-color: var(--neon-cyan);
+}
+
+.highlight-card.cyan .highlight-icon {
+  background: var(--neon-cyan);
+  color: var(--bg-primary);
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .two-column {
+    grid-template-columns: 1fr;
+  }
+
+  .assumptions-list {
+    gap: 0.75rem;
+  }
+
+  .assumption-item {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .case-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .case-info ul {
+    text-align: left;
+  }
+
+  .formula-box {
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+
+  th, td {
+    padding: 0.5rem;
+  }
+}
+
+/* ==========================================================================
+   Quiz Section Specific
+   ========================================================================== */
+
+.quiz-section {
+  min-height: 100vh;
+}
+
+.quiz-block-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.quiz-block-icon {
+  color: var(--neon-gold);
+  font-size: 1.25rem;
+}
+
+.quiz-block-header h3 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.question-count {
+  margin-left: auto;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.previous-attempts-banner {
+  background: var(--bg-secondary);
+  border: 1px solid var(--neon-green);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.attempts-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.attempts-icon {
+  color: var(--neon-green);
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.limitation-item,
+.example-box,
+.diagram-placeholder {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+  .content-card,
+  .highlight-card,
+  .example-box {
+    break-inside: avoid;
+  }
+
+  .nav-hint,
+  .section-navigation {
+    display: none;
+  }
+}

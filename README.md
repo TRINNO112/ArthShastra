@@ -1,355 +1,434 @@
-# ArthShastra - Economics Learning Platform
+# ArthShastra
 
-An interactive learning platform for Class 12 Economics (CBSE/ISC) built with React + Vite + Firebase.
-
----
-
-## Project Overview
-
-**ArthShastra** (meaning "Science of Wealth" in Sanskrit) is an educational platform designed to help Class 12 Commerce students master Microeconomics and Macroeconomics through interactive lessons, quizzes, and progress tracking.
-
-### Features
-- Interactive lessons with explanations in Hindi/Hinglish
-- Topic-wise quizzes with instant feedback
-- Progress tracking with Firebase
-- Google Authentication + Anonymous mode
-- Mobile-responsive neon-themed UI
-- Personal dashboard with statistics
-
----
+An interactive economics learning platform built with React and Vite, featuring lessons, quizzes, and progress tracking powered by Firebase.
 
 ## Tech Stack
 
-| Technology | Purpose |
-|------------|---------|
-| **React 18** | Frontend framework |
-| **Vite** | Build tool & dev server |
-| **React Router v6** | Client-side routing |
-| **Firebase** | Auth, Firestore database, Hosting |
-| **React Icons** | Icon library |
-| **CSS Variables** | Theming & styling |
-
----
+- **Frontend**: React 18, Vite
+- **Routing**: React Router v6
+- **Styling**: CSS with CSS Variables (dark theme with neon accents)
+- **Icons**: React Icons (FontAwesome)
+- **Backend**: Firebase (Authentication, Firestore)
+- **Deployment**: GitHub Pages
 
 ## Project Structure
 
 ```
 ArthShastra/
-├── public/                  # Static assets
 ├── src/
-│   ├── assets/             # Images, fonts, etc.
+│   ├── App.jsx              # Main app with routing
+│   ├── App.css              # App-level styles
+│   ├── main.jsx             # Entry point
+│   ├── index.css            # Global base styles
+│   │
 │   ├── components/
-│   │   ├── common/         # Shared components (Navbar, Footer, Toast)
-│   │   └── ui/             # Reusable UI components (Button, Card, Modal)
+│   │   ├── common/
+│   │   │   ├── Navbar.jsx   # Navigation bar component
+│   │   │   ├── Navbar.css
+│   │   │   └── TopicSnippets.jsx
+│   │   └── ui/              # Reusable UI components (future)
+│   │
 │   ├── context/
-│   │   └── AuthContext.jsx # Authentication state management
-│   ├── data/
-│   │   ├── microeconomics.json  # Lesson content for Micro
-│   │   └── macroeconomics.json  # Lesson content for Macro
-│   ├── hooks/
-│   │   ├── useAuth.js      # Authentication hook (exported from context)
-│   │   ├── useProgress.js  # Progress tracking hook
-│   │   └── useQuiz.js      # Quiz state management hook
-│   ├── pages/
-│   │   ├── Home.jsx        # Landing page
-│   │   ├── About.jsx       # About page
-│   │   ├── Lessons.jsx     # Lessons listing
-│   │   ├── Lesson.jsx      # Individual lesson view
-│   │   ├── Quiz.jsx        # Quiz interface
-│   │   ├── Profile.jsx     # User profile
-│   │   └── Progress.jsx    # Progress dashboard
+│   │   └── AuthContext.jsx  # Authentication state management
+│   │
 │   ├── services/
-│   │   └── firebase.js     # Firebase configuration & functions
+│   │   └── firebase.js      # Firebase config & functions
+│   │
 │   ├── styles/
-│   │   └── variables.css   # CSS variables & global styles
-│   ├── App.jsx             # Main app with routing
-│   ├── main.jsx            # Entry point
-│   └── index.css           # Base styles
-├── .env                    # Environment variables (Firebase keys)
-├── .gitignore
-├── index.html
+│   │   └── variables.css    # CSS variables for theming
+│   │
+│   ├── hooks/               # Custom React hooks (future)
+│   │
+│   ├── pages/
+│   │   ├── Home.jsx         # Landing page
+│   │   ├── Home.css
+│   │   ├── About.jsx        # About page
+│   │   ├── About.css
+│   │   ├── Lessons.jsx      # Lessons hub/listing
+│   │   ├── Lessons.css
+│   │   └── Lessons/         # Individual lesson folders
+│   │       ├── Lesson1/     # Economics & Economies
+│   │       │   ├── Lesson1.jsx
+│   │       │   ├── index.js
+│   │       │   └── components/
+│   │       │       ├── Introduction.jsx
+│   │       │       ├── Definitions.jsx
+│   │       │       ├── EconomicProblems.jsx
+│   │       │       ├── PositiveNormative.jsx
+│   │       │       ├── MicroVsMacro.jsx
+│   │       │       ├── TypesOfEconomies.jsx
+│   │       │       ├── SimpleAndComplexEconomies.jsx
+│   │       │       ├── Quiz.jsx
+│   │       │       └── index.js
+│   │       │
+│   │       ├── Lesson2/     # Production, Consumption & Revenue
+│   │       │   ├── Lesson2.jsx
+│   │       │   ├── index.js
+│   │       │   └── components/
+│   │       │       ├── Introduction.jsx
+│   │       │       ├── CentralProblems.jsx
+│   │       │       ├── OpportunityCost.jsx
+│   │       │       ├── OpportunityCostCalculator.jsx
+│   │       │       ├── PPC.jsx
+│   │       │       ├── PPCAssumptions.jsx
+│   │       │       ├── PPCScenario.jsx
+│   │       │       ├── AttainableUnattainable.jsx
+│   │       │       ├── TabularRepresentation.jsx
+│   │       │       ├── SlopeMOC.jsx
+│   │       │       ├── Quiz.jsx
+│   │       │       └── index.js
+│   │       │
+│   │       ├── Lesson3/     # Empty (future lessons)
+│   │       │   └── components/
+│   │       │
+│   │       ├── css/
+│   │       │   └── lessons.css     # Shared lesson styles
+│   │       │
+│   │       └── data/
+│   │           ├── lesson1Data.js  # Lesson 1 quiz questions
+│   │           └── lesson2Data.js  # Lesson 2 quiz questions
+│   │
+│   └── assets/              # Images, static assets
+│
+├── public/                  # Static public files
 ├── package.json
 ├── vite.config.js
+├── eslint.config.js
 └── README.md
 ```
 
----
+## How Lessons Are Structured
 
-## Key Files Explained
+Each lesson follows a modular, component-based architecture:
 
-### 1. `src/services/firebase.js`
-Central Firebase configuration and all database operations.
+### Folder Structure for a Lesson
 
-**Exports:**
-- `auth` - Firebase auth instance
-- `db` - Firestore instance
-- `getUserId()` - Get current user ID (auth or anonymous)
-- `signInWithGoogle()` - Google sign-in
-- `signOutUser()` - Sign out
-- `onAuthChange(callback)` - Auth state listener
-- `submitLessonAttempt()` - Save lesson progress
-- `loadLessonProgress()` - Load previous answers
-- `submitQuizAttempt()` - Save quiz results
-- `getOverallStats()` - Get user's overall statistics
+```
+Lesson[N]/
+├── Lesson[N].jsx            # Main container component
+├── index.js                 # Export file
+└── components/
+    ├── Introduction.jsx     # First section
+    ├── [TopicName].jsx      # Additional sections
+    ├── [AnotherTopic].jsx
+    ├── Quiz.jsx             # Reusable quiz component
+    └── index.js             # Component exports
+```
 
-### 2. `src/context/AuthContext.jsx`
-React Context for authentication state management.
+### Main Lesson Component Pattern (`Lesson[N].jsx`)
 
-**Provides:**
-- `user` - Current user object
-- `loading` - Auth loading state
-- `error` - Auth error if any
-- `login()` - Trigger Google sign-in
-- `logout()` - Sign out user
-- `isAuthenticated` - Boolean for auth status
-
-**Usage:**
 ```jsx
-import { useAuth } from './context/AuthContext';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { FaArrowLeft, FaBookOpen, FaClipboardList } from 'react-icons/fa';
+import { Section1, Section2, Quiz } from './components';
+import { lesson[N]Data } from '../data/lesson[N]Data';
+import { logLessonProgress } from '../../../services/firebase';
+import '../css/lessons.css';
 
-function MyComponent() {
-  const { user, login, logout, isAuthenticated } = useAuth();
+const sections = [
+  { id: 'intro', name: 'Introduction', icon: FaBookOpen },
+  { id: 'section2', name: 'Section Name', icon: FaBookOpen },
+  { id: 'quiz', name: 'Quiz', icon: FaClipboardList }
+];
+
+function Lesson[N]() {
+  const [activeSection, setActiveSection] = useState('intro');
+  const [startTime] = useState(() => Date.now());
+  const lessonId = 'micro11-[N]';
+
+  // Track time spent and completion
+  useEffect(() => {
+    return () => {
+      const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
+      const completed = activeSection === 'quiz';
+      if (timeSpent > 0) {
+        logLessonProgress(lessonId, timeSpent, completed);
+      }
+    };
+  }, [startTime, lessonId, activeSection]);
+
+  const currentIndex = sections.findIndex(s => s.id === activeSection);
+
+  const renderActiveSection = () => {
+    switch (activeSection) {
+      case 'intro': return <Section1 />;
+      case 'section2': return <Section2 />;
+      case 'quiz': return <Quiz mcqQuestions={lesson[N]Data.mcqQuestions} tfQuestions={lesson[N]Data.tfQuestions} />;
+      default: return <Section1 />;
+    }
+  };
 
   return (
-    <div>
-      {isAuthenticated ? (
-        <button onClick={logout}>Logout</button>
-      ) : (
-        <button onClick={login}>Login with Google</button>
-      )}
+    <div className="lesson-page">
+      {/* Header with back link */}
+      <header className="lesson-header">
+        <Link to="/lessons" className="back-link">
+          <FaArrowLeft /> Back to Lessons
+        </Link>
+      </header>
+
+      {/* Navigation */}
+      <nav className="lesson-nav">
+        {sections.map((section, index) => (
+          <button
+            key={section.id}
+            className={`nav-item ${activeSection === section.id ? 'active' : ''} ${index < currentIndex ? 'completed' : ''}`}
+            onClick={() => setActiveSection(section.id)}
+          >
+            <section.icon />
+            <span>{section.name}</span>
+          </button>
+        ))}
+      </nav>
+
+      {/* Main Content */}
+      <main className="lesson-content">
+        {renderActiveSection()}
+      </main>
+
+      {/* Footer Navigation */}
+      <footer className="lesson-footer">
+        <button disabled={currentIndex === 0} onClick={() => setActiveSection(sections[currentIndex - 1].id)}>
+          Previous
+        </button>
+        <div className="progress-dots">
+          {sections.map((_, i) => (
+            <span key={i} className={`dot ${i === currentIndex ? 'active' : ''}`} />
+          ))}
+        </div>
+        <button disabled={currentIndex === sections.length - 1} onClick={() => setActiveSection(sections[currentIndex + 1].id)}>
+          Next
+        </button>
+      </footer>
     </div>
   );
 }
+
+export default Lesson[N];
 ```
 
-### 3. `src/styles/variables.css`
-All CSS custom properties (variables) for consistent theming.
+### Section Component Pattern
 
-**Key Variables:**
-```css
---bg-primary: #0a0a0f        /* Main background */
---neon-gold: #ffd700         /* Primary accent (Economics theme) */
---neon-green: #00ff88        /* Secondary accent */
---text-primary: #ffffff      /* Main text */
---text-secondary: #a0a0b8    /* Muted text */
---border-radius: 16px        /* Standard border radius */
---shadow-glow: 0 0 30px ...  /* Neon glow effect */
-```
+```jsx
+import { FaIcon } from 'react-icons/fa';
 
----
+function SectionName() {
+  return (
+    <section className="lesson-section">
+      <div className="section-header-lesson">
+        <span className="section-badge-lesson">Chapter X</span>
+        <h2 className="section-title-lesson">Section Title</h2>
+        <p className="section-subtitle-lesson">Subtitle description</p>
+      </div>
 
-## Firebase Collections
+      <div className="content-card">
+        <div className="card-glow"></div>
+        <div className="card-content">
+          <p>Main content text...</p>
+        </div>
+      </div>
 
-### `users`
-Stores user profile information.
-```javascript
-{
-  name: "User Name",
-  email: "user@email.com",
-  photoURL: "https://...",
-  lastLogin: Timestamp
+      {/* Highlighted cards */}
+      <div className="highlight-card gold">
+        <div className="highlight-icon"><FaIcon /></div>
+        <div className="highlight-content">
+          <h3>Key Point Title</h3>
+          <p>Explanation...</p>
+        </div>
+      </div>
+    </section>
+  );
 }
+
+export default SectionName;
 ```
 
-### `lesson-progress`
-Document ID: `{userId}_lesson_{lessonId}`
+## How to Add a New Lesson
+
+### Step 1: Create Lesson Folder Structure
+
+Create `src/pages/Lessons/Lesson3/` with:
+```
+Lesson3/
+├── Lesson3.jsx
+├── index.js
+└── components/
+    ├── Introduction.jsx
+    ├── Topic1.jsx
+    ├── Topic2.jsx
+    ├── Quiz.jsx
+    └── index.js
+```
+
+### Step 2: Create Lesson Data File
+
+Create `src/pages/Lessons/data/lesson3Data.js`:
+
 ```javascript
-{
-  userId: "abc123",
-  lessonId: "micro-1",
-  answers: { q1: "a", q2: "b", ... },
-  score: 8,
-  totalQuestions: 10,
-  percentage: 80,
-  timestamp: Timestamp,
-  attempts: 3
-}
-```
-
-### `quiz-progress`
-Document ID: `{userId}_quiz_{quizId}`
-```javascript
-{
-  userId: "abc123",
-  quizId: "micro-chapter-1",
-  answers: [...],
-  score: 15,
-  totalQuestions: 20,
-  percentage: 75,
-  timeSpent: 450, // seconds
-  timestamp: Timestamp,
-  attempts: 2
-}
-```
-
-### `overall-progress`
-Document ID: `{userId}`
-```javascript
-{
-  lessons: {
-    completed: 5,
-    totalScore: 42,
-    totalQuestions: 50,
-    percentage: 84
-  },
-  quizzes: {
-    completed: 3,
-    totalScore: 55,
-    totalQuestions: 60,
-    percentage: 91
-  },
-  lastUpdated: Timestamp
-}
-```
-
----
-
-## Getting Started
-
-### 1. Install Dependencies
-```bash
-cd ArthShastra
-npm install
-```
-
-### 2. Configure Firebase
-Create a `.env` file in root:
-```env
-VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_project.firebasestorage.app
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
-VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
-```
-
-Update `src/services/firebase.js` to use environment variables:
-```javascript
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  // ... etc
+export const lesson3Data = {
+  mcqQuestions: [
+    {
+      id: 1,
+      question: "Question text?",
+      options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+      correct: 0  // Index of correct answer (0-3)
+    }
+    // Add more MCQs...
+  ],
+  tfQuestions: [
+    {
+      id: 1,
+      question: "Statement to evaluate?",
+      correct: true  // true or false
+    }
+    // Add more T/F questions...
+  ]
 };
 ```
 
-### 3. Run Development Server
-```bash
-npm run dev
+### Step 3: Create Section Components
+
+Create each section component in `components/` folder following the pattern above.
+
+### Step 4: Export Components
+
+**`src/pages/Lessons/Lesson3/components/index.js`**:
+```javascript
+export { default as Introduction } from './Introduction';
+export { default as Topic1 } from './Topic1';
+export { default as Topic2 } from './Topic2';
+export { default as Quiz } from './Quiz';
 ```
 
-### 4. Build for Production
-```bash
-npm run build
+**`src/pages/Lessons/Lesson3/index.js`**:
+```javascript
+export { default } from './Lesson3';
 ```
 
----
+### Step 5: Add to Routing
 
-## Content Structure
+Edit `src/App.jsx`:
 
-### Microeconomics (10 Units)
-1. Introduction to Microeconomics
-2. Consumer Equilibrium - Utility Approach
-3. Consumer Equilibrium - Indifference Curve
-4. Demand & Law of Demand
-5. Elasticity of Demand
-6. Production Function
-7. Cost & Revenue
-8. Producer's Equilibrium
-9. Supply & Elasticity of Supply
-10. Market Forms & Price Determination
-
-### Macroeconomics (10 Units)
-1. Introduction to Macroeconomics
-2. National Income - Basic Concepts
-3. Circular Flow of Income
-4. Methods of Calculating National Income
-5. Money & Banking
-6. Commercial Banks & Credit Creation
-7. Central Bank & Monetary Policy
-8. Government Budget
-9. Balance of Payments
-10. Foreign Exchange Rate
-
----
-
-## Component Guide
-
-### Creating a New Page
 ```jsx
-// src/pages/NewPage.jsx
-import { useAuth } from '../context/AuthContext';
-import '../styles/NewPage.css';
+import Lesson3 from './pages/Lessons/Lesson3';
 
-function NewPage() {
-  const { user } = useAuth();
+<Route path="/lesson/micro11-3" element={<Lesson3 />} />
+```
 
-  return (
-    <div className="page-container">
-      <h1>Welcome, {user?.name}</h1>
-    </div>
-  );
+### Step 6: Add to Lessons Hub
+
+Edit `src/pages/Lessons.jsx`, add to `lessonsData.micro11.chapters`:
+
+```javascript
+{
+  id: 'micro11-3',
+  title: 'Lesson Title',
+  description: 'Lesson description',
+  duration: '35 min',
+  questions: 15,
+  completed: false,
+  difficulty: 'Medium'
 }
-
-export default NewPage;
 ```
 
-### Adding to Router
-```jsx
-// In App.jsx
-import NewPage from './pages/NewPage';
+## CSS Styling System
 
-// Inside Routes
-<Route path="/new-page" element={<NewPage />} />
+### Available CSS Classes
+
+**Section Layout:**
+- `.lesson-section` - Main section container
+- `.section-header-lesson` - Section header
+- `.section-title-lesson` - Section title
+- `.section-subtitle-lesson` - Section subtitle
+- `.section-badge-lesson` - Chapter badge
+
+**Cards:**
+- `.content-card` - Main content container with glow effect
+- `.card-glow` - Glow effect (child of content-card)
+- `.card-content` - Content area (child of content-card)
+- `.highlight-card` - Highlighted info card
+  - `.gold` - Gold accent
+  - `.green` - Green accent
+  - `.cyan` - Cyan accent
+
+**Text Styling:**
+- `.highlight-gold`, `.highlight-green`, `.highlight-cyan` - Colored text
+- `.quote-box` - Blockquote container
+- `.bullet-list` - Styled list
+- `.term` - Key term definition
+- `.note-text` - Note/warning text
+
+### CSS Variables
+
+Defined in `src/styles/variables.css`:
+```css
+:root {
+  --bg-primary: #0a0a0f
+  --bg-secondary: #1a1a2e
+  --neon-gold: #ffd700
+  --neon-green: #00ff88
+  --neon-cyan: #00d9ff
+  --text-primary: #ffffff
+  --text-secondary: #a0a0b8
+  --shadow-glow: 0 0 30px rgba(255, 215, 0, 0.3)
+  --border-radius: 16px
+}
 ```
 
----
+## Firebase Integration
 
-## Scripts
+### Key Functions (`src/services/firebase.js`)
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build |
-| `npm run lint` | Run ESLint |
+**Authentication:**
+- `signInWithGoogle()` - Google sign-in
+- `signOutUser()` - Sign out
+- `onAuthChange(callback)` - Listen to auth state changes
+- `getUserId()` - Get current user ID
 
----
+**Progress Tracking:**
+- `logLessonProgress(lessonId, timeSpent, completed)` - Log lesson completion
+- `submitDetailedQuizAttempt(quizId, attemptData)` - Submit quiz results
+- `updateUserStats(userId, statsUpdate)` - Update user statistics
 
-## Deployment
+### Firestore Collections
 
-### Firebase Hosting
+**`users`** - User profiles and stats
+**`quiz-history`** - Quiz attempt records
+
+## Available Icons
+
+Import from `react-icons/fa`:
+- `FaArrowLeft` - Back navigation
+- `FaBookOpen` - Introduction sections
+- `FaLightbulb` - Definitions/tips
+- `FaExclamationTriangle` - Problems/warnings
+- `FaBalanceScale` - Comparisons
+- `FaGlobe` - Global/economy topics
+- `FaClipboardList` - Quiz
+- `FaChevronRight`, `FaChevronLeft` - Navigation arrows
+- `FaFlask` - Analysis/experiments
+- `FaLink` - Connections
+
+## Running the Project
+
 ```bash
-npm install -g firebase-tools
-firebase login
-firebase init hosting
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
 npm run build
-firebase deploy
+
+# Preview production build
+npm run preview
 ```
 
----
+## Route Naming Convention
 
-## Contributing
-
-1. Create a new branch for features
-2. Follow existing code style
-3. Test thoroughly before committing
-4. Write meaningful commit messages
-
----
-
-## License
-
-This project is for educational purposes.
-
----
-
-## Author
-
-Created by Amit Pathak
-
----
-
-## Related Projects
-
-- [AccountsWizard](../AccountsWIzard) - Accounting learning platform for Class 11-12
+- **Microeconomics Class 11**: `/lesson/micro11-[1-13]`
+- **Macroeconomics Class 12**: `/lesson/macro-[1-14]` (planned)
+- **Statistics Class 11**: `/lesson/stats-[1-13]` (planned)
+- **Indian Economy Class 12**: `/lesson/indian-[1-10]` (planned)
