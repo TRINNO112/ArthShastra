@@ -41,7 +41,7 @@ const sections = [
 
 function Lesson1() {
   const [activeSection, setActiveSection] = useState('intro');
-  const [startTime] = useState(Date.now());
+  const [startTime] = useState(() => Date.now());
   const lessonId = 'micro11-1';
 
   // Track time spent and completion

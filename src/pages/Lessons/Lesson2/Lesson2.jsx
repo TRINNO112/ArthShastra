@@ -46,7 +46,7 @@ const sections = [
 
 function Lesson2() {
   const [activeSection, setActiveSection] = useState('intro');
-  const [startTime] = useState(Date.now());
+  const [startTime] = useState(() => Date.now());
   const lessonId = 'micro11-2';
 
   useEffect(() => {
