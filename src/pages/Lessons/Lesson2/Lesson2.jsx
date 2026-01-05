@@ -28,7 +28,7 @@ import {
 } from './components';
 import { lesson2Data } from '../data/lesson2Data';
 import { logLessonProgress } from '../../../services/firebase';
-import '../Lesson1/Lesson1.css'; // Reusing Lesson 1 styles
+import '../css/lessons.css'; // Reusing Lesson 1 styles
 
 const sections = [
   { id: 'intro', name: 'Scarcity & Choice', icon: FaBookOpen },

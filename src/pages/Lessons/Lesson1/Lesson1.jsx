@@ -26,7 +26,7 @@ import {
 } from './components';
 import { lesson1Data } from '../data/lesson1Data';
 import { logLessonProgress } from '../../../services/firebase';
-import './Lesson1.css';
+import '../css/lessons.css'; // Shared styles for lessons
 
 const sections = [
   { id: 'intro', name: 'Introduction', icon: FaBookOpen },

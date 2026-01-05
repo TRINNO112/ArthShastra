@@ -18,7 +18,10 @@
       "Bash(git mv:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(git fetch:*)"
+      "Bash(git fetch:*)",
+      "Bash(tree:*)",
+      "Bash(.module \")",
+      "Bash(node test-extract.cjs:*)"
     ]
   }
 }
