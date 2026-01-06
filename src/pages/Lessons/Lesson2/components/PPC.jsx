@@ -1,6 +1,7 @@
 // PPC.jsx - Production Possibility Curve
 import { FaChartLine, FaCheckCircle, FaUndoAlt, FaArrowRight } from 'react-icons/fa';
 import PPCVisualizer from './PPCVisualizer';
+import './components.css';
 
 function PPC() {
   return (
@@ -33,7 +34,7 @@ function PPC() {
             <FaCheckCircle />
           </div>
           <h4>Properties of PPC</h4>
-          <ul className="bullet-list" style={{ fontSize: '0.85rem' }}>
+          <ul className="bullet-list ppc-properties-list">
             <li><strong>Slopes Downwards:</strong> To produce more of one good, we must sacrifice some of the other.</li>
             <li><strong>Concave to Origin:</strong> Due to increasing Marginal Opportunity Cost (MOC).</li>
           </ul>
@@ -44,7 +45,7 @@ function PPC() {
             <FaUndoAlt />
           </div>
           <h4>Shifts in PPC</h4>
-          <ul className="bullet-list" style={{ fontSize: '0.85rem' }}>
+          <ul className="bullet-list ppc-shifts-list">
             <li><strong>Rightward Shift:</strong> Increase in resources or improved technology.</li>
             <li><strong>Leftward Shift:</strong> Decrease in resources or degradation of technology.</li>
           </ul>

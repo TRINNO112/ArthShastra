@@ -13,6 +13,7 @@ import {
   ReferenceDot,
   Scatter,
 } from 'recharts';
+import './components.css';
 
 function AttainableUnattainable() {
   const [selectedPoint, setSelectedPoint] = useState('A');
@@ -112,24 +113,49 @@ function AttainableUnattainable() {
       const data = payload[0].payload;
       if (data && typeof data.x === 'number' && typeof data.y === 'number') {
         return (
-          <div style={{
-            background: 'linear-gradient(135deg, rgba(15, 15, 30, 0.98), rgba(25, 25, 45, 0.98))',
-            border: '2px solid #ffd700',
-            padding: '12px 16px',
-            borderRadius: '10px',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.5)'
-          }}>
-            <p style={{ color: 'white', fontSize: '0.9rem', margin: '5px 0' }}>
-              <span>🌾 Wheat: <strong style={{ color: '#00ff88' }}>{data.x.toFixed(1)}</strong></span>
+          <div className="attainable-tooltip">
+            <p className="attainable-tooltip-text">
+              <span>🌾 Wheat: <strong className="attainable-tooltip-value-green">{data.x.toFixed(1)}</strong></span>
             </p>
-            <p style={{ color: 'white', fontSize: '0.9rem', margin: '5px 0' }}>
-              <span>🍚 Rice: <strong style={{ color: '#00d4ff' }}>{data.y.toFixed(1)}</strong></span>
+            <p className="attainable-tooltip-text">
+              <span>🍚 Rice: <strong className="attainable-tooltip-value-cyan">{data.y.toFixed(1)}</strong></span>
             </p>
           </div>
         );
       }
     }
     return null;
+  };
+
+  const getPointButtonClass = (point) => {
+    const baseClass = 'attainable-point-button-base';
+    const isSelected = selectedPoint === point.id;
+    const activeClass = isSelected ? 'attainable-point-button-active' : 'attainable-point-button-inactive';
+    return `${baseClass} ${activeClass}`;
+  };
+
+  const getPointButtonStyle = (point) => {
+    const isSelected = selectedPoint === point.id;
+    return {
+      background: isSelected
+        ? `linear-gradient(135deg, ${point.color}, ${point.color}cc)`
+        : undefined,
+      color: isSelected ? '#0a0a15' : undefined,
+      border: `2px solid ${point.color}`,
+      boxShadow: isSelected ? `0 4px 20px ${point.color}40` : undefined
+    };
+  };
+
+  const getPointDetailsClass = () => {
+    return 'attainable-point-details';
+  };
+
+  const getPointDetailsStyle = () => {
+    return {
+      background: `linear-gradient(145deg, ${selectedPointData.color}15, ${selectedPointData.color}08)`,
+      borderLeft: `5px solid ${selectedPointData.color}`,
+      boxShadow: `0 4px 20px ${selectedPointData.color}20`
+    };
   };
 
   return (
@@ -148,13 +174,7 @@ function AttainableUnattainable() {
           Three Types of Production Points
         </h3>
 
-        <div style={{
-          background: 'linear-gradient(160deg, rgba(10,10,25,0.95), rgba(20,15,40,0.95))',
-          padding: '30px',
-          borderRadius: '20px',
-          border: '1px solid rgba(255,215,0,0.15)',
-          marginTop: '20px'
-        }}>
+        <div className="attainable-graph-container">
           {/* Graph */}
           <ResponsiveContainer width="100%" height={450}>
             <ComposedChart margin={{ top: 20, right: 40, left: 20, bottom: 30 }}>
@@ -245,77 +265,34 @@ function AttainableUnattainable() {
           </ResponsiveContainer>
 
           {/* Point Legend */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '25px',
-            marginTop: '25px',
-            flexWrap: 'wrap',
-            padding: '15px',
-            background: 'rgba(0,0,0,0.2)',
-            borderRadius: '12px'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div style={{
-                width: '20px',
-                height: '20px',
-                borderRadius: '50%',
-                background: '#00ff88',
-                border: '3px solid white'
-              }} />
-              <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: '0.9rem' }}>Efficient (On PPC)</span>
+          <div className="attainable-legend">
+            <div className="attainable-legend-item">
+              <div className="attainable-legend-dot-green" />
+              <span className="attainable-legend-label">Efficient (On PPC)</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div style={{
-                width: '20px',
-                height: '20px',
-                borderRadius: '50%',
-                background: '#ffd700',
-                border: '3px solid white'
-              }} />
-              <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: '0.9rem' }}>Inefficient (Inside PPC)</span>
+            <div className="attainable-legend-item">
+              <div className="attainable-legend-dot-gold" />
+              <span className="attainable-legend-label">Inefficient (Inside PPC)</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div style={{
-                width: '20px',
-                height: '20px',
-                borderRadius: '50%',
-                background: '#ff6b6b',
-                border: '3px solid white'
-              }} />
-              <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: '0.9rem' }}>Unattainable (Outside PPC)</span>
+            <div className="attainable-legend-item">
+              <div className="attainable-legend-dot-red" />
+              <span className="attainable-legend-label">Unattainable (Outside PPC)</span>
             </div>
           </div>
         </div>
 
         {/* Point Selection Buttons */}
-        <div style={{ marginTop: '30px' }}>
-          <h4 style={{ color: 'white', marginBottom: '15px', fontSize: '1.1rem' }}>
+        <div className="attainable-point-selector">
+          <h4 className="attainable-point-selector-heading">
             Click on a point to learn more:
           </h4>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
-            gap: '12px'
-          }}>
+          <div className="attainable-point-grid">
             {examplePoints.map((point) => (
               <button
                 key={point.id}
                 onClick={() => setSelectedPoint(point.id)}
-                style={{
-                  padding: '12px',
-                  background: selectedPoint === point.id
-                    ? `linear-gradient(135deg, ${point.color}, ${point.color}cc)`
-                    : 'rgba(255,255,255,0.05)',
-                  color: selectedPoint === point.id ? '#0a0a15' : 'white',
-                  border: `2px solid ${point.color}`,
-                  borderRadius: '10px',
-                  cursor: 'pointer',
-                  fontWeight: selectedPoint === point.id ? '700' : '500',
-                  fontSize: '0.95rem',
-                  transition: 'all 0.3s ease',
-                  boxShadow: selectedPoint === point.id ? `0 4px 20px ${point.color}40` : 'none'
-                }}
+                className={getPointButtonClass(point)}
+                style={getPointButtonStyle(point)}
               >
                 {point.label}
               </button>
@@ -325,46 +302,20 @@ function AttainableUnattainable() {
 
         {/* Selected Point Details */}
         {selectedPointData && (
-          <div style={{
-            marginTop: '25px',
-            padding: '25px',
-            background: `linear-gradient(145deg, ${selectedPointData.color}15, ${selectedPointData.color}08)`,
-            borderLeft: `5px solid ${selectedPointData.color}`,
-            borderRadius: '14px',
-            boxShadow: `0 4px 20px ${selectedPointData.color}20`
-          }}>
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
-              <div style={{
-                fontSize: '2.5rem',
-                color: selectedPointData.color,
-                marginTop: '5px'
-              }}>
+          <div className={getPointDetailsClass()} style={getPointDetailsStyle()}>
+            <div className="attainable-point-details-content">
+              <div className="attainable-point-details-icon" style={{ color: selectedPointData.color }}>
                 {selectedPointData.icon}
               </div>
-              <div style={{ flex: 1 }}>
-                <h3 style={{
-                  color: selectedPointData.color,
-                  margin: '0 0 8px 0',
-                  fontSize: '1.3rem',
-                  fontWeight: '700'
-                }}>
+              <div className="attainable-point-details-text">
+                <h3 className="attainable-point-details-title" style={{ color: selectedPointData.color }}>
                   {selectedPointData.label}: {selectedPointData.status}
                 </h3>
-                <p style={{
-                  color: 'rgba(255,255,255,0.85)',
-                  margin: '0 0 12px 0',
-                  fontSize: '0.95rem',
-                  lineHeight: '1.7'
-                }}>
+                <p className="attainable-point-details-description">
                   {selectedPointData.description}
                 </p>
-                <div style={{
-                  background: 'rgba(0,0,0,0.2)',
-                  padding: '12px 15px',
-                  borderRadius: '8px',
-                  fontSize: '0.9rem'
-                }}>
-                  <p style={{ color: 'rgba(255,255,255,0.75)', margin: 0 }}>
+                <div className="attainable-point-details-production">
+                  <p className="attainable-point-details-production-text">
                     <strong>Production:</strong> {selectedPointData.x} units of Wheat + {selectedPointData.y} units of Rice
                   </p>
                 </div>
@@ -374,13 +325,13 @@ function AttainableUnattainable() {
         )}
       </div>
 
-      <div className="feature-grid" style={{ marginTop: '30px' }}>
+      <div className="feature-grid attainable-feature-grid">
         <div className="feature-item">
           <div className="feature-icon green">
             <FaCheckCircle />
           </div>
           <h4>Points ON the PPC</h4>
-          <ul className="bullet-list" style={{ fontSize: '0.88rem' }}>
+          <ul className="bullet-list attainable-feature-list">
             <li><strong>Attainable:</strong> Can be produced with available resources</li>
             <li><strong>Efficient:</strong> All resources are fully employed</li>
             <li><strong>Maximum Production:</strong> Cannot produce more of one good without reducing the other</li>
@@ -392,7 +343,7 @@ function AttainableUnattainable() {
             <FaExclamationTriangle />
           </div>
           <h4>Points INSIDE the PPC</h4>
-          <ul className="bullet-list" style={{ fontSize: '0.88rem' }}>
+          <ul className="bullet-list attainable-feature-list">
             <li><strong>Attainable:</strong> Can be easily produced</li>
             <li><strong>Inefficient:</strong> Resources are underutilized or unemployed</li>
             <li><strong>Room for Growth:</strong> Production can be increased without trade-offs</li>
@@ -404,7 +355,7 @@ function AttainableUnattainable() {
             <FaTimesCircle />
           </div>
           <h4>Points OUTSIDE the PPC</h4>
-          <ul className="bullet-list" style={{ fontSize: '0.88rem' }}>
+          <ul className="bullet-list attainable-feature-list">
             <li><strong>Unattainable:</strong> Cannot be produced currently</li>
             <li><strong>Requires Growth:</strong> Need more resources or better technology</li>
             <li><strong>Future Goal:</strong> May become attainable if PPC shifts outward</li>
@@ -412,16 +363,16 @@ function AttainableUnattainable() {
         </div>
       </div>
 
-      <div className="highlight-card purple" style={{ marginTop: '30px' }}>
+      <div className="highlight-card purple attainable-movement-card">
         <div className="highlight-content">
-          <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <h3 className="attainable-movement-heading">
             <FaArrowRight />
             Moving Between Points
           </h3>
-          <p style={{ fontSize: '0.95rem', lineHeight: '1.7', marginBottom: '10px' }}>
+          <p className="attainable-movement-text">
             <strong>From Inside to On the PPC:</strong> Achieve full employment and efficient use of resources.
           </p>
-          <p style={{ fontSize: '0.95rem', lineHeight: '1.7', margin: 0 }}>
+          <p className="attainable-movement-text-last">
             <strong>From On to Outside the PPC:</strong> Requires economic growth through increased resources,
             technological advancement, or improved productivity.
           </p>

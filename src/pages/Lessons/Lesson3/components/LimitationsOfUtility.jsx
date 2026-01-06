@@ -12,6 +12,7 @@
  */
 
 import { FaRuler, FaUserSecret, FaExchangeAlt, FaQuestionCircle, FaExclamationTriangle } from 'react-icons/fa';
+import './component.css';
 
 function LimitationsOfUtility() {
   return (

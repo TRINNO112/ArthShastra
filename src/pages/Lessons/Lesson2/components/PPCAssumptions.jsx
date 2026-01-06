@@ -1,5 +1,6 @@
 // PPCAssumptions.jsx - Assumptions of Production Possibility Curve
 import { FaListOl, FaCheckCircle, FaInfoCircle, FaLightbulb } from 'react-icons/fa';
+import './components.css';
 
 function PPCAssumptions() {
   const assumptions = [
@@ -37,6 +38,38 @@ function PPCAssumptions() {
     }
   ];
 
+  const getAssumptionCardStyle = (color) => {
+    return {
+      border: `2px solid ${color}40`
+    };
+  };
+
+  const getIconBoxStyle = (color) => {
+    return {
+      background: `linear-gradient(135deg, ${color}, ${color}cc)`,
+      boxShadow: `0 4px 15px ${color}40`
+    };
+  };
+
+  const getBadgeStyle = (color) => {
+    return {
+      color: color,
+      background: `${color}20`
+    };
+  };
+
+  const getDetailBoxStyle = (color) => {
+    return {
+      borderLeft: `3px solid ${color}`
+    };
+  };
+
+  const getDetailIconStyle = (color) => {
+    return {
+      color: color
+    };
+  };
+
   return (
     <section className="lesson-section">
       <div className="section-header-lesson">
@@ -48,20 +81,14 @@ function PPCAssumptions() {
       </div>
 
       <div className="content-card">
-        <div style={{
-          background: 'linear-gradient(135deg, rgba(255,215,0,0.1), rgba(0,150,255,0.1))',
-          padding: '20px',
-          borderRadius: '12px',
-          border: '2px solid rgba(255,215,0,0.3)',
-          marginBottom: '30px'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
-            <FaInfoCircle style={{ color: '#ffd700', fontSize: '1.5rem', marginTop: '5px', flexShrink: 0 }} />
+        <div className="assumptions-intro-box">
+          <div className="assumptions-intro-content">
+            <FaInfoCircle className="assumptions-intro-icon" />
             <div>
-              <h3 style={{ color: '#ffd700', margin: '0 0 10px 0', fontSize: '1.2rem' }}>
+              <h3 className="assumptions-intro-heading">
                 Why Assumptions Matter
               </h3>
-              <p style={{ color: 'rgba(255,255,255,0.85)', margin: 0, lineHeight: '1.7', fontSize: '0.95rem' }}>
+              <p className="assumptions-intro-text">
                 The Production Possibility Curve is a simplified economic model. Like all models, it makes certain assumptions
                 to help us understand complex real-world phenomena. These assumptions allow us to focus on the fundamental
                 trade-offs that economies face when allocating scarce resources.
@@ -70,19 +97,12 @@ function PPCAssumptions() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gap: '20px' }}>
+        <div className="assumptions-grid">
           {assumptions.map((assumption) => (
             <div
               key={assumption.id}
-              style={{
-                background: 'linear-gradient(145deg, rgba(10,10,25,0.6), rgba(20,15,40,0.6))',
-                padding: '25px',
-                borderRadius: '16px',
-                border: `2px solid ${assumption.color}40`,
-                transition: 'all 0.3s ease',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
+              className="assumption-card"
+              style={getAssumptionCardStyle(assumption.color)}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-5px)';
                 e.currentTarget.style.boxShadow = `0 10px 30px ${assumption.color}30`;
@@ -92,73 +112,29 @@ function PPCAssumptions() {
                 e.currentTarget.style.boxShadow = 'none';
               }}
             >
-              <div style={{
-                position: 'absolute',
-                top: '15px',
-                right: '15px',
-                fontSize: '2.5rem',
-                opacity: 0.15
-              }}>
+              <div className="assumption-card-icon-bg">
                 {assumption.icon}
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '15px', marginBottom: '15px' }}>
-                <div style={{
-                  fontSize: '2rem',
-                  minWidth: '50px',
-                  height: '50px',
-                  background: `linear-gradient(135deg, ${assumption.color}, ${assumption.color}cc)`,
-                  borderRadius: '12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: `0 4px 15px ${assumption.color}40`
-                }}>
+              <div className="assumption-card-content">
+                <div className="assumption-card-icon" style={getIconBoxStyle(assumption.color)}>
                   {assumption.icon}
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-                    <span style={{
-                      color: assumption.color,
-                      fontWeight: '700',
-                      fontSize: '0.85rem',
-                      background: `${assumption.color}20`,
-                      padding: '4px 10px',
-                      borderRadius: '6px'
-                    }}>
+                <div className="assumption-card-text">
+                  <div className="assumption-card-badge-container">
+                    <span className="assumption-card-badge" style={getBadgeStyle(assumption.color)}>
                       Assumption {assumption.id}
                     </span>
                   </div>
-                  <h3 style={{
-                    color: 'white',
-                    margin: '0 0 10px 0',
-                    fontSize: '1.3rem',
-                    fontWeight: '600'
-                  }}>
+                  <h3 className="assumption-card-title">
                     {assumption.title}
                   </h3>
-                  <p style={{
-                    color: 'rgba(255,255,255,0.75)',
-                    margin: '0 0 12px 0',
-                    fontSize: '0.95rem',
-                    lineHeight: '1.6'
-                  }}>
+                  <p className="assumption-card-description">
                     {assumption.description}
                   </p>
-                  <div style={{
-                    background: 'rgba(0,0,0,0.3)',
-                    padding: '12px 15px',
-                    borderRadius: '8px',
-                    borderLeft: `3px solid ${assumption.color}`
-                  }}>
-                    <p style={{
-                      color: 'rgba(255,255,255,0.65)',
-                      margin: 0,
-                      fontSize: '0.88rem',
-                      lineHeight: '1.6',
-                      fontStyle: 'italic'
-                    }}>
-                      <FaLightbulb style={{ color: assumption.color, marginRight: '8px' }} />
+                  <div className="assumption-card-detail-box" style={getDetailBoxStyle(assumption.color)}>
+                    <p className="assumption-card-detail-text">
+                      <FaLightbulb className="assumption-card-detail-icon" style={getDetailIconStyle(assumption.color)} />
                       {assumption.detail}
                     </p>
                   </div>
@@ -169,13 +145,13 @@ function PPCAssumptions() {
         </div>
       </div>
 
-      <div className="highlight-card cyan" style={{ marginTop: '30px' }}>
+      <div className="highlight-card cyan assumptions-takeaway-card">
         <div className="highlight-content">
-          <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '15px' }}>
+          <h3 className="assumptions-takeaway-heading">
             <FaCheckCircle />
             Key Takeaway
           </h3>
-          <p style={{ fontSize: '0.95rem', lineHeight: '1.8', margin: 0 }}>
+          <p className="assumptions-takeaway-text">
             <strong>Remember:</strong> These assumptions create an <em>idealized model</em> of production possibilities.
             In the real world, resources may not be fully employed, technology constantly evolves, and economies produce
             thousands of goods. However, the PPC still provides valuable insights into the fundamental economic problem
@@ -184,13 +160,13 @@ function PPCAssumptions() {
         </div>
       </div>
 
-      <div className="feature-grid" style={{ marginTop: '25px' }}>
+      <div className="feature-grid assumptions-feature-grid">
         <div className="feature-item">
           <div className="feature-icon gold">
             <FaInfoCircle />
           </div>
           <h4>What if assumptions are violated?</h4>
-          <p style={{ fontSize: '0.88rem', lineHeight: '1.6' }}>
+          <p className="assumptions-feature-text">
             If any assumption is violated, the PPC may shift or change shape. For example, technological improvements
             would shift the curve outward, while unemployment would mean the economy operates inside the curve.
           </p>
@@ -201,7 +177,7 @@ function PPCAssumptions() {
             <FaLightbulb />
           </div>
           <h4>Real-World Application</h4>
-          <p style={{ fontSize: '0.88rem', lineHeight: '1.6' }}>
+          <p className="assumptions-feature-text">
             Despite these simplifying assumptions, the PPC framework helps policymakers understand production trade-offs,
             opportunity costs, and the benefits of technological progress and increased resources.
           </p>

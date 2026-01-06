@@ -12,6 +12,7 @@
  */
 
 import { FaBalanceScale, FaEquals, FaBoxOpen, FaShoppingBag, FaChartLine } from 'react-icons/fa';
+import './component.css';
 
 function ConsumerEquilibrium() {
   return (
@@ -33,11 +34,17 @@ function ConsumerEquilibrium() {
             entire income on goods in such a way that gives maximum satisfaction."
           </p>
           <p>
-            {/* TODO: Add detailed explanation */}
             A consumer is in equilibrium when they have no tendency to change their
             consumption bundle. At this point, they cannot increase satisfaction by
-            buying more or less of any good.
+            buying more or less of any good. The consumer has optimally allocated their
+            limited income across goods to maximize total utility. This is the point where
+            the consumer stops purchasing because any further purchase would reduce net satisfaction.
           </p>
+          <div className="note-text">
+            <strong>Example:</strong> If you have ₹100 to spend on apples and oranges, you're in
+            equilibrium when spending that ₹100 in a way that gives you maximum satisfaction -
+            reallocating even ₹1 would make you worse off.
+          </div>
 
           {/* Assumptions */}
           <h3 className="highlight-cyan">Assumptions</h3>
@@ -82,10 +89,17 @@ function ConsumerEquilibrium() {
           {/* One Commodity Case */}
           <h3 className="highlight-gold">Case 1: One Commodity</h3>
           <p>
-            {/* TODO: Add detailed explanation */}
             When a consumer buys only one commodity, equilibrium is reached when
-            the marginal utility from the last unit equals the price paid.
+            the marginal utility from the last unit equals the price paid. This is because:
           </p>
+          <ul className="bullet-list">
+            <li><strong>If MU {'>'} Price:</strong> The consumer gains more satisfaction than what they pay,
+            so they should buy more units</li>
+            <li><strong>If MU = Price:</strong> The consumer is in equilibrium - satisfaction gained equals
+            money paid, no net gain from buying more</li>
+            <li><strong>If MU {'<'} Price:</strong> The consumer loses satisfaction - they pay more than the
+            utility received, so they should stop buying</li>
+          </ul>
 
           <div className="formula-box">
             <strong>Condition:</strong> MU = Price
@@ -108,14 +122,14 @@ function ConsumerEquilibrium() {
                   <td>1</td>
                   <td>20</td>
                   <td>5</td>
-                  <td>MU > P</td>
+                  <td>MU {'>'} P</td>
                   <td>Buy (gain 15 utils)</td>
                 </tr>
                 <tr>
                   <td>2</td>
                   <td>15</td>
                   <td>5</td>
-                  <td>MU > P</td>
+                  <td>MU {'>'} P</td>
                   <td>Buy (gain 10 utils)</td>
                 </tr>
                 <tr>
@@ -129,7 +143,7 @@ function ConsumerEquilibrium() {
                   <td>4</td>
                   <td>5</td>
                   <td>5</td>
-                  <td>MU < P</td>
+                  <td>MU {'<'} P</td>
                   <td>Don't buy (lose 0 utils)</td>
                 </tr>
               </tbody>
@@ -138,16 +152,22 @@ function ConsumerEquilibrium() {
           </div>
 
           <div className="note-text">
-            <strong>Logic:</strong> As long as MU > P, each purchase gives net gain (utility - price).
-            When MU = P, no net gain. When MU < P, purchase causes loss.
+            <strong>Logic:</strong> As long as MU {'>'} P, each purchase gives net gain (utility - price).
+            When MU = P, no net gain. When MU {'<'} P, purchase causes loss.
           </div>
 
           {/* Two Commodity Case */}
           <h3 className="highlight-green">Case 2: Two Commodities (X and Y)</h3>
           <p>
-            {/* TODO: Add detailed explanation */}
-            When a consumer buys two commodities, equilibrium is reached when
-            the marginal utility per rupee spent is equal for both goods.
+            When a consumer buys two commodities (X and Y), equilibrium is reached when
+            the marginal utility per rupee spent is equal for both goods. This ensures optimal
+            allocation of the budget between the two goods. The consumer continues reallocating
+            spending until the utility per rupee is equalized across both commodities.
+          </p>
+          <p>
+            <strong>Why this condition?</strong> If MU<sub>X</sub>/P<sub>X</sub> {'>'} MU<sub>Y</sub>/P<sub>Y</sub>,
+            it means each rupee spent on X gives more utility than a rupee spent on Y. The rational consumer
+            will buy more of X and less of Y until equality is achieved.
           </p>
 
           <div className="formula-box">
@@ -157,12 +177,12 @@ function ConsumerEquilibrium() {
           {/* Two column explanation */}
           <div className="two-column">
             <div className="column">
-              <h4>If MUx/Px > MUy/Py</h4>
+              <h4>If MUx/Px {'>'} MUy/Py</h4>
               <p>Consumer should buy more X and less Y</p>
               <p>MUx will fall, MUy will rise until equality</p>
             </div>
             <div className="column">
-              <h4>If MUx/Px < MUy/Py</h4>
+              <h4>If MUx/Px {'<'} MUy/Py</h4>
               <p>Consumer should buy more Y and less X</p>
               <p>MUy will fall, MUx will rise until equality</p>
             </div>
@@ -198,7 +218,7 @@ function ConsumerEquilibrium() {
               </tbody>
             </table>
             <p className="table-note">
-              Since MUy/Py (5) > MUx/Px (4), consumer should buy more Oranges and fewer Apples
+              Since MUy/Py (5) {'>'}  MUx/Px (4), consumer should buy more Oranges and fewer Apples
             </p>
           </div>
 

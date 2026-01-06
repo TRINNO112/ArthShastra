@@ -20,6 +20,7 @@
  */
 
 import { FaBoxOpen, FaShoppingBag, FaEquals, FaExchangeAlt, FaCalculator } from 'react-icons/fa';
+import './component.css';
 
 function UtilityCases() {
   return (
@@ -198,7 +199,7 @@ function UtilityCases() {
                   </tbody>
                 </table>
               </div>
-              <p><strong>Adjustment:</strong> Since MUy/Py (4) > MUx/Px (3), consumer should buy more Y and less X</p>
+              <p><strong>Adjustment:</strong> Since MUy/Py (4) &gt; MUx/Px (3), consumer should buy more Y and less X</p>
               <p><strong>Final Equilibrium:</strong> MUx/Px = MUy/Py = 3.5</p>
             </div>
           </div>

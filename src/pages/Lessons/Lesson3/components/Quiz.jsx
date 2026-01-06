@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { FaCheckCircle, FaTimesCircle, FaTrophy, FaRedo, FaArrowRight, FaQuestionCircle, FaClock, FaChartLine, FaExclamationTriangle } from 'react-icons/fa';
 import { submitDetailedQuizAttempt, getQuizAnalytics } from '../../../../services/firebase';
+import './component.css';
 
 function Quiz({ mcqQuestions, tfQuestions, quizId = 'lesson3' }) {
   // Answer states

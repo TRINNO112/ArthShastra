@@ -1,5 +1,6 @@
 // OpportunityCost.jsx - Concept of Opportunity Cost and MOC
 import { FaBalanceScale, FaCalculator, FaSync, FaLightbulb } from 'react-icons/fa';
+import './components.css';
 
 function OpportunityCost() {
   return (
@@ -44,10 +45,10 @@ function OpportunityCost() {
         <div className="highlight-card cyan">
           <div className="highlight-content">
             <h3>MOC Formula</h3>
-            <div className="formula-box" style={{ fontSize: '1.5rem', textAlign: 'center', padding: '20px', background: 'rgba(0,0,0,0.2)', borderRadius: '10px', margin: '15px 0' }}>
-              MOC = <span style={{ borderBottom: '2px solid white', paddingBottom: '2px' }}>Δ Sacrificed Units (Y)</span>
+            <div className="formula-box moc-formula-box">
+              MOC = <span className="moc-formula-numerator">Δ Sacrificed Units (Y)</span>
               <br />
-              <span style={{ display: 'inline-block', paddingTop: '5px' }}>Δ Gained Units (X)</span>
+              <span className="moc-formula-denominator">Δ Gained Units (X)</span>
             </div>
           </div>
         </div>

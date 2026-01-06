@@ -11,6 +11,7 @@ import Lessons from './pages/Lessons';
 import About from './pages/About';
 import Lesson1 from './pages/Lessons/Lesson1';
 import Lesson2 from './pages/Lessons/Lesson2';
+import Lesson3 from './pages/Lessons/Lesson3/Lesson3';
 
 // Styles
 import './styles/variables.css';
@@ -34,6 +35,7 @@ function App() {
               {/* Microeconomics Class 11 Lessons */}
               <Route path="/lesson/micro11-1" element={<Lesson1 />} />
               <Route path="/lesson/micro11-2" element={<Lesson2 />} />
+              <Route path="/lesson/micro11-3" element={<Lesson3 />} />
 
               {/* TODO: Add more lesson routes */}
               {/* <Route path="/quiz" element={<Quiz />} /> */}

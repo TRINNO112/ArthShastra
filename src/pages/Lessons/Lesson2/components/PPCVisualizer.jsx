@@ -1,5 +1,6 @@
 // PPCVisualizer.jsx - Interactive PPC Graph Component using Recharts
 import { useState, useMemo } from 'react';
+import './components.css';
 import {
   ComposedChart,
   Line,
@@ -160,30 +161,17 @@ function PPCVisualizer() {
       const data = payload[0].payload;
       if (data && typeof data.x === 'number' && typeof data.y === 'number') {
         return (
-          <div style={{
-            background: 'linear-gradient(135deg, rgba(15, 15, 30, 0.98), rgba(25, 25, 45, 0.98))',
-            border: '2px solid #ffd700',
-            padding: '14px 18px',
-            borderRadius: '12px',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.5)'
-          }}>
-            <p style={{
-              color: '#ffd700',
-              fontSize: '1rem',
-              margin: '0 0 10px 0',
-              fontWeight: '700',
-              borderBottom: '1px solid rgba(255,215,0,0.3)',
-              paddingBottom: '8px'
-            }}>
+          <div className="ppc-visualizer-tooltip">
+            <p className="ppc-visualizer-tooltip-title">
               Production Point
             </p>
-            <p style={{ color: 'white', fontSize: '0.95rem', margin: '6px 0', display: 'flex', justifyContent: 'space-between', gap: '20px' }}>
+            <p className="ppc-visualizer-tooltip-row">
               <span>🌾 Wheat:</span>
-              <strong style={{ color: '#00ff88' }}>{data.x.toFixed(1)} units</strong>
+              <strong className="ppc-visualizer-tooltip-value-green">{data.x.toFixed(1)} units</strong>
             </p>
-            <p style={{ color: 'white', fontSize: '0.95rem', margin: '6px 0', display: 'flex', justifyContent: 'space-between', gap: '20px' }}>
+            <p className="ppc-visualizer-tooltip-row">
               <span>🍚 Rice:</span>
-              <strong style={{ color: '#00d4ff' }}>{data.y.toFixed(1)} units</strong>
+              <strong className="ppc-visualizer-tooltip-value-cyan">{data.y.toFixed(1)} units</strong>
             </p>
           </div>
         );
@@ -192,66 +180,44 @@ function PPCVisualizer() {
     return null;
   };
 
-  // Button styling function
-  const getButtonStyle = (isActive, accentColor = '#ffd700') => ({
-    padding: '14px 18px',
-    background: isActive
-      ? `linear-gradient(135deg, ${accentColor}, ${accentColor}dd)`
-      : 'rgba(255,255,255,0.03)',
-    color: isActive ? '#0a0a15' : 'rgba(255,255,255,0.9)',
-    border: `2px solid ${isActive ? accentColor : 'rgba(255,215,0,0.25)'}`,
-    borderRadius: '12px',
-    cursor: 'pointer',
-    textAlign: 'left',
-    fontWeight: isActive ? '700' : '500',
-    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-    fontSize: '0.95rem',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-    boxShadow: isActive ? `0 4px 20px ${accentColor}40` : 'none',
-    transform: isActive ? 'scale(1.02)' : 'scale(1)',
-  });
+  // Button class name function
+  const getButtonClassName = (isActive, accentColor = 'gold') => {
+    const baseClass = 'ppc-visualizer-button-base';
+    if (!isActive) {
+      return `${baseClass} ppc-visualizer-button-inactive`;
+    }
+    return `${baseClass} ppc-visualizer-button-active ppc-visualizer-button-active-${accentColor}`;
+  };
+
+  // Get color class name based on scenario color
+  const getColorClass = (baseClass, color) => {
+    const colorMap = {
+      '#ffd700': 'gold',
+      '#00ff88': 'green',
+      '#ff6b6b': 'red',
+      '#00d4ff': 'cyan',
+      '#ff9500': 'orange',
+      '#9d4edd': 'purple'
+    };
+    const colorName = colorMap[color] || 'gold';
+    return `${baseClass}-${colorName}`;
+  };
 
   return (
-    <div className="ppc-visualizer-container" style={{
-      background: 'linear-gradient(160deg, rgba(10,10,25,0.95), rgba(20,15,40,0.95))',
-      padding: '35px',
-      borderRadius: '24px',
-      border: '1px solid rgba(255,215,0,0.15)',
-      marginTop: '25px',
-      boxShadow: '0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)'
-    }}>
+    <div className="ppc-visualizer-container">
       {/* Header */}
-      <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-        <h3 style={{
-          color: '#ffd700',
-          fontSize: '1.6rem',
-          margin: '0 0 8px 0',
-          textShadow: '0 0 30px rgba(255,215,0,0.4)',
-          letterSpacing: '0.5px'
-        }}>
+      <div className="ppc-visualizer-header">
+        <h3 className="ppc-visualizer-title">
           🎯 Production Possibility Curve (PPC) Visualizer
         </h3>
-        <p style={{
-          color: 'rgba(255,255,255,0.6)',
-          fontSize: '0.95rem',
-          margin: 0
-        }}>
+        <p className="ppc-visualizer-subtitle">
           Interactive demonstration of economic production possibilities
         </p>
       </div>
 
-      <div style={{ display: 'flex', gap: '35px', flexWrap: 'wrap' }}>
+      <div className="ppc-visualizer-layout">
         {/* Graph Area */}
-        <div className="graph-area" style={{
-          flex: '1.3',
-          minWidth: '420px',
-          background: 'linear-gradient(145deg, rgba(0,0,0,0.4), rgba(10,10,20,0.4))',
-          borderRadius: '18px',
-          padding: '25px',
-          border: '1px solid rgba(255,255,255,0.08)'
-        }}>
+        <div className="graph-area ppc-visualizer-graph-area">
           <ResponsiveContainer width="100%" height={480}>
             <ComposedChart margin={{ top: 25, right: 45, left: 25, bottom: 35 }}>
               <defs>
@@ -413,38 +379,17 @@ function PPCVisualizer() {
           </ResponsiveContainer>
 
           {/* Legend */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '30px',
-            marginTop: '20px',
-            flexWrap: 'wrap',
-            padding: '15px',
-            background: 'rgba(0,0,0,0.2)',
-            borderRadius: '12px'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <div style={{
-                width: '35px',
-                height: '4px',
-                background: scenario === 'normal' ? 'linear-gradient(90deg, #ffd700, #ffed4e)' : 'rgba(255,255,255,0.3)',
-                borderRadius: '2px',
-                boxShadow: scenario === 'normal' ? '0 0 10px rgba(255,215,0,0.5)' : 'none'
-              }} />
-              <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: '0.9rem', fontWeight: '500' }}>
+          <div className="ppc-visualizer-legend">
+            <div className="ppc-visualizer-legend-item">
+              <div className={scenario === 'normal' ? 'ppc-visualizer-legend-line-normal' : 'ppc-visualizer-legend-line-original'} />
+              <span className="ppc-visualizer-legend-label">
                 {scenario === 'normal' ? 'Current PPC' : 'Original PPC'}
               </span>
             </div>
             {transformedCurve && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <div style={{
-                  width: '35px',
-                  height: '4px',
-                  background: 'linear-gradient(90deg, #00ff88, #00ffaa)',
-                  borderRadius: '2px',
-                  boxShadow: '0 0 10px rgba(0,255,136,0.5)'
-                }} />
-                <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: '0.9rem', fontWeight: '500' }}>
+              <div className="ppc-visualizer-legend-item">
+                <div className="ppc-visualizer-legend-line-new" />
+                <span className="ppc-visualizer-legend-label">
                   New PPC
                 </span>
               </div>
@@ -453,116 +398,79 @@ function PPCVisualizer() {
         </div>
 
         {/* Controls Area */}
-        <div className="controls-area" style={{ flex: '0.8', minWidth: '300px' }}>
-          <h4 style={{
-            color: 'white',
-            marginBottom: '20px',
-            fontSize: '1.2rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px'
-          }}>
+        <div className="controls-area ppc-visualizer-controls">
+          <h4 className="ppc-visualizer-controls-heading">
             🎮 Simulate Economic Changes
           </h4>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div className="ppc-visualizer-buttons">
             <button
               onClick={() => setScenario('normal')}
-              style={getButtonStyle(scenario === 'normal', '#ffd700')}
+              className={getButtonClassName(scenario === 'normal', 'gold')}
             >
-              <span style={{ fontSize: '1.2rem' }}>📊</span>
+              <span className="ppc-visualizer-button-icon">📊</span>
               <span>Standard PPC</span>
             </button>
 
             <button
               onClick={() => setScenario('shift-right')}
-              style={getButtonStyle(scenario === 'shift-right', '#00ff88')}
+              className={getButtonClassName(scenario === 'shift-right', 'green')}
             >
-              <span style={{ fontSize: '1.2rem' }}>📈</span>
+              <span className="ppc-visualizer-button-icon">📈</span>
               <span>Economic Growth (Shift Outward)</span>
             </button>
 
             <button
               onClick={() => setScenario('shift-left')}
-              style={getButtonStyle(scenario === 'shift-left', '#ff6b6b')}
+              className={getButtonClassName(scenario === 'shift-left', 'red')}
             >
-              <span style={{ fontSize: '1.2rem' }}>📉</span>
+              <span className="ppc-visualizer-button-icon">📉</span>
               <span>Economic Decline (Shift Inward)</span>
             </button>
 
             <button
               onClick={() => setScenario('rotate-x')}
-              style={getButtonStyle(scenario === 'rotate-x', '#ffd700')}
+              className={getButtonClassName(scenario === 'rotate-x', 'gold')}
             >
-              <span style={{ fontSize: '1.2rem' }}>🌾</span>
+              <span className="ppc-visualizer-button-icon">🌾</span>
               <span>Wheat Tech Improvement</span>
             </button>
 
             <button
               onClick={() => setScenario('rotate-y')}
-              style={getButtonStyle(scenario === 'rotate-y', '#00d4ff')}
+              className={getButtonClassName(scenario === 'rotate-y', 'cyan')}
             >
-              <span style={{ fontSize: '1.2rem' }}>🍚</span>
+              <span className="ppc-visualizer-button-icon">🍚</span>
               <span>Rice Tech Improvement</span>
             </button>
 
             <button
               onClick={() => setScenario('asymmetric-growth')}
-              style={getButtonStyle(scenario === 'asymmetric-growth', '#ff9500')}
+              className={getButtonClassName(scenario === 'asymmetric-growth', 'orange')}
             >
-              <span style={{ fontSize: '1.2rem' }}>⚖️</span>
+              <span className="ppc-visualizer-button-icon">⚖️</span>
               <span>Asymmetric Growth (Wheat ↑ Rice ↓)</span>
             </button>
 
             <button
               onClick={() => setScenario('balanced-tech')}
-              style={getButtonStyle(scenario === 'balanced-tech', '#9d4edd')}
+              className={getButtonClassName(scenario === 'balanced-tech', 'purple')}
             >
-              <span style={{ fontSize: '1.2rem' }}>🚀</span>
+              <span className="ppc-visualizer-button-icon">🚀</span>
               <span>Balanced Tech Progress</span>
             </button>
           </div>
 
           {/* Scenario Info Box */}
-          <div style={{
-            marginTop: '28px',
-            padding: '20px',
-            background: `linear-gradient(145deg, ${scenarioInfo.color}15, ${scenarioInfo.color}08)`,
-            borderLeft: `5px solid ${scenarioInfo.color}`,
-            borderRadius: '14px',
-            boxShadow: `0 4px 20px ${scenarioInfo.color}15`
-          }}>
-            <h5 style={{
-              color: scenarioInfo.color,
-              margin: '0 0 12px 0',
-              fontSize: '1.05rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px'
-            }}>
+          <div className={`ppc-visualizer-scenario-info ${getColorClass('ppc-visualizer-scenario-info', scenarioInfo.color)}`}>
+            <h5 className={`ppc-visualizer-scenario-title ${getColorClass('ppc-visualizer-scenario-title', scenarioInfo.color)}`}>
               {scenarioInfo.title}
             </h5>
-            <p style={{
-              fontSize: '0.9rem',
-              color: 'rgba(255,255,255,0.85)',
-              margin: '0 0 14px 0',
-              lineHeight: '1.7'
-            }}>
+            <p className="ppc-visualizer-scenario-description">
               {scenarioInfo.description}
             </p>
-            <div style={{
-              background: 'rgba(0,0,0,0.2)',
-              padding: '12px',
-              borderRadius: '8px',
-              marginTop: '10px'
-            }}>
-              <p style={{
-                fontSize: '0.88rem',
-                color: '#ffd700',
-                margin: 0,
-                fontWeight: '600',
-                lineHeight: '1.6'
-              }}>
+            <div className="ppc-visualizer-scenario-effect-box">
+              <p className="ppc-visualizer-scenario-effect-text">
                 ⚡ Effect: {scenarioInfo.effect}
               </p>
             </div>
@@ -570,82 +478,41 @@ function PPCVisualizer() {
 
           {/* Points Legend (for normal scenario) */}
           {scenario === 'normal' && (
-            <div style={{
-              marginTop: '22px',
-              padding: '18px',
-              background: 'rgba(255,255,255,0.03)',
-              borderRadius: '14px',
-              border: '1px solid rgba(255,255,255,0.08)'
-            }}>
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: '15px'
-              }}>
-                <h5 style={{ color: 'white', margin: 0, fontSize: '1rem' }}>
+            <div className="ppc-visualizer-points-legend">
+              <div className="ppc-visualizer-points-legend-header">
+                <h5 className="ppc-visualizer-points-legend-title">
                   📍 Key Points on Graph
                 </h5>
                 <button
                   onClick={() => setShowExamplePoints(!showExamplePoints)}
-                  style={{
-                    background: showExamplePoints ? 'rgba(0,255,136,0.2)' : 'rgba(255,255,255,0.1)',
-                    border: `1px solid ${showExamplePoints ? '#00ff88' : 'rgba(255,255,255,0.2)'}`,
-                    color: showExamplePoints ? '#00ff88' : 'rgba(255,255,255,0.7)',
-                    padding: '6px 12px',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    fontSize: '0.8rem',
-                    transition: 'all 0.3s ease'
-                  }}
+                  className={showExamplePoints ? 'ppc-visualizer-points-legend-toggle-active' : 'ppc-visualizer-points-legend-toggle-inactive'}
                 >
                   {showExamplePoints ? 'Hide' : 'Show'}
                 </button>
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div style={{
-                    width: '18px',
-                    height: '18px',
-                    borderRadius: '50%',
-                    background: '#00ff88',
-                    border: '3px solid white',
-                    boxShadow: '0 0 10px rgba(0,255,136,0.5)'
-                  }} />
+              <div className="ppc-visualizer-points-list">
+                <div className="ppc-visualizer-point-item">
+                  <div className="ppc-visualizer-point-dot-green" />
                   <div>
-                    <span style={{ color: '#00ff88', fontWeight: '600', fontSize: '0.9rem' }}>Point A</span>
-                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem' }}> - Efficient (On curve)</span>
+                    <span className="ppc-visualizer-point-label-green">Point A</span>
+                    <span className="ppc-visualizer-point-description"> - Efficient (On curve)</span>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div style={{
-                    width: '18px',
-                    height: '18px',
-                    borderRadius: '50%',
-                    background: '#ffd700',
-                    border: '3px solid white',
-                    boxShadow: '0 0 10px rgba(255,215,0,0.5)'
-                  }} />
+                <div className="ppc-visualizer-point-item">
+                  <div className="ppc-visualizer-point-dot-gold" />
                   <div>
-                    <span style={{ color: '#ffd700', fontWeight: '600', fontSize: '0.9rem' }}>Point B</span>
-                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem' }}> - Inefficient (Inside curve)</span>
+                    <span className="ppc-visualizer-point-label-gold">Point B</span>
+                    <span className="ppc-visualizer-point-description"> - Inefficient (Inside curve)</span>
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div style={{
-                    width: '18px',
-                    height: '18px',
-                    borderRadius: '50%',
-                    background: '#ff6b6b',
-                    border: '3px solid white',
-                    boxShadow: '0 0 10px rgba(255,107,107,0.5)'
-                  }} />
+                <div className="ppc-visualizer-point-item">
+                  <div className="ppc-visualizer-point-dot-red" />
                   <div>
-                    <span style={{ color: '#ff6b6b', fontWeight: '600', fontSize: '0.9rem' }}>Point C</span>
-                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem' }}> - Unattainable (Outside curve)</span>
+                    <span className="ppc-visualizer-point-label-red">Point C</span>
+                    <span className="ppc-visualizer-point-description"> - Unattainable (Outside curve)</span>
                   </div>
                 </div>
               </div>
@@ -653,20 +520,9 @@ function PPCVisualizer() {
           )}
 
           {/* Quick Reference */}
-          <div style={{
-            marginTop: '22px',
-            padding: '15px',
-            background: 'rgba(0,150,255,0.08)',
-            borderRadius: '12px',
-            border: '1px solid rgba(0,150,255,0.2)'
-          }}>
-            <p style={{
-              fontSize: '0.85rem',
-              color: 'rgba(255,255,255,0.75)',
-              margin: 0,
-              lineHeight: '1.6'
-            }}>
-              <FaInfoCircle style={{ marginRight: '8px', color: '#00d4ff' }} />
+          <div className="ppc-visualizer-quick-ref">
+            <p className="ppc-visualizer-quick-ref-text">
+              <FaInfoCircle className="ppc-visualizer-quick-ref-icon" />
               <strong>Remember:</strong> The PPC is concave (bows outward) due to <em>increasing opportunity cost</em> -
               resources are not equally efficient in producing both goods.
             </p>

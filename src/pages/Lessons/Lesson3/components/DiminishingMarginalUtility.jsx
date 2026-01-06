@@ -13,6 +13,7 @@
  */
 
 import { FaArrowDown, FaExclamationTriangle, FaTable, FaChartLine, FaQuestion } from 'react-icons/fa';
+import './component.css';
 
 function DiminishingMarginalUtility() {
   return (
@@ -35,11 +36,16 @@ function DiminishingMarginalUtility() {
             remain constant."
           </p>
           <p>
-            {/* TODO: Add detailed explanation */}
-            This law is also known as the Fundamental Law of Satisfaction or Law of Equi-Marginal Utility.
-            It explains why the first unit of consumption gives maximum satisfaction and each
-            subsequent unit gives less.
+            This law is also known as the <strong>Fundamental Law of Satisfaction</strong> or
+            <strong> Gossen's First Law</strong>. It explains why the first unit of consumption
+            gives maximum satisfaction and each subsequent unit gives less. This is a universal
+            phenomenon observed in consumption of all goods and services. The law forms the basis
+            for understanding consumer behavior and demand.
           </p>
+          <div className="note-text">
+            <strong>Key Insight:</strong> This law explains the downward sloping demand curve - as price
+            falls, consumers buy more units even though each additional unit gives less satisfaction.
+          </div>
 
           {/* Why the Law Operates */}
           <h3 className="highlight-green">Why Does This Law Operate?</h3>
@@ -47,21 +53,40 @@ function DiminishingMarginalUtility() {
             <div className="column">
               <div className="reason-card">
                 <h4>1. Completeness of Want</h4>
-                <p>Every want is specific and limited. Once partially satisfied, the intensity of want decreases.</p>
+                <p>Every want is specific and limited. Once partially satisfied, the intensity of want decreases.
+                As you consume more, the urgency of the want diminishes.</p>
               </div>
             </div>
             <div className="column">
               <div className="reason-card">
                 <h4>2. Variety in Wants</h4>
-                <p>Different units of the same commodity satisfy different kinds of wants with different intensities.</p>
+                <p>Different units of the same commodity satisfy different kinds of wants with different intensities.
+                We have multiple wants, and after satisfying one, we move to the next.</p>
               </div>
             </div>
           </div>
 
-          {/* TODO: Add more reasons */}
+          <div className="two-column">
+            <div className="column">
+              <div className="reason-card">
+                <h4>3. Single Use</h4>
+                <p>A single commodity has limited uses. After the most important use is satisfied,
+                subsequent units are put to less important uses.</p>
+              </div>
+            </div>
+            <div className="column">
+              <div className="reason-card">
+                <h4>4. Introspection</h4>
+                <p>Our own experience and observation confirm that additional units of consumption
+                provide diminishing satisfaction. This is a psychological reality.</p>
+              </div>
+            </div>
+          </div>
+
           <div className="note-text">
-            <strong>Example:</strong> The first glass of water when thirsty gives great satisfaction.
-            The second glass gives less, and by the fifth glass, you may not want any more.
+            <strong>Example:</strong> The first glass of water when thirsty gives great satisfaction (quenches thirst).
+            The second glass gives less (refreshment). The third gives even less (habit). By the fifth glass,
+            you may not want any more - MU becomes zero or negative.
           </div>
 
           {/* Two Basic Assumptions */}
@@ -134,7 +159,10 @@ function DiminishingMarginalUtility() {
                 </tr>
               </tbody>
             </table>
-            <p className="table-note">TODO: Add more detailed examples from textbook</p>
+            <p className="table-note">
+              Notice: MU falls from 20 to 0 (saturation) and then becomes negative (disutility).
+              TU rises, reaches maximum at saturation, then falls.
+            </p>
           </div>
 
           {/* Diagrammatic Presentation */}
@@ -160,11 +188,23 @@ function DiminishingMarginalUtility() {
               <h3>Exceptions to the Law</h3>
               <p>In some rare cases, the law may not operate:</p>
               <ul className="bullet-list">
-                <li><strong>Abnormal Persons:</strong> People with unusual psychological conditions</li>
-                <li><strong>Strange Habits:</strong> Collecting items (stamps, coins) - more gives more satisfaction</li>
-                <li><strong>New Discoveries:</strong> When you discover the utility of something you previously undervalued</li>
-                <li><strong>Irregular Consumption:</strong> Long gaps between consumption</li>
+                <li><strong>Hobbies and Collections:</strong> Collecting items (stamps, coins, antiques) -
+                each additional item may give more satisfaction as the collection becomes more complete</li>
+                <li><strong>Money:</strong> For most people, additional units of money continue to give
+                satisfaction without diminishing, as money can be used to satisfy various wants</li>
+                <li><strong>Misers:</strong> People with abnormal love for money - each additional rupee
+                gives them increasing satisfaction</li>
+                <li><strong>Drunkards and Drug Addicts:</strong> Addiction can cause increasing MU initially
+                due to psychological dependence</li>
+                <li><strong>Reading and Music:</strong> Appreciation may increase with more exposure,
+                making subsequent units more enjoyable</li>
+                <li><strong>Fashion and Status Goods:</strong> Rare/unique items may give increasing
+                satisfaction due to their exclusivity</li>
               </ul>
+              <p className="note-text">
+                <strong>Important:</strong> These are exceptions, not the norm. The law applies to most
+                consumption situations for most people.
+              </p>
             </div>
           </div>
         </div>

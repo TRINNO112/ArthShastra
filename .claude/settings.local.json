@@ -21,7 +21,8 @@
       "Bash(git fetch:*)",
       "Bash(tree:*)",
       "Bash(node test-extract.cjs:*)",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "Bash(del \"C:\\\\Users\\\\Amit Pathak\\\\Documents\\\\ArthShastra\\\\extract-inline-styles.js\")"
     ]
   }
 }
