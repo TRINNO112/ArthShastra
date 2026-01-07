@@ -110,7 +110,7 @@ const useGraphAnimation = (duration = 2000) => {
 /**
  * Graph Control Button Component
  */
-const GraphControlButton = ({ onClick, disabled, active, label, variant = 'default' }) => {
+const GraphControlButton = ({ onClick, disabled, active, label, variant = 'default', icon }) => {
   const getButtonClass = () => {
     let baseClass = 'control-btn';
     if (variant === 'primary') baseClass += ' primary';
@@ -125,7 +125,7 @@ const GraphControlButton = ({ onClick, disabled, active, label, variant = 'defau
       disabled={disabled}
       className={getButtonClass()}
     >
-      <Icon />
+      {icon && icon()}
       {label}
     </button>
   );
@@ -1234,7 +1234,7 @@ function DiminishingMarginalUtility() {
             <GraphControlButton
               onClick={startAnimation}
               disabled={isAnimating}
-              icon={isAnimating ? FaPause : FaPlay}
+              icon={() => (isAnimating ? <FaPause /> : <FaPlay />)}
               label={isAnimating ? 'Animating...' : 'Animate Graph'}
               variant="primary"
             />
@@ -1242,7 +1242,7 @@ function DiminishingMarginalUtility() {
             <GraphControlButton
               onClick={resetAnimation}
               disabled={isAnimating}
-              icon={FaRedo}
+              icon={() => <FaRedo />}
               label="Reset"
               variant="default"
             />
@@ -1250,7 +1250,7 @@ function DiminishingMarginalUtility() {
             <GraphControlButton
               onClick={() => setShowMUCurve(!showMUCurve)}
               active={showMUCurve}
-              icon={showMUCurve ? FaEye : FaEyeSlash}
+              icon={() => (showMUCurve ? <FaEye /> : <FaEyeSlash />)}
               label="MU Curve"
               variant="toggle"
             />
@@ -1258,7 +1258,7 @@ function DiminishingMarginalUtility() {
             <GraphControlButton
               onClick={() => setShowTUCurve(!showTUCurve)}
               active={showTUCurve}
-              icon={showTUCurve ? FaEye : FaEyeSlash}
+              icon={() => (showTUCurve ? <FaEye /> : <FaEyeSlash />)}
               label="TU Curve"
               variant="toggle-gold"
             />

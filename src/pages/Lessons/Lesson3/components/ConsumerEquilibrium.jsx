@@ -224,16 +224,155 @@ function ConsumerEquilibrium() {
 
           {/* Diagrammatic Presentation */}
           <h3 className="highlight-cyan">Diagrammatic Presentation</h3>
-          <div className="diagram-placeholder">
-            <h4><FaChartLine /> Derivation of Demand Curve</h4>
-            <div className="placeholder-image">
-              <p>TODO: Add diagram showing:</p>
-              <ul>
-                <li>MU curve sloping downward</li>
-                <li>Price line at different levels</li>
-                <li>Quantity demanded at each price level</li>
-                <li>Derivation of individual demand curve</li>
-              </ul>
+          <div className="demand-curve-derivation">
+            <h4><FaChartLine /> Derivation of Individual Demand Curve</h4>
+            <div className="dual-diagram">
+              {/* Left: MU-Price Equilibrium Diagram */}
+              <div className="diagram-panel">
+                <h5>Panel A: Consumer Equilibrium (MU = Price)</h5>
+                <svg viewBox="0 0 500 350" className="mu-price-diagram">
+                  <defs>
+                    <linearGradient id="muGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#00ff00" />
+                      <stop offset="100%" stopColor="#ff6b6b" />
+                    </linearGradient>
+                    <linearGradient id="priceGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#ffd700" />
+                      <stop offset="100%" stopColor="#ff8c00" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Background */}
+                  <rect x="0" y="0" width="500" height="350" fill="rgba(0,0,0,0.2)" rx="8" />
+
+                  {/* Grid */}
+                  <g className="grid-lines">
+                    {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(x => (
+                      <line key={`v-${x}`} x1={80 + x * 50} y1="60" x2={80 + x * 50} y2="280" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+                    ))}
+                    {[0, 10, 20, 30, 40, 50, 60].map(y => (
+                      <line key={`h-${y}`} x1="80" y1={280 - (y * 4)} x2="450" y2={280 - (y * 4)} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+                    ))}
+                  </g>
+
+                  {/* Axes */}
+                  <line x1="80" y1="280" x2="450" y2="280" stroke="#00ffff" strokeWidth="2" />
+                  <line x1="80" y1="60" x2="80" y2="280" stroke="#00ff00" strokeWidth="2" />
+
+                  {/* MU Curve */}
+                  <path d="M80,280 C150,200 220,140 290,100 C360,60 430,80 450,120"
+                        fill="none" stroke="url(#muGradient)" strokeWidth="3" />
+                  <text x="470" y="110" fill="#00ff00" fontSize="12" fontWeight="bold">MU</text>
+
+                  {/* Price Lines at Different Levels */}
+                  <line x1="80" y1="180" x2="450" y2="180" stroke="url(#priceGradient)" strokeWidth="2" strokeDasharray="5,5" />
+                  <text x="470" y="185" fill="#ffd700" fontSize="12" fontWeight="bold">P₁ = ₹40</text>
+
+                  <line x1="80" y1="220" x2="450" y2="220" stroke="#ffd700" strokeWidth="2" strokeDasharray="5,5" />
+                  <text x="470" y="225" fill="#ffd700" fontSize="12" fontWeight="bold">P₂ = ₹30</text>
+
+                  <line x1="80" y1="260" x2="450" y2="260" stroke="#ffd700" strokeWidth="2" strokeDasharray="5,5" />
+                  <text x="470" y="265" fill="#ffd700" fontSize="12" fontWeight="bold">P₃ = ₹20</text>
+
+                  {/* Equilibrium Points */}
+                  <circle cx="180" cy="180" r="5" fill="#ffff00" stroke="#fff" strokeWidth="2" />
+                  <line x1="180" y1="180" x2="180" y2="280" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
+                  <text x="180" y="295" fill="#ffff00" fontSize="11">Q₁ = 2</text>
+
+                  <circle cx="260" cy="220" r="5" fill="#ffff00" stroke="#fff" strokeWidth="2" />
+                  <line x1="260" y1="220" x2="260" y2="280" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
+                  <text x="260" y="295" fill="#ffff00" fontSize="11">Q₂ = 3</text>
+
+                  <circle cx="340" cy="260" r="5" fill="#ffff00" stroke="#fff" strokeWidth="2" />
+                  <line x1="340" y1="260" x2="340" y2="280" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
+                  <text x="340" y="295" fill="#ffff00" fontSize="11">Q₃ = 4</text>
+
+                  {/* Labels */}
+                  <text x="265" y="310" fill="#00ffff" fontSize="12">Quantity Consumed (Units)</text>
+                  <text x="30" y="170" fill="#00ff00" fontSize="12" transform="rotate(-90 30,170)">Marginal Utility</text>
+                </svg>
+              </div>
+
+              {/* Right: Derived Demand Curve */}
+              <div className="diagram-panel">
+                <h5>Panel B: Individual Demand Curve</h5>
+                <svg viewBox="0 0 500 350" className="demand-curve-diagram">
+                  <defs>
+                    <linearGradient id="demandGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#ff6b6b" />
+                      <stop offset="100%" stopColor="#8800ff" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Background */}
+                  <rect x="0" y="0" width="500" height="350" fill="rgba(0,0,0,0.2)" rx="8" />
+
+                  {/* Grid */}
+                  <g className="grid-lines">
+                    {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(x => (
+                      <line key={`v-${x}`} x1={80 + x * 50} y1="60" x2={80 + x * 50} y2="280" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+                    ))}
+                    {[0, 10, 20, 30, 40, 50, 60].map(y => (
+                      <line key={`h-${y}`} x1="80" y1={280 - (y * 4)} x2="450" y2={280 - (y * 4)} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+                    ))}
+                  </g>
+
+                  {/* Axes */}
+                  <line x1="80" y1="280" x2="450" y2="280" stroke="#00ffff" strokeWidth="2" />
+                  <line x1="80" y1="60" x2="80" y2="280" stroke="#ff6b6b" strokeWidth="2" />
+
+                  {/* Demand Curve */}
+                  <path d="M80,260 C150,220 220,180 290,140 C360,100 430,80 450,80"
+                        fill="none" stroke="url(#demandGradient)" strokeWidth="3" />
+                  <text x="470" y="85" fill="#ff6b6b" fontSize="12" fontWeight="bold">Demand Curve</text>
+
+                  {/* Price-Quantity Points */}
+                  <circle cx="180" cy="220" r="5" fill="#ffff00" stroke="#fff" strokeWidth="2" />
+                  <line x1="180" y1="220" x2="180" y2="280" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
+                  <text x="180" y="295" fill="#ffff00" fontSize="11">Q₁ = 2</text>
+
+                  <line x1="80" y1="220" x2="180" y2="220" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
+                  <text x="60" y="225" fill="#ffff00" fontSize="11">P₁ = ₹40</text>
+
+                  <circle cx="260" cy="180" r="5" fill="#ffff00" stroke="#fff" strokeWidth="2" />
+                  <line x1="260" y1="180" x2="260" y2="280" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
+                  <text x="260" y="295" fill="#ffff00" fontSize="11">Q₂ = 3</text>
+
+                  <line x1="80" y1="180" x2="260" y2="180" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
+                  <text x="60" y="185" fill="#ffff00" fontSize="11">P₂ = ₹30</text>
+
+                  <circle cx="340" cy="140" r="5" fill="#ffff00" stroke="#fff" strokeWidth="2" />
+                  <line x1="340" y1="140" x2="340" y2="280" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
+                  <text x="340" y="295" fill="#ffff00" fontSize="11">Q₃ = 4</text>
+
+                  <line x1="80" y1="140" x2="340" y2="140" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
+                  <text x="60" y="145" fill="#ffff00" fontSize="11">P₃ = ₹20</text>
+
+                  {/* Labels */}
+                  <text x="265" y="310" fill="#00ffff" fontSize="12">Quantity Demanded</text>
+                  <text x="30" y="170" fill="#ff6b6b" fontSize="12" transform="rotate(-90 30,170)">Price (₹)</text>
+                </svg>
+              </div>
+            </div>
+
+            <div className="diagram-explanation">
+              <h6>How Demand Curve is Derived:</h6>
+              <div className="explanation-item">
+                <span className="arrow yellow">1.</span>
+                <span>Consumer equilibrium occurs where <strong>MU = Price</strong></span>
+              </div>
+              <div className="explanation-item">
+                <span className="arrow green">2.</span>
+                <span>When price falls (P₁ → P₂ → P₃), consumer buys more quantity (Q₁ → Q₂ → Q₃)</span>
+              </div>
+              <div className="explanation-item">
+                <span className="arrow red">3.</span>
+                <span>Plotting price-quantity combinations gives the <strong>downward sloping demand curve</strong></span>
+              </div>
+              <div className="explanation-item">
+                <span className="arrow gold">4.</span>
+                <span><strong>Law of DMU</strong> is the foundation - as consumption increases, MU falls, so consumer needs lower price to buy more</span>
+              </div>
             </div>
           </div>
 

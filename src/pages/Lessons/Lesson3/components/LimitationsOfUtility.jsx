@@ -30,10 +30,24 @@ function LimitationsOfUtility() {
           {/* Introduction */}
           <h3 className="highlight-gold">Introduction</h3>
           <p>
-            {/* TODO: Add introduction */}
             While utility analysis provides a useful framework for understanding consumer behavior,
-            it is based on several assumptions that may not hold true in the real world.
+            it is based on several assumptions that may not hold true in the real world. These
+            assumptions, while helpful for theoretical analysis, face significant criticisms
+            when applied to actual consumer decision-making.
           </p>
+
+          <div className="highlight-card gold">
+            <div className="highlight-icon"><FaBalanceScale /></div>
+            <div className="highlight-content">
+              <h3>Theoretical vs. Real World</h3>
+              <p>
+                The utility analysis is built on <strong>idealized assumptions</strong> that make
+                mathematical analysis possible but limit its practical application. Understanding
+                these limitations helps us appreciate why economists developed alternative approaches
+                like indifference curve analysis.
+              </p>
+            </div>
+          </div>
 
           {/* Major Limitations */}
           <h3 className="highlight-cyan">Major Limitations</h3>
@@ -49,11 +63,25 @@ function LimitationsOfUtility() {
                 <strong>Assumption:</strong> Utility can be measured in exact numbers like 1, 2, 3, 10, 50 utils
               </div>
               <p>
-                {/* TODO: Add detailed explanation */}
                 <strong>The Problem:</strong> In reality, utility is a psychological concept and cannot
                 be measured in exact numerical terms. When a consumer says "first ice cream gives me
                 20 utils and second gives 15 utils," these numbers are imaginary and cannot be verified.
               </p>
+
+              <div className="explanation-box">
+                <h5>Why Cardinal Measurement Fails:</h5>
+                <ul className="bullet-list">
+                  <li><strong>Subjective Nature:</strong> Utility depends on individual preferences, mood, and circumstances</li>
+                  <li><strong>No Standard Unit:</strong> Unlike weight (kg) or length (m), there's no objective unit for satisfaction</li>
+                  <li><strong>Personal Differences:</strong> Same commodity gives different "utils" to different people</li>
+                  <li><strong>Cannot Verify:</strong> No scientific instrument can measure psychological satisfaction</li>
+                </ul>
+              </div>
+
+              <div className="note-text">
+                <strong>💡 Alternative Approach:</strong> The <strong>Ordinal Approach</strong> (Indifference Curve Analysis)
+                avoids this problem by only requiring consumers to rank preferences (1st, 2nd, 3rd) rather than assign exact numbers.
+              </div>
               <div className="highlight-card green">
                 <div className="highlight-icon"><FaQuestionCircle /></div>
                 <div className="highlight-content">

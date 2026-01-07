@@ -37,11 +37,25 @@ function UtilityCases() {
         <div className="card-content">
           {/* Introduction */}
           <p>
-            {/* TODO: Add introduction */}
             In utility analysis, we study consumer behavior under two simplified scenarios:
             when a consumer buys only one commodity and when a consumer buys two commodities.
-            Both cases help us understand how consumers maximize satisfaction.
+            Both cases help us understand how consumers maximize satisfaction under different
+            consumption patterns. These models form the foundation for understanding more complex
+            consumer behavior in real-world markets.
           </p>
+
+          <div className="highlight-card green">
+            <div className="highlight-icon"><FaLightbulb /></div>
+            <div className="highlight-content">
+              <h4>Why Study These Cases?</h4>
+              <ul className="bullet-list">
+                <li><strong>One Commodity:</strong> Simplifies analysis to understand basic MU-Price relationship</li>
+                <li><strong>Two Commodities:</strong> Introduces substitution and income effects</li>
+                <li><strong>Foundation:</strong> Both cases lead to the derivation of demand curves</li>
+                <li><strong>Real-world:</strong> Helps explain why demand curves slope downward</li>
+              </ul>
+            </div>
+          </div>
 
           {/* One Commodity Case */}
           <h3 className="highlight-gold">Case 1: One Commodity Case</h3>
@@ -63,11 +77,26 @@ function UtilityCases() {
 
           <h4>Explanation</h4>
           <p>
-            {/* TODO: Add detailed explanation */}
             When a consumer buys only one commodity, they will continue to buy as long as
             the marginal utility from the last unit is greater than or equal to the price.
             The consumer stops when MU equals price.
           </p>
+
+          <div className="explanation-box gold">
+            <h5>Step-by-Step Decision Process:</h5>
+            <ol>
+              <li><strong>Compare MU with Price:</strong> For each additional unit, check if MU ≥ Price</li>
+              <li><strong>Buy if MU {'>'} Price:</strong> If MU {'>'} Price, buying gives positive net benefit</li>
+              <li><strong>Stop when MU = Price:</strong> At this point, no further gain from additional consumption</li>
+              <li><strong>Don't Buy if MU {'<'} Price:</strong> Would result in net loss of satisfaction</li>
+            </ol>
+          </div>
+
+          <div className="note-text">
+            <strong>💡 Key Insight:</strong> This condition (MU = P) is the foundation of the <strong>Law of Demand</strong>.
+            As price falls, more units satisfy MU ≥ P, so demand increases. As price rises, fewer units
+            satisfy the condition, so demand decreases.
+          </div>
 
           {/* Example Box */}
           <div className="example-box">
@@ -155,11 +184,31 @@ function UtilityCases() {
 
           <h4>Explanation</h4>
           <p>
-            {/* TODO: Add detailed explanation */}
             When a consumer buys two commodities, they allocate income to maximize total utility.
             The consumer spends each rupee where it gives the most marginal utility.
             At equilibrium, the marginal utility per rupee is the same for both goods.
           </p>
+
+          <div className="explanation-box cyan">
+            <h5>How Consumer Allocates Income:</h5>
+            <ol>
+              <li><strong>Calculate MU/P Ratio:</strong> For each good, find marginal utility per rupee spent</li>
+              <li><strong>Compare Ratios:</strong> Spend on the good with higher MU/P ratio first</li>
+              <li><strong>Re-evaluate After Each Purchase:</strong> MU changes due to Law of DMU</li>
+              <li><strong>Continue Until Equilibrium:</strong> MU<sub>X</sub>/P<sub>X</sub> = MU<sub>Y</sub>/P<sub>Y</sub></li>
+              <li><strong>Spend All Income:</strong> No saving or borrowing (ceteris paribus assumption)</li>
+            </ol>
+          </div>
+
+          <div className="formula-box">
+            <strong>Equilibrium Condition:</strong> MU<sub>X</sub>/P<sub>X</sub> = MU<sub>Y</sub>/P<sub>Y</sub> = MUm
+          </div>
+
+          <div className="note-text">
+            <strong>💡 Key Insight:</strong> This is the <strong>Law of Equi-Marginal Utility</strong> or <strong>Law of Substitution</strong>.
+            It explains how consumers achieve maximum satisfaction by equalizing utility per rupee across all goods.
+            This principle is the foundation for understanding consumer choice and demand in multi-commodity markets.
+          </div>
 
           {/* Example Box */}
           <div className="example-box">
