@@ -12,6 +12,7 @@ import {
   Label,
   ReferenceDot,
 } from 'recharts';
+import './components.css';
 
 function TabularRepresentation() {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -76,23 +77,32 @@ function TabularRepresentation() {
 
   const ppcCurve = generatePPC();
 
+  // Helper function for row classes
+  const getRowClass = (combination, index) => {
+    const baseClass = 'tabular-table-row';
+    const evenClass = index % 2 === 0 ? 'tabular-table-row-even' : '';
+    const selectedClass = selectedRow === combination ? 'tabular-table-row-selected' : '';
+    return `${baseClass} ${evenClass} ${selectedClass}`.trim();
+  };
+
+  // Helper function for combination badge classes
+  const getBadgeClass = (combination) => {
+    const baseClass = 'tabular-table-combination-badge';
+    const selectedClass = selectedRow === combination ? 'tabular-table-combination-badge-selected' : 'tabular-table-combination-badge-normal';
+    return `${baseClass} ${selectedClass}`;
+  };
+
   // Custom tooltip
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length > 0) {
       const data = payload[0].payload;
       return (
-        <div style={{
-          background: 'linear-gradient(135deg, rgba(15, 15, 30, 0.98), rgba(25, 25, 45, 0.98))',
-          border: '2px solid #ffd700',
-          padding: '12px 16px',
-          borderRadius: '10px',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.5)'
-        }}>
-          <p style={{ color: 'white', fontSize: '0.9rem', margin: '5px 0' }}>
-            🌾 Wheat: <strong style={{ color: '#00ff88' }}>{data.wheat.toFixed(0)}</strong>
+        <div className="attainable-tooltip">
+          <p className="attainable-tooltip-text">
+            🌾 Wheat: <strong className="attainable-tooltip-value-green">{data.wheat.toFixed(0)}</strong>
           </p>
-          <p style={{ color: 'white', fontSize: '0.9rem', margin: '5px 0' }}>
-            🍚 Rice: <strong style={{ color: '#00d4ff' }}>{data.rice.toFixed(0)}</strong>
+          <p className="attainable-tooltip-text">
+            🍚 Rice: <strong className="attainable-tooltip-value-cyan">{data.rice.toFixed(0)}</strong>
           </p>
         </div>
       );
@@ -121,57 +131,20 @@ function TabularRepresentation() {
         </p>
 
         {/* Production Schedule Table */}
-        <div style={{
-          overflowX: 'auto',
-          marginTop: '25px',
-          borderRadius: '16px',
-          border: '1px solid rgba(255,215,0,0.2)',
-          background: 'linear-gradient(145deg, rgba(10,10,25,0.6), rgba(20,15,40,0.6))'
-        }}>
-          <table style={{
-            width: '100%',
-            borderCollapse: 'collapse',
-            fontSize: '0.95rem'
-          }}>
-            <thead>
-              <tr style={{
-                background: 'linear-gradient(135deg, rgba(255,215,0,0.2), rgba(0,150,255,0.2))',
-                borderBottom: '2px solid rgba(255,215,0,0.4)'
-              }}>
-                <th style={{
-                  padding: '15px 20px',
-                  textAlign: 'center',
-                  color: '#ffd700',
-                  fontWeight: '700',
-                  fontSize: '1rem'
-                }}>
+        <div className="tabular-table-container">
+          <table className="tabular-table">
+            <thead className="tabular-table-head">
+              <tr>
+                <th className="tabular-table-th-base tabular-table-th-combination">
                   Combination
                 </th>
-                <th style={{
-                  padding: '15px 20px',
-                  textAlign: 'center',
-                  color: '#00ff88',
-                  fontWeight: '700',
-                  fontSize: '1rem'
-                }}>
+                <th className="tabular-table-th-base tabular-table-th-wheat">
                   🌾 Wheat (units)
                 </th>
-                <th style={{
-                  padding: '15px 20px',
-                  textAlign: 'center',
-                  color: '#00d4ff',
-                  fontWeight: '700',
-                  fontSize: '1rem'
-                }}>
+                <th className="tabular-table-th-base tabular-table-th-rice">
                   🍚 Rice (units)
                 </th>
-                <th style={{
-                  padding: '15px 20px',
-                  textAlign: 'center',
-                  color: '#ff6b6b',
-                  fontWeight: '700',
-                  fontSize: '1rem'
-                }}>
+                <th className="tabular-table-th-base tabular-table-th-cost">
                   Opportunity Cost
                 </th>
               </tr>
@@ -181,67 +154,20 @@ function TabularRepresentation() {
                 <tr
                   key={row.combination}
                   onClick={() => setSelectedRow(selectedRow === row.combination ? null : row.combination)}
-                  style={{
-                    borderBottom: '1px solid rgba(255,255,255,0.08)',
-                    background: selectedRow === row.combination
-                      ? 'rgba(255,215,0,0.15)'
-                      : index % 2 === 0
-                        ? 'rgba(255,255,255,0.02)'
-                        : 'transparent',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (selectedRow !== row.combination) {
-                      e.currentTarget.style.background = 'rgba(255,215,0,0.08)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (selectedRow !== row.combination) {
-                      e.currentTarget.style.background = index % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent';
-                    }
-                  }}
+                  className={getRowClass(row.combination, index)}
                 >
-                  <td style={{
-                    padding: '18px 20px',
-                    textAlign: 'center',
-                    color: 'white',
-                    fontWeight: '700',
-                    fontSize: '1.1rem'
-                  }}>
-                    <span style={{
-                      background: selectedRow === row.combination ? '#ffd700' : 'rgba(255,215,0,0.2)',
-                      color: selectedRow === row.combination ? '#0a0a15' : '#ffd700',
-                      padding: '6px 14px',
-                      borderRadius: '8px',
-                      fontWeight: '700'
-                    }}>
+                  <td className="tabular-table-td-combination">
+                    <span className={getBadgeClass(row.combination)}>
                       {row.combination}
                     </span>
                   </td>
-                  <td style={{
-                    padding: '18px 20px',
-                    textAlign: 'center',
-                    color: 'white',
-                    fontSize: '1rem',
-                    fontWeight: '600'
-                  }}>
+                  <td className="tabular-table-td-number">
                     {row.wheat}
                   </td>
-                  <td style={{
-                    padding: '18px 20px',
-                    textAlign: 'center',
-                    color: 'white',
-                    fontSize: '1rem',
-                    fontWeight: '600'
-                  }}>
+                  <td className="tabular-table-td-number">
                     {row.rice}
                   </td>
-                  <td style={{
-                    padding: '18px 20px',
-                    textAlign: 'center',
-                    color: 'rgba(255,255,255,0.75)',
-                    fontSize: '0.9rem',
+                  <td className="tabular-table-td-cost" style={{
                     fontStyle: row.opportunityCost === '-' ? 'italic' : 'normal'
                   }}>
                     {row.opportunityCost}
@@ -254,47 +180,23 @@ function TabularRepresentation() {
 
         {/* Selected Row Details */}
         {selectedRow && (
-          <div style={{
-            marginTop: '20px',
-            padding: '20px',
-            background: 'linear-gradient(145deg, rgba(255,215,0,0.15), rgba(0,150,255,0.15))',
-            borderLeft: '5px solid #ffd700',
-            borderRadius: '12px'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-              <FaLightbulb style={{ color: '#ffd700', fontSize: '1.5rem' }} />
-              <h4 style={{ color: '#ffd700', margin: 0, fontSize: '1.1rem' }}>
+          <div className="tabular-selected-details">
+            <div className="tabular-selected-details-header">
+              <FaLightbulb className="tabular-selected-details-icon" />
+              <h4 className="tabular-selected-details-title">
                 Combination {selectedRow}
               </h4>
             </div>
-            <p style={{
-              color: 'rgba(255,255,255,0.85)',
-              margin: 0,
-              fontSize: '0.95rem',
-              lineHeight: '1.6'
-            }}>
+            <p className="tabular-selected-details-text">
               {productionSchedule.find(row => row.combination === selectedRow)?.description}
             </p>
           </div>
         )}
 
         {/* Graph Representation */}
-        <div style={{
-          marginTop: '35px',
-          background: 'linear-gradient(160deg, rgba(10,10,25,0.95), rgba(20,15,40,0.95))',
-          padding: '25px',
-          borderRadius: '18px',
-          border: '1px solid rgba(255,215,0,0.15)'
-        }}>
-          <h4 style={{
-            color: 'white',
-            marginBottom: '20px',
-            fontSize: '1.2rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px'
-          }}>
-            <FaChartBar style={{ color: '#ffd700' }} />
+        <div className="tabular-graph-container">
+          <h4 className="tabular-graph-heading">
+            <FaChartBar className="tabular-graph-heading-icon" />
             Graphical Representation
           </h4>
 
@@ -374,25 +276,19 @@ function TabularRepresentation() {
             </ComposedChart>
           </ResponsiveContainer>
 
-          <p style={{
-            color: 'rgba(255,255,255,0.6)',
-            fontSize: '0.85rem',
-            textAlign: 'center',
-            marginTop: '15px',
-            fontStyle: 'italic'
-          }}>
+          <p className="tabular-graph-note">
             Click on any point in the table or graph to highlight it
           </p>
         </div>
       </div>
 
-      <div className="feature-grid" style={{ marginTop: '30px' }}>
+      <div className="feature-grid tabular-feature-grid">
         <div className="feature-item">
           <div className="feature-icon gold">
             <FaCalculator />
           </div>
           <h4>Reading the Schedule</h4>
-          <p style={{ fontSize: '0.88rem', lineHeight: '1.6' }}>
+          <p className="tabular-feature-text">
             Each row represents a production possibility. Moving down the table, we produce more Wheat and less Rice,
             illustrating the trade-off between the two goods.
           </p>
@@ -403,7 +299,7 @@ function TabularRepresentation() {
             <FaExchangeAlt />
           </div>
           <h4>Increasing Opportunity Cost</h4>
-          <p style={{ fontSize: '0.88rem', lineHeight: '1.6' }}>
+          <p className="tabular-feature-text">
             Notice how the opportunity cost increases as we produce more Wheat. From A to B, we sacrifice 4 units of Rice,
             but from E to F, we sacrifice 55 units of Rice for the same 20-unit increase in Wheat.
           </p>
@@ -414,20 +310,20 @@ function TabularRepresentation() {
             <FaLightbulb />
           </div>
           <h4>Practical Application</h4>
-          <p style={{ fontSize: '0.88rem', lineHeight: '1.6' }}>
+          <p className="tabular-feature-text">
             Governments and businesses use production schedules to make informed decisions about resource allocation,
             understanding the true cost of choosing one production mix over another.
           </p>
         </div>
       </div>
 
-      <div className="highlight-card green" style={{ marginTop: '30px' }}>
+      <div className="highlight-card green tabular-insights-card">
         <div className="highlight-content">
-          <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+          <h3 className="tabular-insights-heading">
             <FaTable />
             Key Insights from the Table
           </h3>
-          <ul style={{ fontSize: '0.95rem', lineHeight: '1.8', margin: 0, paddingLeft: '20px' }}>
+          <ul className="tabular-insights-list">
             <li><strong>All combinations are efficient:</strong> Every row represents full resource utilization</li>
             <li><strong>Scarcity is evident:</strong> We cannot have maximum of both goods simultaneously</li>
             <li><strong>Choice involves trade-offs:</strong> More of one good means less of the other</li>

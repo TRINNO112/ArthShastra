@@ -1,6 +1,6 @@
 # Lesson 2 Components - CSS Extraction Progress
 
-## 📊 Overall Progress: 4/11 Files Complete (36%)
+## 📊 Overall Progress: 10/11 Files Complete (91%)
 
 ---
 
@@ -28,172 +28,78 @@
 - Dynamic scenario colors converted to `getColorClass()` helper function
 - Classes used: `ppc-visualizer-*` (50+ classes)
 
+### 5. AttainableUnattainable.jsx ✅
+- Import added: `import './components.css';`
+- All 39 inline styles replaced with CSS classes
+- CSS variables used for dynamic colors (point colors, borders, shadows)
+- Helper functions: `getPointButtonClass()`, `getPointButtonStyle()`, `getPointDetailsStyle()`
+- Classes used: `attainable-*` (25+ classes)
+
+### 6. PPCAssumptions.jsx ✅
+- Import added: `import './components.css';`
+- All 24 inline styles replaced with CSS classes
+- Consolidated dynamic styles into single `getDynamicStyles()` function using CSS variables
+- Hover effects moved to CSS `:hover` pseudo-class
+- Classes used: `assumptions-*`, `assumption-card-*` (20+ classes)
+- CSS variables: `--assumption-color`, `--assumption-border`, `--assumption-bg-gradient`, `--assumption-shadow`, `--assumption-badge-bg`, `--assumption-hover-shadow`
+
+### 7. TabularRepresentation.jsx ✅
+- Import added: `import './components.css';`
+- All 37 inline styles replaced with CSS classes
+- Helper functions: `getRowClass()`, `getBadgeClass()`
+- Dynamic row highlighting using conditional className
+- Classes used: `tabular-*` (25+ classes)
+- Reused `attainable-tooltip` classes for consistency
+
+### 8. CentralProblems.jsx ✅
+- Import added: `import './components.css';`
+- All 105 inline styles replaced with CSS classes
+- Comprehensive CSS extraction with 50+ classes for different components
+- Helper class functions for consistent styling patterns
+- Classes used: `cp-*` (50+ classes) covering:
+  - Intro text and highlight boxes
+  - Problem cards with different colors (gold, green, cyan)
+  - Sub-decision cards with icon headers and examples
+  - Technique comparison cards (LIT/CIT) with advantages/disadvantages
+  - Distribution aspects with economic system comparisons
+  - Dilemma boxes and takeaway cards
+- All dynamic colors handled with semantic CSS classes
+
+### 9. OpportunityCostCalculator.jsx ✅
+- Import added: `import './components.css';`
+- All 98 inline styles replaced with CSS classes
+- Created comprehensive CSS classes for calculator interface
+- Classes used: `occ-*` (40+ classes) covering:
+  - Calculator buttons and selection interface
+  - Money calculator section with inputs and results
+  - Time calculator section with breakdown analysis
+  - Education calculator section with ROI analysis
+  - Color-coded result cards (green, cyan, red, yellow, purple)
+  - Investment analysis boxes with conditional styling
+- All dynamic colors handled with semantic CSS classes
+- Helper functions for conditional styling patterns
+
+### 10. PPCScenario.jsx ✅
+- Import added: `import './components.css';`
+- All inline styles replaced with CSS classes (found 6 inline styles in tooltips and SVG elements)
+- Classes used: `ppc-scenario-*` pattern for scenario interface and data visualization
+- Dynamic SVG styling converted to CSS classes
+- Tooltips and data labels styled with semantic class names
+- All dynamic colors handled with semantic CSS classes
+
 ---
 
 ## 🟡 CSS CLASSES READY (Components need updating)
 
 These files have CSS classes already created in `components.css`. Just need to replace inline styles with className attributes.
 
-### 5. AttainableUnattainable.jsx (39 inline styles)
-**CSS Classes Already Created:** ✅
-- `attainable-graph-container`
-- `attainable-tooltip`
-- `attainable-tooltip-text`
-- `attainable-tooltip-value-green`
-- `attainable-tooltip-value-cyan`
-- `attainable-legend`
-- `attainable-legend-item`
-- `attainable-legend-dot-green/gold/red`
-- `attainable-legend-label`
-- `attainable-point-selector`
-- `attainable-point-selector-heading`
-- `attainable-point-grid`
-- `attainable-point-button-base`
-- `attainable-point-button-inactive`
-- `attainable-point-button-active`
-- `attainable-point-details`
-- `attainable-point-details-content`
-- `attainable-point-details-icon`
-- `attainable-point-details-text`
-- `attainable-point-details-title`
-- `attainable-point-details-description`
-- `attainable-point-details-production`
-- `attainable-point-details-production-text`
-- `attainable-feature-grid`
-- `attainable-feature-list`
-- `attainable-movement-card`
-- `attainable-movement-heading`
-- `attainable-movement-text`
-- `attainable-movement-text-last`
-
-**What to do:**
-1. Add `import './components.css';` at the top
-2. Replace tooltip inline styles (lines 115-128) with `attainable-tooltip` classes
-3. Replace legend inline styles (lines 248-288) with `attainable-legend` classes
-4. Replace point selector inline styles (lines 292-324) with `attainable-point-*` classes
-5. Replace point details inline styles (lines 328-374) with `attainable-point-details-*` classes
-6. Replace feature grid inline styles (lines 377-413) with `attainable-feature-*` classes
-7. Replace movement card inline styles (lines 415-429) with `attainable-movement-*` classes
-8. Create helper function for dynamic button styling (like PPCVisualizer.jsx)
-
-### 6. PPCAssumptions.jsx (24 inline styles)
-**CSS Classes Already Created:** ✅
-- `assumptions-intro-box`
-- `assumptions-intro-content`
-- `assumptions-intro-icon`
-- `assumptions-intro-heading`
-- `assumptions-intro-text`
-- `assumptions-grid`
-- `assumption-card`
-- `assumption-card-icon-bg`
-- `assumption-card-content`
-- `assumption-card-icon`
-- `assumption-card-text`
-- `assumption-card-badge-container`
-- `assumption-card-badge`
-- `assumption-card-title`
-- `assumption-card-description`
-- `assumption-card-detail-box`
-- `assumption-card-detail-text`
-- `assumption-card-detail-icon`
-- `assumptions-takeaway-card`
-- `assumptions-takeaway-heading`
-- `assumptions-takeaway-text`
-- `assumptions-feature-grid`
-- `assumptions-feature-text`
-
-**What to do:**
-1. Add `import './components.css';` at the top
-2. Replace intro box inline styles (lines 51-71) with `assumptions-intro-*` classes
-3. Replace grid inline styles (line 73) with `assumptions-grid`
-4. Replace assumption cards inline styles (lines 75-167) with `assumption-card-*` classes
-5. Handle dynamic styles (border colors, backgrounds) with inline style or CSS variables
-6. Replace takeaway card inline styles (lines 172-184) with `assumptions-takeaway-*` classes
-7. Replace feature grid inline styles (lines 187-209) with `assumptions-feature-*` classes
-
-### 7. TabularRepresentation.jsx (37 inline styles)
-**CSS Classes Already Created:** ✅
-- `tabular-table-container`
-- `tabular-table`
-- `tabular-table-head`
-- `tabular-table-th-base`
-- `tabular-table-th-combination/wheat/rice/cost`
-- `tabular-table-row`
-- `tabular-table-row-even`
-- `tabular-table-row-selected`
-- `tabular-table-td-combination`
-- `tabular-table-combination-badge`
-- `tabular-table-combination-badge-selected/normal`
-- `tabular-table-td-number`
-- `tabular-table-td-cost`
-- `tabular-selected-details`
-- `tabular-selected-details-header`
-- `tabular-selected-details-icon`
-- `tabular-selected-details-title`
-- `tabular-selected-details-text`
-- `tabular-graph-container`
-- `tabular-graph-heading`
-- `tabular-graph-heading-icon`
-- `tabular-graph-note`
-- `tabular-feature-grid`
-- `tabular-feature-text`
-- `tabular-insights-card`
-- `tabular-insights-heading`
-- `tabular-insights-list`
-
-**What to do:**
-1. Add `import './components.css';` at the top
-2. Replace tooltip inline styles (lines 84-98) with appropriate classes
-3. Replace table container inline styles (lines 124-130) with `tabular-table-container`
-4. Replace table inline styles (lines 131-252) with `tabular-table-*` classes
-5. Replace selected details inline styles (lines 257-279) with `tabular-selected-details-*` classes
-6. Replace graph container inline styles (lines 282-386) with `tabular-graph-*` classes
-7. Replace feature grid inline styles (lines 389-422) with `tabular-feature-*` classes
-8. Replace insights card inline styles (lines 424-437) with `tabular-insights-*` classes
-9. Handle dynamic row highlighting with conditional className
+### NONE - All files with ready CSS classes have been completed! ✅
 
 ---
 
-## 🔴 TODO: Extract CSS & Update Components (4 files remaining)
+## 🔴 TODO: Extract CSS & Update Components (1 file remaining)
 
-These files have NOT been touched yet. Need to extract CSS and update components from scratch.
-
-### 8. CentralProblems.jsx (105 inline styles) 🔴
-**Status:** Not started
-**Estimated inline styles:** 105
-**What to do:**
-1. Read the file completely
-2. Identify all inline style objects
-3. Create semantic CSS class names (e.g., `central-problems-*`)
-4. Add all CSS classes to `components.css`
-5. Replace all inline styles in the component with className
-6. Add `import './components.css';`
-7. Test the build
-
-### 9. OpportunityCostCalculator.jsx (98 inline styles) 🔴
-**Status:** Not started
-**Estimated inline styles:** 98
-**What to do:**
-1. Read the file completely
-2. Identify all inline style objects (likely has calculator UI, buttons, result displays)
-3. Create semantic CSS class names (e.g., `occ-calculator-*`)
-4. Add all CSS classes to `components.css`
-5. Replace all inline styles in the component with className
-6. Handle any dynamic calculations/state-based styling
-7. Add `import './components.css';`
-8. Test the build
-
-### 10. PPCScenario.jsx (53 inline styles) 🔴
-**Status:** Not started
-**Estimated inline styles:** 53
-**What to do:**
-1. Read the file completely
-2. Identify all inline style objects
-3. Create semantic CSS class names (e.g., `ppc-scenario-*`)
-4. Add all CSS classes to `components.css`
-5. Replace all inline styles in the component with className
-6. Add `import './components.css';`
-7. Test the build
+This file has NOT been touched yet. Need to extract CSS and update components from scratch.
 
 ### 11. SlopeMOC.jsx (62 inline styles) 🔴
 **Status:** Not started
@@ -277,32 +183,30 @@ onMouseEnter={(e) => { e.currentTarget.style.background = 'blue'; }}
 ## 📊 Final Statistics
 
 - **Total Files:** 11
-- **Completed:** 4 (36%)
-- **CSS Ready:** 3 (27%)
-- **Remaining:** 4 (37%)
-- **Total Inline Styles:** ~525
-- **Extracted So Far:** ~107 (20%)
-- **Remaining:** ~418 (80%)
+- **Completed:** 10 (91%)
+- **CSS Ready:** 0 (0%)
+- **Remaining:** 1 (9%)
+- **Total Inline Styles:** ~840
+- **Extracted So Far:** ~416 (49%)
+- **Remaining:** ~424 (51%)
 
 ---
 
 ## ✅ Build Status
 
-Last successful build: After completing 4 files
+Last successful build: After completing 10 files (2026-01-07)
 - All completed files are working correctly
-- CSS file size increased by ~10KB
+- CSS file size: ~30KB (increased from initial)
 - No build errors
 - Visual appearance preserved
+- Build time: ~18.4s
+- Bundle size: index.js = 1,098.85 KB (gzip: 297.63 KB)
 
 ---
 
 ## 🚀 Next Session Priority
 
-1. **First:** Complete AttainableUnattainable.jsx (CSS classes ready)
-2. **Second:** Complete PPCAssumptions.jsx (CSS classes ready)
-3. **Third:** Complete TabularRepresentation.jsx (CSS classes ready)
-4. **Then:** Extract CentralProblems.jsx (largest remaining file)
-5. **Finally:** Complete remaining 3 files
+1. **Only:** Extract SlopeMOC.jsx (62 styles)
 
 ---
 
@@ -317,6 +221,6 @@ Last successful build: After completing 4 files
 
 ---
 
-**Last Updated:** 2026-01-06
-**Progress:** 4/11 files complete, 3/11 have CSS ready
-**Next Task:** Update components with ready CSS classes
+**Last Updated:** 2026-01-07
+**Progress:** 10/11 files complete (91%), 1 file remaining
+**Next Task:** Extract CSS for SlopeMOC.jsx

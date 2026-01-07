@@ -28,23 +28,109 @@ function WhoIsConsumer() {
         <div className="card-glow"></div>
         <div className="card-content">
           <h3 className="highlight-gold">Definition of a Consumer</h3>
-          <p className="term">
-            "A consumer is a person who buys goods and services for personal consumption
-            and not for resale or commercial purposes."
-          </p>
-          <p>
-            In economics, a consumer is the end-user of goods and services. Unlike a producer
-            who creates or supplies goods, a consumer purchases them to satisfy their wants and needs.
-            Every individual acts as a consumer when they buy products for personal use - whether it's
-            food for eating, clothes for wearing, or entertainment for enjoyment.
-          </p>
-          <p>
-            The term "consumer" is derived from the Latin word "consumere" which means "to use up."
-            In the economic sense, consumption refers to the final use of goods and services by
-            individuals to satisfy their immediate wants. When you buy a smartphone for personal use,
-            you are a consumer. But if a mobile shop owner buys smartphones to resell them, they are
-            a trader, not a consumer in that transaction.
-          </p>
+
+          {/* Enhanced Definition Box */}
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1))',
+            border: '3px solid rgba(255, 215, 0, 0.4)',
+            borderRadius: '15px',
+            padding: '1.8rem',
+            margin: '1.5rem 0',
+            boxShadow: '0 8px 32px rgba(255, 215, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            {/* Decorative corner elements */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '60px',
+              height: '60px',
+              background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.3), transparent)',
+              borderRadius: '0 0 100% 0'
+            }}></div>
+            <div style={{
+              position: 'absolute',
+              bottom: 0,
+              right: 0,
+              width: '60px',
+              height: '60px',
+              background: 'linear-gradient(135deg, transparent, rgba(255, 215, 0, 0.3))',
+              borderRadius: '100% 0 0 0'
+            }}></div>
+
+            <div style={{
+              position: 'relative',
+              zIndex: 1
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.8rem',
+                marginBottom: '1rem'
+              }}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  background: 'linear-gradient(135deg, #ffd700, #ffaa00)',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 15px rgba(255, 215, 0, 0.4)'
+                }}>
+                  <FaUser style={{ color: '#000', fontSize: '1.2rem' }} />
+                </div>
+                <h4 style={{
+                  margin: 0,
+                  fontSize: '1.3rem',
+                  color: '#ffd700',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.5px'
+                }}>Consumer - The Final User</h4>
+              </div>
+
+              <p style={{
+                fontSize: '1.15rem',
+                lineHeight: '1.8',
+                color: '#fff',
+                fontStyle: 'italic',
+                fontWeight: '500',
+                margin: '1rem 0',
+                padding: '1rem',
+                background: 'rgba(0, 0, 0, 0.3)',
+                borderLeft: '4px solid #ffd700',
+                borderRadius: '8px',
+                boxShadow: 'inset 0 2px 8px rgba(0, 0, 0, 0.2)'
+              }}>
+                "A consumer is a person who buys goods and services for personal consumption
+                and not for resale or commercial purposes."
+              </p>
+
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.05)',
+                borderRadius: '10px',
+                padding: '1.2rem',
+                marginTop: '1rem'
+              }}>
+                <p style={{ margin: '0 0 1rem 0', color: '#e8e8e8', lineHeight: '1.7' }}>
+                  In economics, a consumer is the <strong style={{ color: '#ffd700' }}>end-user of goods and services</strong>.
+                  Unlike a producer who creates or supplies goods, a consumer purchases them to satisfy their wants and needs.
+                  Every individual acts as a consumer when they buy products for personal use - whether it's
+                  food for eating, clothes for wearing, or entertainment for enjoyment.
+                </p>
+                <p style={{ margin: 0, color: '#e8e8e8', lineHeight: '1.7' }}>
+                  The term <strong style={{ color: '#ffaa00' }}>"consumer"</strong> is derived from the Latin word
+                  <em style={{ color: '#ffd700' }}> "consumere"</em> which means <strong>"to use up."</strong>
+                  In the economic sense, consumption refers to the final use of goods and services by
+                  individuals to satisfy their immediate wants. When you buy a smartphone for personal use,
+                  you are a consumer. But if a mobile shop owner buys smartphones to resell them, they are
+                  a trader, not a consumer in that transaction.
+                </p>
+              </div>
+            </div>
+          </div>
 
           <h3 className="highlight-green">Key Characteristics of a Consumer</h3>
           <ul className="bullet-list">
@@ -65,20 +151,194 @@ function WhoIsConsumer() {
           </ul>
 
           {/* Real-world Examples */}
-          <div className="note-text">
-            <h4><strong>Real-World Example:</strong></h4>
-            <p>
-              <strong>Scenario:</strong> Rahul has ₹5,000 to spend this month after paying his bills.
-              He wants to buy: new shoes (₹2,500), dinner at a restaurant (₹1,500), a book (₹500),
-              and a movie ticket (₹300). But he also wants to save ₹1,200 for future needs.
-            </p>
-            <p>
-              As a consumer, Rahul must make choices because his wants (total ₹4,800) plus savings
-              (₹1,200) exceed his budget. He decides: buy the shoes (need), skip the dinner (want),
-              buy the book (moderate need), watch the movie (entertainment), and save the rest.
-              This decision-making process reflects consumer behavior - balancing needs, wants, and
-              savings within a limited budget.
-            </p>
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(0, 200, 255, 0.1), rgba(0, 150, 255, 0.1))',
+            border: '3px solid rgba(0, 200, 255, 0.3)',
+            borderRadius: '15px',
+            padding: '1.8rem',
+            margin: '1.5rem 0',
+            boxShadow: '0 8px 32px rgba(0, 200, 255, 0.2)',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            {/* Animated background pattern */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              width: '150px',
+              height: '150px',
+              background: 'radial-gradient(circle, rgba(0, 200, 255, 0.2), transparent)',
+              borderRadius: '50%',
+              opacity: 0.5
+            }}></div>
+            <div style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              width: '100px',
+              height: '100px',
+              background: 'radial-gradient(circle, rgba(0, 150, 255, 0.2), transparent)',
+              borderRadius: '50%',
+              opacity: 0.5
+            }}></div>
+
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.8rem',
+                marginBottom: '1.5rem'
+              }}>
+                <div style={{
+                  width: '45px',
+                  height: '45px',
+                  background: 'linear-gradient(135deg, #00c8ff, #0080ff)',
+                  borderRadius: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 15px rgba(0, 200, 255, 0.4)',
+                  transform: 'rotate(5deg)'
+                }}>
+                  <FaShoppingCart style={{ color: '#fff', fontSize: '1.3rem' }} />
+                </div>
+                <h4 style={{
+                  margin: 0,
+                  fontSize: '1.4rem',
+                  color: '#00c8ff',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.5px'
+                }}>Real-World Example</h4>
+              </div>
+
+              {/* Scenario Box */}
+              <div style={{
+                background: 'rgba(0, 0, 0, 0.4)',
+                borderRadius: '12px',
+                padding: '1.5rem',
+                marginBottom: '1.2rem',
+                border: '2px solid rgba(0, 200, 255, 0.3)',
+                boxShadow: 'inset 0 2px 10px rgba(0, 0, 0, 0.3)'
+              }}>
+                <div style={{
+                  display: 'inline-block',
+                  background: 'linear-gradient(90deg, #00c8ff, #0080ff)',
+                  color: '#000',
+                  padding: '0.4rem 1rem',
+                  borderRadius: '20px',
+                  fontWeight: 'bold',
+                  fontSize: '0.9rem',
+                  marginBottom: '1rem',
+                  boxShadow: '0 2px 10px rgba(0, 200, 255, 0.5)'
+                }}>
+                  SCENARIO
+                </div>
+                <p style={{
+                  margin: 0,
+                  color: '#fff',
+                  fontSize: '1.05rem',
+                  lineHeight: '1.7'
+                }}>
+                  <strong style={{ color: '#ffd700' }}>Rahul</strong> has <strong style={{ color: '#00ff00' }}>₹5,000</strong> to
+                  spend this month after paying his bills. He wants to buy:
+                </p>
+                <ul style={{
+                  listStyle: 'none',
+                  padding: '0.5rem 0 0 0',
+                  margin: 0
+                }}>
+                  <li style={{ padding: '0.4rem 0', color: '#e8e8e8', fontSize: '1rem' }}>
+                    🥾 <strong>New shoes:</strong> <span style={{ color: '#ff6b6b' }}>₹2,500</span>
+                  </li>
+                  <li style={{ padding: '0.4rem 0', color: '#e8e8e8', fontSize: '1rem' }}>
+                    🍽️ <strong>Dinner at restaurant:</strong> <span style={{ color: '#ff6b6b' }}>₹1,500</span>
+                  </li>
+                  <li style={{ padding: '0.4rem 0', color: '#e8e8e8', fontSize: '1rem' }}>
+                    📚 <strong>A book:</strong> <span style={{ color: '#ff6b6b' }}>₹500</span>
+                  </li>
+                  <li style={{ padding: '0.4rem 0', color: '#e8e8e8', fontSize: '1rem' }}>
+                    🎬 <strong>Movie ticket:</strong> <span style={{ color: '#ff6b6b' }}>₹300</span>
+                  </li>
+                  <li style={{ padding: '0.4rem 0', color: '#e8e8e8', fontSize: '1rem' }}>
+                    💰 <strong>Savings goal:</strong> <span style={{ color: '#ffaa00' }}>₹1,200</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Analysis Box */}
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.05)',
+                borderRadius: '12px',
+                padding: '1.5rem',
+                borderLeft: '5px solid #00c8ff'
+              }}>
+                <div style={{
+                  display: 'inline-block',
+                  background: 'rgba(0, 200, 255, 0.2)',
+                  color: '#00c8ff',
+                  padding: '0.3rem 0.8rem',
+                  borderRadius: '15px',
+                  fontWeight: 'bold',
+                  fontSize: '0.85rem',
+                  marginBottom: '1rem',
+                  border: '1px solid rgba(0, 200, 255, 0.5)'
+                }}>
+                  CONSUMER BEHAVIOR IN ACTION
+                </div>
+                <p style={{
+                  margin: '0 0 1rem 0',
+                  color: '#e8e8e8',
+                  lineHeight: '1.7',
+                  fontSize: '1rem'
+                }}>
+                  As a consumer, Rahul must make choices because his wants (total <strong style={{ color: '#ff6b6b' }}>₹4,800</strong>)
+                  plus savings (<strong style={{ color: '#ffaa00' }}>₹1,200</strong>) exceed his budget of
+                  <strong style={{ color: '#00ff00' }}> ₹5,000</strong>.
+                </p>
+                <div style={{
+                  background: 'rgba(0, 200, 255, 0.15)',
+                  padding: '1rem',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(0, 200, 255, 0.3)'
+                }}>
+                  <p style={{ margin: '0 0 0.5rem 0', color: '#00c8ff', fontWeight: 'bold' }}>
+                    Rahul's Decision:
+                  </p>
+                  <ul style={{
+                    listStyle: 'none',
+                    padding: 0,
+                    margin: 0
+                  }}>
+                    <li style={{ padding: '0.3rem 0', color: '#00ff00' }}>
+                      ✅ Buy the shoes (need)
+                    </li>
+                    <li style={{ padding: '0.3rem 0', color: '#ff6b6b' }}>
+                      ❌ Skip the dinner (want)
+                    </li>
+                    <li style={{ padding: '0.3rem 0', color: '#00ff00' }}>
+                      ✅ Buy the book (moderate need)
+                    </li>
+                    <li style={{ padding: '0.3rem 0', color: '#00ff00' }}>
+                      ✅ Watch the movie (entertainment)
+                    </li>
+                    <li style={{ padding: '0.3rem 0', color: '#ffd700' }}>
+                      💾 Save the rest (₹1,200)
+                    </li>
+                  </ul>
+                </div>
+                <p style={{
+                  margin: '1rem 0 0 0',
+                  color: '#e8e8e8',
+                  lineHeight: '1.7',
+                  fontSize: '0.95rem',
+                  fontStyle: 'italic'
+                }}>
+                  This decision-making process reflects <strong style={{ color: '#00c8ff' }}>consumer behavior</strong> - balancing
+                  needs, wants, and savings within a limited budget.
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="highlight-card gold">

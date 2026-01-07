@@ -204,7 +204,7 @@ export async function logLessonProgress(lessonId, timeSpent, completed) {
     }
     await updateUserStats(userId, statsUpdate);
     return { success: true };
-  } catch (error) {
+  } catch {
     return { success: false };
   }
 }

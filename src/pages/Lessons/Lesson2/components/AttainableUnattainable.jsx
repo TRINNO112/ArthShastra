@@ -137,11 +137,9 @@ function AttainableUnattainable() {
   const getPointButtonStyle = (point) => {
     const isSelected = selectedPoint === point.id;
     return {
-      background: isSelected
-        ? `linear-gradient(135deg, ${point.color}, ${point.color}cc)`
-        : undefined,
+      '--point-color': point.color,
+      background: isSelected ? `linear-gradient(135deg, ${point.color}, ${point.color}cc)` : undefined,
       color: isSelected ? '#0a0a15' : undefined,
-      border: `2px solid ${point.color}`,
       boxShadow: isSelected ? `0 4px 20px ${point.color}40` : undefined
     };
   };
@@ -152,6 +150,7 @@ function AttainableUnattainable() {
 
   const getPointDetailsStyle = () => {
     return {
+      '--point-color': selectedPointData.color,
       background: `linear-gradient(145deg, ${selectedPointData.color}15, ${selectedPointData.color}08)`,
       borderLeft: `5px solid ${selectedPointData.color}`,
       boxShadow: `0 4px 20px ${selectedPointData.color}20`
@@ -304,11 +303,11 @@ function AttainableUnattainable() {
         {selectedPointData && (
           <div className={getPointDetailsClass()} style={getPointDetailsStyle()}>
             <div className="attainable-point-details-content">
-              <div className="attainable-point-details-icon" style={{ color: selectedPointData.color }}>
+              <div className="attainable-point-details-icon" style={{ '--icon-color': selectedPointData.color, color: selectedPointData.color }}>
                 {selectedPointData.icon}
               </div>
               <div className="attainable-point-details-text">
-                <h3 className="attainable-point-details-title" style={{ color: selectedPointData.color }}>
+                <h3 className="attainable-point-details-title" style={{ '--title-color': selectedPointData.color, color: selectedPointData.color }}>
                   {selectedPointData.label}: {selectedPointData.status}
                 </h3>
                 <p className="attainable-point-details-description">

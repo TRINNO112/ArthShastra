@@ -38,35 +38,14 @@ function PPCAssumptions() {
     }
   ];
 
-  const getAssumptionCardStyle = (color) => {
+  const getDynamicStyles = (color) => {
     return {
-      border: `2px solid ${color}40`
-    };
-  };
-
-  const getIconBoxStyle = (color) => {
-    return {
-      background: `linear-gradient(135deg, ${color}, ${color}cc)`,
-      boxShadow: `0 4px 15px ${color}40`
-    };
-  };
-
-  const getBadgeStyle = (color) => {
-    return {
-      color: color,
-      background: `${color}20`
-    };
-  };
-
-  const getDetailBoxStyle = (color) => {
-    return {
-      borderLeft: `3px solid ${color}`
-    };
-  };
-
-  const getDetailIconStyle = (color) => {
-    return {
-      color: color
+      '--assumption-color': color,
+      '--assumption-border': `2px solid ${color}40`,
+      '--assumption-bg-gradient': `linear-gradient(135deg, ${color}, ${color}cc)`,
+      '--assumption-shadow': `0 4px 15px ${color}40`,
+      '--assumption-badge-bg': `${color}20`,
+      '--assumption-hover-shadow': `0 10px 30px ${color}30`
     };
   };
 
@@ -102,27 +81,19 @@ function PPCAssumptions() {
             <div
               key={assumption.id}
               className="assumption-card"
-              style={getAssumptionCardStyle(assumption.color)}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-5px)';
-                e.currentTarget.style.boxShadow = `0 10px 30px ${assumption.color}30`;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}
+              style={getDynamicStyles(assumption.color)}
             >
               <div className="assumption-card-icon-bg">
                 {assumption.icon}
               </div>
 
               <div className="assumption-card-content">
-                <div className="assumption-card-icon" style={getIconBoxStyle(assumption.color)}>
+                <div className="assumption-card-icon">
                   {assumption.icon}
                 </div>
                 <div className="assumption-card-text">
                   <div className="assumption-card-badge-container">
-                    <span className="assumption-card-badge" style={getBadgeStyle(assumption.color)}>
+                    <span className="assumption-card-badge">
                       Assumption {assumption.id}
                     </span>
                   </div>
@@ -132,9 +103,9 @@ function PPCAssumptions() {
                   <p className="assumption-card-description">
                     {assumption.description}
                   </p>
-                  <div className="assumption-card-detail-box" style={getDetailBoxStyle(assumption.color)}>
+                  <div className="assumption-card-detail-box">
                     <p className="assumption-card-detail-text">
-                      <FaLightbulb className="assumption-card-detail-icon" style={getDetailIconStyle(assumption.color)} />
+                      <FaLightbulb className="assumption-card-detail-icon" />
                       {assumption.detail}
                     </p>
                   </div>

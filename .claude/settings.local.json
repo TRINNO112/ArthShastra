@@ -22,7 +22,9 @@
       "Bash(tree:*)",
       "Bash(node test-extract.cjs:*)",
       "Bash(findstr:*)",
-      "Bash(del \"C:\\\\Users\\\\Amit Pathak\\\\Documents\\\\ArthShastra\\\\extract-inline-styles.js\")"
+      "Bash(del \"C:\\\\Users\\\\Amit Pathak\\\\Documents\\\\ArthShastra\\\\extract-inline-styles.js\")",
+      "Bash(cat \"C:\\\\Users\\\\Amit Pathak\\\\Documents\\\\ArthShastra\\\\src\\\\pages\\\\Lessons\\\\Lesson2\\\\components\\\\central-problems-temp.css\")",
+      "Bash(del \"C:\\\\Users\\\\Amit Pathak\\\\Documents\\\\ArthShastra\\\\src\\\\pages\\\\Lessons\\\\Lesson2\\\\components\\\\central-problems-temp.css\")"
     ]
   }
 }
