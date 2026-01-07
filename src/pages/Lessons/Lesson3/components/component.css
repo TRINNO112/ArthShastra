@@ -867,6 +867,152 @@ td.negative {
   margin-top: var(--spacing-lg);
 }
 
+/* Dual Diagram Layout for Consumer Equilibrium */
+.dual-diagram {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.diagram-panel {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 20, 40, 0.6) 100%);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.diagram-panel h5 {
+  color: #00ffff;
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+  padding-bottom: 12px;
+}
+
+/* Enhanced Graph Container for Recharts */
+.graph-container {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.05), rgba(0, 200, 255, 0.05));
+  border-radius: 15px;
+  padding: var(--spacing-xl);
+  border: 2px solid rgba(0, 255, 255, 0.2);
+  margin-top: var(--spacing-lg);
+  min-height: 320px;
+}
+
+/* Consumer Equilibrium Main Heading Style */
+.section-title-lesson {
+  font-size: 2.5rem !important;
+  font-weight: 900 !important;
+  background: linear-gradient(135deg, #ffd700, #ff8c00, #ff0000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  position: relative;
+  display: inline-block;
+}
+
+.section-title-lesson::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: linear-gradient(135deg, #ffd700, #ff0000);
+  border-radius: 20px;
+  opacity: 0.3;
+  z-index: -1;
+  filter: blur(10px);
+}
+
+/* Demand Curve Derivation Specific Styles */
+.demand-curve-derivation {
+  margin: 3rem 0;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 0, 0.1));
+  border-radius: 20px;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.1);
+}
+
+.demand-curve-derivation h4 {
+  color: #ffd700;
+  margin-bottom: 2rem;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+  padding-bottom: 1rem;
+}
+
+.demand-curve-derivation h6 {
+  color: #00ffff;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Enhanced Diagram Explanation */
+.diagram-explanation {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  border-left: 4px solid #ffd700;
+}
+
+.explanation-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.explanation-item:last-child {
+  border-bottom: none;
+}
+
+.explanation-item .arrow {
+  font-weight: bold;
+  font-size: 1.2rem;
+  min-width: 20px;
+}
+
+.explanation-item span:last-child {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+}
+
+/* Recharts Tooltip Enhancement */
+.recharts-tooltip-wrapper .recharts-tooltip-label {
+  color: #00ffff !important;
+  font-weight: bold;
+}
+
+.recharts-tooltip-wrapper .recharts-tooltip-item {
+  color: #ffd700 !important;
+  font-weight: bold;
+}
+
+/* Highlighted Section Header for Consumer Equilibrium */
+.section-header-lesson {
+  text-align: center;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+  margin-bottom: 2rem;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(255, 215, 0, 0.05) 100%);
+}
+
 .graph-container h4 {
   display: flex;
   align-items: center;

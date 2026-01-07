@@ -11,10 +11,61 @@
  * Related quiz topic: consumer-equilibrium
  */
 
-import { FaBalanceScale, FaEquals, FaBoxOpen, FaShoppingBag, FaChartLine } from 'react-icons/fa';
+import { FaBalanceScale, FaEquals, FaBoxOpen, FaShoppingBag, FaChartLine, FaArrowRight } from 'react-icons/fa';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  ReferenceLine,
+  ReferenceDot,
+  Label
+} from 'recharts';
 import './component.css';
 
 function ConsumerEquilibrium() {
+  // Data for MU-Price Equilibrium Chart
+  const utilityData = [
+    { quantity: 0, mu: 45 },
+    { quantity: 1, mu: 40 },
+    { quantity: 2, mu: 35 },
+    { quantity: 3, mu: 30 },
+    { quantity: 4, mu: 25 },
+    { quantity: 5, mu: 20 },
+    { quantity: 6, mu: 15 },
+    { quantity: 7, mu: 10 },
+    { quantity: 8, mu: 5 },
+    { quantity: 9, mu: 0 }
+  ];
+
+  // Price levels and their equilibrium quantities
+  const priceLevels = [
+    { value: 40, label: 'P₁ = ₹40', equilibriumQ: 1 },
+    { value: 30, label: 'P₂ = ₹30', equilibriumQ: 3 },
+    { value: 20, label: 'P₃ = ₹20', equilibriumQ: 5 }
+  ];
+
+  // Data for Demand Curve
+  const demandData = [
+    { quantity: 1, price: 40 },
+    { quantity: 2, price: 35 },
+    { quantity: 3, price: 30 },
+    { quantity: 4, price: 25 },
+    { quantity: 5, price: 20 },
+    { quantity: 6, price: 15 },
+    { quantity: 7, price: 10 }
+  ];
+
+  // Specific points to highlight on demand curve
+  const demandPoints = [
+    { quantity: 1, price: 40 },
+    { quantity: 3, price: 30 },
+    { quantity: 5, price: 20 }
+  ];
+
   return (
     <section className="lesson-section">
       <div className="section-header-lesson">
@@ -230,128 +281,199 @@ function ConsumerEquilibrium() {
               {/* Left: MU-Price Equilibrium Diagram */}
               <div className="diagram-panel">
                 <h5>Panel A: Consumer Equilibrium (MU = Price)</h5>
-                <svg viewBox="0 0 500 350" className="mu-price-diagram">
-                  <defs>
-                    <linearGradient id="muGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#00ff00" />
-                      <stop offset="100%" stopColor="#ff6b6b" />
-                    </linearGradient>
-                    <linearGradient id="priceGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#ffd700" />
-                      <stop offset="100%" stopColor="#ff8c00" />
-                    </linearGradient>
-                  </defs>
-
-                  {/* Background */}
-                  <rect x="0" y="0" width="500" height="350" fill="rgba(0,0,0,0.2)" rx="8" />
-
-                  {/* Grid */}
-                  <g className="grid-lines">
-                    {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(x => (
-                      <line key={`v-${x}`} x1={80 + x * 50} y1="60" x2={80 + x * 50} y2="280" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-                    ))}
-                    {[0, 10, 20, 30, 40, 50, 60].map(y => (
-                      <line key={`h-${y}`} x1="80" y1={280 - (y * 4)} x2="450" y2={280 - (y * 4)} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-                    ))}
-                  </g>
-
-                  {/* Axes */}
-                  <line x1="80" y1="280" x2="450" y2="280" stroke="#00ffff" strokeWidth="2" />
-                  <line x1="80" y1="60" x2="80" y2="280" stroke="#00ff00" strokeWidth="2" />
-
-                  {/* MU Curve */}
-                  <path d="M80,280 C150,200 220,140 290,100 C360,60 430,80 450,120"
-                        fill="none" stroke="url(#muGradient)" strokeWidth="3" />
-                  <text x="470" y="110" fill="#00ff00" fontSize="12" fontWeight="bold">MU</text>
-
-                  {/* Price Lines at Different Levels */}
-                  <line x1="80" y1="180" x2="450" y2="180" stroke="url(#priceGradient)" strokeWidth="2" strokeDasharray="5,5" />
-                  <text x="470" y="185" fill="#ffd700" fontSize="12" fontWeight="bold">P₁ = ₹40</text>
-
-                  <line x1="80" y1="220" x2="450" y2="220" stroke="#ffd700" strokeWidth="2" strokeDasharray="5,5" />
-                  <text x="470" y="225" fill="#ffd700" fontSize="12" fontWeight="bold">P₂ = ₹30</text>
-
-                  <line x1="80" y1="260" x2="450" y2="260" stroke="#ffd700" strokeWidth="2" strokeDasharray="5,5" />
-                  <text x="470" y="265" fill="#ffd700" fontSize="12" fontWeight="bold">P₃ = ₹20</text>
-
-                  {/* Equilibrium Points */}
-                  <circle cx="180" cy="180" r="5" fill="#ffff00" stroke="#fff" strokeWidth="2" />
-                  <line x1="180" y1="180" x2="180" y2="280" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
-                  <text x="180" y="295" fill="#ffff00" fontSize="11">Q₁ = 2</text>
-
-                  <circle cx="260" cy="220" r="5" fill="#ffff00" stroke="#fff" strokeWidth="2" />
-                  <line x1="260" y1="220" x2="260" y2="280" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
-                  <text x="260" y="295" fill="#ffff00" fontSize="11">Q₂ = 3</text>
-
-                  <circle cx="340" cy="260" r="5" fill="#ffff00" stroke="#fff" strokeWidth="2" />
-                  <line x1="340" y1="260" x2="340" y2="280" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
-                  <text x="340" y="295" fill="#ffff00" fontSize="11">Q₃ = 4</text>
-
-                  {/* Labels */}
-                  <text x="265" y="310" fill="#00ffff" fontSize="12">Quantity Consumed (Units)</text>
-                  <text x="30" y="170" fill="#00ff00" fontSize="12" transform="rotate(-90 30,170)">Marginal Utility</text>
-                </svg>
+                <div className="graph-container">
+                  <ResponsiveContainer width="100%" height={320}>
+                    <LineChart data={utilityData}>
+                      <CartesianGrid stroke="#00ffff" strokeDasharray="3 3" opacity="0.2" />
+                      <XAxis
+                        dataKey="quantity"
+                        stroke="#00ffff"
+                        tick={{ fill: '#00ffff', fontSize: 12 }}
+                        axisLine={{ stroke: '#00ffff', strokeWidth: 2 }}
+                        tickLine={{ stroke: '#00ffff' }}
+                        label={{
+                          value: 'Quantity Consumed (Units)',
+                          position: 'bottom',
+                          fill: '#00ffff',
+                          fontSize: 12
+                        }}
+                      />
+                      <YAxis
+                        stroke="#00ff00"
+                        tick={{ fill: '#00ff00', fontSize: 12 }}
+                        axisLine={{ stroke: '#00ff00', strokeWidth: 2 }}
+                        tickLine={{ stroke: '#00ff00' }}
+                        domain={[0, 50]}
+                        label={{
+                          value: 'Marginal Utility (Utils)',
+                          angle: -90,
+                          position: 'insideLeft',
+                          fill: '#00ff00',
+                          fontSize: 12
+                        }}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+                          border: '1px solid #00ffff',
+                          borderRadius: '8px'
+                        }}
+                        labelStyle={{ color: '#00ffff' }}
+                        itemStyle={{ color: '#ffd700' }}
+                      />
+                      {/* MU Curve */}
+                      <Line
+                        type="monotone"
+                        dataKey="mu"
+                        stroke="#00ff00"
+                        strokeWidth={3}
+                        dot={{
+                          fill: '#00ff00',
+                          strokeWidth: 2,
+                          r: 5,
+                          stroke: '#fff'
+                        }}
+                        activeDot={{
+                          r: 8,
+                          stroke: '#00ff00',
+                          strokeWidth: 3,
+                          fill: '#fff'
+                        }}
+                        name="Marginal Utility"
+                      />
+                      {/* Price Lines and Equilibrium Points */}
+                      {priceLevels.map((price, idx) => (
+                        <g key={idx}>
+                          {/* Price Line */}
+                          <ReferenceLine
+                            y={price.value}
+                            stroke="#ffd700"
+                            strokeDasharray="5 5"
+                            strokeWidth={2}
+                            label={{
+                              value: price.label,
+                              fill: '#ffd700',
+                              fontSize: 11,
+                              position: 'right'
+                            }}
+                          />
+                          {/* Equilibrium Point */}
+                          <ReferenceDot
+                            x={price.equilibriumQ}
+                            y={price.value}
+                            r={6}
+                            fill="#ffff00"
+                            stroke="#fff"
+                            strokeWidth={2}
+                          />
+                          {/* Vertical Line to X-axis */}
+                          <ReferenceLine
+                            x={price.equilibriumQ}
+                            stroke="#ffff00"
+                            strokeDasharray="3 3"
+                            strokeWidth={1}
+                          />
+                        </g>
+                      ))}
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
 
               {/* Right: Derived Demand Curve */}
               <div className="diagram-panel">
                 <h5>Panel B: Individual Demand Curve</h5>
-                <svg viewBox="0 0 500 350" className="demand-curve-diagram">
-                  <defs>
-                    <linearGradient id="demandGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#ff6b6b" />
-                      <stop offset="100%" stopColor="#8800ff" />
-                    </linearGradient>
-                  </defs>
-
-                  {/* Background */}
-                  <rect x="0" y="0" width="500" height="350" fill="rgba(0,0,0,0.2)" rx="8" />
-
-                  {/* Grid */}
-                  <g className="grid-lines">
-                    {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(x => (
-                      <line key={`v-${x}`} x1={80 + x * 50} y1="60" x2={80 + x * 50} y2="280" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-                    ))}
-                    {[0, 10, 20, 30, 40, 50, 60].map(y => (
-                      <line key={`h-${y}`} x1="80" y1={280 - (y * 4)} x2="450" y2={280 - (y * 4)} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-                    ))}
-                  </g>
-
-                  {/* Axes */}
-                  <line x1="80" y1="280" x2="450" y2="280" stroke="#00ffff" strokeWidth="2" />
-                  <line x1="80" y1="60" x2="80" y2="280" stroke="#ff6b6b" strokeWidth="2" />
-
-                  {/* Demand Curve */}
-                  <path d="M80,260 C150,220 220,180 290,140 C360,100 430,80 450,80"
-                        fill="none" stroke="url(#demandGradient)" strokeWidth="3" />
-                  <text x="470" y="85" fill="#ff6b6b" fontSize="12" fontWeight="bold">Demand Curve</text>
-
-                  {/* Price-Quantity Points */}
-                  <circle cx="180" cy="220" r="5" fill="#ffff00" stroke="#fff" strokeWidth="2" />
-                  <line x1="180" y1="220" x2="180" y2="280" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
-                  <text x="180" y="295" fill="#ffff00" fontSize="11">Q₁ = 2</text>
-
-                  <line x1="80" y1="220" x2="180" y2="220" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
-                  <text x="60" y="225" fill="#ffff00" fontSize="11">P₁ = ₹40</text>
-
-                  <circle cx="260" cy="180" r="5" fill="#ffff00" stroke="#fff" strokeWidth="2" />
-                  <line x1="260" y1="180" x2="260" y2="280" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
-                  <text x="260" y="295" fill="#ffff00" fontSize="11">Q₂ = 3</text>
-
-                  <line x1="80" y1="180" x2="260" y2="180" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
-                  <text x="60" y="185" fill="#ffff00" fontSize="11">P₂ = ₹30</text>
-
-                  <circle cx="340" cy="140" r="5" fill="#ffff00" stroke="#fff" strokeWidth="2" />
-                  <line x1="340" y1="140" x2="340" y2="280" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
-                  <text x="340" y="295" fill="#ffff00" fontSize="11">Q₃ = 4</text>
-
-                  <line x1="80" y1="140" x2="340" y2="140" stroke="#ffff00" strokeWidth="1" strokeDasharray="4,2" />
-                  <text x="60" y="145" fill="#ffff00" fontSize="11">P₃ = ₹20</text>
-
-                  {/* Labels */}
-                  <text x="265" y="310" fill="#00ffff" fontSize="12">Quantity Demanded</text>
-                  <text x="30" y="170" fill="#ff6b6b" fontSize="12" transform="rotate(-90 30,170)">Price (₹)</text>
-                </svg>
+                <div className="graph-container">
+                  <ResponsiveContainer width="100%" height={320}>
+                    <LineChart data={demandData}>
+                      <CartesianGrid stroke="#00ffff" strokeDasharray="3 3" opacity="0.2" />
+                      <XAxis
+                        dataKey="quantity"
+                        stroke="#00ffff"
+                        tick={{ fill: '#00ffff', fontSize: 12 }}
+                        axisLine={{ stroke: '#00ffff', strokeWidth: 2 }}
+                        tickLine={{ stroke: '#00ffff' }}
+                        label={{
+                          value: 'Quantity Demanded (Units)',
+                          position: 'bottom',
+                          fill: '#00ffff',
+                          fontSize: 12
+                        }}
+                      />
+                      <YAxis
+                        stroke="#ff6b6b"
+                        tick={{ fill: '#ff6b6b', fontSize: 12 }}
+                        axisLine={{ stroke: '#ff6b6b', strokeWidth: 2 }}
+                        tickLine={{ stroke: '#ff6b6b' }}
+                        domain={[15, 45]}
+                        label={{
+                          value: 'Price (₹)',
+                          angle: -90,
+                          position: 'insideLeft',
+                          fill: '#ff6b6b',
+                          fontSize: 12
+                        }}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+                          border: '1px solid #ff6b6b',
+                          borderRadius: '8px'
+                        }}
+                        labelStyle={{ color: '#ff6b6b' }}
+                        itemStyle={{ color: '#ffd700' }}
+                      />
+                      {/* Demand Curve */}
+                      <Line
+                        type="monotone"
+                        dataKey="price"
+                        stroke="#ff6b6b"
+                        strokeWidth={3}
+                        dot={{
+                          fill: '#ff6b6b',
+                          strokeWidth: 2,
+                          r: 5,
+                          stroke: '#fff'
+                        }}
+                        activeDot={{
+                          r: 8,
+                          stroke: '#ff6b6b',
+                          strokeWidth: 3,
+                          fill: '#fff'
+                        }}
+                        name="Demand Curve"
+                      />
+                      {/* Price-Quantity Points */}
+                      {demandPoints.map((point, idx) => (
+                        <g key={idx}>
+                          {/* Price Line */}
+                          <ReferenceLine
+                            y={point.price}
+                            stroke="#ffff00"
+                            strokeDasharray="3 3"
+                            strokeWidth={1}
+                          />
+                          {/* Quantity Line */}
+                          <ReferenceLine
+                            x={point.quantity}
+                            stroke="#ffff00"
+                            strokeDasharray="3 3"
+                            strokeWidth={1}
+                          />
+                          {/* Point */}
+                          <ReferenceDot
+                            x={point.quantity}
+                            y={point.price}
+                            r={6}
+                            fill="#ffff00"
+                            stroke="#fff"
+                            strokeWidth={2}
+                          />
+                        </g>
+                      ))}
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
               </div>
             </div>
 
