@@ -40,9 +40,18 @@ const sections = [
 ];
 
 function Lesson1() {
-  const [activeSection, setActiveSection] = useState('intro');
+  // Load active section from localStorage, default to 'intro'
+  const [activeSection, setActiveSection] = useState(() => {
+    const saved = localStorage.getItem('lesson1-activeSection');
+    return saved || 'intro';
+  });
   const [startTime] = useState(() => Date.now());
   const lessonId = 'micro11-1';
+
+  // Save active section to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('lesson1-activeSection', activeSection);
+  }, [activeSection]);
 
   // Track time spent and completion
   useEffect(() => {

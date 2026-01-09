@@ -514,18 +514,146 @@ function ConsumerEquilibrium() {
         </div>
       </div>
 
-      {/* Placeholder for additional content */}
-      <div className="content-card placeholder">
+      {/* Numerical Examples and Practice Problems */}
+      <div className="content-card">
         <div className="card-glow"></div>
         <div className="card-content">
-          <div className="placeholder-message">
-            <h3>Content Coming Soon</h3>
-            <p>This section needs the following content:</p>
-            <ul>
-              <li>More numerical examples</li>
-              <li>Interactive equilibrium calculator</li>
-              <li>Graph visualization</li>
-              <li>Practice problems with solutions</li>
+          <h3 className="highlight-gold">✏️ Practice Problems</h3>
+
+          {/* Problem 1: One Commodity */}
+          <div className="example-box">
+            <h4>
+              <span style={{ color: '#00ffff' }}>Problem 1:</span> Find Equilibrium (One Commodity)
+            </h4>
+            <div className="example-content">
+              <p>
+                The price of chocolate is ₹10 per bar. The marginal utility schedule is given below.
+                Find the equilibrium quantity where the consumer stops buying.
+              </p>
+              <div className="table-container">
+                <table className="equilibrium-table">
+                  <thead>
+                    <tr>
+                      <th>Bars</th>
+                      <th>MU (Utils)</th>
+                      <th>Price (₹)</th>
+                      <th>MU - Price</th>
+                      <th>Decision</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>25</td>
+                      <td>10</td>
+                      <td>+15</td>
+                      <td>Buy</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>20</td>
+                      <td>10</td>
+                      <td>+10</td>
+                      <td>Buy</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>10</td>
+                      <td>10</td>
+                      <td>0</td>
+                      <td><strong>Equilibrium</strong></td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>5</td>
+                      <td>10</td>
+                      <td>-5</td>
+                      <td>Don't Buy</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p><strong>Answer:</strong> Consumer buys 3 bars (where MU = Price = ₹10)</p>
+            </div>
+          </div>
+
+          {/* Problem 2: Two Commodities */}
+          <div className="example-box">
+            <h4>
+              <span style={{ color: '#ffd700' }}>Problem 2:</span> Find Equilibrium (Two Commodities)
+            </h4>
+            <div className="example-content">
+              <p>
+                A consumer has ₹24 to spend on Good X (₹3/unit) and Good Y (₹2/unit).
+                The marginal utility schedules are given below. Find the equilibrium bundle.
+              </p>
+              <div className="table-container">
+                <table className="equilibrium-table two-commodity">
+                  <thead>
+                    <tr>
+                      <th>Units</th>
+                      <th>MUₓ</th>
+                      <th>MUᵧ</th>
+                      <th>MUₓ/Pₓ</th>
+                      <th>MUᵧ/Pᵧ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>18</td>
+                      <td>16</td>
+                      <td>6</td>
+                      <td>8</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>15</td>
+                      <td>14</td>
+                      <td>5</td>
+                      <td>7</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>12</td>
+                      <td>10</td>
+                      <td>4</td>
+                      <td>5</td>
+                    </tr>
+                    <tr>
+                      <td>4</td>
+                      <td>9</td>
+                      <td>6</td>
+                      <td>3</td>
+                      <td>3</td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>6</td>
+                      <td>2</td>
+                      <td>2</td>
+                      <td>1</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p>
+                <strong>Solution:</strong> MUₓ/Pₓ = MUᵧ/Pᵧ = 3 at 4 units of X and 4 units of Y.
+              </p>
+              <p>
+                <strong>Check Budget:</strong> (4 × ₹3) + (4 × ₹2) = ₹12 + ₹8 = ₹20 (within budget).
+                Consumer can also add more units until budget is exhausted.
+              </p>
+            </div>
+          </div>
+
+          {/* Key Formulas */}
+          <div className="formula-display">
+            <h4>📐 Key Formulas</h4>
+            <ul className="bullet-list">
+              <li><strong>One Commodity:</strong> MU = Price</li>
+              <li><strong>Two Commodities:</strong> MUₓ/Pₓ = MUᵧ/Pᵧ</li>
+              <li><strong>General Condition:</strong> MU₁/P₁ = MU₂/P₂ = ... = MUₙ/Pₙ</li>
             </ul>
           </div>
         </div>

@@ -11,7 +11,7 @@
  * Related quiz topic: limitations
  */
 
-import { FaRuler, FaUserSecret, FaExchangeAlt, FaQuestionCircle, FaExclamationTriangle } from 'react-icons/fa';
+import { FaRuler, FaUserSecret, FaExchangeAlt, FaQuestionCircle, FaExclamationTriangle, FaBalanceScale } from 'react-icons/fa';
 import './component.css';
 
 function LimitationsOfUtility() {
@@ -103,11 +103,21 @@ function LimitationsOfUtility() {
             </div>
             <div className="limitation-content">
               <p>
-                {/* TODO: Add detailed explanation */}
                 <strong>The Problem:</strong> Utility analysis assumes we can compare the utility
                 that different persons derive from the same commodity. However, this is impossible
                 because utility is subjective and personal.
               </p>
+
+              <div className="explanation-box">
+                <h5>Why Inter-personal Comparison Fails:</h5>
+                <ul className="bullet-list">
+                  <li><strong>Subjective Nature:</strong> Each person's preferences, tastes, and circumstances are unique</li>
+                  <li><strong>Different Backgrounds:</strong> Rich vs poor, urban vs rural, young vs old — all affect utility perception</li>
+                  <li><strong>No Common Scale:</strong> There's no objective "utility meter" that works across individuals</li>
+                  <li><strong>Mental Privacy:</strong> We cannot read others' minds to know their satisfaction levels</li>
+                </ul>
+              </div>
+
               <div className="two-column">
                 <div className="column">
                   <div className="example-box-small">
@@ -127,6 +137,12 @@ function LimitationsOfUtility() {
                   </div>
                 </div>
               </div>
+
+              <div className="note-text">
+                <strong>💡 Real-world Impact:</strong> This limitation affects welfare economics and taxation policy.
+                Progressive taxation assumes that ₹100 means more to a poor person than to a rich person, but this
+                is an assumption, not a scientifically measurable fact.
+              </div>
             </div>
           </div>
 
@@ -138,11 +154,36 @@ function LimitationsOfUtility() {
             </div>
             <div className="limitation-content">
               <p>
-                {/* TODO: Add detailed explanation */}
                 <strong>The Problem:</strong> Utility analysis assumes that the marginal utility of
                 money remains constant while the consumer spends income. In reality, as a person
-                spends more money, the marginal utility of remaining money increases.
+                spends more money, the marginal utility of remaining money increases (due to scarcity).
               </p>
+
+              <div className="explanation-box">
+                <h5>Why This Assumption is Unrealistic:</h5>
+                <ul className="bullet-list">
+                  <li><strong>Scarcity Principle:</strong> As you spend money, remaining money becomes more valuable</li>
+                  <li><strong>Law of DMU Applies to Money Too:</strong> First ₹1000 spent gives less MU than the last ₹1000</li>
+                  <li><strong>Rich vs Poor:</strong> ₹100 has different utility for rich vs poor consumers</li>
+                  <li><strong>Buying Power Changes:</strong> Inflation and price changes affect money's real value</li>
+                </ul>
+              </div>
+
+              <div className="example-box">
+                <h5>Example: Why MU of Money is Not Constant</h5>
+                <div className="example-content">
+                  <p><strong>Scenario:</strong> A person has ₹10,000 to spend on goods.</p>
+                  <p><strong>First ₹1,000 spent:</strong> MU is relatively low (still have ₹9,000 left)</p>
+                  <p><strong>Last ₹1,000 spent:</strong> MU is very high (only ₹1,000 remaining, precious)</p>
+                  <p><strong>But utility analysis treats all ₹1,000 as having equal MU!</strong></p>
+                </div>
+              </div>
+
+              <div className="note-text">
+                <strong>💡 Impact on Analysis:</strong> If MU of money varies with expenditure, the equilibrium
+                condition (MUₓ/Pₓ = MUᵧ/Pᵧ = MUₘ) becomes complex because MUₘ itself changes as spending increases.
+                This makes consumer behavior predictions less accurate.
+              </div>
             </div>
           </div>
 
@@ -154,11 +195,52 @@ function LimitationsOfUtility() {
             </div>
             <div className="limitation-content">
               <p>
-                {/* TODO: Add detailed explanation */}
-                <strong>The Problem:</strong> The analysis assumes consumers are perfectly rational
-                and have complete information about all goods and prices. In reality, consumers
-                often make irrational decisions due to emotions, habits, or limited information.
+                <strong>The Problem:</strong> The analysis assumes consumers are perfectly rational,
+                have complete information about all goods and prices, and always choose to maximize satisfaction.
+                In reality, consumers often make irrational decisions due to emotions, habits, limited information,
+                or cognitive biases.
               </p>
+
+              <div className="explanation-box">
+                <h5>Why Perfect Rationality is Unrealistic:</h5>
+                <ul className="bullet-list">
+                  <li><strong>Bounded Rationality:</strong> Consumers have limited mental capacity to process all information</li>
+                  <li><strong>Emotional Decisions:</strong> Fear, anger, love, and excitement often override logical choices</li>
+                  <li><strong>Habitual Behavior:</strong> People often buy out of habit without comparing alternatives</li>
+                  <li><strong>Information Asymmetry:</strong> Consumers rarely have complete information about all options</li>
+                  <li><strong>Social Influence:</strong> Peer pressure, advertising, and trends affect decisions</li>
+                  <li><strong>Cognitive Biases:</strong> Anchoring, loss aversion, and other biases distort choices</li>
+                </ul>
+              </div>
+
+              <div className="two-column">
+                <div className="column">
+                  <div className="example-box-small">
+                    <h5>Example: Irrational Choices</h5>
+                    <ul style={{ margin: 0, paddingLeft: '1rem' }}>
+                      <li>Buying expensive brand name vs cheaper generic</li>
+                      <li>Impulse buying due to sales</li>
+                      <li>Choosing based on attractive packaging</li>
+                      <li>Emotional eating (comfort food)</li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="column">
+                  <div className="highlight-card gold">
+                    <div className="highlight-icon"><FaExclamationTriangle /></div>
+                    <div className="highlight-content">
+                      <h3>Behavioral Economics</h3>
+                      <p>Modern economists study these irrational behaviors to build more realistic models.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="note-text">
+                <strong>💡 Real-world Impact:</strong> This limitation explains why marketing, advertising, and
+                psychology are important in business. Companies exploit these irrational behaviors to influence
+                consumer choices. The utility analysis cannot predict these influences.
+              </div>
             </div>
           </div>
 

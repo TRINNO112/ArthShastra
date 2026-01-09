@@ -19,7 +19,20 @@
  * Related quiz topic: consumer-equilibrium
  */
 
-import { FaBoxOpen, FaShoppingBag, FaEquals, FaExchangeAlt, FaCalculator } from 'react-icons/fa';
+import { FaBoxOpen, FaShoppingBag, FaExchangeAlt, FaCalculator, FaLightbulb } from 'react-icons/fa';
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ReferenceLine,
+  BarChart,
+  Bar,
+} from 'recharts';
 import './component.css';
 
 function UtilityCases() {
@@ -102,7 +115,13 @@ function UtilityCases() {
           <div className="example-box">
             <h4><FaCalculator /> Numerical Example</h4>
             <div className="example-content">
-              <p><strong>Given:</strong> Price of commodity = ₹5 per unit</p>
+              <h5>Question</h5>
+              <p>
+                The price of a commodity is <strong>₹10 per unit</strong>. The marginal utility (MU) schedule is given below.
+                Using the <strong>MU = Price</strong> condition, find the <strong>equilibrium quantity</strong>.
+              </p>
+
+              <h5>Table</h5>
               <div className="table-container">
                 <table className="case-table">
                   <thead>
@@ -110,57 +129,72 @@ function UtilityCases() {
                       <th>Units</th>
                       <th>MU (Utils)</th>
                       <th>Price (₹)</th>
-                      <th>MU - Price</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td>1</td>
-                      <td>25</td>
-                      <td>5</td>
-                      <td>+20</td>
-                      <td>Buy - Gain 20 utils</td>
+                      <td>20</td>
+                      <td>10</td>
+                      <td>Buy (MU {'>'} Price)</td>
                     </tr>
                     <tr>
                       <td>2</td>
-                      <td>20</td>
-                      <td>5</td>
-                      <td>+15</td>
-                      <td>Buy - Gain 15 utils</td>
+                      <td>16</td>
+                      <td>10</td>
+                      <td>Buy (MU {'>'} Price)</td>
                     </tr>
                     <tr>
                       <td>3</td>
-                      <td>15</td>
-                      <td>5</td>
-                      <td>+10</td>
-                      <td>Buy - Gain 10 utils</td>
+                      <td>10</td>
+                      <td>10</td>
+                      <td><strong>Equilibrium (MU = Price)</strong></td>
                     </tr>
                     <tr>
                       <td>4</td>
+                      <td>5</td>
                       <td>10</td>
-                      <td>5</td>
-                      <td>+5</td>
-                      <td>Buy - Gain 5 utils</td>
+                      <td>Don't Buy (MU {'<'} Price)</td>
                     </tr>
                     <tr>
                       <td>5</td>
-                      <td>5</td>
-                      <td>5</td>
                       <td>0</td>
-                      <td><strong>Equilibrium</strong></td>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td>0</td>
-                      <td>5</td>
-                      <td>-5</td>
-                      <td>Don't Buy - Lose 5 utils</td>
+                      <td>10</td>
+                      <td>Don't Buy (MU {'<'} Price)</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <p><strong>Equilibrium Quantity:</strong> 5 units (where MU = Price = 5)</p>
+
+              <h5>Graph</h5>
+              <div style={{ width: '100%', height: 350 }}>
+                <ResponsiveContainer>
+                  <LineChart
+                    data={[
+                      { units: 0, MU: 25, Price: 10 },
+                      { units: 1, MU: 20, Price: 10 },
+                      { units: 2, MU: 16, Price: 10 },
+                      { units: 3, MU: 10, Price: 10 },
+                      { units: 4, MU: 5, Price: 10 },
+                      { units: 5, MU: 0, Price: 10 },
+                    ]}
+                    margin={{ top: 20, right: 30, left: 40, bottom: 20 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="units" label={{ value: 'Units of Commodity', position: 'insideBottom', offset: -5 }} />
+                    <YAxis label={{ value: 'MU (Utils) / Price (₹)', angle: -90, position: 'insideLeft' }} domain={[0, 30]} />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="Price" stroke="#f59e0b" strokeWidth={2} dot={false} name="Price (₹)" />
+                    <Line type="monotone" dataKey="MU" stroke="#22c55e" strokeWidth={3} dot={{ r: 4 }} name="MU (Utils)" />
+                    {/* Mark equilibrium point E where MU = Price */}
+                    <ReferenceLine x={3} stroke="#ef4444" strokeDasharray="5 5" label={{ value: 'E', position: 'top' }} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+
+              <p><strong>Equilibrium Quantity:</strong> 3 units (where MU = Price = ₹10) — Point E on the graph</p>
             </div>
           </div>
 
@@ -214,42 +248,102 @@ function UtilityCases() {
           <div className="example-box">
             <h4><FaCalculator /> Numerical Example</h4>
             <div className="example-content">
-              <p><strong>Given:</strong> Income = ₹20, P<sub>X</sub> = ₹5, P<sub>Y</sub> = ₹4</p>
-              <p><strong>Initial State:</strong></p>
+              <h5>Question</h5>
+              <p>
+                A consumer has income of <strong>₹26</strong> to spend on two goods, X and Y.
+                Prices are: P<sub>X</sub> = <strong>₹2</strong>, P<sub>Y</sub> = <strong>₹2</strong>.
+                The MU schedules for both goods are shown below. Find the equilibrium bundle using <strong>MU<sub>X</sub>/P<sub>X</sub> = MU<sub>Y</sub>/P<sub>Y</sub></strong>.
+              </p>
+
+              <h5>Table</h5>
               <div className="table-container">
                 <table className="case-table">
                   <thead>
                     <tr>
-                      <th>Commodity</th>
                       <th>Units</th>
-                      <th>MU</th>
-                      <th>Price (₹)</th>
-                      <th>MU/P</th>
-                      <th>Action</th>
+                      <th>MU<sub>X</sub></th>
+                      <th>MU<sub>Y</sub></th>
+                      <th>MU<sub>X</sub>/P<sub>X</sub></th>
+                      <th>MU<sub>Y</sub>/P<sub>Y</sub></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td>X (Apple)</td>
-                      <td>2</td>
-                      <td>15</td>
-                      <td>5</td>
-                      <td>3</td>
-                      <td>Buy less X</td>
+                      <td>1</td>
+                      <td>36</td>
+                      <td>40</td>
+                      <td>18</td>
+                      <td>20</td>
                     </tr>
                     <tr>
-                      <td>Y (Orange)</td>
                       <td>2</td>
+                      <td>24</td>
+                      <td>32</td>
+                      <td>12</td>
                       <td>16</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td><strong>12</strong></td>
+                      <td>24</td>
+                      <td><strong>6</strong></td>
+                      <td>12</td>
+                    </tr>
+                    <tr>
                       <td>4</td>
+                      <td>8</td>
+                      <td><strong>12</strong></td>
                       <td>4</td>
-                      <td>Buy more Y</td>
+                      <td><strong>6</strong></td>
+                    </tr>
+                    <tr>
+                      <td>5</td>
+                      <td>6</td>
+                      <td>8</td>
+                      <td>3</td>
+                      <td>4</td>
+                    </tr>
+                    <tr>
+                      <td>6</td>
+                      <td>4</td>
+                      <td>6</td>
+                      <td>2</td>
+                      <td>3</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <p><strong>Adjustment:</strong> Since MUy/Py (4) &gt; MUx/Px (3), consumer should buy more Y and less X</p>
-              <p><strong>Final Equilibrium:</strong> MUx/Px = MUy/Py = 3.5</p>
+
+              <h5>Graph</h5>
+              <div style={{ width: '100%', height: 350 }}>
+                <ResponsiveContainer>
+                  <LineChart
+                    data={[
+                      { units: 1, MUX: 36, MUY: 40 },
+                      { units: 2, MUX: 24, MUY: 32 },
+                      { units: 3, MUX: 12, MUY: 24 },
+                      { units: 4, MUX: 8, MUY: 12 },
+                      { units: 5, MUX: 6, MUY: 8 },
+                      { units: 6, MUX: 4, MUY: 6 },
+                    ]}
+                    margin={{ top: 20, right: 30, left: 40, bottom: 20 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="units" label={{ value: 'Units', position: 'insideBottom', offset: -5 }} />
+                    <YAxis label={{ value: 'MU (Utils)', angle: -90, position: 'insideLeft' }} domain={[0, 50]} />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="MUX" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4 }} name="MUₓ (Good X)" />
+                    <Line type="monotone" dataKey="MUY" stroke="#06b6d4" strokeWidth={3} dot={{ r: 4 }} name="MUᵧ (Good Y)" />
+                    {/* Mark equilibrium points */}
+                    <ReferenceLine x={3} stroke="#3b82f6" strokeDasharray="5 5" label={{ value: 'X=3', position: 'top' }} />
+                    <ReferenceLine x={4} stroke="#06b6d4" strokeDasharray="5 5" label={{ value: 'Y=4', position: 'bottom' }} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+
+              <p><strong>Equilibrium:</strong> Consumer buys 3 units of X and 4 units of Y where MU<sub>X</sub>/P<sub>X</sub> = MU<sub>Y</sub>/P<sub>Y</sub> = 6.</p>
+              <p><strong>Total Expenditure:</strong> (3 × ₹2) + (4 × ₹2) = ₹6 + ₹8 = ₹14 (within income)</p>
             </div>
           </div>
 
@@ -309,19 +403,134 @@ function UtilityCases() {
         </div>
       </div>
 
-      {/* Placeholder for additional content */}
-      <div className="content-card placeholder">
+      {/* Practice / Additional Examples */}
+      <div className="content-card">
         <div className="card-glow"></div>
         <div className="card-content">
-          <div className="placeholder-message">
-            <h3>Content Coming Soon</h3>
-            <p>This section needs the following content:</p>
+          <h3 className="highlight-gold">More Practice: One-Commodity Case</h3>
+          <p>
+            Suppose the price of a commodity (say, "Tea") is ₹4 per cup. A consumer will keep buying
+            cups of tea as long as the marginal utility (MU) of the last cup is at least ₹4.
+          </p>
+
+          <div className="table-container">
+            <table className="case-table">
+              <thead>
+                <tr>
+                  <th>Cups</th>
+                  <th>MU (Utils)</th>
+                  <th>Price (₹)</th>
+                  <th>Decision</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>18</td>
+                  <td>4</td>
+                  <td>Buy (MU &gt; P)</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>14</td>
+                  <td>4</td>
+                  <td>Buy (MU &gt; P)</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>10</td>
+                  <td>4</td>
+                  <td>Buy (MU &gt; P)</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>6</td>
+                  <td>4</td>
+                  <td>Buy (MU &gt; P)</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>4</td>
+                  <td>4</td>
+                  <td><strong>Stop here (MU = P)</strong></td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>2</td>
+                  <td>4</td>
+                  <td>Don’t buy (MU &lt; P)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="note-text">
+            <strong>Result:</strong> Equilibrium quantity is <strong>5 cups</strong> (where MU = P).
+          </div>
+
+          <h3 className="highlight-green">More Practice: Two-Commodity Case</h3>
+          <p>
+            Now assume the consumer spends income on two goods: <strong>X</strong> and <strong>Y</strong>.
+            Equilibrium requires:
+            <strong> MU<sub>X</sub>/P<sub>X</sub> = MU<sub>Y</sub>/P<sub>Y</sub> </strong>
+            and the whole budget is spent.
+          </p>
+
+          <div className="explanation-box cyan">
+            <h5>Quick Illustration (How adjustment happens)</h5>
             <ul>
-              <li>More numerical examples</li>
-              <li>Interactive budget allocation calculator</li>
-              <li>Graphical representation</li>
-              <li>Practice problems</li>
+              <li>If MU<sub>X</sub>/P<sub>X</sub> is higher, shift spending from Y to X.</li>
+              <li>If MU<sub>Y</sub>/P<sub>Y</sub> is higher, shift spending from X to Y.</li>
+              <li>Stop shifting only when both ratios are equal.</li>
             </ul>
+          </div>
+
+          <div className="example-box">
+            <h4><FaCalculator /> Mini Numerical Illustration</h4>
+            <div className="example-content">
+              <p><strong>Given:</strong> Income = ₹18, P<sub>X</sub> = ₹3, P<sub>Y</sub> = ₹3</p>
+              <div className="table-container">
+                <table className="case-table">
+                  <thead>
+                    <tr>
+                      <th>Units</th>
+                      <th>MUx</th>
+                      <th>MUx/Px</th>
+                      <th>MUy</th>
+                      <th>MUy/Py</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>15</td>
+                      <td>5</td>
+                      <td>12</td>
+                      <td>4</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>12</td>
+                      <td>4</td>
+                      <td>9</td>
+                      <td>3</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>9</td>
+                      <td>3</td>
+                      <td>6</td>
+                      <td>2</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p>
+                Here, initially X gives more utility per rupee than Y, so the consumer buys more X.
+                As X consumption rises, MUx falls (DMU), and the ratio moves closer to Y.
+                The consumer reaches equilibrium when both ratios become equal.
+              </p>
+            </div>
           </div>
         </div>
       </div>
