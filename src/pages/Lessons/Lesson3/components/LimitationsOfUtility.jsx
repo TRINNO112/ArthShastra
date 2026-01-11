@@ -1,13 +1,6 @@
 /**
  * LimitationsOfUtility.jsx - Topic 6 of Lesson 3
  *
- * Content to add:
- * - Utility can be measured in cardinal numbers (1, 2, 3, etc.)
- * - The assumption of measurability is unrealistic
- * - Different consumers may assign different utilities to same good
- * - Cannot compare utilities between individuals
- * - Ordinal utility approach as an alternative
- *
  * Related quiz topic: limitations
  */
 
@@ -300,23 +293,6 @@ function LimitationsOfUtility() {
             Despite these limitations, utility analysis remains a valuable tool for understanding
             basic consumer behavior principles like the Law of Demand and the relationship
             between price and quantity demanded.
-          </div>
-        </div>
-      </div>
-
-      {/* Placeholder for additional content */}
-      <div className="content-card placeholder">
-        <div className="card-glow"></div>
-        <div className="card-content">
-          <div className="placeholder-message">
-            <h3>Content Coming Soon</h3>
-            <p>This section needs the following content:</p>
-            <ul>
-              <li>More real-world examples of each limitation</li>
-              <li>Comparison with indifference curve approach</li>
-              <li>Historical development of utility theory</li>
-              <li>Modern behavioral economics perspective</li>
-            </ul>
           </div>
         </div>
       </div>

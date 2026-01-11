@@ -25,7 +25,17 @@
       "Bash(del \"C:\\\\Users\\\\Amit Pathak\\\\Documents\\\\ArthShastra\\\\extract-inline-styles.js\")",
       "Bash(cat \"C:\\\\Users\\\\Amit Pathak\\\\Documents\\\\ArthShastra\\\\src\\\\pages\\\\Lessons\\\\Lesson2\\\\components\\\\central-problems-temp.css\")",
       "Bash(del \"C:\\\\Users\\\\Amit Pathak\\\\Documents\\\\ArthShastra\\\\src\\\\pages\\\\Lessons\\\\Lesson2\\\\components\\\\central-problems-temp.css\")",
-      "WebFetch(domain:www.anytimeclass.com)"
+      "WebFetch(domain:www.anytimeclass.com)",
+      "WebFetch(domain:www.toppr.com)",
+      "WebFetch(domain:www.economicsdiscussion.net)",
+      "WebFetch(domain:www.geeksforgeeks.org)",
+      "WebFetch(domain:www.investopedia.com)",
+      "WebFetch(domain:byjus.com)",
+      "WebFetch(domain:www.learnatnoon.com)",
+      "WebFetch(domain:www.noonacademy.com)",
+      "WebFetch(domain:www.tutor2u.net)",
+      "WebFetch(domain:www.econlib.org)",
+      "WebFetch(domain:www.khanacademy.org)"
     ]
   }
 }
