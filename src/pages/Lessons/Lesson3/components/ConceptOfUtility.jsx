@@ -44,14 +44,8 @@ const utilitySchedule = [
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div style={{
-        background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
-        border: '1px solid #00ffff',
-        borderRadius: '8px',
-        padding: '12px 16px',
-        boxShadow: '0 4px 20px rgba(0, 255, 255, 0.3)'
-      }}>
-        <p style={{ color: '#00ffff', fontWeight: 'bold', marginBottom: '8px' }}>
+      <div className="graph-tooltip-container">
+        <p className="tooltip-label">
           Units Consumed: {label}
         </p>
         {payload.map((entry, index) => (
@@ -66,94 +60,17 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 function ConceptOfUtility() {
-  // ============================================
-  // INLINE STYLES
-  // ============================================
-
-  const definitionBoxStyle = {
-    background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 140, 0, 0.05) 100%)',
-    border: '2px solid #ffd700',
-    borderRadius: '12px',
-    padding: '24px 28px',
-    margin: '24px 0',
-    position: 'relative',
-    boxShadow: '0 4px 20px rgba(255, 215, 0, 0.15)',
-  };
-
-  const quoteIconStyle = {
-    position: 'absolute',
-    top: '-12px',
-    left: '20px',
-    background: '#1a1a2e',
-    padding: '4px 12px',
-    color: '#ffd700',
-    fontSize: '20px',
-  };
-
-  const definitionTextStyle = {
-    fontSize: '1.15rem',
-    fontStyle: 'italic',
-    color: '#fff',
-    lineHeight: '1.8',
-    fontWeight: '500',
-    margin: 0,
-  };
-
-  const keyTermStyle = {
-    background: 'linear-gradient(90deg, #ffd700, #ff8c00)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
-    fontWeight: 'bold',
-  };
-
-  const tableContainerStyle = {
-    background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 20, 40, 0.6) 100%)',
-    borderRadius: '16px',
-    padding: '24px',
-    margin: '32px 0',
-    border: '1px solid rgba(0, 255, 255, 0.3)',
-    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-  };
-
-  const chartContainerStyle = {
-    background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 20, 40, 0.6) 100%)',
-    borderRadius: '16px',
-    padding: '24px',
-    margin: '32px 0',
-    border: '1px solid rgba(0, 255, 255, 0.2)',
-    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-  };
-
-  const sectionTitleStyle = {
-    textAlign: 'center',
-    color: '#00ffff',
-    fontSize: '1.3rem',
-    fontWeight: 'bold',
-    marginBottom: '20px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '10px',
-  };
-
-  // Table cell styles
-  const thStyle = {
-    padding: '14px 16px',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    borderBottom: '2px solid #00ffff',
-    background: 'rgba(0, 255, 255, 0.1)',
-  };
-
-  const tdStyle = {
-    padding: '12px 16px',
-    textAlign: 'center',
-    borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-  };
-
   // Function to get MU color based on value
   const getMUColor = (mu) => {
+    if (mu === null) return 'text-muted';
+    if (mu > 10) return 'text-cyan';
+    if (mu > 0) return 'text-green';
+    if (mu === 0) return 'text-gold';
+    return 'text-red';
+  };
+
+  // Helper to get hex color for inline styles that can't be easily replaced in Recharts
+  const getMUHexColor = (mu) => {
     if (mu === null) return '#888';
     if (mu > 10) return '#00ff88';
     if (mu > 0) return '#88ff88';
@@ -184,10 +101,10 @@ function ConceptOfUtility() {
           <h3 className="highlight-gold">What is Utility?</h3>
 
           {/* Styled Definition Box */}
-          <div style={definitionBoxStyle}>
-            <span style={quoteIconStyle}><FaQuoteLeft /></span>
-            <p style={definitionTextStyle}>
-              <span style={keyTermStyle}>Utility</span> is the want-satisfying power of a commodity.
+          <div className="definition-quote-box">
+            <span className="definition-quote-icon"><FaQuoteLeft /></span>
+            <p className="definition-text">
+              <span className="key-term-gold">Utility</span> is the want-satisfying power of a commodity.
               It is the capacity of a good or service to satisfy human wants.
             </p>
           </div>
@@ -200,58 +117,34 @@ function ConceptOfUtility() {
             is the utility of that food.
           </p>
 
-          <p style={{
-            background: 'rgba(255, 107, 107, 0.1)',
-            borderLeft: '4px solid #ff6b6b',
-            padding: '16px 20px',
-            borderRadius: '0 8px 8px 0',
-            margin: '20px 0'
-          }}>
-            <strong style={{ color: '#ff6b6b' }}>⚠️ Important:</strong> Utility is purely subjective and varies from person to person,
+          <div className="note-text danger">
+            <strong>⚠️ Important:</strong> Utility is purely subjective and varies from person to person,
             time to time, and place to place. What gives high utility to one person may give little or
             no utility to another. A vegetarian person gets zero utility from meat, while a non-vegetarian
             may derive high utility from it. The utility of an umbrella is high during monsoon but low
             in winter.
-          </p>
+          </div>
 
           {/* Real-World Example - Smartphone */}
-          <div className="note-text" style={{
-            background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 200, 100, 0.05) 100%)',
-            border: '1px solid rgba(0, 255, 136, 0.3)',
-          }}>
-            <h4 style={{ color: '#00ff88' }}>📱 Real-World Example - Understanding Utility:</h4>
+          <div className="note-text green">
+            <h4 className="text-green">📱 Real-World Example - Understanding Utility:</h4>
             <p>
               Consider a <strong>smartphone</strong>. Different people derive different utilities from it:
             </p>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-              gap: '16px',
-              marginTop: '16px'
-            }}>
+            <div className="cou-example-grid">
               {[
-                { icon: '👨‍🎓', label: 'For a student', desc: 'High utility for online classes, research, and communication', color: '#ffd700' },
-                { icon: '👔', label: 'For a businessperson', desc: 'High utility for emails, video calls, and managing work', color: '#00ffff' },
-                { icon: '👴', label: 'For elderly (unfamiliar with tech)', desc: 'Low utility, may prefer a basic phone', color: '#ff8c00' },
-                { icon: '📱📱📱', label: 'Person with 3 phones', desc: 'Very low marginal utility from a 4th phone', color: '#ff6b6b' },
+                { icon: '👨‍🎓', label: 'For a student', desc: 'High utility for online classes, research, and communication', colorClass: 'text-gold', borderClass: 'border-gold' },
+                { icon: '👔', label: 'For a businessperson', desc: 'High utility for emails, video calls, and managing work', colorClass: 'text-cyan', borderClass: 'border-cyan' },
+                { icon: '👴', label: 'For elderly (unfamiliar with tech)', desc: 'Low utility, may prefer a basic phone', colorClass: 'text-orange', borderClass: 'border-orange' },
+                { icon: '📱📱📱', label: 'Person with 3 phones', desc: 'Very low marginal utility from a 4th phone', colorClass: 'text-red', borderClass: 'border-red' },
               ].map((item, idx) => (
-                <div key={idx} style={{
-                  background: 'rgba(255,255,255,0.05)',
-                  padding: '12px 16px',
-                  borderRadius: '8px',
-                  borderLeft: `3px solid ${item.color}`
-                }}>
-                  <strong style={{ color: item.color }}>{item.icon} {item.label}:</strong>
-                  <p style={{ margin: '8px 0 0 0', fontSize: '0.95rem' }}>{item.desc}</p>
+                <div key={idx} className={`cou-example-grid-item ${item.borderClass}`} style={{borderLeft: '3px solid', borderLeftColor: idx === 0 ? '#ffd700' : idx === 1 ? '#00ffff' : idx === 2 ? '#ff8c00' : '#ff6b6b'}}>
+                  <strong className={item.colorClass}>{item.icon} {item.label}:</strong>
+                  <p className="mt-1 text-sm">{item.desc}</p>
                 </div>
               ))}
             </div>
-            <p style={{
-              marginTop: '16px',
-              fontStyle: 'italic',
-              color: '#00ff88',
-              textAlign: 'center'
-            }}>
+            <p className="mt-2 text-center italic text-green">
               Same commodity (smartphone), but different levels of satisfaction for different people!
             </p>
           </div>
@@ -284,10 +177,10 @@ function ConceptOfUtility() {
 
           <h3 className="highlight-gold">Total Utility (TU)</h3>
 
-          <div style={definitionBoxStyle}>
-            <span style={quoteIconStyle}><FaQuoteLeft /></span>
-            <p style={definitionTextStyle}>
-              <span style={keyTermStyle}>Total Utility (TU)</span> is the aggregate sum of satisfaction
+          <div className="definition-quote-box">
+            <span className="definition-quote-icon"><FaQuoteLeft /></span>
+            <p className="definition-text">
+              <span className="key-term-gold">Total Utility (TU)</span> is the aggregate sum of satisfaction
               that a consumer derives from the consumption of all units of a commodity at a given time.
             </p>
           </div>
@@ -301,61 +194,50 @@ function ConceptOfUtility() {
           </p>
 
           {/* Formula Box for TU */}
-          <div style={{
-            background: 'linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(0, 200, 255, 0.05) 100%)',
-            border: '2px solid #00ffff',
-            borderRadius: '12px',
-            padding: '20px 24px',
-            margin: '20px 0',
-          }}>
-            <p style={{ fontSize: '1.2rem', marginBottom: '12px' }}>
-              <strong style={{ color: '#00ffff' }}>Formula:</strong>{' '}
-              <span style={{ fontFamily: 'monospace', color: '#ffd700', fontSize: '1.1rem' }}>
+          <div className="cou-formula-box-styled">
+            <p className="text-lg mb-2">
+              <strong className="text-cyan">Formula:</strong>{' '}
+              <span className="font-mono text-gold text-lg">
                 TU<sub>n</sub> = MU<sub>1</sub> + MU<sub>2</sub> + MU<sub>3</sub> + ... + MU<sub>n</sub>
               </span>
             </p>
-            <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.95rem', margin: 0 }}>
+            <p className="text-muted text-sm m-0">
               Where TU<sub>n</sub> is total utility from n units, and MU<sub>1</sub>, MU<sub>2</sub>...
               are marginal utilities from 1st, 2nd... units respectively.
             </p>
           </div>
 
           {/* Real Example for TU - Samosa */}
-          <div className="note-text" style={{
-            background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 140, 0, 0.05) 100%)',
-            border: '1px solid rgba(255, 215, 0, 0.3)',
-          }}>
-            <h4 style={{ color: '#ffd700' }}>🥟 Real-World Example - Total Utility:</h4>
+          <div className="note-text gold">
+            <h4 className="text-gold">🥟 Real-World Example - Total Utility:</h4>
             <p><strong>Scenario:</strong> You're eating samosas at a party. Let's track your total satisfaction:</p>
 
-            <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div className="flex-column gap-sm mt-2">
               {[
-                { unit: '1st samosa', desc: "You're hungry", mu: 50, tu: 50, color: '#00ff88' },
-                { unit: '2nd samosa', desc: "Still tasty", mu: 40, tu: 90, color: '#00ff88' },
-                { unit: '3rd samosa', desc: "Starting to feel full", mu: 25, tu: 115, color: '#ffd700' },
-                { unit: '4th samosa', desc: "Almost full", mu: 10, tu: 125, color: '#ff8c00' },
-                { unit: '5th samosa', desc: "Feeling too full", mu: 0, tu: 125, color: '#ff6b6b' },
-                { unit: '6th samosa', desc: "Uncomfortable (Disutility)", mu: -15, tu: 110, color: '#ff4444' },
+                { unit: '1st samosa', desc: "You're hungry", mu: 50, tu: 50, colorClass: 'text-green', borderColor: '#00ff88' },
+                { unit: '2nd samosa', desc: "Still tasty", mu: 40, tu: 90, colorClass: 'text-green', borderColor: '#00ff88' },
+                { unit: '3rd samosa', desc: "Starting to feel full", mu: 25, tu: 115, colorClass: 'text-gold', borderColor: '#ffd700' },
+                { unit: '4th samosa', desc: "Almost full", mu: 10, tu: 125, colorClass: 'text-orange', borderColor: '#ff8c00' },
+                { unit: '5th samosa', desc: "Feeling too full", mu: 0, tu: 125, colorClass: 'text-red', borderColor: '#ff6b6b' },
+                { unit: '6th samosa', desc: "Uncomfortable (Disutility)", mu: -15, tu: 110, colorClass: 'text-red', borderColor: '#ff4444' },
               ].map((item, idx) => (
-                <div key={idx} style={{
+                <div key={idx} className="cou-example-grid-item" style={{
                   display: 'grid',
                   gridTemplateColumns: '140px 1fr 100px 100px',
                   gap: '12px',
                   alignItems: 'center',
                   background: 'rgba(0,0,0,0.2)',
-                  padding: '10px 16px',
-                  borderRadius: '8px',
-                  borderLeft: `3px solid ${item.color}`,
+                  borderLeft: `3px solid ${item.borderColor}`,
                 }}>
-                  <strong style={{ color: item.color }}>{item.unit}</strong>
-                  <span style={{ color: 'rgba(255,255,255,0.8)' }}>{item.desc}</span>
-                  <span style={{ color: item.mu >= 0 ? '#00ff88' : '#ff4444' }}>MU: {item.mu}</span>
-                  <span style={{ color: '#00ffff', fontWeight: 'bold' }}>TU: {item.tu}</span>
+                  <strong className={item.colorClass}>{item.unit}</strong>
+                  <span className="text-muted">{item.desc}</span>
+                  <span className={item.mu >= 0 ? 'text-green' : 'text-red'}>MU: {item.mu}</span>
+                  <span className="text-cyan font-bold">TU: {item.tu}</span>
                 </div>
               ))}
             </div>
 
-            <p style={{ marginTop: '16px', fontStyle: 'italic', color: '#ffd700' }}>
+            <p className="mt-2 italic text-gold">
               📊 Notice how total satisfaction increased initially, reached maximum at 5 samosas (TU = 125),
               then decreased when you ate too much!
             </p>
@@ -367,10 +249,10 @@ function ConceptOfUtility() {
 
           <h3 className="highlight-gold">Marginal Utility (MU)</h3>
 
-          <div style={definitionBoxStyle}>
-            <span style={quoteIconStyle}><FaQuoteLeft /></span>
-            <p style={definitionTextStyle}>
-              <span style={keyTermStyle}>Marginal Utility (MU)</span> is the additional satisfaction
+          <div className="definition-quote-box mu">
+            <span className="definition-quote-icon"><FaQuoteLeft /></span>
+            <p className="definition-text">
+              <span className="key-term-gold">Marginal Utility (MU)</span> is the additional satisfaction
               that a consumer derives from consuming one more unit of a commodity.
             </p>
           </div>
@@ -383,56 +265,36 @@ function ConceptOfUtility() {
           </p>
 
           {/* Formula Box for MU */}
-          <div style={{
-            background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 200, 100, 0.05) 100%)',
-            border: '2px solid #00ff88',
-            borderRadius: '12px',
-            padding: '20px 24px',
-            margin: '20px 0',
-          }}>
-            <p style={{ fontSize: '1.2rem', marginBottom: '8px' }}>
-              <strong style={{ color: '#00ff88' }}>Formula 1:</strong>{' '}
-              <span style={{ fontFamily: 'monospace', color: '#ffd700', fontSize: '1.1rem' }}>
+          <div className="cou-formula-box-styled green">
+            <p className="text-lg mb-1">
+              <strong className="text-green">Formula 1:</strong>{' '}
+              <span className="font-mono text-gold text-lg">
                 MU<sub>n</sub> = TU<sub>n</sub> - TU<sub>n-1</sub>
               </span>
             </p>
-            <p style={{ fontSize: '1.2rem', marginBottom: '12px' }}>
-              <strong style={{ color: '#00ff88' }}>Formula 2:</strong>{' '}
-              <span style={{ fontFamily: 'monospace', color: '#ffd700', fontSize: '1.1rem' }}>
+            <p className="text-lg mb-2">
+              <strong className="text-green">Formula 2:</strong>{' '}
+              <span className="font-mono text-gold text-lg">
                 MU = ΔTU / ΔQ
               </span>
-              <span style={{ color: 'rgba(255,255,255,0.6)', marginLeft: '12px', fontSize: '0.95rem' }}>
+              <span className="text-muted ml-2 text-sm">
                 (Change in Total Utility / Change in Quantity)
               </span>
             </p>
-            <div style={{
-              background: 'rgba(0,0,0,0.3)',
-              padding: '12px 16px',
-              borderRadius: '8px',
-              marginTop: '12px'
-            }}>
-              <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.95rem', margin: 0 }}>
+            <div className="bg-tertiary p-2 rounded mt-2">
+              <p className="text-secondary text-sm m-0">
                 <strong>Example:</strong> If TU from 3 units = 45 utils, and TU from 4 units = 50 utils,<br />
-                then MU<sub>4</sub> = 50 - 45 = <strong style={{ color: '#ffd700' }}>5 utils</strong>
+                then MU<sub>4</sub> = 50 - 45 = <strong className="text-gold">5 utils</strong>
               </p>
             </div>
           </div>
 
           {/* Real Example for MU - Cold Drinks */}
-          <div className="note-text" style={{
-            background: 'linear-gradient(135deg, rgba(0, 150, 255, 0.1) 0%, rgba(0, 100, 200, 0.05) 100%)',
-            border: '1px solid rgba(0, 150, 255, 0.3)',
-          }}>
-            <h4 style={{ color: '#00aaff' }}>🥤 Real-World Example - Marginal Utility:</h4>
+          <div className="note-text blue">
+            <h4 className="text-cyan">🥤 Real-World Example - Marginal Utility:</h4>
             <p><strong>Scenario:</strong> You're buying bottles of cold drinks on a hot summer day:</p>
 
-            <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '12px',
-              marginTop: '16px',
-              justifyContent: 'center'
-            }}>
+            <div className="cou-icon-grid">
               {[
                 { bottle: '1st', mu: 100, emoji: '🔥', desc: 'Very thirsty' },
                 { bottle: '2nd', mu: 60, emoji: '😊', desc: 'Still refreshing' },
@@ -441,44 +303,28 @@ function ConceptOfUtility() {
                 { bottle: '5th', mu: 0, emoji: '🛑', desc: 'Saturation' },
                 { bottle: '6th', mu: -20, emoji: '🤢', desc: 'Disutility!' },
               ].map((item, idx) => (
-                <div key={idx} style={{
+                <div key={idx} className="cou-icon-item" style={{
                   background: item.mu > 0 ? 'rgba(0, 255, 136, 0.1)' :
                     item.mu === 0 ? 'rgba(255, 215, 0, 0.1)' : 'rgba(255, 68, 68, 0.1)',
                   border: `1px solid ${item.mu > 0 ? '#00ff88' : item.mu === 0 ? '#ffd700' : '#ff4444'}`,
-                  borderRadius: '12px',
-                  padding: '16px',
-                  textAlign: 'center',
-                  minWidth: '100px',
-                  flex: '1',
                 }}>
-                  <div style={{ fontSize: '2rem' }}>{item.emoji}</div>
-                  <div style={{ fontWeight: 'bold', marginTop: '8px' }}>{item.bottle}</div>
-                  <div style={{
-                    color: item.mu > 0 ? '#00ff88' : item.mu === 0 ? '#ffd700' : '#ff4444',
-                    fontSize: '1.2rem',
-                    fontWeight: 'bold',
-                    marginTop: '4px'
-                  }}>
+                  <div className="text-xxl mb-1">{item.emoji}</div>
+                  <div className="font-bold mt-1">{item.bottle}</div>
+                  <div className={`font-bold mt-1 text-lg ${item.mu > 0 ? 'text-green' : item.mu === 0 ? 'text-gold' : 'text-red'}`}>
                     MU: {item.mu}
                   </div>
-                  <div style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', marginTop: '4px' }}>
+                  <div className="text-xs text-muted mt-1">
                     {item.desc}
                   </div>
                 </div>
               ))}
             </div>
 
-            <div style={{
-              marginTop: '20px',
-              padding: '16px',
-              background: 'rgba(255, 215, 0, 0.1)',
-              borderRadius: '8px',
-              border: '1px solid rgba(255, 215, 0, 0.3)'
-            }}>
-              <strong style={{ color: '#ffd700' }}>💡 Key Insight:</strong>{' '}
-              <span style={{ color: 'rgba(255,255,255,0.9)' }}>
+            <div className="bg-gold p-2 rounded border-gold mt-2">
+              <strong className="text-gold">💡 Key Insight:</strong>{' '}
+              <span className="text-secondary">
                 Notice how marginal utility keeps falling with each bottle? This is the
-                <strong style={{ color: '#00ff88' }}> Law of Diminishing Marginal Utility</strong> -
+                <strong className="text-green"> Law of Diminishing Marginal Utility</strong> -
                 as you consume more, extra satisfaction from each unit decreases!
               </span>
             </div>
@@ -500,35 +346,31 @@ function ConceptOfUtility() {
           {/* STEP 1: THE UTILITY SCHEDULE (TABLE) */}
           {/* ============================================ */}
 
-          <div style={tableContainerStyle}>
-            <h3 style={sectionTitleStyle}>
+          <div className="table-container">
+            <h3 className="subsection-title">
               <FaTable />
               Step 1: Utility Schedule (Table)
             </h3>
-            <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.7)', marginBottom: '20px' }}>
+            <p className="text-center text-muted mb-2">
               📋 This schedule shows TU and MU for consuming ice cream on a hot summer day
             </p>
 
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{
-                width: '100%',
-                borderCollapse: 'collapse',
-                minWidth: '600px'
-              }}>
+            <div className="overflow-x-auto">
+              <table>
                 <thead>
                   <tr>
-                    <th style={{ ...thStyle, color: '#00ffff' }}>
+                    <th className="text-cyan">
                       Units of Ice Cream 🍦
                     </th>
-                    <th style={{ ...thStyle, color: '#00ff88', borderBottomColor: '#00ff88' }}>
+                    <th className="text-green border-green">
                       Marginal Utility (MU)<br />
-                      <span style={{ fontSize: '0.8rem', fontWeight: 'normal' }}>(Utils)</span>
+                      <span className="text-xs font-normal">(Utils)</span>
                     </th>
-                    <th style={{ ...thStyle, color: '#ffd700', borderBottomColor: '#ffd700' }}>
+                    <th className="text-gold border-gold">
                       Total Utility (TU)<br />
-                      <span style={{ fontSize: '0.8rem', fontWeight: 'normal' }}>(Utils)</span>
+                      <span className="text-xs font-normal">(Utils)</span>
                     </th>
-                    <th style={{ ...thStyle, color: '#ff8c00', borderBottomColor: '#ff8c00' }}>
+                    <th className="text-orange border-orange">
                       Observation
                     </th>
                   </tr>
@@ -547,44 +389,23 @@ function ConceptOfUtility() {
                       'MU more negative, TU falls further',
                     ];
 
+                    const muClass = row.MU > 10 ? 'text-green' : row.MU > 0 ? 'text-green' : row.MU === 0 ? 'text-gold' : row.MU < 0 ? 'text-red' : '';
+
                     return (
                       <tr
                         key={idx}
-                        style={{
-                          background: isSaturation
-                            ? 'rgba(255, 215, 0, 0.15)'
-                            : idx % 2 === 0
-                              ? 'rgba(255, 255, 255, 0.02)'
-                              : 'transparent',
-                          transition: 'background 0.3s',
-                        }}
+                        className={isSaturation ? 'bg-gold' : idx % 2 === 0 ? 'bg-tertiary' : ''}
                       >
-                        <td style={{ ...tdStyle, fontWeight: 'bold', fontSize: '1.1rem' }}>
+                        <td className="font-bold text-lg text-center">
                           {row.units}
                         </td>
-                        <td style={{
-                          ...tdStyle,
-                          color: getMUColor(row.MU),
-                          fontWeight: 'bold',
-                          fontSize: '1.1rem'
-                        }}>
+                        <td className={`font-bold text-lg text-center ${muClass}`}>
                           {row.MU !== null ? row.MU : '—'}
                         </td>
-                        <td style={{
-                          ...tdStyle,
-                          color: '#ffd700',
-                          fontWeight: 'bold',
-                          fontSize: '1.1rem'
-                        }}>
+                        <td className="font-bold text-lg text-center text-gold">
                           {row.TU}
                         </td>
-                        <td style={{
-                          ...tdStyle,
-                          textAlign: 'left',
-                          fontSize: '0.9rem',
-                          color: isSaturation ? '#ffd700' : 'rgba(255,255,255,0.8)',
-                          fontWeight: isSaturation ? 'bold' : 'normal'
-                        }}>
+                        <td className={`text-left text-sm ${isSaturation ? 'text-gold font-bold' : 'text-muted'}`}>
                           {observations[idx]}
                         </td>
                       </tr>
@@ -595,28 +416,22 @@ function ConceptOfUtility() {
             </div>
 
             {/* Calculation Explanation */}
-            <div style={{
-              marginTop: '24px',
-              padding: '16px 20px',
-              background: 'rgba(0, 255, 255, 0.1)',
-              borderRadius: '10px',
-              border: '1px dashed rgba(0, 255, 255, 0.4)'
-            }}>
-              <h4 style={{ color: '#00ffff', marginBottom: '12px' }}>📐 How to Calculate:</h4>
-              <div style={{ display: 'grid', gap: '8px' }}>
-                <p style={{ margin: 0 }}>
-                  <strong style={{ color: '#ffd700' }}>TU Calculation:</strong>{' '}
+            <div className="bg-cyan p-2 rounded border-cyan mt-3 border-dashed">
+              <h4 className="text-cyan mb-1">📐 How to Calculate:</h4>
+              <div className="flex-column gap-xs">
+                <p className="m-0">
+                  <strong className="text-gold">TU Calculation:</strong>{' '}
                   TU<sub>n</sub> = TU<sub>n-1</sub> + MU<sub>n</sub>
                 </p>
-                <p style={{ margin: 0, color: 'rgba(255,255,255,0.8)' }}>
-                  Example: TU<sub>3</sub> = TU<sub>2</sub> + MU<sub>3</sub> = 35 + 10 = <strong style={{ color: '#ffd700' }}>45 utils</strong>
+                <p className="m-0 text-muted">
+                  Example: TU<sub>3</sub> = TU<sub>2</sub> + MU<sub>3</sub> = 35 + 10 = <strong className="text-gold">45 utils</strong>
                 </p>
-                <p style={{ margin: '8px 0 0 0' }}>
-                  <strong style={{ color: '#00ff88' }}>MU Calculation:</strong>{' '}
+                <p className="mt-1 mb-0">
+                  <strong className="text-green">MU Calculation:</strong>{' '}
                   MU<sub>n</sub> = TU<sub>n</sub> - TU<sub>n-1</sub>
                 </p>
-                <p style={{ margin: 0, color: 'rgba(255,255,255,0.8)' }}>
-                  Example: MU<sub>4</sub> = TU<sub>4</sub> - TU<sub>3</sub> = 50 - 45 = <strong style={{ color: '#00ff88' }}>5 utils</strong>
+                <p className="m-0 text-muted">
+                  Example: MU<sub>4</sub> = TU<sub>4</sub> - TU<sub>3</sub> = 50 - 45 = <strong className="text-green">5 utils</strong>
                 </p>
               </div>
             </div>
@@ -626,12 +441,12 @@ function ConceptOfUtility() {
           {/* STEP 2: THE GRAPH (DERIVED FROM TABLE) */}
           {/* ============================================ */}
 
-          <div style={chartContainerStyle}>
-            <h3 style={sectionTitleStyle}>
+          <div className="graph-container">
+            <h3 className="subsection-title">
               <FaChartLine />
               Step 2: TU and MU Curves (Derived from the Schedule)
             </h3>
-            <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.7)', marginBottom: '20px' }}>
+            <p className="text-center text-muted mb-2">
               📈 This graph is plotted using the data from the utility schedule above
             </p>
 
@@ -818,12 +633,7 @@ function ConceptOfUtility() {
             </div>
 
             {/* Graph Explanation Points */}
-            <div style={{
-              marginTop: '28px',
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: '12px'
-            }}>
+            <div className="cou-example-grid">
               {[
                 {
                   color: '#ffd700',
@@ -846,19 +656,18 @@ function ConceptOfUtility() {
                   text: 'Below zero line, MU is negative. Consuming more reduces total satisfaction.'
                 },
               ].map((item, idx) => (
-                <div key={idx} style={{
+                <div key={idx} className="cou-example-grid-item" style={{
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '6px',
                   padding: '14px 18px',
                   background: 'rgba(0,0,0,0.3)',
-                  borderRadius: '10px',
                   borderLeft: `4px solid ${item.color}`,
                 }}>
                   <span style={{ color: item.color, fontWeight: 'bold', fontSize: '0.95rem' }}>
                     {item.title}
                   </span>
-                  <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: '0.9rem' }}>
+                  <span className="text-muted text-sm">
                     {item.text}
                   </span>
                 </div>
@@ -871,7 +680,7 @@ function ConceptOfUtility() {
             <div className="highlight-icon"><FaChartLine /></div>
             <div className="highlight-content">
               <h3>Summary: Key Relationships Between TU and MU</h3>
-              <div style={{ display: 'grid', gap: '16px', marginTop: '12px' }}>
+              <div className="flex-column gap-md mt-2">
                 {[
                   {
                     condition: 'When MU > 0 (Positive)',
@@ -902,23 +711,21 @@ function ConceptOfUtility() {
                     color: '#00ffff'
                   },
                 ].map((item, idx) => (
-                  <div key={idx} style={{
+                  <div key={idx} className="cou-example-grid-item" style={{
                     display: 'flex',
                     gap: '14px',
                     alignItems: 'flex-start',
                     background: 'rgba(0,0,0,0.2)',
-                    padding: '14px 18px',
-                    borderRadius: '10px',
                     borderLeft: `4px solid ${item.color}`,
                   }}>
-                    <span style={{ fontSize: '1.6rem' }}>{item.icon}</span>
+                    <span className="text-xl">{item.icon}</span>
                     <div>
-                      <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+                      <div className="flex-wrap gap-sm items-center">
                         <strong style={{ color: item.color }}>{item.condition}</strong>
-                        <span style={{ color: 'rgba(255,255,255,0.5)' }}>→</span>
-                        <strong style={{ color: '#fff' }}>{item.result}</strong>
+                        <span className="text-muted">→</span>
+                        <strong className="text-white">{item.result}</strong>
                       </div>
-                      <p style={{ margin: '6px 0 0 0', color: 'rgba(255,255,255,0.75)' }}>{item.desc}</p>
+                      <p className="mt-1 text-muted text-sm m-0">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -943,86 +750,47 @@ function ConceptOfUtility() {
             by Adam Smith. It beautifully illustrates the difference between total utility and marginal utility.
           </p>
 
-          <div style={{
-            background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(0, 150, 255, 0.1) 100%)',
-            border: '2px solid rgba(255, 215, 0, 0.5)',
-            borderRadius: '16px',
-            padding: '28px',
-            margin: '24px 0',
-          }}>
-            <h4 style={{ color: '#ffd700', marginBottom: '16px', fontSize: '1.2rem' }}>
-              <FaLightbulb style={{ marginRight: '8px' }} />
+          <div className="cou-diamond-box">
+            <h4 className="text-gold mb-2 text-lg">
+              <FaLightbulb className="mr-2" />
               The Paradox Explained
             </h4>
 
             {/* The Question */}
-            <div style={{
-              background: 'rgba(0,0,0,0.3)',
-              padding: '16px 20px',
-              borderRadius: '10px',
-              marginBottom: '20px',
-            }}>
-              <p style={{ color: '#00ffff', fontSize: '1.1rem', margin: 0 }}>
+            <div className="bg-tertiary p-2 rounded mb-2">
+              <p className="text-cyan text-lg m-0">
                 <strong>❓ The Question:</strong> Water is essential for life with enormous total utility,
                 yet it's cheap. Diamonds are not essential with limited use, yet extremely expensive. Why?
               </p>
             </div>
 
             {/* The Answer */}
-            <div style={{
-              background: 'rgba(0, 255, 136, 0.1)',
-              padding: '16px 20px',
-              borderRadius: '10px',
-              marginBottom: '20px',
-              border: '1px solid rgba(0, 255, 136, 0.3)',
-            }}>
-              <p style={{ color: '#00ff88', fontSize: '1.1rem', margin: 0 }}>
+            <div className="bg-green p-2 rounded mb-2 border-green">
+              <p className="text-green text-lg m-0">
                 <strong>💡 The Answer:</strong> Price is determined by <strong>MARGINAL UTILITY</strong>,
                 not total utility!
               </p>
             </div>
 
             {/* Comparison Grid */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: '20px',
-              marginTop: '20px'
-            }}>
+            <div className="cou-diamond-grid">
               {/* Water Box */}
-              <div style={{
-                background: 'linear-gradient(135deg, rgba(0, 150, 255, 0.2) 0%, rgba(0, 100, 200, 0.1) 100%)',
-                border: '2px solid #00aaff',
-                borderRadius: '12px',
-                padding: '20px',
-              }}>
-                <h5 style={{
-                  color: '#00aaff',
-                  fontSize: '1.3rem',
-                  marginBottom: '16px',
-                  textAlign: 'center'
-                }}>
+              <div className="cou-diamond-water-item">
+                <h5 className="text-center text-blue text-xl mb-2">
                   💧 Water
                 </h5>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div className="flex-column gap-sm">
                   {[
-                    { label: 'Total Utility', value: 'Very High', sub: '(Essential for life)', color: '#00ff88' },
-                    { label: 'Supply', value: 'Abundant', sub: '(Easily available)', color: '#ffd700' },
-                    { label: 'Marginal Utility', value: 'Low', sub: '(One more glass = little extra satisfaction)', color: '#ff8c00' },
-                    { label: 'Price', value: 'Low', sub: '(Based on low MU)', color: '#ff6b6b' },
+                    { label: 'Total Utility', value: 'Very High', sub: '(Essential for life)', color: 'text-green' },
+                    { label: 'Supply', value: 'Abundant', sub: '(Easily available)', color: 'text-gold' },
+                    { label: 'Marginal Utility', value: 'Low', sub: '(One more glass = little extra satisfaction)', color: 'text-orange' },
+                    { label: 'Price', value: 'Low', sub: '(Based on low MU)', color: 'text-red' },
                   ].map((item, idx) => (
-                    <div key={idx} style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      padding: '10px 12px',
-                      background: 'rgba(0,0,0,0.2)',
-                      borderRadius: '8px',
-                    }}>
-                      <span style={{ color: 'rgba(255,255,255,0.8)' }}>{item.label}</span>
-                      <div style={{ textAlign: 'right' }}>
-                        <span style={{ color: item.color, fontWeight: 'bold' }}>{item.value}</span>
-                        <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)' }}>{item.sub}</div>
+                    <div key={idx} className="flex-between items-center p-1 bg-tertiary rounded">
+                      <span className="text-muted">{item.label}</span>
+                      <div className="text-right">
+                        <span className={`${item.color} font-bold`}>{item.value}</span>
+                        <div className="text-xs text-muted">{item.sub}</div>
                       </div>
                     </div>
                   ))}
@@ -1030,39 +798,22 @@ function ConceptOfUtility() {
               </div>
 
               {/* Diamond Box */}
-              <div style={{
-                background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 140, 0, 0.1) 100%)',
-                border: '2px solid #ffd700',
-                borderRadius: '12px',
-                padding: '20px',
-              }}>
-                <h5 style={{
-                  color: '#ffd700',
-                  fontSize: '1.3rem',
-                  marginBottom: '16px',
-                  textAlign: 'center'
-                }}>
+              <div className="cou-diamond-diamond-item">
+                <h5 className="text-center text-gold text-xl mb-2">
                   💎 Diamonds
                 </h5>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div className="flex-column gap-sm">
                   {[
-                    { label: 'Total Utility', value: 'Low', sub: '(Not essential for survival)', color: '#ff8c00' },
-                    { label: 'Supply', value: 'Scarce', sub: '(Rare and limited)', color: '#ff6b6b' },
-                    { label: 'Marginal Utility', value: 'High', sub: '(One more diamond = huge satisfaction)', color: '#00ff88' },
-                    { label: 'Price', value: 'Very High', sub: '(Based on high MU)', color: '#00ff88' },
+                    { label: 'Total Utility', value: 'Low', sub: '(Not essential for survival)', color: 'text-orange' },
+                    { label: 'Supply', value: 'Scarce', sub: '(Rare and limited)', color: 'text-red' },
+                    { label: 'Marginal Utility', value: 'High', sub: '(One more diamond = huge satisfaction)', color: 'text-green' },
+                    { label: 'Price', value: 'Very High', sub: '(Based on high MU)', color: 'text-green' },
                   ].map((item, idx) => (
-                    <div key={idx} style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      padding: '10px 12px',
-                      background: 'rgba(0,0,0,0.2)',
-                      borderRadius: '8px',
-                    }}>
-                      <span style={{ color: 'rgba(255,255,255,0.8)' }}>{item.label}</span>
-                      <div style={{ textAlign: 'right' }}>
-                        <span style={{ color: item.color, fontWeight: 'bold' }}>{item.value}</span>
-                        <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)' }}>{item.sub}</div>
+                    <div key={idx} className="flex-between items-center p-1 bg-tertiary rounded">
+                      <span className="text-muted">{item.label}</span>
+                      <div className="text-right">
+                        <span className={`${item.color} font-bold`}>{item.value}</span>
+                        <div className="text-xs text-muted">{item.sub}</div>
                       </div>
                     </div>
                   ))}
@@ -1071,19 +822,13 @@ function ConceptOfUtility() {
             </div>
 
             {/* Key Lesson */}
-            <div style={{
-              marginTop: '24px',
-              padding: '18px',
-              background: 'rgba(255, 215, 0, 0.15)',
-              borderRadius: '10px',
-              border: '1px dashed rgba(255, 215, 0, 0.5)',
-            }}>
-              <p style={{ margin: 0, color: 'rgba(255,255,255,0.95)', lineHeight: '1.7' }}>
-                <strong style={{ color: '#ffd700' }}>🏜️ Key Lesson:</strong> In a desert without water,
-                the marginal utility of water becomes <strong style={{ color: '#00ff88' }}>extremely high</strong>,
+            <div className="bg-gold p-2 rounded border-gold-dashed mt-3">
+              <p className="m-0 text-white-95 leading-relaxed">
+                <strong className="text-gold">🏜️ Key Lesson:</strong> In a desert without water,
+                the marginal utility of water becomes <strong className="text-green">extremely high</strong>,
                 and people would pay enormous amounts for it. Similarly, if diamonds were as common as sand,
                 their price would be very low. <br /><br />
-                <em style={{ color: '#00ffff' }}>
+                <em className="text-cyan">
                   Conclusion: Scarcity affects marginal utility, and marginal utility determines price!
                 </em>
               </p>
@@ -1094,25 +839,19 @@ function ConceptOfUtility() {
           <h3 className="highlight-cyan">Practice Problems: Calculating TU and MU</h3>
 
           {/* Problem 1 */}
-          <div style={{
-            background: 'linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(0, 200, 255, 0.05) 100%)',
-            border: '1px solid rgba(0, 255, 255, 0.3)',
-            borderRadius: '12px',
-            padding: '24px',
-            margin: '20px 0',
-          }}>
-            <h4 style={{ color: '#00ffff', marginBottom: '16px' }}>
+          <div className="practice-box">
+            <h4 className="text-cyan mb-2">
               📝 Problem 1: Complete the Utility Schedule
             </h4>
             <p>Fill in the missing values (marked with ?) in the table below:</p>
 
-            <div style={{ overflowX: 'auto', margin: '16px 0' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
+            <div className="overflow-x-auto my-2">
+              <table className="text-center w-full">
                 <thead>
-                  <tr style={{ background: 'rgba(0, 255, 255, 0.2)' }}>
-                    <th style={{ padding: '12px', border: '1px solid rgba(255,255,255,0.2)' }}>Units</th>
-                    <th style={{ padding: '12px', border: '1px solid rgba(255,255,255,0.2)', color: '#00ff88' }}>MU (Utils)</th>
-                    <th style={{ padding: '12px', border: '1px solid rgba(255,255,255,0.2)', color: '#ffd700' }}>TU (Utils)</th>
+                  <tr className="bg-cyan">
+                    <th className="p-1 border-white-20">Units</th>
+                    <th className="p-1 border-white-20 text-green">MU (Utils)</th>
+                    <th className="p-1 border-white-20 text-gold">TU (Utils)</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1123,26 +862,14 @@ function ConceptOfUtility() {
                     { units: 4, mu: '?', tu: '70', muQ: true, tuQ: false },
                     { units: 5, mu: '0', tu: '?', muQ: false, tuQ: true },
                   ].map((row, idx) => (
-                    <tr key={idx} style={{ background: idx % 2 === 0 ? 'rgba(0,0,0,0.2)' : 'transparent' }}>
-                      <td style={{ padding: '12px', border: '1px solid rgba(255,255,255,0.2)', fontWeight: 'bold' }}>
+                    <tr key={idx} className={idx % 2 === 0 ? 'bg-tertiary' : ''}>
+                      <td className="p-1 border-white-20 font-bold">
                         {row.units}
                       </td>
-                      <td style={{
-                        padding: '12px',
-                        border: '1px solid rgba(255,255,255,0.2)',
-                        color: row.muQ ? '#ff8c00' : '#00ff88',
-                        fontWeight: 'bold',
-                        fontSize: row.muQ ? '1.2rem' : '1rem'
-                      }}>
+                      <td className={`p-1 border-white-20 font-bold ${row.muQ ? 'text-orange text-lg' : 'text-green'}`}>
                         {row.mu}
                       </td>
-                      <td style={{
-                        padding: '12px',
-                        border: '1px solid rgba(255,255,255,0.2)',
-                        color: row.tuQ ? '#ff8c00' : '#ffd700',
-                        fontWeight: 'bold',
-                        fontSize: row.tuQ ? '1.2rem' : '1rem'
-                      }}>
+                      <td className={`p-1 border-white-20 font-bold ${row.tuQ ? 'text-orange text-lg' : 'text-gold'}`}>
                         {row.tu}
                       </td>
                     </tr>
@@ -1151,26 +878,13 @@ function ConceptOfUtility() {
               </table>
             </div>
 
-            <details style={{ marginTop: '16px' }}>
-              <summary style={{
-                cursor: 'pointer',
-                color: '#00ff88',
-                fontWeight: 'bold',
-                padding: '12px 16px',
-                background: 'rgba(0, 255, 136, 0.1)',
-                borderRadius: '8px',
-                border: '1px solid rgba(0, 255, 136, 0.3)'
-              }}>
+            <details className="mt-2">
+              <summary className="solution-reveal">
                 ✅ Click to reveal solution
               </summary>
-              <div style={{
-                marginTop: '16px',
-                padding: '20px',
-                background: 'rgba(0,0,0,0.3)',
-                borderRadius: '10px'
-              }}>
-                <h5 style={{ color: '#00ffff', marginBottom: '16px' }}>Step-by-Step Solution:</h5>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div className="solution-content">
+                <h5 className="text-cyan mb-2">Step-by-Step Solution:</h5>
+                <div className="flex-column gap-sm">
                   {[
                     { step: 'TU₁', calc: '= MU₁ = 30 utils', result: '30', formula: 'First unit: TU = MU' },
                     { step: 'MU₂', calc: '= TU₂ - TU₁ = 50 - 30 = 20 utils', result: '20', formula: 'MU = Change in TU' },
@@ -1178,19 +892,11 @@ function ConceptOfUtility() {
                     { step: 'MU₄', calc: '= TU₄ - TU₃ = 70 - 65 = 5 utils', result: '5', formula: 'MU = Change in TU' },
                     { step: 'TU₅', calc: '= TU₄ + MU₅ = 70 + 0 = 70 utils (Maximum!)', result: '70', formula: 'MU = 0 means TU is max' },
                   ].map((item, idx) => (
-                    <div key={idx} style={{
-                      display: 'grid',
-                      gridTemplateColumns: '80px 1fr',
-                      gap: '12px',
-                      padding: '10px 14px',
-                      background: 'rgba(255,255,255,0.05)',
-                      borderRadius: '8px',
-                      alignItems: 'center'
-                    }}>
-                      <strong style={{ color: '#ffd700' }}>{item.step}:</strong>
+                    <div key={idx} className="bg-white-05 p-1 rounded flex gap-sm items-center grid-cols-auto-1fr">
+                      <strong className="text-gold" style={{minWidth: '60px'}}>{item.step}:</strong>
                       <div>
-                        <span style={{ color: 'rgba(255,255,255,0.9)' }}>{item.calc}</span>
-                        <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', marginTop: '4px' }}>
+                        <span className="text-white-90">{item.calc}</span>
+                        <div className="text-xs text-muted mt-1">
                           ({item.formula})
                         </div>
                       </div>
@@ -1202,26 +908,14 @@ function ConceptOfUtility() {
           </div>
 
           {/* Problem 2 */}
-          <div style={{
-            background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 140, 0, 0.05) 100%)',
-            border: '1px solid rgba(255, 215, 0, 0.3)',
-            borderRadius: '12px',
-            padding: '24px',
-            margin: '20px 0',
-          }}>
-            <h4 style={{ color: '#ffd700', marginBottom: '16px' }}>
+          <div className="practice-box gold">
+            <h4 className="text-gold mb-2">
               🍫 Problem 2: Real-World Application
             </h4>
             <p>
               Priya is buying chocolates at a fair. The marginal utilities she derives are:
             </p>
-            <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '12px',
-              margin: '16px 0',
-              justifyContent: 'center'
-            }}>
+            <div className="cou-icon-grid">
               {[
                 { n: '1st', mu: 40 },
                 { n: '2nd', mu: 30 },
@@ -1229,87 +923,49 @@ function ConceptOfUtility() {
                 { n: '4th', mu: 10 },
                 { n: '5th', mu: 0 },
               ].map((item, idx) => (
-                <span key={idx} style={{
-                  background: 'rgba(255,255,255,0.1)',
-                  padding: '10px 18px',
-                  borderRadius: '20px',
-                  border: `1px solid ${item.mu > 0 ? '#00ff88' : '#ffd700'}`,
-                }}>
-                  {item.n}: <strong style={{ color: item.mu > 0 ? '#00ff88' : '#ffd700' }}>{item.mu} utils</strong>
+                <span key={idx} className="bg-white-10 px-2 py-1 rounded-full border-solid border-1"
+                  style={{borderColor: item.mu > 0 ? '#00ff88' : '#ffd700'}}>
+                  {item.n}: <strong className={item.mu > 0 ? 'text-green' : 'text-gold'}>{item.mu} utils</strong>
                 </span>
               ))}
             </div>
 
-            <div style={{
-              background: 'rgba(0,0,0,0.2)',
-              padding: '16px 20px',
-              borderRadius: '10px',
-              marginTop: '16px'
-            }}>
-              <p style={{ margin: '0 0 12px 0' }}><strong>Questions:</strong></p>
-              <ol style={{ paddingLeft: '20px', color: 'rgba(255,255,255,0.9)', margin: 0 }}>
-                <li style={{ marginBottom: '8px' }}>Calculate the total utility from consuming 4 chocolates.</li>
-                <li style={{ marginBottom: '8px' }}>At which unit does Priya reach saturation?</li>
+            <div className="bg-tertiary p-2 rounded mt-2">
+              <p className="mb-1"><strong>Questions:</strong></p>
+              <ol className="pl-4 text-white-90 m-0">
+                <li className="mb-1">Calculate the total utility from consuming 4 chocolates.</li>
+                <li className="mb-1">At which unit does Priya reach saturation?</li>
                 <li>Should Priya buy a 6th chocolate if its MU is -10 utils? Explain.</li>
               </ol>
             </div>
 
-            <details style={{ marginTop: '16px' }}>
-              <summary style={{
-                cursor: 'pointer',
-                color: '#00ff88',
-                fontWeight: 'bold',
-                padding: '12px 16px',
-                background: 'rgba(0, 255, 136, 0.1)',
-                borderRadius: '8px',
-                border: '1px solid rgba(0, 255, 136, 0.3)'
-              }}>
+            <details className="mt-2">
+              <summary className="solution-reveal">
                 ✅ Click to reveal solution
               </summary>
-              <div style={{
-                marginTop: '16px',
-                padding: '20px',
-                background: 'rgba(0,0,0,0.3)',
-                borderRadius: '10px'
-              }}>
-                <ol style={{ paddingLeft: '20px' }}>
-                  <li style={{ marginBottom: '16px' }}>
-                    <strong style={{ color: '#00ffff' }}>TU from 4 chocolates:</strong>
-                    <div style={{
-                      marginTop: '8px',
-                      padding: '12px',
-                      background: 'rgba(255,255,255,0.05)',
-                      borderRadius: '8px'
-                    }}>
+              <div className="solution-content">
+                <ol className="pl-4">
+                  <li className="mb-2">
+                    <strong className="text-cyan">TU from 4 chocolates:</strong>
+                    <div className="mt-1 p-1 bg-white-05 rounded">
                       TU = MU₁ + MU₂ + MU₃ + MU₄<br />
-                      TU = 40 + 30 + 20 + 10 = <strong style={{ color: '#ffd700', fontSize: '1.2rem' }}>100 utils</strong>
+                      TU = 40 + 30 + 20 + 10 = <strong className="text-gold text-lg">100 utils</strong>
                     </div>
                   </li>
-                  <li style={{ marginBottom: '16px' }}>
-                    <strong style={{ color: '#00ffff' }}>Saturation point:</strong>
-                    <div style={{
-                      marginTop: '8px',
-                      padding: '12px',
-                      background: 'rgba(255,255,255,0.05)',
-                      borderRadius: '8px'
-                    }}>
-                      At <strong style={{ color: '#ffd700' }}>5th unit</strong> where MU = 0<br />
-                      At this point, TU = 100 + 0 = <strong style={{ color: '#ffd700' }}>100 utils (Maximum)</strong>
+                  <li className="mb-2">
+                    <strong className="text-cyan">Saturation point:</strong>
+                    <div className="mt-1 p-1 bg-white-05 rounded">
+                      At <strong className="text-gold">5th unit</strong> where MU = 0<br />
+                      At this point, TU = 100 + 0 = <strong className="text-gold">100 utils (Maximum)</strong>
                     </div>
                   </li>
                   <li>
-                    <strong style={{ color: '#00ffff' }}>Should she buy 6th chocolate?</strong>
-                    <div style={{
-                      marginTop: '8px',
-                      padding: '12px',
-                      background: 'rgba(255, 68, 68, 0.1)',
-                      borderRadius: '8px',
-                      border: '1px solid rgba(255, 68, 68, 0.3)'
-                    }}>
-                      <strong style={{ color: '#ff6b6b' }}>No!</strong> If MU₆ = -10 utils, then:<br />
-                      New TU = 100 + (-10) = <strong style={{ color: '#ff6b6b' }}>90 utils</strong><br /><br />
+                    <strong className="text-cyan">Should she buy 6th chocolate?</strong>
+                    <div className="mt-1 p-1 bg-red rounded border-red">
+                      <strong className="text-red">No!</strong> If MU₆ = -10 utils, then:<br />
+                      New TU = 100 + (-10) = <strong className="text-red">90 utils</strong><br /><br />
                       Her total satisfaction would <em>decrease</em> from 100 to 90 utils.<br />
-                      <strong style={{ color: '#ffd700' }}>Conclusion:</strong> She should stop at 5 chocolates to maximize satisfaction.
+                      <strong className="text-gold">Conclusion:</strong> She should stop at 5 chocolates to maximize satisfaction.
                     </div>
                   </li>
                 </ol>
@@ -1319,77 +975,51 @@ function ConceptOfUtility() {
 
           {/* Key Takeaways */}
           <h3 className="highlight-gold">Key Takeaways</h3>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '16px',
-            marginTop: '20px'
-          }}>
+          <div className="cou-takeaway-grid">
             {[
               {
                 num: '1',
                 title: 'Utility is Subjective',
                 desc: 'Different people get different satisfaction from the same good based on personal preferences.',
-                color: '#00ffff'
+                color: '#00ffff',
+                colorClass: 'text-cyan',
+                borderClass: 'border-cyan'
               },
               {
                 num: '2',
                 title: 'TU = Sum of all MUs',
                 desc: 'Total utility is calculated by adding marginal utilities of all units consumed.',
-                color: '#ffd700'
+                color: '#ffd700',
+                colorClass: 'text-gold',
+                borderClass: 'border-gold'
               },
               {
                 num: '3',
                 title: 'MU Diminishes with Consumption',
                 desc: 'As you consume more units, additional satisfaction from each unit typically decreases.',
-                color: '#00ff88'
+                color: '#00ff88',
+                colorClass: 'text-green',
+                borderClass: 'border-green'
               },
               {
                 num: '4',
                 title: 'Price Reflects Marginal Utility',
                 desc: 'Market prices are determined by marginal utility, not total utility (Diamond-Water Paradox).',
-                color: '#ff8c00'
+                color: '#ff8c00',
+                colorClass: 'text-orange',
+                borderClass: 'border-orange'
               },
             ].map((item, idx) => (
-              <div key={idx} style={{
-                background: 'rgba(0,0,0,0.3)',
-                border: `2px solid ${item.color}`,
-                borderRadius: '12px',
-                padding: '20px',
-                position: 'relative',
-                overflow: 'hidden',
-              }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '-15px',
-                  right: '-15px',
-                  width: '70px',
-                  height: '70px',
-                  background: item.color,
-                  opacity: 0.1,
-                  borderRadius: '50%',
-                }}></div>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  marginBottom: '12px',
-                }}>
-                  <span style={{
-                    width: '36px',
-                    height: '36px',
-                    borderRadius: '50%',
-                    background: item.color,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontWeight: 'bold',
-                    color: '#000',
-                    fontSize: '1.1rem',
-                  }}>{item.num}</span>
-                  <h4 style={{ color: item.color, margin: 0 }}>{item.title}</h4>
+              <div key={idx} className={`cou-takeaway-card`} style={{borderColor: item.color}}>
+                <div className="cou-takeaway-bg-icon" style={{background: item.color}}></div>
+                <div className="flex items-center gap-sm mb-1">
+                  <span className="rounded-full flex-center font-bold text-black text-lg"
+                    style={{width: '36px', height: '36px', background: item.color}}>
+                    {item.num}
+                  </span>
+                  <h4 className={`${item.colorClass} m-0`}>{item.title}</h4>
                 </div>
-                <p style={{ color: 'rgba(255,255,255,0.8)', margin: 0, fontSize: '0.95rem' }}>
+                <p className="text-secondary m-0 text-sm">
                   {item.desc}
                 </p>
               </div>
