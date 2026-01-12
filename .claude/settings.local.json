@@ -35,7 +35,9 @@
       "WebFetch(domain:www.noonacademy.com)",
       "WebFetch(domain:www.tutor2u.net)",
       "WebFetch(domain:www.econlib.org)",
-      "WebFetch(domain:www.khanacademy.org)"
+      "WebFetch(domain:www.khanacademy.org)",
+      "mcp__ide__executeCode",
+      "mcp__ide__getDiagnostics"
     ]
   }
 }

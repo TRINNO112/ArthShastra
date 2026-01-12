@@ -1,0 +1,126 @@
+/**
+ * Lesson 4 Components CSS
+ * Consumer Equilibrium: Indifference Curve Analysis
+ *
+ * Imports styles from shared lesson styles and extends them if needed.
+ * Reuses Lesson 3 styles by relative import if necessary, or provides local overrides.
+ */
+
+@import "../../Lesson3/components/component.css";
+
+/* Lesson 4 Specific Styles */
+
+/* Header alignment and spacing */
+.section-header-lesson {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(255, 215, 0, 0.05) 100%);
+  border-radius: 12px;
+  padding-top: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.section-title-lesson {
+  font-size: 2.8rem;
+  margin-bottom: 0.8rem;
+  line-height: 1.2;
+  color: #ffd700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+.section-subtitle-lesson {
+  font-size: 1.3rem;
+  color: #a0a0a0;
+  font-weight: 300;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Indifference Curve Specifics */
+.ic-curve-formula {
+  font-size: 1.4rem;
+  color: var(--neon-gold);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.graph-container {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Recharts Customization overrides if needed */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke-opacity: 0.1;
+}
+
+/* Properties of IC layout */
+.property-layout-row {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.property-text-section {
+  flex: 1.2;
+  min-width: 300px;
+}
+
+.property-visual-section {
+  flex: 1;
+  min-width: 250px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.property-graph {
+  width: 100%;
+  position: relative;
+}
+
+.property-error {
+  border: 1.5px dashed #ff4444;
+}
+
+.warning-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ff4444;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.property-item-container {
+  margin-bottom: 3rem !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 2rem !important;
+}
+
+/* Consumer Equilibrium spacing fixes */
+.math-explanation {
+  margin-top: 2rem !important;
+  margin-bottom: 2.5rem !important;
+}
+
+.graph-analysis-list {
+  margin-top: 2rem !important;
+  padding: 1.5rem !important;
+}
