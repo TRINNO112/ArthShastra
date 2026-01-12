@@ -97,35 +97,49 @@
   opacity: 0.5;
 }
 
+/* Section Header & Navigation */
+.section-header-lesson {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 1;
+}
+
 /* Section Badge Enhancement */
 .section-badge-lesson {
   display: inline-block;
-  padding: 0.4rem 1rem;
-  background: linear-gradient(135deg, var(--neon-gold), #ff8c00);
-  color: #000;
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
+  padding: 8px 20px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 50px;
+  color: #ffd700;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 15px;
   letter-spacing: 1px;
-  border-radius: 20px;
-  margin-bottom: var(--spacing-md);
-  box-shadow: 0 2px 10px rgba(255, 215, 0, 0.4);
+  text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
 }
 
 .section-title-lesson {
-  font-size: 2.2rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #fff, var(--neon-cyan));
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: var(--spacing-sm);
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.5px;
 }
 
 .section-subtitle-lesson {
-  color: var(--text-secondary);
   font-size: 1.1rem;
-  margin-top: 0;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
 /* ==========================================================================
@@ -902,34 +916,6 @@ td.negative {
   min-height: 320px;
 }
 
-/* Consumer Equilibrium Main Heading Style */
-.section-title-lesson {
-  font-size: 2.5rem !important;
-  font-weight: 900 !important;
-  background: linear-gradient(135deg, #ffd700, #ff8c00, #ff0000);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-  position: relative;
-  display: inline-block;
-}
-
-.section-title-lesson::before {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  background: linear-gradient(135deg, #ffd700, #ff0000);
-  border-radius: 20px;
-  opacity: 0.3;
-  z-index: -1;
-  filter: blur(10px);
-}
 
 /* Demand Curve Derivation Specific Styles */
 .demand-curve-derivation {
@@ -1004,14 +990,6 @@ td.negative {
   font-weight: bold;
 }
 
-/* Highlighted Section Header for Consumer Equilibrium */
-.section-header-lesson {
-  text-align: center;
-  padding-bottom: 2rem;
-  border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-  margin-bottom: 2rem;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(255, 215, 0, 0.05) 100%);
-}
 
 .graph-container h4 {
   display: flex;
@@ -3634,3 +3612,121 @@ td.negative {
 .transition { transition: all var(--transition-medium); }
 .transition-fast { transition: all var(--transition-fast); }
 .transition-slow { transition: all var(--transition-slow); }
+
+/* ==========================================================================
+   Config of Utility Specific Styles (Refactored from Inline)
+   ========================================================================== */
+
+.cou-definition-box {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 140, 0, 0.05) 100%);
+  border: 2px solid #ffd700;
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin: 24px 0;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.15);
+}
+
+.cou-quote-icon {
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: #1a1a2e;
+  padding: 4px 12px;
+  color: #ffd700;
+  font-size: 20px;
+}
+
+.cou-definition-text {
+  font-size: 1.15rem;
+  font-style: italic;
+  color: #fff;
+  line-height: 1.8;
+  font-weight: 500;
+  margin: 0;
+}
+
+.cou-key-term {
+  background: linear-gradient(90deg, #ffd700, #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: bold;
+}
+
+.cou-table-container {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 20, 40, 0.6) 100%);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 32px 0;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.cou-section-title {
+  text-align: center;
+  color: #00ffff;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.cou-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.cou-table th {
+  padding: 14px 16px;
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 2px solid #00ffff;
+  background: rgba(0, 255, 255, 0.1);
+}
+
+.cou-table td {
+  padding: 12px 16px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cou-important-note {
+  background: rgba(255, 107, 107, 0.1);
+  border-left: 4px solid #ff6b6b;
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  margin: 20px 0;
+}
+
+.cou-real-world-example {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 200, 100, 0.05) 100%);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.cou-grid-example {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.cou-grid-item {
+  background: rgba(255,255,255,0.05);
+  padding: 12px 16px;
+  border-radius: 8px;
+}
+
+.cou-formula-box {
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(0, 200, 255, 0.05) 100%);
+  border: 2px solid #00ffff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin: 20px 0;
+}

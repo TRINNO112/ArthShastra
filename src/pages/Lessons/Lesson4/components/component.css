@@ -10,35 +10,7 @@
 
 /* Lesson 4 Specific Styles */
 
-/* Header alignment and spacing */
-.section-header-lesson {
-  text-align: center;
-  margin-bottom: 3rem;
-  padding-bottom: 2rem;
-  border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(255, 215, 0, 0.05) 100%);
-  border-radius: 12px;
-  padding-top: 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-.section-title-lesson {
-  font-size: 2.8rem;
-  margin-bottom: 0.8rem;
-  line-height: 1.2;
-  color: #ffd700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
-}
-
-.section-subtitle-lesson {
-  font-size: 1.3rem;
-  color: #a0a0a0;
-  font-weight: 300;
-  max-width: 800px;
-  margin: 0 auto;
-}
+/* Header styles are inherited from Lesson 3 */
 
 /* Indifference Curve Specifics */
 .ic-curve-formula {
