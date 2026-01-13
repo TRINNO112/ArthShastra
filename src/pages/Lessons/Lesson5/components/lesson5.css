@@ -1,0 +1,71 @@
+@import "../../Lesson3/components/component.css";
+
+/* Lesson 5 Specific Styles */
+
+/* Math Formula Layout */
+.math-formula-large {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1.5rem;
+  color: #ffd700;
+  margin: 1.5rem 0;
+  gap: 1rem;
+}
+
+.math-fraction {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.math-numerator {
+  border-bottom: 2px solid #ffd700;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+.math-denominator {
+  padding-top: 5px;
+}
+
+.math-symbol {
+  font-size: 1.8rem;
+  margin: 0 0.5rem;
+}
+
+/* Fix for Colliding Legends in Charts */
+.recharts-legend-wrapper {
+  padding-top: 10px;
+}
+
+/* Expanded Text Sections */
+.expanded-text-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 3px solid #00ffff;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 12px 12px 0;
+}
+
+.expanded-text-section h4 {
+  color: #00ffff;
+  margin-bottom: 0.8rem;
+}
+
+.real-world-example {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), transparent);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.real-world-example strong {
+  color: #ffd700;
+  display: block;
+  margin-bottom: 0.5rem;
+}

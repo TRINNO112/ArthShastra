@@ -146,7 +146,6 @@ const bundleExamples = [
 function IntroToIC() {
   const [activeTab, setActiveTab] = useState('cardinal');
   const [selectedBundle, setSelectedBundle] = useState(null);
-  const [showQuiz, setShowQuiz] = useState(false);
   const [quizAnswer, setQuizAnswer] = useState(null);
 
   return (
