@@ -168,7 +168,7 @@ const DeterminantsOfDemand = () => {
                   <Bar dataKey="inferior" name="Inferior Goods (Demand falls)" fill="#ff4444" />
                 </BarChart>
               </ResponsiveContainer>
-               <p className="diagram-caption text-center small-text">Fixed Data: Inferior Goods demand now correctly decreases as Income increases.</p>
+               <p className="diagram-caption text-center small-text">As income rises, demand for Normal Goods increases, but for Inferior Goods, it decreases.</p>
            </div>
         </div>
       </div>
