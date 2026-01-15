@@ -102,22 +102,65 @@ const MovementVsShift = () => {
           </div>
 
           <div className="graph-container" style={{ background: 'rgba(0,0,0,0.3)', borderRadius: '16px', padding: '1.5rem', marginBottom: '1.5rem' }}>
-             <h4 className="text-center mb-3">Visualizing Movement</h4>
-             <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={MOVEMENT_DATA} margin={{top: 20, right: 30, left: 20, bottom: 20}}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)"/>
-                  <XAxis dataKey="quantity" type="number" stroke="#fff">
-                    <Label value="Quantity" position="bottom" fill="#fff"/>
-                  </XAxis>
-                  <YAxis dataKey="price" type="number" stroke="#fff">
-                    <Label value="Price" angle={-90} position="left" fill="#fff"/>
-                  </YAxis>
-                  <Tooltip contentStyle={{backgroundColor: '#1a1a1a', border: '1px solid #fff'}}/>
-                  <Line type="monotone" dataKey="price" stroke="#00d4ff" strokeWidth={3} dot={{r:5}} activeDot={{r:8}}/>
-                  {/* Arrows for movement annotation would be complex in pure recharts, using text description below */}
-                </LineChart>
-             </ResponsiveContainer>
-             <p className="text-center small-text">A to B (Down) = Extension. B to A (Up) = Contraction.</p>
+             <h4 className="text-center mb-3">Visualizing Movement (Extension & Contraction)</h4>
+             <div style={{ width: '100%', height: '350px', position: 'relative' }}>
+                <svg width="100%" height="100%" viewBox="0 0 400 300" style={{ overflow: 'visible' }}>
+                  {/* Grid Lines */}
+                  <g stroke="rgba(255,255,255,0.1)" strokeWidth="1">
+                    {[50, 100, 150, 200, 250].map(y => <line key={y} x1="50" y1={y} x2="350" y2={y} />)}
+                    {[100, 150, 200, 250, 300].map(x => <line key={x} x1={x} y1="20" x2={x} y2="270" />)}
+                  </g>
+
+                  {/* Axes */}
+                  <line x1="50" y1="270" x2="350" y2="270" stroke="#fff" strokeWidth="2" /> {/* X Axis */}
+                  <line x1="50" y1="20" x2="50" y2="270" stroke="#fff" strokeWidth="2" />   {/* Y Axis */}
+
+                  {/* Axis Labels */}
+                  <text x="200" y="295" fill="#fff" textAnchor="middle" fontSize="14">Quantity Demanded (Units)</text>
+                  <text x="20" y="150" fill="#fff" textAnchor="middle" transform="rotate(-90, 20, 150)" fontSize="14">Price (₹)</text>
+
+                  {/* Demand Curve */}
+                  <path d="M 100 220 L 300 70" stroke="#00d4ff" strokeWidth="3" fill="none" />
+
+                  {/* Point A (Higher Price) */}
+                  <circle cx="233" cy="120" r="5" fill="#ffd700" />
+                  <text x="245" y="115" fill="#ffd700" fontSize="16" fontWeight="bold">A</text>
+                  <line x1="233" y1="120" x2="233" y2="270" stroke="#ffd700" strokeDasharray="4 4" />
+                  <line x1="50" y1="120" x2="233" y2="120" stroke="#ffd700" strokeDasharray="4 4" />
+
+                  {/* Point B (Lower Price) */}
+                  <circle cx="166" cy="170" r="5" fill="#ffd700" />
+                  <text x="145" y="180" fill="#ffd700" fontSize="16" fontWeight="bold">B</text>
+                  <line x1="166" y1="170" x2="166" y2="270" stroke="#ffd700" strokeDasharray="4 4" />
+                  <line x1="50" y1="170" x2="166" y2="170" stroke="#ffd700" strokeDasharray="4 4" />
+
+                  {/* Movement Arrows (Semicircle/Curved) */}
+                  {/* Contraction (B to A) - Upward Arrow */}
+                  <path d="M 175 160 Q 200 135 220 130" stroke="#ff4444" strokeWidth="2" fill="none" markerEnd="url(#arrowhead-red)" />
+
+                  {/* Extension (A to B) - Downward Arrow */}
+                  <path d="M 225 140 Q 200 155 180 165" stroke="#00ff00" strokeWidth="2" fill="none" markerEnd="url(#arrowhead-green)" />
+
+                  {/* Defs for Markers */}
+                  <defs>
+                    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                      <polygon points="0 0, 10 3.5, 0 7" fill="#ff4444" />
+                    </marker>
+                    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                      <polygon points="0 0, 10 3.5, 0 7" fill="#00ff00" />
+                    </marker>
+                  </defs>
+
+                </svg>
+             </div>
+
+             <div className="diagram-caption text-center" style={{marginTop: '0.5rem', background: 'rgba(255,255,255,0.05)', padding: '1rem', borderRadius: '8px'}}>
+               <p style={{marginBottom: '0.5rem'}}><strong style={{color: '#ffd700'}}>Movement Along Curve</strong></p>
+               <div style={{display: 'flex', justifyContent: 'center', gap: '2rem'}}>
+                 <span style={{color: '#00ff00'}}>⬇ Extension (Price ↓, Qty ↑)</span>
+                 <span style={{color: '#ff4444'}}>⬆ Contraction (Price ↑, Qty ↓)</span>
+               </div>
+             </div>
           </div>
         </div>
       </div>
@@ -126,7 +169,11 @@ const MovementVsShift = () => {
       <div className="content-card">
         <div className="card-content">
           <h3 className="highlight-purple"><FaExpandArrowsAlt /> 2. Shift in Demand Curve</h3>
-          <p>Caused by factors OTHER than Price (Income, Tastes, Price of Related Goods, etc.). Price remains constant.</p>
+          <p>
+            A <strong>shift</strong> in the demand curve occurs when <strong>factors other than price</strong> change (like income, tastes, or prices of related goods).
+            Unlike movement (which is along the same curve), a shift creates a <strong>completely new demand curve</strong>.
+            The price remains constant at the time of the shift, but consumers are willing to buy more or less at that same price.
+          </p>
 
           <div className="scenario-buttons">
               <button
@@ -150,29 +197,45 @@ const MovementVsShift = () => {
           </div>
 
           <div className="graph-container" style={{ background: 'rgba(0,0,0,0.3)', borderRadius: '16px', padding: '1.5rem', margin: '1.5rem 0' }}>
-             <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={SHIFT_DATA} margin={{top: 20, right: 30, left: 20, bottom: 20}}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)"/>
-                  <XAxis type="number" domain={[0, 70]} stroke="#fff">
-                    <Label value="Quantity" position="bottom" fill="#fff"/>
-                  </XAxis>
-                  <YAxis dataKey="price" type="number" stroke="#fff">
-                    <Label value="Price" angle={-90} position="left" fill="#fff"/>
-                  </YAxis>
-                  <Tooltip contentStyle={{backgroundColor: '#1a1a1a', border: '1px solid #fff'}}/>
+             <div style={{ width: '100%', height: '350px', position: 'relative' }}>
+                <svg width="100%" height="100%" viewBox="0 0 400 300" style={{ overflow: 'visible' }}>
+                  {/* Grid Lines */}
+                  <g stroke="rgba(255,255,255,0.1)" strokeWidth="1">
+                    {[50, 100, 150, 200, 250].map(y => <line key={y} x1="50" y1={y} x2="350" y2={y} />)}
+                    {[100, 150, 200, 250, 300].map(x => <line key={x} x1={x} y1="20" x2={x} y2="270" />)}
+                  </g>
 
-                  {/* Original Curve */}
-                  <Line type="monotone" dataKey="q_d1" name="Original Demand (D1)" stroke="#fff" strokeWidth={3} dot={false} strokeOpacity={0.5}/>
+                   {/* Axes */}
+                  <line x1="50" y1="270" x2="350" y2="270" stroke="#fff" strokeWidth="2" /> {/* X Axis */}
+                  <line x1="50" y1="20" x2="50" y2="270" stroke="#fff" strokeWidth="2" />   {/* Y Axis */}
 
-                  {/* Shifted Curves */}
-                  {shiftType === 'right' && (
-                    <Line type="monotone" dataKey="q_d2" name="Increased Demand (D2)" stroke="#00ff00" strokeWidth={3} dot={false}/>
-                  )}
-                  {shiftType === 'left' && (
-                    <Line type="monotone" dataKey="q_d3" name="Decreased Demand (D3)" stroke="#ff4444" strokeWidth={3} dot={false}/>
-                  )}
-                </LineChart>
-             </ResponsiveContainer>
+                  {/* Axis Labels */}
+                  <text x="200" y="295" fill="#fff" textAnchor="middle" fontSize="14">Quantity Demanded (Units)</text>
+                  <text x="20" y="150" fill="#fff" textAnchor="middle" transform="rotate(-90, 20, 150)" fontSize="14">Price (₹)</text>
+
+
+                  {/* Original Curve D1 (Center) */}
+                  <path d="M 120 220 L 280 60" stroke="#fff" strokeWidth="3" strokeDasharray={shiftType !== 'none' ? "5 5" : "0"} strokeOpacity={shiftType !== 'none' ? 0.5 : 1} fill="none" />
+                  <text x="285" y="55" fill="#fff" fontSize="14" fontWeight="bold">D1</text>
+
+                  {/* Right Shift D2 (Green) */}
+                  <path d="M 170 220 L 330 60" stroke="#00ff00" strokeWidth="4" fill="none" opacity={shiftType === 'right' ? 1 : 0} style={{ transition: 'opacity 0.5s ease' }} />
+                  {shiftType === 'right' && <text x="335" y="55" fill="#00ff00" fontSize="14" fontWeight="bold">D2 (Right)</text>}
+
+                  {/* Right Shift Arrow */}
+                   <line x1="200" y1="140" x2="240" y2="140" stroke="#00ff00" strokeWidth="2" markerEnd="url(#arrowhead-green)" opacity={shiftType === 'right' ? 1 : 0} />
+
+
+                  {/* Left Shift D3 (Red) */}
+                  <path d="M 70 220 L 230 60" stroke="#ff4444" strokeWidth="4" fill="none" opacity={shiftType === 'left' ? 1 : 0} style={{ transition: 'opacity 0.5s ease' }} />
+                  {shiftType === 'left' && <text x="235" y="55" fill="#ff4444" fontSize="14" fontWeight="bold">D3 (Left)</text>}
+
+                  {/* Left Shift Arrow */}
+                  <line x1="200" y1="140" x2="160" y2="140" stroke="#ff4444" strokeWidth="2" markerEnd="url(#arrowhead-red)" opacity={shiftType === 'left' ? 1 : 0} />
+
+                </svg>
+             </div>
+
              <div className="expanded-text-section">
                 {shiftType === 'none' && <p>Select a shift type above to see changes.</p>}
                 {shiftType === 'right' && (

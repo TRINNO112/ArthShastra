@@ -17,9 +17,7 @@ import {
   ConceptOfDemand,
   DeterminantsOfDemand,
   LawOfDemand,
-  ElasticityOfDemand,
   MovementVsShift,
-  FactorsAffectingElasticity,
   Quiz
 } from './components'; // Components imported from index.js
 import { lesson5Data } from '../data/lesson5Data';
@@ -34,8 +32,6 @@ import '../css/lessons.css'; // Shared lesson styles
  * 2. Determinants of Demand & Demand Function
  * 3. Law of Demand
  * 4. Movement vs Shift in Demand
- * 5. Price Elasticity of Demand
- * 6. Factors Affecting Elasticity
  */
 
 const sections = lesson5Data.sections;
@@ -93,10 +89,6 @@ function Lesson5() {
         return <LawOfDemand />;
       case 'movement-shift':
         return <MovementVsShift />;
-      case 'elasticity':
-        return <ElasticityOfDemand />;
-      case 'factors-elasticity':
-        return <FactorsAffectingElasticity />;
       case 'quiz':
         return <Quiz
           mcqQuestions={lesson5Data.mcqQuestions}

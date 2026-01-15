@@ -11,8 +11,6 @@ export const lesson5Data = {
     { id: 'determinants', name: 'Determinants', icon: FaShoppingBasket },
     { id: 'law-demand', name: 'Law of Demand', icon: FaArrowDown },
     { id: 'movement-shift', name: 'Movement vs Shift', icon: FaExchangeAlt },
-    { id: 'elasticity', name: 'Price Elasticity', icon: FaPercentage },
-    { id: 'factors-elasticity', name: 'Factors of Elasticity', icon: FaListUl },
     { id: 'quiz', name: 'Quiz', icon: FaClipboardList }
   ],
 
@@ -52,17 +50,6 @@ export const lesson5Data = {
       explanation: "Tea and Coffee are Substitute Goods. When price of a substitute (Tea) rises, consumers switch to the other good (Coffee), increasing its demand."
     },
     {
-      question: "Demand for Salt is likely to be:",
-      options: [
-        "Perfectly Elastic",
-        "Highly Elastic",
-        "Inelastic",
-        "Unitary Elastic"
-      ],
-      correctAnswer: 2,
-      explanation: "Salt is a necessity with no close substitutes and takes a very small portion of income, so its demand is inelastic (price changes don't affect consumption much)."
-    },
-    {
       question: "Movement along the demand curve occurs due to change in:",
       options: [
         "Own Price of the commodity",
@@ -72,17 +59,6 @@ export const lesson5Data = {
       ],
       correctAnswer: 0,
       explanation: "Change in Own Price leads to 'Extension' or 'Contraction' of demand, shown as movement along the same curve. Other factors cause a 'Shift'."
-    },
-    {
-      question: "Which of the following goods has inelastic demand?",
-      options: [
-        "Luxury Car",
-        "Life Saving Medicine",
-        "Air Conditioner",
-        "Pizza"
-      ],
-      correctAnswer: 1,
-      explanation: "Life Saving Medicines are absolute necessities and cannot be postponed, so their demand is inelastic."
     },
     {
       question: "A rightward shift in demand curve indicates:",
@@ -107,21 +83,6 @@ export const lesson5Data = {
       question: "For inferior goods, demand falls when income rises.",
       answer: true,
       explanation: "Inferior goods have a negative income effect. As people get richer, they buy less of inferior goods and switch to superior alternatives."
-    },
-    {
-      question: "A vertical demand curve represents perfectly elastic demand.",
-      answer: false,
-      explanation: "A vertical demand curve represents Perfectly Inelastic Demand (Ed = 0). Perfectly Elastic Demand is a horizontal line."
-    },
-    {
-      question: "Total Expenditure Method is one way to measure Price Elasticity of Demand.",
-      answer: true,
-      explanation: "Yes, along with Percentage Method and Geometric Method, Total Expenditure Method (Relation between Price and Total Outlay) is used."
-    },
-    {
-      question: "If a good has many substitutes, its demand is likely to be inelastic.",
-      answer: false,
-      explanation: "If a good has many substitutes, its demand is Elastic because consumers can easily switch to other goods if price rises."
     }
   ]
 };
