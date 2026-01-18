@@ -12,19 +12,61 @@
  */
 
 import { FaBalanceScale, FaEquals, FaBoxOpen, FaShoppingBag, FaChartLine, FaArrowRight } from 'react-icons/fa';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  ReferenceLine,
-  ReferenceDot,
-  Label
-} from 'recharts';
+import SingleCommodityChart from './SingleCommodityChart';
+import TwoCommodityChart from './TwoCommodityChart';
 import './component.css';
+
+// Generate Data for Single Commodity (10 Units)
+const getSingleCommodityData = () => {
+  // Price = 10
+  // MU starts at 20, drops by 2
+  const data = [];
+  for (let i = 1; i <= 10; i++) {
+    data.push({
+      units: i,
+      mu: Math.max(0, 22 - (2 * i)), // 1:20, 2:18... 6:10(Eq)... 10:2
+      price: 10
+    });
+  }
+  return data;
+};
+
+// Generate Data for Two Commodity (10 Units Total Budget allocation context)
+// Let's assume we are plotting the "Allocation of Income" graph.
+// Total Units to allocate = 10.
+// X axis: 0 to 10 units of X.
+// Y axis: 0 to 10 units of Y (implied opposite).
+// Generate Data for Two Commodity (10 Units Total Budget allocation context)
+const getTwoCommodityData = () => {
+  const data = [];
+  const maxUnits = 10;
+
+  for (let i = 0; i <= maxUnits; i++) {
+    const unitsX = i;
+    const unitsY = maxUnits - i;
+
+    // Custom logic for Asymmetric Equilibrium (X=7, Y=3)
+    // MUx = 28 - 2x. At x=7, MUx=14.
+    // MUy = 20 - 2y. At y=3, MUy=14.
+
+    // Ensure values don't go negative for display
+    const mux = Math.max(0, 28 - (2 * unitsX));
+    const muy = Math.max(0, 20 - (2 * unitsY));
+
+    data.push({
+      unitsX,
+      unitsY,
+      mux,
+      muy
+    });
+  }
+  return data;
+};
+
+const singleData = getSingleCommodityData();
+const twoComData = getTwoCommodityData();
+
+
 
 function ConsumerEquilibrium() {
   return (
@@ -106,11 +148,11 @@ function ConsumerEquilibrium() {
           </p>
           <ul className="bullet-list">
             <li><strong>If MU {'>'} Price:</strong> The consumer gains more satisfaction than what they pay,
-            so they should buy more units</li>
+              so they should buy more units</li>
             <li><strong>If MU = Price:</strong> The consumer is in equilibrium - satisfaction gained equals
-            money paid, no net gain from buying more</li>
+              money paid, no net gain from buying more</li>
             <li><strong>If MU {'<'} Price:</strong> The consumer loses satisfaction - they pay more than the
-            utility received, so they should stop buying</li>
+              utility received, so they should stop buying</li>
           </ul>
 
           <div className="formula-box">
@@ -446,199 +488,51 @@ function ConsumerEquilibrium() {
                 </tr>
               </thead>
               <tbody>
-                <tr style={{ background: 'rgba(40,167,69,0.15)' }}>
-                  <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: '1px solid #444' }}>1</td>
-                  <td style={{ padding: '10px', color: '#4da6ff', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>20</td>
-                  <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: '1px solid #444' }}>10</td>
-                  <td style={{ padding: '10px', color: '#28a745', textAlign: 'center', border: '1px solid #444' }}>20 {'>'} 10</td>
-                  <td style={{ padding: '10px', color: '#28a745', textAlign: 'center', border: '1px solid #444' }}>✓ Buy</td>
-                </tr>
-                <tr style={{ background: 'rgba(40,167,69,0.15)' }}>
-                  <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: '1px solid #444' }}>2</td>
-                  <td style={{ padding: '10px', color: '#4da6ff', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>16</td>
-                  <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: '1px solid #444' }}>10</td>
-                  <td style={{ padding: '10px', color: '#28a745', textAlign: 'center', border: '1px solid #444' }}>16 {'>'} 10</td>
-                  <td style={{ padding: '10px', color: '#28a745', textAlign: 'center', border: '1px solid #444' }}>✓ Buy</td>
-                </tr>
-                <tr style={{ background: 'rgba(40,167,69,0.15)' }}>
-                  <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: '1px solid #444' }}>3</td>
-                  <td style={{ padding: '10px', color: '#4da6ff', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>12</td>
-                  <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: '1px solid #444' }}>10</td>
-                  <td style={{ padding: '10px', color: '#28a745', textAlign: 'center', border: '1px solid #444' }}>12 {'>'} 10</td>
-                  <td style={{ padding: '10px', color: '#28a745', textAlign: 'center', border: '1px solid #444' }}>✓ Buy</td>
-                </tr>
-                <tr style={{ background: 'rgba(255,193,7,0.25)', border: '3px solid #ffc107' }}>
-                  <td style={{ padding: '10px', color: '#ffc107', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>4</td>
-                  <td style={{ padding: '10px', color: '#ffc107', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold', fontSize: '1.1rem' }}>10 ⭐</td>
-                  <td style={{ padding: '10px', color: '#ffc107', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>10</td>
-                  <td style={{ padding: '10px', color: '#ffc107', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>10 = 10</td>
-                  <td style={{ padding: '10px', color: '#ffc107', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>⚡ EQUILIBRIUM</td>
-                </tr>
-                <tr style={{ background: 'rgba(220,53,69,0.15)' }}>
-                  <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: '1px solid #444' }}>5</td>
-                  <td style={{ padding: '10px', color: '#dc3545', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>6</td>
-                  <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: '1px solid #444' }}>10</td>
-                  <td style={{ padding: '10px', color: '#dc3545', textAlign: 'center', border: '1px solid #444' }}>6 {'<'} 10</td>
-                  <td style={{ padding: '10px', color: '#dc3545', textAlign: 'center', border: '1px solid #444' }}>✗ Stop</td>
-                </tr>
-                <tr style={{ background: 'rgba(220,53,69,0.15)' }}>
-                  <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: '1px solid #444' }}>6</td>
-                  <td style={{ padding: '10px', color: '#dc3545', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>2</td>
-                  <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: '1px solid #444' }}>10</td>
-                  <td style={{ padding: '10px', color: '#dc3545', textAlign: 'center', border: '1px solid #444' }}>2 {'<'} 10</td>
-                  <td style={{ padding: '10px', color: '#dc3545', textAlign: 'center', border: '1px solid #444' }}>✗ Loss</td>
-                </tr>
+                {singleData.map((row) => {
+                  const comparison = row.mu > row.price
+                    ? `${row.mu} > ${row.price} (Surplus)`
+                    : row.mu < row.price
+                      ? `${row.mu} < ${row.price} (Deficit)`
+                      : `${row.mu} = ${row.price}`;
+
+                  const rowStyle = row.mu === row.price
+                    ? { background: 'rgba(255,193,7,0.25)', border: '2px solid #ffc107' }
+                    : row.mu > row.price
+                      ? { background: 'rgba(40,167,69,0.15)' }
+                      : { background: 'rgba(220,53,69,0.15)' };
+
+                  return (
+                    <tr key={row.units} style={rowStyle}>
+                      <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: '1px solid #444' }}>{row.units}</td>
+                      <td style={{ padding: '10px', color: row.mu === row.price ? '#ffc107' : '#4da6ff', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>
+                        {row.mu}
+                        {row.mu === row.price && " ⭐"}
+                      </td>
+                      <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: '1px solid #444' }}>{row.price}</td>
+                      <td style={{ padding: '10px', color: row.mu >= row.price ? '#28a745' : '#dc3545', textAlign: 'center', border: '1px solid #444' }}>
+                        {comparison}
+                      </td>
+                      <td style={{ padding: '10px', color: row.mu > row.price ? '#28a745' : (row.mu < row.price ? '#dc3545' : '#ffc107'), textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>
+                        {row.mu > row.price ? "✓ Buy" : (row.mu < row.price ? "✗ Stop" : "⚡ EQUILIBRIUM")}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
 
-          {/* Single Commodity Graph */}
+          {/* Single Commodity Graph - Interactive D3 */}
           <div className="graph-container" style={{
             background: 'rgba(0,0,0,0.3)',
             borderRadius: '16px',
             padding: '1.5rem',
-            overflowX: 'auto'
+            marginBottom: '2rem'
           }}>
-            <div style={{ minWidth: '620px', maxWidth: '800px', margin: '0 auto' }}>
-              <svg viewBox="0 0 620 450" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto' }}>
-
-                {/* Definitions */}
-                <defs>
-                  <marker id="arrow1" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#fff" />
-                  </marker>
-                </defs>
-
-                {/* Title */}
-                <text x="310" y="35" textAnchor="middle" fill="#fff" fontSize="18" fontWeight="bold" fontFamily="Arial, sans-serif">
-                  Consumer Equilibrium - Single Commodity
-                </text>
-                <text x="310" y="55" textAnchor="middle" fill="#aaa" fontSize="12" fontFamily="Arial, sans-serif">
-                  Equilibrium Condition: MUₓ = Pₓ
-                </text>
-
-                {/* Y-Axis */}
-                <line x1="90" y1="370" x2="90" y2="70" stroke="#fff" strokeWidth="2" markerEnd="url(#arrow1)" />
-
-                {/* Y-Axis Label */}
-                <text x="35" y="220" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold" fontFamily="Arial, sans-serif" transform="rotate(-90, 35, 220)">
-                  MU / Price (Utils / ₹)
-                </text>
-
-                {/* Y-Axis Tick Marks and Values */}
-                <line x1="85" y1="98" x2="95" y2="98" stroke="#fff" strokeWidth="1" />
-                <text x="75" y="102" textAnchor="end" fill="#aaa" fontSize="11" fontFamily="Arial, sans-serif">20</text>
-
-                <line x1="85" y1="152" x2="95" y2="152" stroke="#fff" strokeWidth="1" />
-                <text x="75" y="156" textAnchor="end" fill="#aaa" fontSize="11" fontFamily="Arial, sans-serif">16</text>
-
-                <line x1="85" y1="207" x2="95" y2="207" stroke="#fff" strokeWidth="1" />
-                <text x="75" y="211" textAnchor="end" fill="#aaa" fontSize="11" fontFamily="Arial, sans-serif">12</text>
-
-                <line x1="85" y1="234" x2="95" y2="234" stroke="#ffc107" strokeWidth="2" />
-                <text x="75" y="238" textAnchor="end" fill="#ffc107" fontSize="12" fontWeight="bold" fontFamily="Arial, sans-serif">10</text>
-
-                <line x1="85" y1="288" x2="95" y2="288" stroke="#fff" strokeWidth="1" />
-                <text x="75" y="292" textAnchor="end" fill="#aaa" fontSize="11" fontFamily="Arial, sans-serif">6</text>
-
-                <line x1="85" y1="343" x2="95" y2="343" stroke="#fff" strokeWidth="1" />
-                <text x="75" y="347" textAnchor="end" fill="#aaa" fontSize="11" fontFamily="Arial, sans-serif">2</text>
-
-                <text x="75" y="374" textAnchor="end" fill="#aaa" fontSize="11" fontFamily="Arial, sans-serif">0</text>
-
-                {/* X-Axis */}
-                <line x1="90" y1="370" x2="560" y2="370" stroke="#fff" strokeWidth="2" markerEnd="url(#arrow1)" />
-
-                {/* X-Axis Label */}
-                <text x="325" y="420" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="bold" fontFamily="Arial, sans-serif">
-                  Quantity of X (Units)
-                </text>
-
-                {/* X-Axis Tick Marks and Values */}
-                <line x1="160" y1="370" x2="160" y2="378" stroke="#fff" strokeWidth="1" />
-                <text x="160" y="395" textAnchor="middle" fill="#aaa" fontSize="11" fontFamily="Arial, sans-serif">1</text>
-
-                <line x1="230" y1="370" x2="230" y2="378" stroke="#fff" strokeWidth="1" />
-                <text x="230" y="395" textAnchor="middle" fill="#aaa" fontSize="11" fontFamily="Arial, sans-serif">2</text>
-
-                <line x1="300" y1="370" x2="300" y2="378" stroke="#fff" strokeWidth="1" />
-                <text x="300" y="395" textAnchor="middle" fill="#aaa" fontSize="11" fontFamily="Arial, sans-serif">3</text>
-
-                <line x1="370" y1="370" x2="370" y2="380" stroke="#ffc107" strokeWidth="2" />
-                <text x="370" y="398" textAnchor="middle" fill="#ffc107" fontSize="13" fontWeight="bold" fontFamily="Arial, sans-serif">4</text>
-
-                <line x1="440" y1="370" x2="440" y2="378" stroke="#fff" strokeWidth="1" />
-                <text x="440" y="395" textAnchor="middle" fill="#aaa" fontSize="11" fontFamily="Arial, sans-serif">5</text>
-
-                <line x1="510" y1="370" x2="510" y2="378" stroke="#fff" strokeWidth="1" />
-                <text x="510" y="395" textAnchor="middle" fill="#aaa" fontSize="11" fontFamily="Arial, sans-serif">6</text>
-
-                {/* Price Line (Horizontal at y=234, i.e., P=10) */}
-                <line x1="90" y1="234" x2="540" y2="234" stroke="#e74c3c" strokeWidth="2.5" strokeDasharray="10,5" />
-                <text x="555" y="228" fill="#e74c3c" fontSize="12" fontWeight="bold" fontFamily="Arial, sans-serif">Pₓ = 10</text>
-
-                {/* MU Curve - Smooth curve through all points */}
-                <path
-                  d="M 160,98 
-           C 180,115 210,140 230,152 
-           C 250,165 280,195 300,207 
-           C 320,218 350,228 370,234 
-           C 390,250 420,275 440,288 
-           C 460,305 490,335 510,343"
-                  fill="none"
-                  stroke="#3498db"
-                  strokeWidth="3.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-
-                {/* Data Points */}
-                {/* Point 1: (160, 98) - MU=20 */}
-                <circle cx="160" cy="98" r="7" fill="#28a745" stroke="#fff" strokeWidth="2" />
-
-                {/* Point 2: (230, 152) - MU=16 */}
-                <circle cx="230" cy="152" r="7" fill="#28a745" stroke="#fff" strokeWidth="2" />
-
-                {/* Point 3: (300, 207) - MU=12 */}
-                <circle cx="300" cy="207" r="7" fill="#28a745" stroke="#fff" strokeWidth="2" />
-
-                {/* Point 4: (370, 234) - MU=10 - EQUILIBRIUM */}
-                <circle cx="370" cy="234" r="10" fill="#ffc107" stroke="#fff" strokeWidth="3" />
-
-                {/* Point 5: (440, 288) - MU=6 */}
-                <circle cx="440" cy="288" r="7" fill="#dc3545" stroke="#fff" strokeWidth="2" />
-
-                {/* Point 6: (510, 343) - MU=2 */}
-                <circle cx="510" cy="343" r="7" fill="#dc3545" stroke="#fff" strokeWidth="2" />
-
-                {/* Dashed vertical line from equilibrium point to X-axis */}
-                <line x1="370" y1="234" x2="370" y2="370" stroke="#ffc107" strokeWidth="2" strokeDasharray="6,4" />
-
-                {/* Point Labels - positioned to avoid overlaps */}
-                <text x="175" y="90" fill="#28a745" fontSize="11" fontWeight="bold" fontFamily="Arial, sans-serif">20</text>
-                <text x="245" y="145" fill="#28a745" fontSize="11" fontWeight="bold" fontFamily="Arial, sans-serif">16</text>
-                <text x="315" y="200" fill="#28a745" fontSize="11" fontWeight="bold" fontFamily="Arial, sans-serif">12</text>
-                <text x="455" y="280" fill="#dc3545" fontSize="11" fontWeight="bold" fontFamily="Arial, sans-serif">6</text>
-                <text x="525" y="338" fill="#dc3545" fontSize="11" fontWeight="bold" fontFamily="Arial, sans-serif">2</text>
-
-                {/* Equilibrium Label Box */}
-                <rect x="385" y="205" width="110" height="40" rx="5" fill="rgba(255,193,7,0.2)" stroke="#ffc107" strokeWidth="1.5" />
-                <text x="440" y="222" textAnchor="middle" fill="#ffc107" fontSize="11" fontWeight="bold" fontFamily="Arial, sans-serif">EQUILIBRIUM</text>
-                <text x="440" y="238" textAnchor="middle" fill="#fff" fontSize="10" fontFamily="Arial, sans-serif">MUₓ = Pₓ = 10</text>
-
-                {/* Curve Label */}
-                <text x="145" y="78" fill="#3498db" fontSize="13" fontWeight="bold" fontFamily="Arial, sans-serif">MUₓ Curve</text>
-
-                {/* Legend Box */}
-                <rect x="420" y="85" width="150" height="60" rx="6" fill="rgba(0,0,0,0.5)" stroke="#555" strokeWidth="1" />
-                <text x="495" y="103" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="bold" fontFamily="Arial, sans-serif">LEGEND</text>
-                <line x1="435" y1="120" x2="465" y2="120" stroke="#3498db" strokeWidth="3" />
-                <text x="475" y="124" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">MU Curve</text>
-                <line x1="435" y1="137" x2="465" y2="137" stroke="#e74c3c" strokeWidth="2" strokeDasharray="5,3" />
-                <text x="475" y="141" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">Price Line</text>
-
-              </svg>
-            </div>
+            <h5 className="text-center mb-4" style={{ color: '#4da6ff' }}>Interactive: Single Commodity Equilibrium</h5>
+            {/* Passed 10 as price to match the Data Generation Logic */}
+            <SingleCommodityChart data={singleData} price={10} />
+            <p className="text-center text-muted mt-2" style={{ fontSize: '0.9rem' }}>*Hover over the points to see details. Green = Surplus, Red = Loss.</p>
           </div>
 
           {/* Explanation */}
@@ -659,18 +553,56 @@ function ConsumerEquilibrium() {
 
           <hr style={{ border: '1px solid rgba(255,255,255,0.1)', margin: '3rem 0' }} />
 
-          {/* ============================================ */}
-          {/* TWO COMMODITY EQUILIBRIUM - SCHEDULE + GRAPH */}
-          {/* ============================================ */}
+          {/* Single Interactive Graph - Combined MUx and MUy */}
+          <div className="graph-container">
+            <h4 className="text-center mb-4" style={{ color: '#00ffff' }}>
+              <FaChartLine /> Consumer Equilibrium - Two Commodity Case (Interactive)
+            </h4>
 
-          <h4 className="text-center mb-4">
-            <FaChartLine /> Consumer Equilibrium: Two Commodity Case
-          </h4>
+            {/* Replaced with D3 TwoCommodityChart */}
+            <TwoCommodityChart data={twoComData} maxUnits={10} />
 
-          {/* Schedule Table */}
+            {/* Equilibrium Info Box */}
+            <div className="mt-4 p-3" style={{
+              background: 'rgba(255, 215, 0, 0.1)',
+              border: '1px solid rgba(255, 215, 0, 0.3)',
+              borderRadius: '8px'
+            }}>
+              <h5 className="text-center mb-2" style={{ color: '#ffd700' }}>⚖️ Equilibrium Point</h5>
+              <div className="text-center">
+                <p className="text-white mb-1"><strong>Optimal Distribution:</strong></p>
+                <p className="text-cyan d-inline">Spend equal MU per Rupee</p>
+                <p className="text-muted mt-2">The curves intersect where MUx/Px = MUy/Py!</p>
+              </div>
+            </div>
+
+            {/* Custom Legend */}
+            <div className="mt-4" style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '30px',
+              flexWrap: 'wrap'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#00ffff' }}>
+                <span style={{ width: '20px', height: '3px', background: '#00ffff' }}></span>
+                <span>MUₓ Curve (Left to Right)</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ff69b4' }}>
+                <span style={{ width: '20px', height: '3px', background: '#ff69b4' }}></span>
+                <span>MUy Curve (Right to Left)</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ffd700' }}>
+                <span style={{ width: '20px', height: '20px', borderRadius: '50%', background: '#ffd700', border: '2px dashed #ffd700', boxSizing: 'border-box' }}></span>
+                <span>Equilibrium Point</span>
+              </div>
+            </div>
+          </div>
+
+
+          {/* Detailed Two Commodity Schedule - Added dynamically */}
           <div style={{ marginBottom: '2rem', overflowX: 'auto' }}>
             <h5 style={{ color: '#fff', textAlign: 'center', marginBottom: '1rem' }}>
-              📋 Utility Schedule (Pₓ = ₹1, Pᵧ = ₹1, Income = ₹5)
+              📋 Allocation Schedule (Total Budget Units = 10)
             </h5>
             <table style={{
               width: '100%',
@@ -681,282 +613,161 @@ function ConsumerEquilibrium() {
               borderRadius: '8px'
             }}>
               <thead>
-                <tr style={{ background: '#6f42c1' }}>
-                  <th style={{ padding: '12px', color: '#fff', border: '1px solid #444' }} rowSpan="2">Units</th>
-                  <th style={{ padding: '10px', color: '#00ffff', border: '1px solid #444', borderBottom: 'none' }} colSpan="2">Commodity X (Pₓ = ₹1)</th>
-                  <th style={{ padding: '10px', color: '#ff69b4', border: '1px solid #444', borderBottom: 'none' }} colSpan="2">Commodity Y (Pᵧ = ₹1)</th>
+                <tr style={{ background: '#0056b3' }}>
+                  <th colSpan="2" style={{ padding: '10px', color: '#fff', border: '1px solid #444', textAlign: 'center' }}>Scale of Preferences</th>
+                  <th colSpan="3" style={{ padding: '10px', color: '#fff', border: '1px solid #444', textAlign: 'center' }}>Marginal Utility Analysis</th>
                 </tr>
-                <tr style={{ background: '#5a32a3' }}>
-                  <th style={{ padding: '8px', color: '#00ffff', border: '1px solid #444' }}>MUₓ</th>
-                  <th style={{ padding: '8px', color: '#00ffff', border: '1px solid #444' }}>MUₓ/Pₓ</th>
-                  <th style={{ padding: '8px', color: '#ff69b4', border: '1px solid #444' }}>MUᵧ</th>
-                  <th style={{ padding: '8px', color: '#ff69b4', border: '1px solid #444' }}>MUᵧ/Pᵧ</th>
+                <tr style={{ background: '#004494' }}>
+                  <th style={{ padding: '10px', color: '#00ffff', border: '1px solid #444' }}>Units of X</th>
+                  <th style={{ padding: '10px', color: '#ff69b4', border: '1px solid #444' }}>Units of Y</th>
+                  <th style={{ padding: '10px', color: '#fff', border: '1px solid #444' }}>MUₓ / Pₓ</th>
+                  <th style={{ padding: '10px', color: '#fff', border: '1px solid #444' }}>MUᵧ / Pᵧ</th>
+                  <th style={{ padding: '10px', color: '#fff', border: '1px solid #444' }}>Status / Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>1</td>
-                  <td style={{ padding: '10px', color: '#00ffff', textAlign: 'center', border: '1px solid #444' }}>10</td>
-                  <td style={{ padding: '10px', color: '#00ffff', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>10</td>
-                  <td style={{ padding: '10px', color: '#ff69b4', textAlign: 'center', border: '1px solid #444' }}>8</td>
-                  <td style={{ padding: '10px', color: '#ff69b4', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>8</td>
-                </tr>
-                <tr>
-                  <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>2</td>
-                  <td style={{ padding: '10px', color: '#00ffff', textAlign: 'center', border: '1px solid #444' }}>8</td>
-                  <td style={{ padding: '10px', color: '#00ffff', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>8</td>
-                  <td style={{ padding: '10px', color: '#ff69b4', textAlign: 'center', border: '1px solid #444' }}>6</td>
-                  <td style={{ padding: '10px', color: '#ff69b4', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>6</td>
-                </tr>
-                <tr style={{ background: 'rgba(255,193,7,0.2)', border: '3px solid #ffc107' }}>
-                  <td style={{ padding: '10px', color: '#ffc107', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>3</td>
-                  <td style={{ padding: '10px', color: '#00ffff', textAlign: 'center', border: '1px solid #444' }}>6</td>
-                  <td style={{ padding: '10px', color: '#ffc107', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold', fontSize: '1.1rem' }}>6 ⭐</td>
-                  <td style={{ padding: '10px', color: '#ff69b4', textAlign: 'center', border: '1px solid #444' }}>4</td>
-                  <td style={{ padding: '10px', color: '#ff69b4', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>4</td>
-                </tr>
-                <tr>
-                  <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>4</td>
-                  <td style={{ padding: '10px', color: '#aaa', textAlign: 'center', border: '1px solid #444' }}>4</td>
-                  <td style={{ padding: '10px', color: '#aaa', textAlign: 'center', border: '1px solid #444' }}>4</td>
-                  <td style={{ padding: '10px', color: '#aaa', textAlign: 'center', border: '1px solid #444' }}>2</td>
-                  <td style={{ padding: '10px', color: '#aaa', textAlign: 'center', border: '1px solid #444' }}>2</td>
-                </tr>
-                <tr>
-                  <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: '1px solid #444', fontWeight: 'bold' }}>5</td>
-                  <td style={{ padding: '10px', color: '#aaa', textAlign: 'center', border: '1px solid #444' }}>2</td>
-                  <td style={{ padding: '10px', color: '#aaa', textAlign: 'center', border: '1px solid #444' }}>2</td>
-                  <td style={{ padding: '10px', color: '#aaa', textAlign: 'center', border: '1px solid #444' }}>1</td>
-                  <td style={{ padding: '10px', color: '#aaa', textAlign: 'center', border: '1px solid #444' }}>1</td>
-                </tr>
+                {twoComData.map((row) => {
+                  const diff = row.mux - row.muy;
+                  const isEquilibrium = Math.abs(diff) < 0.1; // Float tolerance
+                  const bg = isEquilibrium ? 'rgba(255,193,7,0.25)' : 'rgba(0,0,0,0.2)';
+                  const border = isEquilibrium ? '2px solid #ffc107' : '1px solid #444';
+
+                  return (
+                    <tr key={row.unitsX} style={{ background: bg }}>
+                      <td style={{ padding: '10px', color: '#00ffff', textAlign: 'center', border: border, fontWeight: 'bold' }}>
+                        {row.unitsX}
+                      </td>
+                      <td style={{ padding: '10px', color: '#ff69b4', textAlign: 'center', border: border, fontWeight: 'bold' }}>
+                        {row.unitsY}
+                      </td>
+                      <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: border }}>
+                        {row.mux.toFixed(1)}
+                      </td>
+                      <td style={{ padding: '10px', color: '#fff', textAlign: 'center', border: border }}>
+                        {row.muy.toFixed(1)}
+                      </td>
+                      <td style={{ padding: '10px', color: isEquilibrium ? '#ffc107' : '#aaa', textAlign: 'center', border: border, fontWeight: 'bold' }}>
+                        {isEquilibrium
+                          ? "⚡ EQUILIBRIUM"
+                          : (row.mux > row.muy ? "Buy more X (MUₓ > MUᵧ)" : "Buy more Y (MUᵧ > MUₓ)")
+                        }
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
-
-            {/* Equilibrium Result */}
-            <div style={{
-              background: 'linear-gradient(90deg, rgba(255,193,7,0.15), rgba(255,193,7,0.05))',
-              padding: '1rem',
-              borderRadius: '8px',
-              marginTop: '1rem',
-              maxWidth: '800px',
-              margin: '1rem auto 0',
-              border: '1px solid #ffc107'
-            }}>
-              <p style={{ color: '#fff', margin: 0, textAlign: 'center' }}>
-                <strong style={{ color: '#ffc107' }}>Equilibrium:</strong> Buy <span style={{ color: '#00ffff' }}>3 units of X</span> +
-                <span style={{ color: '#ff69b4' }}> 2 units of Y</span> where MUₓ/Pₓ = MUᵧ/Pᵧ = <strong style={{ color: '#ffc107' }}>6</strong>
-                <br />
-                <span style={{ color: '#aaa', fontSize: '0.9rem' }}>Total Expenditure: 3×₹1 + 2×₹1 = ₹5 = Income ✓</span>
-              </p>
-            </div>
+            <p className="table-note text-center">
+              Note: As we consume more X (and less Y), MUₓ falls and MUᵧ rises until they equalize.
+            </p>
           </div>
 
-          {/* Two Commodity Graph */}
-          <div className="graph-container" style={{
-            background: 'rgba(0,0,0,0.3)',
-            borderRadius: '16px',
-            padding: '1.5rem',
-            overflowX: 'auto'
-          }}>
-            <div style={{ minWidth: '750px', maxWidth: '900px', margin: '0 auto' }}>
-              <svg viewBox="0 0 750 420" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto' }}>
-
-                {/* Definitions */}
-                <defs>
-                  <marker id="arrow2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#fff" />
-                  </marker>
-                </defs>
-
-                {/* Title */}
-                <text x="375" y="30" textAnchor="middle" fill="#fff" fontSize="18" fontWeight="bold" fontFamily="Arial, sans-serif">
-                  Consumer Equilibrium - Two Commodity Case
-                </text>
-                <text x="375" y="50" textAnchor="middle" fill="#aaa" fontSize="12" fontFamily="Arial, sans-serif">
-                  Law of Equi-Marginal Utility: MUₓ/Pₓ = MUᵧ/Pᵧ = MUₘ
-                </text>
-
-                {/* ===== LEFT GRAPH - COMMODITY X ===== */}
-
-                {/* Left Y-Axis */}
-                <line x1="70" y1="340" x2="70" y2="80" stroke="#fff" strokeWidth="2" markerEnd="url(#arrow2)" />
-                <text x="40" y="65" textAnchor="middle" fill="#fff" fontSize="11" fontFamily="Arial, sans-serif">MU/P</text>
-
-                {/* Left Y-Axis Ticks */}
-                <line x1="65" y1="115" x2="75" y2="115" stroke="#fff" strokeWidth="1" />
-                <text x="55" y="119" textAnchor="end" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">10</text>
-
-                <line x1="65" y1="165" x2="75" y2="165" stroke="#fff" strokeWidth="1" />
-                <text x="55" y="169" textAnchor="end" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">8</text>
-
-                <line x1="65" y1="215" x2="75" y2="215" stroke="#ffc107" strokeWidth="2" />
-                <text x="55" y="219" textAnchor="end" fill="#ffc107" fontSize="11" fontWeight="bold" fontFamily="Arial, sans-serif">6</text>
-
-                <line x1="65" y1="265" x2="75" y2="265" stroke="#fff" strokeWidth="1" />
-                <text x="55" y="269" textAnchor="end" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">4</text>
-
-                <line x1="65" y1="315" x2="75" y2="315" stroke="#fff" strokeWidth="1" />
-                <text x="55" y="319" textAnchor="end" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">2</text>
-
-                <text x="55" y="344" textAnchor="end" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">0</text>
-
-                {/* Left X-Axis */}
-                <line x1="70" y1="340" x2="330" y2="340" stroke="#fff" strokeWidth="2" markerEnd="url(#arrow2)" />
-                <text x="200" y="380" textAnchor="middle" fill="#00ffff" fontSize="13" fontWeight="bold" fontFamily="Arial, sans-serif">
-                  Quantity of X →
-                </text>
-
-                {/* Left X-Axis Ticks */}
-                <line x1="125" y1="340" x2="125" y2="348" stroke="#fff" strokeWidth="1" />
-                <text x="125" y="362" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">1</text>
-
-                <line x1="180" y1="340" x2="180" y2="348" stroke="#fff" strokeWidth="1" />
-                <text x="180" y="362" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">2</text>
-
-                <line x1="235" y1="340" x2="235" y2="350" stroke="#ffc107" strokeWidth="2" />
-                <text x="235" y="365" textAnchor="middle" fill="#ffc107" fontSize="12" fontWeight="bold" fontFamily="Arial, sans-serif">3</text>
-
-                <line x1="290" y1="340" x2="290" y2="348" stroke="#fff" strokeWidth="1" />
-                <text x="290" y="362" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">4</text>
-
-                {/* Curve X - MUx/Px */}
-                {/* Points: (1,10)→(125,115), (2,8)→(180,165), (3,6)→(235,215), (4,4)→(290,265), (5,2)→(345,315) */}
-                <path
-                  d="M 125,115 C 145,135 160,155 180,165 C 200,180 215,200 235,215 C 255,235 270,255 290,265"
-                  fill="none"
-                  stroke="#00ffff"
-                  strokeWidth="3.5"
-                  strokeLinecap="round"
-                />
-
-                {/* Points for X */}
-                <circle cx="125" cy="115" r="6" fill="#00ffff" stroke="#fff" strokeWidth="2" />
-                <circle cx="180" cy="165" r="6" fill="#00ffff" stroke="#fff" strokeWidth="2" />
-                <circle cx="235" cy="215" r="9" fill="#ffc107" stroke="#fff" strokeWidth="2" />
-                <circle cx="290" cy="265" r="5" fill="#00ffff" stroke="#fff" strokeWidth="1" opacity="0.5" />
-
-                {/* Point Labels for X */}
-                <text x="138" y="108" fill="#00ffff" fontSize="10" fontWeight="bold" fontFamily="Arial, sans-serif">10</text>
-                <text x="193" y="158" fill="#00ffff" fontSize="10" fontWeight="bold" fontFamily="Arial, sans-serif">8</text>
-
-                {/* Dashed line from X equilibrium to X-axis */}
-                <line x1="235" y1="215" x2="235" y2="340" stroke="#ffc107" strokeWidth="2" strokeDasharray="5,4" />
-
-                {/* Curve Label X */}
-                <text x="100" y="100" fill="#00ffff" fontSize="12" fontWeight="bold" fontFamily="Arial, sans-serif">MUₓ/Pₓ</text>
-
-                {/* ===== EQUILIBRIUM LINE (Horizontal) ===== */}
-                <line x1="70" y1="215" x2="680" y2="215" stroke="#ffc107" strokeWidth="2.5" strokeDasharray="8,4" />
-
-                {/* ===== RIGHT GRAPH - COMMODITY Y ===== */}
-
-                {/* Right Y-Axis */}
-                <line x1="430" y1="340" x2="430" y2="80" stroke="#fff" strokeWidth="2" markerEnd="url(#arrow2)" />
-                <text x="410" y="65" textAnchor="middle" fill="#fff" fontSize="11" fontFamily="Arial, sans-serif">MU/P</text>
-
-                {/* Right Y-Axis Ticks */}
-                <line x1="425" y1="115" x2="435" y2="115" stroke="#fff" strokeWidth="1" />
-                <text x="418" y="119" textAnchor="end" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">10</text>
-
-                <line x1="425" y1="165" x2="435" y2="165" stroke="#fff" strokeWidth="1" />
-                <text x="418" y="169" textAnchor="end" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">8</text>
-
-                <line x1="425" y1="215" x2="435" y2="215" stroke="#ffc107" strokeWidth="2" />
-                <text x="418" y="219" textAnchor="end" fill="#ffc107" fontSize="11" fontWeight="bold" fontFamily="Arial, sans-serif">6</text>
-
-                <line x1="425" y1="265" x2="435" y2="265" stroke="#fff" strokeWidth="1" />
-                <text x="418" y="269" textAnchor="end" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">4</text>
-
-                <line x1="425" y1="315" x2="435" y2="315" stroke="#fff" strokeWidth="1" />
-                <text x="418" y="319" textAnchor="end" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">2</text>
-
-                <text x="418" y="344" textAnchor="end" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">0</text>
-
-                {/* Right X-Axis */}
-                <line x1="430" y1="340" x2="690" y2="340" stroke="#fff" strokeWidth="2" markerEnd="url(#arrow2)" />
-                <text x="560" y="380" textAnchor="middle" fill="#ff69b4" fontSize="13" fontWeight="bold" fontFamily="Arial, sans-serif">
-                  Quantity of Y →
-                </text>
-
-                {/* Right X-Axis Ticks */}
-                <line x1="485" y1="340" x2="485" y2="348" stroke="#fff" strokeWidth="1" />
-                <text x="485" y="362" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">1</text>
-
-                <line x1="540" y1="340" x2="540" y2="350" stroke="#ffc107" strokeWidth="2" />
-                <text x="540" y="365" textAnchor="middle" fill="#ffc107" fontSize="12" fontWeight="bold" fontFamily="Arial, sans-serif">2</text>
-
-                <line x1="595" y1="340" x2="595" y2="348" stroke="#fff" strokeWidth="1" />
-                <text x="595" y="362" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">3</text>
-
-                <line x1="650" y1="340" x2="650" y2="348" stroke="#fff" strokeWidth="1" />
-                <text x="650" y="362" textAnchor="middle" fill="#aaa" fontSize="10" fontFamily="Arial, sans-serif">4</text>
-
-                {/* Curve Y - MUy/Py */}
-                {/* Points: (1,8)→(485,165), (2,6)→(540,215), (3,4)→(595,265), (4,2)→(650,315) */}
-                <path
-                  d="M 485,165 C 505,185 520,205 540,215 C 560,235 575,255 595,265 C 615,285 630,305 650,315"
-                  fill="none"
-                  stroke="#ff69b4"
-                  strokeWidth="3.5"
-                  strokeLinecap="round"
-                />
-
-                {/* Points for Y */}
-                <circle cx="485" cy="165" r="6" fill="#ff69b4" stroke="#fff" strokeWidth="2" />
-                <circle cx="540" cy="215" r="9" fill="#ffc107" stroke="#fff" strokeWidth="2" />
-                <circle cx="595" cy="265" r="5" fill="#ff69b4" stroke="#fff" strokeWidth="1" opacity="0.5" />
-                <circle cx="650" cy="315" r="5" fill="#ff69b4" stroke="#fff" strokeWidth="1" opacity="0.5" />
-
-                {/* Point Labels for Y */}
-                <text x="498" y="158" fill="#ff69b4" fontSize="10" fontWeight="bold" fontFamily="Arial, sans-serif">8</text>
-
-                {/* Dashed line from Y equilibrium to X-axis */}
-                <line x1="540" y1="215" x2="540" y2="340" stroke="#ffc107" strokeWidth="2" strokeDasharray="5,4" />
-
-                {/* Curve Label Y */}
-                <text x="460" y="150" fill="#ff69b4" fontSize="12" fontWeight="bold" fontFamily="Arial, sans-serif">MUᵧ/Pᵧ</text>
-
-                {/* ===== EQUILIBRIUM ANNOTATIONS ===== */}
-
-                {/* Equilibrium Label - Centered between graphs */}
-                <rect x="320" y="180" width="120" height="50" rx="6" fill="rgba(255,193,7,0.15)" stroke="#ffc107" strokeWidth="1.5" />
-                <text x="380" y="200" textAnchor="middle" fill="#ffc107" fontSize="12" fontWeight="bold" fontFamily="Arial, sans-serif">EQUILIBRIUM</text>
-                <text x="380" y="218" textAnchor="middle" fill="#fff" fontSize="11" fontFamily="Arial, sans-serif">MUₓ/Pₓ = MUᵧ/Pᵧ</text>
-                <text x="380" y="232" textAnchor="middle" fill="#ffc107" fontSize="11" fontFamily="Arial, sans-serif">= 6</text>
-
-                {/* Equilibrium Line Label */}
-                <text x="375" y="248" textAnchor="middle" fill="#ffc107" fontSize="10" fontFamily="Arial, sans-serif">
-                  ← Line of Equi-Marginal Utility (MUₘ = 6) →
-                </text>
-
-                {/* Legend */}
-                <rect x="285" y="395" width="180" height="22" rx="4" fill="rgba(0,0,0,0.5)" stroke="#555" strokeWidth="1" />
-                <line x1="295" y1="406" x2="325" y2="406" stroke="#00ffff" strokeWidth="3" />
-                <text x="332" y="410" fill="#aaa" fontSize="9" fontFamily="Arial, sans-serif">MUₓ/Pₓ</text>
-                <line x1="385" y1="406" x2="415" y2="406" stroke="#ff69b4" strokeWidth="3" />
-                <text x="422" y="410" fill="#aaa" fontSize="9" fontFamily="Arial, sans-serif">MUᵧ/Pᵧ</text>
-
-              </svg>
-            </div>
-          </div>
-
-          {/* Explanation */}
+          {/* Steps to Achieve Consumer Equilibrium (Two Commodity Case) */}
           <div style={{
-            background: 'rgba(111,66,193,0.1)',
-            borderRadius: '12px',
-            padding: '1.5rem',
-            marginTop: '1.5rem',
-            borderLeft: '4px solid #6f42c1'
+            background: 'linear-gradient(135deg, rgba(0,86,179,0.1), rgba(0,150,255,0.05))',
+            borderRadius: '16px',
+            padding: '2rem',
+            marginTop: '2rem',
+            border: '1px solid rgba(0,86,179,0.3)'
           }}>
-            <h6 style={{ color: '#b794f6', marginBottom: '1rem' }}>📌 Interpretation:</h6>
-            <ul style={{ color: '#ccc', lineHeight: '1.8', margin: 0, paddingLeft: '1.2rem' }}>
-              <li><strong style={{ color: '#00ffff' }}>Left Graph:</strong> Shows MUₓ/Pₓ curve for commodity X, equilibrium at 3 units (MU/P = 6)</li>
-              <li><strong style={{ color: '#ff69b4' }}>Right Graph:</strong> Shows MUᵧ/Pᵧ curve for commodity Y, equilibrium at 2 units (MU/P = 6)</li>
-              <li><strong style={{ color: '#ffc107' }}>Horizontal Line:</strong> Line of Equi-Marginal Utility where both MU/P ratios are equal</li>
-              <li><strong style={{ color: '#fff' }}>Result:</strong> Consumer buys 3X + 2Y, spending entire income (₹5) with maximum total utility</li>
-            </ul>
+            <h5 style={{ color: '#4da6ff', marginBottom: '1.5rem', textAlign: 'center', fontSize: '1.4rem' }}>
+              🛠️ Steps to Achieve Equilibrium (Two Commodity Case)
+            </h5>
+
+            <div className="steps-container" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+
+              <div className="step-item" style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                <div style={{
+                  background: '#0056b3',
+                  color: '#fff',
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  flexShrink: 0
+                }}>1</div>
+                <div>
+                  <h6 style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '0.5rem' }}>Calculate Marginal Utility per Rupee (MU/P)</h6>
+                  <p style={{ color: '#ccc', lineHeight: '1.6' }}>
+                    First, convert the Marginal Utility (MU) of each commodity into terms of money by dividing MU by its Price (P).
+                    Calculate <strong style={{ color: '#00ffff' }}>MUₓ/Pₓ</strong> and <strong style={{ color: '#ff69b4' }}>MUᵧ/Pᵧ</strong> for all units.
+                  </p>
+                </div>
+              </div>
+
+              <div className="step-item" style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                <div style={{
+                  background: '#0056b3',
+                  color: '#fff',
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  flexShrink: 0
+                }}>2</div>
+                <div>
+                  <h6 style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '0.5rem' }}>Compare the Ratios</h6>
+                  <p style={{ color: '#ccc', lineHeight: '1.6' }}>
+                    Compare MUₓ/Pₓ with MUᵧ/Pᵧ.
+                    <br />• If <strong style={{ color: '#00ffff' }}>MUₓ/Pₓ {'>'} MUᵧ/Pᵧ</strong>: Spend more on X.
+                    <br />• If <strong style={{ color: '#ff69b4' }}>MUᵧ/Pᵧ {'>'} MUₓ/Pₓ</strong>: Spend more on Y.
+                  </p>
+                </div>
+              </div>
+
+              <div className="step-item" style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                <div style={{
+                  background: '#0056b3',
+                  color: '#fff',
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  flexShrink: 0
+                }}>3</div>
+                <div>
+                  <h6 style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '0.5rem' }}>Find the Point of Equality</h6>
+                  <p style={{ color: '#ccc', lineHeight: '1.6' }}>
+                    Identify the combination where the utility derived from the last rupee spent on each good is equal.
+                    <br /><strong style={{ color: '#ffc107', fontSize: '1.2rem' }}>MUₓ / Pₓ = MUᵧ / Pᵧ</strong>
+                  </p>
+                </div>
+              </div>
+
+              <div className="step-item" style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                <div style={{
+                  background: '#0056b3',
+                  color: '#fff',
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  flexShrink: 0
+                }}>4</div>
+                <div>
+                  <h6 style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '0.5rem' }}>Verify Budget Constraint</h6>
+                  <p style={{ color: '#ccc', lineHeight: '1.6' }}>
+                    Ensure that the total expenditure on that combination equals your total income.
+                    <br /><strong>(Price of X × Units of X) + (Price of Y × Units of Y) = Income</strong>
+                  </p>
+                </div>
+              </div>
+
+            </div>
           </div>
-          
+
           {/* Important Notes */}
           <div className="highlight-card gold">
             <div className="highlight-icon"><FaBalanceScale /></div>

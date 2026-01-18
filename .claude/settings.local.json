@@ -45,7 +45,9 @@
       "Bash(python:*)",
       "Bash(py:*)",
       "Bash(python3 -m pip install:*)",
-      "Bash(pip3 install:*)"
+      "Bash(pip3 install:*)",
+      "Bash(copy:*)",
+      "Bash(npm run lint)"
     ]
   }
 }

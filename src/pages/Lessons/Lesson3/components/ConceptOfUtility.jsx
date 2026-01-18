@@ -30,7 +30,7 @@ import './component.css';
 // The table and graph both use this same data
 // ============================================
 const utilitySchedule = [
-  { units: 0, MU: null, TU: 0 },
+  { units: 0, MU: 0, TU: 0 },    // MU starts at 0 (no consumption = no marginal utility)
   { units: 1, MU: 20, TU: 20 },
   { units: 2, MU: 15, TU: 35 },
   { units: 3, MU: 10, TU: 45 },
@@ -60,24 +60,6 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 function ConceptOfUtility() {
-  // Function to get MU color based on value
-  const getMUColor = (mu) => {
-    if (mu === null) return 'text-muted';
-    if (mu > 10) return 'text-cyan';
-    if (mu > 0) return 'text-green';
-    if (mu === 0) return 'text-gold';
-    return 'text-red';
-  };
-
-  // Helper to get hex color for inline styles that can't be easily replaced in Recharts
-  const getMUHexColor = (mu) => {
-    if (mu === null) return '#888';
-    if (mu > 10) return '#00ff88';
-    if (mu > 0) return '#88ff88';
-    if (mu === 0) return '#ffd700';
-    return '#ff6b6b';
-  };
-
   // Function to determine if row is saturation point
   const isSaturationPoint = (mu) => mu === 0;
 
@@ -479,13 +461,14 @@ function ConceptOfUtility() {
                   }}
                 />
 
-                {/* Y-Axis */}
+                {/* Y-Axis with proper consistent scale */}
                 <YAxis
                   stroke="#00ffff"
                   tick={{ fill: '#00ffff', fontSize: 12 }}
                   axisLine={{ stroke: '#00ffff', strokeWidth: 2 }}
                   tickLine={{ stroke: '#00ffff' }}
-                  domain={[-15, 55]}
+                  domain={[-10, 60]}
+                  ticks={[-10, 0, 10, 20, 30, 40, 50, 60]}
                   label={{
                     value: 'Utility (Utils) →',
                     angle: -90,
@@ -923,7 +906,7 @@ function ConceptOfUtility() {
                 { n: '4th', mu: 10 },
                 { n: '5th', mu: 0 },
               ].map((item, idx) => (
-                <span key={idx} className="bg-white-10 px-2 py-1 rounded-full border-solid border-1"
+                <span key={idx} className="bg-white-10 px-2 py-1 rounded-full border-solid border"
                   style={{borderColor: item.mu > 0 ? '#00ff88' : '#ffd700'}}>
                   {item.n}: <strong className={item.mu > 0 ? 'text-green' : 'text-gold'}>{item.mu} utils</strong>
                 </span>
