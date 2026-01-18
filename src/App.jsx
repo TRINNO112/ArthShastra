@@ -14,6 +14,7 @@ import Lesson2 from './pages/Lessons/Lesson2';
 import Lesson3 from './pages/Lessons/Lesson3/Lesson3';
 import Lesson4 from './pages/Lessons/Lesson4';
 import Lesson5 from './pages/Lessons/Lesson5';
+import Lesson6 from './pages/Lessons/Lesson6';
 
 // Styles
 import './styles/variables.css';
@@ -40,6 +41,7 @@ function App() {
               <Route path="/lesson/micro11-3" element={<Lesson3 />} />
               <Route path="/lesson/micro11-4" element={<Lesson4 />} />
               <Route path="/lesson/micro11-5" element={<Lesson5 />} />
+              <Route path="/lesson/micro11-6" element={<Lesson6 />} />
 
               {/* TODO: Add more lesson routes */}
               {/* <Route path="/quiz" element={<Quiz />} /> */}

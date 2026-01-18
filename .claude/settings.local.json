@@ -47,7 +47,10 @@
       "Bash(python3 -m pip install:*)",
       "Bash(pip3 install:*)",
       "Bash(copy:*)",
-      "Bash(npm run lint)"
+      "Bash(npm run lint)",
+      "Bash(.claudeeno)",
+      "Bash(list files in Lesson6 folder)",
+      "Bash(del .claudeeno)"
     ]
   }
 }
