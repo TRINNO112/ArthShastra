@@ -51,7 +51,8 @@
       "Bash(.claudeeno)",
       "Bash(list files in Lesson6 folder)",
       "Bash(del .claudeeno)",
-      "Bash(npm run lint src/pages/Lessons/Lesson6/components/Applications.jsx)"
+      "Bash(npm run lint src/pages/Lessons/Lesson6/components/Applications.jsx)",
+      "Bash(del \"C:\\\\Users\\\\Amit Pathak\\\\Documents\\\\ArthShastra\\\\src\\\\pages\\\\Lessons\\\\Lesson6\\\\components\\\\applications-simulator.css\")"
     ]
   }
 }

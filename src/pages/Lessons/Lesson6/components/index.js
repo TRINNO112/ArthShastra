@@ -1,6 +1,17 @@
-export { default as Introduction } from './Introduction';
-export { default as ConceptAndMeasurement } from './ConceptAndMeasurement';
-export { default as TypesOfElasticity } from './TypesOfElasticity';
-export { default as FactorsAffecting } from './FactorsAffecting';
-export { default as Applications } from './Applications';
-export { default as Quiz } from './Quiz';
+import Introduction from './Introduction';
+import ConceptAndMeasurement from './ConceptAndMeasurement';
+import TypesOfElasticity from './TypesOfElasticity';
+import FactorsAffecting from './FactorsAffecting';
+import Applications from './Applications';
+import Quiz from './Quiz';
+import InteractiveCurveSimulator from './InteractiveCurveSimulator';
+
+export {
+    Introduction,
+    ConceptAndMeasurement,
+    TypesOfElasticity,
+    FactorsAffecting,
+    Applications,
+    Quiz,
+    InteractiveCurveSimulator
+};

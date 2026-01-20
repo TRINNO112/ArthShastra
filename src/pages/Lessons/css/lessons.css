@@ -102,7 +102,7 @@
 }
 
 .header-container {
-  max-width: var(--container-max);
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 var(--container-padding);
 }
@@ -206,7 +206,7 @@
 }
 
 .nav-container {
-  max-width: var(--container-max);
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 var(--container-padding);
 }
@@ -282,7 +282,7 @@
 }
 
 .content-container {
-  max-width: 1000px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 var(--container-padding);
 }
@@ -348,7 +348,7 @@
   padding: 30px;
   margin-bottom: 25px;
   position: relative;
-  overflow: hidden;
+  overflow: visible; /* Prevent clipping of large interactive graphs */
   transition: all var(--transition-base);
 }
 
@@ -2966,7 +2966,7 @@
 }
 
 .footer-container {
-  max-width: var(--container-max);
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 var(--container-padding);
   display: flex;
