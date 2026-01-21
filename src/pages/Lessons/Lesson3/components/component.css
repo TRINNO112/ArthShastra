@@ -2511,6 +2511,85 @@ td.negative {
   animation: fadeIn 0.4s ease-out forwards;
 }
 
+.fad.lesson-section {
+  padding: 0;
+  animation: fadeIn 0.5s ease;
+}
+
+/* Table Responsiveness Utility */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+  .two-column {
+    grid-template-columns: 1fr !important;
+    gap: 15px;
+  }
+  
+  .column {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Lesson 3 Specific Responsive Components */
+.definition-box-enhanced {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1));
+  border: 3px solid rgba(255, 215, 0, 0.4);
+  border-radius: 15px;
+  padding: 1.8rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 8px 32px rgba(255, 215, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.corner-decor {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 0 0 100% 0;
+  pointer-events: none;
+}
+
+.corner-decor.top-left {
+  top: 0;
+  left: 0;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), transparent);
+}
+
+.corner-decor.bottom-right {
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(135deg, transparent, rgba(255, 215, 0, 0.3));
+  border-radius: 100% 0 0 0;
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+@media (max-width: 768px) {
+  .definition-box-enhanced {
+    padding: 1rem;
+  }
+  .role-grid {
+    grid-template-columns: 1fr;
+  }
+  .corner-decor {
+    width: 40px;
+    height: 40px;
+  }
+}
+
 /* Fade In Up Animation */
 @keyframes fadeInUp {
   from {

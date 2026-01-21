@@ -19,7 +19,6 @@ import {
   ConceptOfUtility,
   DiminishingMarginalUtility,
   ConsumerEquilibrium,
-  UtilityCases,
   LimitationsOfUtility,
   Quiz
 } from './components';
@@ -43,7 +42,6 @@ const sections = [
   { id: 'concept-utility', name: 'Concept of Utility', icon: FaLightbulb },
   { id: 'dmu', name: 'Law of DMU', icon: FaArrowDown },
   { id: 'consumer-equilibrium', name: 'Consumer Equilibrium', icon: FaBalanceScale },
-  { id: 'utility-cases', name: 'Utility Cases', icon: FaExchangeAlt },
   { id: 'limitations', name: 'Limitations', icon: FaRuler },
   { id: 'quiz', name: 'Quiz', icon: FaClipboardList }
 ];
@@ -101,8 +99,6 @@ function Lesson3() {
         return <DiminishingMarginalUtility />;
       case 'consumer-equilibrium':
         return <ConsumerEquilibrium />;
-      case 'utility-cases':
-        return <UtilityCases />;
       case 'limitations':
         return <LimitationsOfUtility />;
       case 'quiz':

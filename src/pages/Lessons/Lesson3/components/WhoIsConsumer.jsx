@@ -30,35 +30,10 @@ function WhoIsConsumer() {
           <h3 className="highlight-gold">Definition of a Consumer</h3>
 
           {/* Enhanced Definition Box */}
-          <div style={{
-            background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1))',
-            border: '3px solid rgba(255, 215, 0, 0.4)',
-            borderRadius: '15px',
-            padding: '1.8rem',
-            margin: '1.5rem 0',
-            boxShadow: '0 8px 32px rgba(255, 215, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-            position: 'relative',
-            overflow: 'hidden'
-          }}>
+          <div className="definition-box-enhanced">
             {/* Decorative corner elements */}
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '60px',
-              height: '60px',
-              background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.3), transparent)',
-              borderRadius: '0 0 100% 0'
-            }}></div>
-            <div style={{
-              position: 'absolute',
-              bottom: 0,
-              right: 0,
-              width: '60px',
-              height: '60px',
-              background: 'linear-gradient(135deg, transparent, rgba(255, 215, 0, 0.3))',
-              borderRadius: '100% 0 0 0'
-            }}></div>
+            <div className="corner-decor top-left"></div>
+            <div className="corner-decor bottom-right"></div>
 
             <div style={{
               position: 'relative',
@@ -135,19 +110,19 @@ function WhoIsConsumer() {
           <h3 className="highlight-green">Key Characteristics of a Consumer</h3>
           <ul className="bullet-list">
             <li><strong>Has Wants and Needs:</strong> Every consumer has specific desires and requirements
-            they want to satisfy. For example, a student needs textbooks for study and wants the latest
-            gaming console for entertainment.</li>
+              they want to satisfy. For example, a student needs textbooks for study and wants the latest
+              gaming console for entertainment.</li>
             <li><strong>Purchases for Personal Use:</strong> Goods are bought for final consumption,
-            not for resale. When you buy groceries for your family, you're consuming them, not selling them further.</li>
+              not for resale. When you buy groceries for your family, you're consuming them, not selling them further.</li>
             <li><strong>Makes Rational Choices:</strong> Consumers make purchasing decisions based on
-            their income, preferences, and the utility they expect to receive. A person earning ₹30,000
-            per month will make different choices than someone earning ₹1,00,000.</li>
+              their income, preferences, and the utility they expect to receive. A person earning ₹30,000
+              per month will make different choices than someone earning ₹1,00,000.</li>
             <li><strong>Faces Budget Constraint:</strong> Has limited income but unlimited wants. This
-            scarcity forces consumers to prioritize - choosing between buying a new phone or saving for
-            a vacation.</li>
+              scarcity forces consumers to prioritize - choosing between buying a new phone or saving for
+              a vacation.</li>
             <li><strong>Seeks Maximum Satisfaction:</strong> Every consumer aims to get the highest
-            possible satisfaction (utility) from their limited budget. This is why we compare prices,
-            read reviews, and look for deals before purchasing.</li>
+              possible satisfaction (utility) from their limited budget. This is why we compare prices,
+              read reviews, and look for deals before purchasing.</li>
           </ul>
 
           {/* Real-world Examples */}
@@ -424,15 +399,15 @@ function WhoIsConsumer() {
             <h4><strong>Factors Influencing Consumer Behavior:</strong></h4>
             <ul className="bullet-list">
               <li><strong>Price of the Good:</strong> Higher prices generally reduce demand, lower
-              prices increase it. Example: During sale seasons, consumers buy more clothes.</li>
+                prices increase it. Example: During sale seasons, consumers buy more clothes.</li>
               <li><strong>Income Level:</strong> Rich consumers can afford luxury goods, while
-              middle-income consumers focus on necessities and some comforts.</li>
+                middle-income consumers focus on necessities and some comforts.</li>
               <li><strong>Tastes and Preferences:</strong> Personal likes and dislikes shape choices.
-              A vegetarian won't buy meat products regardless of price.</li>
+                A vegetarian won't buy meat products regardless of price.</li>
               <li><strong>Prices of Related Goods:</strong> If tea prices rise, consumers might switch
-              to coffee (substitute). If car prices fall, demand for petrol rises (complement).</li>
+                to coffee (substitute). If car prices fall, demand for petrol rises (complement).</li>
               <li><strong>Future Expectations:</strong> If consumers expect prices to rise next month,
-              they buy more today. If expecting income increase, they might borrow and spend now.</li>
+                they buy more today. If expecting income increase, they might borrow and spend now.</li>
             </ul>
           </div>
         </div>
@@ -449,7 +424,7 @@ function WhoIsConsumer() {
             helps us appreciate how individual choices collectively impact the entire economic system.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', margin: '1rem 0' }}>
+          <div className="role-grid">
             <div className="reason-card">
               <h4>1. Driving Demand</h4>
               <p>
@@ -506,7 +481,7 @@ function WhoIsConsumer() {
               <div className="assumption-content">
                 <h4>Right to Safety</h4>
                 <p>Protection against goods and services that are hazardous to life and health.
-                Example: Food products must meet safety standards; electrical appliances must be ISI certified.</p>
+                  Example: Food products must meet safety standards; electrical appliances must be ISI certified.</p>
               </div>
             </div>
             <div className="assumption-item">
@@ -514,7 +489,7 @@ function WhoIsConsumer() {
               <div className="assumption-content">
                 <h4>Right to Information</h4>
                 <p>Access to complete information about quality, quantity, price, and standards of goods.
-                Example: Packaged foods must display ingredients, manufacturing date, and expiry date.</p>
+                  Example: Packaged foods must display ingredients, manufacturing date, and expiry date.</p>
               </div>
             </div>
             <div className="assumption-item">
@@ -522,7 +497,7 @@ function WhoIsConsumer() {
               <div className="assumption-content">
                 <h4>Right to Choose</h4>
                 <p>Freedom to select from a variety of products at competitive prices without monopolistic practices.
-                Example: You can choose between different mobile brands and telecom operators.</p>
+                  Example: You can choose between different mobile brands and telecom operators.</p>
               </div>
             </div>
             <div className="assumption-item">
@@ -530,7 +505,7 @@ function WhoIsConsumer() {
               <div className="assumption-content">
                 <h4>Right to be Heard</h4>
                 <p>Opportunity to voice complaints and be heard in consumer forums and courts.
-                Example: Filing complaints in consumer courts against defective products or poor service.</p>
+                  Example: Filing complaints in consumer courts against defective products or poor service.</p>
               </div>
             </div>
             <div className="assumption-item">
@@ -538,7 +513,7 @@ function WhoIsConsumer() {
               <div className="assumption-content">
                 <h4>Right to Seek Redressal</h4>
                 <p>Fair settlement of genuine grievances through consumer courts and mechanisms.
-                Example: Getting refund or replacement for defective products within warranty period.</p>
+                  Example: Getting refund or replacement for defective products within warranty period.</p>
               </div>
             </div>
             <div className="assumption-item">
@@ -546,7 +521,7 @@ function WhoIsConsumer() {
               <div className="assumption-content">
                 <h4>Right to Consumer Education</h4>
                 <p>Access to knowledge and skills needed to make informed consumer decisions.
-                Example: Government awareness campaigns about consumer rights, reading product labels carefully.</p>
+                  Example: Government awareness campaigns about consumer rights, reading product labels carefully.</p>
               </div>
             </div>
           </div>
@@ -558,15 +533,15 @@ function WhoIsConsumer() {
               <p>Determine whether the person is acting as a consumer or not in these scenarios:</p>
               <ul className="bullet-list">
                 <li><strong>Scenario 1:</strong> Priya buys 5kg of rice from a grocery store for her family.
-                <br /><em>Answer: Yes, consumer (buying for personal consumption)</em></li>
+                  <br /><em>Answer: Yes, consumer (buying for personal consumption)</em></li>
                 <li><strong>Scenario 2:</strong> A restaurant owner buys 100kg of rice from a wholesaler.
-                <br /><em>Answer: No, not a consumer (buying for business/resale purpose)</em></li>
+                  <br /><em>Answer: No, not a consumer (buying for business/resale purpose)</em></li>
                 <li><strong>Scenario 3:</strong> Amit downloads a paid app on his smartphone for entertainment.
-                <br /><em>Answer: Yes, consumer (buying service for personal use)</em></li>
+                  <br /><em>Answer: Yes, consumer (buying service for personal use)</em></li>
                 <li><strong>Scenario 4:</strong> A school purchases 500 textbooks for students.
-                <br /><em>Answer: Debatable - school is end-user but buying for students, considered consumer</em></li>
+                  <br /><em>Answer: Debatable - school is end-user but buying for students, considered consumer</em></li>
                 <li><strong>Scenario 5:</strong> A shopkeeper buys cold drinks to sell in their shop.
-                <br /><em>Answer: No, not a consumer (buying for resale)</em></li>
+                  <br /><em>Answer: No, not a consumer (buying for resale)</em></li>
               </ul>
             </div>
           </div>

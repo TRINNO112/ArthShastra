@@ -163,12 +163,25 @@ function LimitationsOfUtility() {
               </div>
 
               <div className="example-box">
-                <h5>Example: Why MU of Money is Not Constant</h5>
+                <h5><FaExchangeAlt /> Visualization: The Money Scarcity Logic</h5>
                 <div className="example-content">
-                  <p><strong>Scenario:</strong> A person has ₹10,000 to spend on goods.</p>
-                  <p><strong>First ₹1,000 spent:</strong> MU is relatively low (still have ₹9,000 left)</p>
-                  <p><strong>Last ₹1,000 spent:</strong> MU is very high (only ₹1,000 remaining, precious)</p>
-                  <p><strong>But utility analysis treats all ₹1,000 as having equal MU!</strong></p>
+                  <p className="mb-4"><strong>Scenario:</strong> You have ₹10,000 to spend. Does the value of ₹1,000 stay the same?</p>
+
+                  <div className="scenario-timeline">
+                    <div className="timeline-step">
+                      <h6 className="highlight-cyan">Beginning (₹10,000 left)</h6>
+                      <p><strong>First ₹1,000 spent:</strong> You feel rich. Spending is easy. The marginal utility of this money is <span className="text-info">Relatively Low</span>.</p>
+                    </div>
+
+                    <div className="timeline-step precious">
+                      <h6 className="highlight-gold">The End (Only ₹1,000 left)</h6>
+                      <p><strong>Last ₹1,000 spent:</strong> This is your last survival money! Every rupee is now "precious". The marginal utility of this money is <span className="text-warning">Extremely High</span>.</p>
+                    </div>
+                  </div>
+
+                  <div className="note-text danger">
+                    <strong>The Conflict:</strong> Standard utility analysis assumes MU of money is <strong>constant</strong>, but your brain knows it's <strong>not</strong>!
+                  </div>
                 </div>
               </div>
 
@@ -253,7 +266,7 @@ function LimitationsOfUtility() {
 
           {/* Summary Table */}
           <h3 className="highlight-cyan">Summary of Limitations</h3>
-          <div className="table-container">
+          <div className="table-responsive">
             <table className="limitations-table">
               <thead>
                 <tr>
@@ -300,7 +313,7 @@ function LimitationsOfUtility() {
       {/* Navigation */}
       <div className="section-navigation">
         <div className="nav-hint">
-          Previous: Utility Cases (One vs Two Commodity)
+          Previous: Consumer Equilibrium
           <span className="separator">|</span>
           Next: Quiz
         </div>
