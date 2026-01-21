@@ -278,13 +278,22 @@
 .lesson-content {
   position: relative;
   z-index: 1;
-  padding: 40px 0 100px;
+  padding: 40px 0 150px; /* Increased bottom padding to prevent cut-off by fixed footer */
 }
 
 .content-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 var(--container-padding);
+  width: 100%; /* Ensure it takes full width */
+}
+
+.mobile-simulator { display: none; }
+.desktop-simulator { display: block; }
+
+@media (max-width: 768px) {
+  .mobile-simulator { display: block; }
+  .desktop-simulator { display: none; }
 }
 
 /* =============================================
@@ -3108,19 +3117,22 @@
   }
 
   .content-container {
-    padding: 0 15px;
+    padding: 0 8px; /* Minimum padding as requested */
   }
 
   .content-card,
   .definition-card,
   .problem-card,
   .question-card {
-    padding: 20px;
+    padding: 12px; /* Reduced from 20px */
+    border-radius: 16px; /* Slightly tighter radius for mobile */
   }
 
   .highlight-card {
     flex-direction: column;
     text-align: center;
+    padding: 15px; /* Reduced from 25px */
+    gap: 15px;
   }
 
   .highlight-icon {
@@ -3169,6 +3181,22 @@
   .progress-indicator {
     order: -1;
   }
+
+  /* Card and padding overrides for all mobile/tablet */
+  .scenario-card,
+  .rw-example-card,
+  .india-example,
+  .student-example-card,
+  .example-pair,
+  .importance-item,
+  .debate-card,
+  .practice-item {
+    padding: 12px;
+  }
+
+  .section-subtitle-lesson {
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -3176,31 +3204,18 @@
     flex-wrap: wrap;
     justify-content: center;
   }
-
   .badge-tag {
     margin-top: 5px;
   }
-
   .section-title-lesson {
     font-size: 1.5rem;
   }
-
   .quiz-block-header {
     flex-wrap: wrap;
   }
-
   .question-count {
     width: 100%;
     margin-top: 5px;
-  }
-
-  .score-circle {
-    width: 150px;
-    height: 150px;
-  }
-
-  .score-number {
-    font-size: 2rem;
   }
 }
 

@@ -1,7 +1,7 @@
 // Applications of Price Elasticity of Demand
-import { useState } from 'react';
 import { FaChartBar, FaDollarSign, FaIndustry, FaGavel, FaUniversity, FaStore, FaLightbulb, FaChartLine } from 'react-icons/fa';
 import InteractiveCurveSimulator from './InteractiveCurveSimulator';
+import InteractiveCurveSimulatorMobile from './InteractiveCurveSimulatorMobile';
 
 function Applications() {
   return (
@@ -93,7 +93,12 @@ function Applications() {
 
           {/* Interactive Demand Curve Simulator */}
           <div className="mt-10 mb-10">
-            <InteractiveCurveSimulator />
+            <div className="desktop-simulator">
+              <InteractiveCurveSimulator />
+            </div>
+            <div className="mobile-simulator">
+              <InteractiveCurveSimulatorMobile />
+            </div>
           </div>
 
           <div className="highlight-card gold">

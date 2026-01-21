@@ -46,8 +46,8 @@ const InteractiveCurveSimulator = () => {
     const q2 = useMemo(() => calculateQ(p2, mode, baseQ), [p2, mode, baseQ, calculateQ]);
 
     // Effective graph limits after calculating quantities
-    const graphMaxP = MAX_P;
-    const graphMaxQ = Math.max(MAX_Q, q1 + 40, q2 + 40);
+    const graphMaxP = useMemo(() => Math.max(100, p1 + 40, p2 + 40), [p1, p2]);
+    const graphMaxQ = useMemo(() => Math.max(Math.max(200, baseQ + 50), q1 + 40, q2 + 40), [baseQ, q1, q2]);
 
     const currentModeInfo = Object.values(ELASTICITY_MODES).find(m => m.id === mode);
 
@@ -235,7 +235,7 @@ const InteractiveCurveSimulator = () => {
             g.append("text").attr("x", (pt1.x + pt2.x) / 2).attr("y", yPos + 25).attr("fill", "#fbbf24").attr("class", "delta-label").text("ΔQ");
         }
 
-    }, [p1, p2, mode, baseQ, dimensions, calculateQ, isMobile]);
+    }, [p1, p2, mode, baseQ, dimensions, calculateQ, isMobile, q1, q2, graphMaxP, graphMaxQ]);
 
     return (
         <div className="premium-lab-root" ref={containerRef}>
