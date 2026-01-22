@@ -210,7 +210,9 @@ function ConceptOfUtility() {
                   gap: '12px',
                   alignItems: 'center',
                   background: 'rgba(0,0,0,0.2)',
-                  borderLeft: `3px solid ${item.borderColor}`,
+                  borderLeftStyle: 'solid',
+                  borderLeftWidth: '3px',
+                  borderLeftColor: item.borderColor,
                 }}>
                   <strong className={item.colorClass}>{item.unit}</strong>
                   <span className="text-muted">{item.desc}</span>
@@ -289,7 +291,9 @@ function ConceptOfUtility() {
                 <div key={idx} className="cou-icon-item" style={{
                   background: item.mu > 0 ? 'rgba(0, 255, 136, 0.1)' :
                     item.mu === 0 ? 'rgba(255, 215, 0, 0.1)' : 'rgba(255, 68, 68, 0.1)',
-                  border: `1px solid ${item.mu > 0 ? '#00ff88' : item.mu === 0 ? '#ffd700' : '#ff4444'}`,
+                  borderStyle: 'solid',
+                  borderWidth: '1px',
+                  borderColor: item.mu > 0 ? '#00ff88' : item.mu === 0 ? '#ffd700' : '#ff4444',
                 }}>
                   <div className="text-xxl mb-1">{item.emoji}</div>
                   <div className="font-bold mt-1">{item.bottle}</div>
@@ -718,6 +722,7 @@ function ConceptOfUtility() {
           </div>
         </div>
       </div>
+</div>
 
       {/* ============================================ */}
       {/* ADDITIONAL CONTENT CARD */}

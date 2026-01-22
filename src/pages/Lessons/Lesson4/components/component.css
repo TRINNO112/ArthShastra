@@ -96,3 +96,33 @@
   margin-top: 2rem !important;
   padding: 1.5rem !important;
 }
+
+/* LESSON4 RESPONSIVE FIXES - Mobile Overflow (Desktop Unchanged) */
+  @media (max-width: 768px) {
+    .advantage-item {
+      padding: 1rem !important;
+      margin-bottom: 1rem !important;
+      width: 85% !important;
+    }
+
+    .comparison-table, .assumptions-table {
+      min-width: 450px !important;
+    }
+
+    .ordinal-advantages-list {
+      flex-direction: column !important;
+
+    }
+  }
+
+  @media (max-width: 480px) {
+    .advantage-item {
+      padding: 0.75rem !important;
+      font-size: 0.9rem !important;
+    }
+
+    .comparison-table, .assumptions-table {
+      min-width: 380px !important;
+    }
+  }
+
