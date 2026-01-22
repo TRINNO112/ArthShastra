@@ -194,7 +194,8 @@ function ConceptOfUtility() {
             <h4 className="text-gold">🥟 Real-World Example - Total Utility:</h4>
             <p><strong>Scenario:</strong> You're eating samosas at a party. Let's track your total satisfaction:</p>
 
-            <div className="flex-column gap-sm mt-2">
+            <div className="table-container">
+  <div className="samosa-grid-container flex-column gap-sm mt-2">
               {[
                 { unit: '1st samosa', desc: "You're hungry", mu: 50, tu: 50, colorClass: 'text-green', borderColor: '#00ff88' },
                 { unit: '2nd samosa', desc: "Still tasty", mu: 40, tu: 90, colorClass: 'text-green', borderColor: '#00ff88' },
@@ -337,8 +338,8 @@ function ConceptOfUtility() {
               📋 This schedule shows TU and MU for consuming ice cream on a hot summer day
             </p>
 
-            <div className="overflow-x-auto">
-              <table>
+            <div className="table-container">
+              <table className="utility-table">
                 <thead>
                   <tr>
                     <th className="text-cyan">

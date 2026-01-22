@@ -4022,3 +4022,50 @@ td.negative {
   border-radius: 12px;
   padding: 20px;
 }
+
+/* MOBILE TABLES: Horizontal Scroll + Vertical Stack (Desktop Unchanged) */
+  @media (max-width: 768px) {
+    .table-container {
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+      margin: 1rem 0;
+      border-radius: 8px;
+    }
+
+    .equilibrium-table,
+    .example-content table {
+      min-width: 450px !important;
+      font-size: 0.9rem;
+      table-layout: fixed;
+    }
+
+    .equilibrium-table th,
+    .equilibrium-table td {
+      padding: 10px 12px !important;
+      min-width: 100px;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    /* Force Vertical Stack */
+    .example-box,
+    .example-content {
+      display: block !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .equilibrium-table,
+    .example-content table {
+      min-width: 380px !important;
+      font-size: 0.85rem;
+    }
+
+    .equilibrium-table th,
+    .equilibrium-table td {
+      padding: 8px 10px !important;
+      min-width: 90px;
+    }
+  }
+
+  
