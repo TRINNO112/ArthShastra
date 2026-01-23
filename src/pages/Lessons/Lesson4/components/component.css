@@ -102,7 +102,8 @@
     .advantage-item {
       padding: 1rem !important;
       margin-bottom: 1rem !important;
-      width: 85% !important;
+      width: 100% !important;
+      overflow-x: auto;
     }
 
     .comparison-table, .assumptions-table {
