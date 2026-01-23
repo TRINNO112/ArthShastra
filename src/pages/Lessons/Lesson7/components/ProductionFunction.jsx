@@ -11,7 +11,7 @@
  * - Assumptions and real-world examples
  */
 
-import { FaFactory, FaChartLine, FaCalculator, FaTable, FaArrowUp, FaArrowDown, FaBalanceScale } from 'react-icons/fa';
+import { FaIndustry, FaChartLine, FaCalculator, FaTable, FaArrowUp, FaArrowDown, FaBalanceScale } from 'react-icons/fa';
 import './component.css';
 
 const productionData = [
@@ -42,7 +42,7 @@ function ProductionFunction() {
         <div className="card-content">
           {/* Production Function Definition */}
           <h3 className="highlight-gold">
-            <FaFactory /> What is Production Function?
+            <FaIndustry /> What is Production Function?
           </h3>
           <div className="definition-quote-box">
             <p className="definition-text">
@@ -116,11 +116,11 @@ function ProductionFunction() {
             </div>
             <div className="stage-card stage-2">
               <h4>Stage II: Diminishing Returns</h4>
-              <p>MP ↓, AP ↓ but >0 | Optimal range</p>
+              <p>MP ↓, AP ↓ but &gt;0 | Optimal range</p>
             </div>
             <div className="stage-card stage-3">
               <h4>Stage III: Negative Returns</h4>
-              <p>MP < 0 | Overcrowding</p>
+              <p>MP &lt; 0 | Overcrowding</p>
             </div>
           </div>
 
