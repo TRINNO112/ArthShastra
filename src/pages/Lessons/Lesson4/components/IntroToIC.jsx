@@ -815,55 +815,58 @@ function IntroToIC() {
             <FaExchangeAlt /> Complete Comparison: Cardinal vs. Ordinal
           </h3>
 
-          <div className="comparison-table-full">
-            <div className="table-header-row">
-              <div className="table-cell header-cell">Aspect</div>
-              <div className="table-cell header-cell cardinal-header">Cardinal Utility</div>
-              <div className="table-cell header-cell ordinal-header">Ordinal Utility</div>
-            </div>
-
-            <div className="table-body">
-              <div className="table-row-full">
-                <div className="table-cell aspect-cell">Propounded By</div>
-                <div className="table-cell">Alfred Marshall</div>
-                <div className="table-cell">J.R. Hicks & R.G.D. Allen</div>
-              </div>
-              <div className="table-row-full">
-                <div className="table-cell aspect-cell">Year</div>
-                <div className="table-cell">1890</div>
-                <div className="table-cell">1934</div>
-              </div>
-              <div className="table-row-full">
-                <div className="table-cell aspect-cell">Utility Measurement</div>
-                <div className="table-cell">Quantitative (Utils)</div>
-                <div className="table-cell">Qualitative (Rankings)</div>
-              </div>
-              <div className="table-row-full">
-                <div className="table-cell aspect-cell">Main Tool</div>
-                <div className="table-cell">Marginal Utility Analysis</div>
-                <div className="table-cell">Indifference Curves</div>
-              </div>
-              <div className="table-row-full">
-                <div className="table-cell aspect-cell">Number of Commodities</div>
-                <div className="table-cell">Single commodity analysis</div>
-                <div className="table-cell">Two commodities at a time</div>
-              </div>
-              <div className="table-row-full">
-                <div className="table-cell aspect-cell">Marginal Utility of Money</div>
-                <div className="table-cell">Assumed constant</div>
-                <div className="table-cell">No such assumption</div>
-              </div>
-              <div className="table-row-full">
-                <div className="table-cell aspect-cell">Equilibrium Condition</div>
-                <div className="table-cell">MU = Price</div>
-                <div className="table-cell">MRS = Price Ratio</div>
-              </div>
-              <div className="table-row-full">
-                <div className="table-cell aspect-cell">Psychological Realism</div>
-                <div className="table-cell">Low ❌</div>
-                <div className="table-cell">High ✅</div>
-              </div>
-            </div>
+          <div className="table-container">
+            <table className="comparison-table">
+              <thead>
+                <tr>
+                  <th className="aspect-header">Aspect</th>
+                  <th className="cardinal-header">Cardinal Utility</th>
+                  <th className="ordinal-header">Ordinal Utility</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Propounded By</td>
+                  <td>Alfred Marshall</td>
+                  <td>J.R. Hicks & R.G.D. Allen</td>
+                </tr>
+                <tr>
+                  <td>Year</td>
+                  <td>1890</td>
+                  <td>1934</td>
+                </tr>
+                <tr>
+                  <td>Utility Measurement</td>
+                  <td>Quantitative (Utils)</td>
+                  <td>Qualitative (Rankings)</td>
+                </tr>
+                <tr>
+                  <td>Main Tool</td>
+                  <td>Marginal Utility Analysis</td>
+                  <td>Indifference Curves</td>
+                </tr>
+                <tr>
+                  <td>Number of Commodities</td>
+                  <td>Single commodity analysis</td>
+                  <td>Two commodities at a time</td>
+                </tr>
+                <tr>
+                  <td>Marginal Utility of Money</td>
+                  <td>Assumed constant</td>
+                  <td>No such assumption</td>
+                </tr>
+                <tr>
+                  <td>Equilibrium Condition</td>
+                  <td>MU = Price</td>
+                  <td>MRS = Price Ratio</td>
+                </tr>
+                <tr>
+                  <td>Psychological Realism</td>
+                  <td>Low ❌</td>
+                  <td>High ✅</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

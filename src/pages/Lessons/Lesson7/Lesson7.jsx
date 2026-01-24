@@ -70,10 +70,6 @@ function Lesson7() {
         return <ProductionFunction />;
       case 'production-schedule':
         return <ProductionSchedule />;
-      case 'production-schedule':
-        return <ProductionSchedule />;
-      case 'production-schedule':
-        return <ProductionSchedule />;
       case 'quiz':
         return (
           <div className="coming-soon">

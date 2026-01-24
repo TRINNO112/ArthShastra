@@ -17,13 +17,6 @@ const productionData = [
 function ProductionSchedule() {
   const [hoveredRow, setHoveredRow] = useState(null);
 
-  const getTooltip = (row, prevRow) => {
-    if (!prevRow) return '';
-    const deltaTP = row.tp - prevRow.tp;
-    const apCalc = row.labor > 0 ? (row.tp / row.labor).toFixed(1) : '-';
-    return `MP = ΔTP/ΔL = ${deltaTP}&lt;br/&gt;AP = TP/L = ${apCalc}`;
-  };
-
   return (
     <section className="lesson-section">
       <div className="section-header-lesson">
@@ -54,6 +47,8 @@ function ProductionSchedule() {
               <tbody>
                 {productionData.map((row, idx) => {
                   const prevRow = productionData[idx - 1];
+                  const deltaTP = prevRow ? row.tp - prevRow.tp : row.mp;
+                  const apCalc = row.labor > 0 ? (row.tp / row.labor).toFixed(1) : '-';
                   const rowColor = row.stage.includes('I') ? 'stage-i' :
                                   row.stage.includes('II') ? 'stage-ii' : 'stage-iii';
                   return (
@@ -71,9 +66,10 @@ function ProductionSchedule() {
                       </td>
                       <td className="font-bold stage-label">{row.stage}</td>
                       {hoveredRow === idx && (
-                        <div className="tooltip">
+                        <div className="hover-tooltip">
                           <FaInfoCircle />
-                          <span dangerouslySetInnerHTML={{ __html: getTooltip(row, prevRow) }} />
+                          <div className="tooltip-mp">MP = ΔTP/ΔL = {deltaTP}</div>
+                          <div className="tooltip-ap">AP = TP/L = {apCalc}</div>
                         </div>
                       )}
                     </tr>
