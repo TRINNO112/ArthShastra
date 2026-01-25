@@ -14,7 +14,19 @@ import {
   FaChevronRight,
   FaChevronLeft
 } from 'react-icons/fa';
-import { ProductionFunction, ProductionSchedule, ReturnsToFactorChart } from './components';
+
+// Import modular components
+import {
+  ProductionFunction,
+  ProductionSchedule,
+  ReturnsToFactorChart,
+  StagesOfProduction,
+  RealWorldExamples,
+  AssumptionsLimitations,
+  PracticeProblems,
+  Quiz
+} from './components';
+
 import { lesson7Data } from '../data/lesson7Data';
 import { logLessonProgress } from '../../../services/firebase';
 import '../css/lessons.css';
@@ -70,20 +82,20 @@ function Lesson7() {
         return <ProductionFunction />;
       case 'production-schedule':
         return <ProductionSchedule />;
+      case 'returns-chart':
+        return <ReturnsToFactorChart />;
+      case 'stages':
+        return <StagesOfProduction />;
+      case 'assumptions':
+        return <AssumptionsLimitations />;
+      case 'examples':
+        return <RealWorldExamples />;
+      case 'practice':
+        return <PracticeProblems />;
       case 'quiz':
-        return (
-          <div className="coming-soon">
-            <h3>Quiz</h3>
-            <p>Interactive quiz coming soon in future parts. {lesson7Data.mcqQuestions.length + lesson7Data.tfQuestions.length} questions prepared.</p>
-          </div>
-        );
+        return <Quiz />;
       default:
-        return (
-          <div className="coming-soon">
-            <h3>{sections.find(s => s.id === activeSection)?.name || 'Section'}</h3>
-            <p>This section will be implemented in future parts of Lesson7.</p>
-          </div>
-        );
+        return <ProductionFunction />;
     }
   };
 
@@ -150,7 +162,7 @@ function Lesson7() {
 
       {/* Main Content */}
       <main className="lesson-content">
-        <div className="content-container">
+        <div className="content-container animate-fade-in">
           {renderActiveSection()}
         </div>
       </main>

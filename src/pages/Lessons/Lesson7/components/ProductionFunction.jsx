@@ -1,177 +1,127 @@
 /**
- * ProductionFunction.jsx - Main component for Lesson 7: Production Function and Returns to a Factor
- *
- * Covers:
- * - Production function definition Q = f(L, K)
- * - Short-run production (variable labor, fixed capital)
- * - Total Product (TP), Average Product (AP), Marginal Product (MP)
- * - Three stages of production
- * - Production schedule table
- * - Graph placeholder for TP/AP/MP curves
- * - Assumptions and real-world examples
+ * ProductionFunction.jsx - Introduction Component for Lesson 7
+ * Describes the core concepts of Production Function, Fixed vs Variable Factors, and Time Periods.
  */
 
-import { FaIndustry, FaChartLine, FaCalculator, FaTable, FaArrowUp, FaArrowDown, FaBalanceScale } from 'react-icons/fa';
+import React from 'react';
+import { FaIndustry, FaClock, FaCubes } from 'react-icons/fa';
 import './component.css';
-
-const productionData = [
-  { labor: 0, tp: 0, ap: '-', mp: '-' },
-  { labor: 1, tp: 10, ap: 10, mp: 10 },
-  { labor: 2, tp: 25, ap: 12.5, mp: 15 },
-  { labor: 3, tp: 36, ap: 12, mp: 11 },
-  { labor: 4, tp: 44, ap: 11, mp: 8 },
-  { labor: 5, tp: 48, ap: 9.6, mp: 4 },
-  { labor: 6, tp: 48, ap: 8, mp: 0 },
-  { labor: 7, tp: 45, ap: 6.4, mp: -3 },
-  { labor: 8, tp: 40, ap: 5, mp: -5 },
-];
 
 function ProductionFunction() {
   return (
-    <section className="lesson-section">
+    <section className="lesson-container-modern animate-fade-in">
       {/* Section Header */}
       <div className="section-header-lesson">
         <span className="section-badge-lesson">Chapter 7</span>
         <h2 className="section-title-lesson">Production Function & Returns to a Factor</h2>
-        <p className="section-subtitle-lesson">How output changes when varying one input while others remain fixed</p>
+        <p className="section-subtitle-lesson">Understanding the input-output relationship in economics</p>
       </div>
 
-      {/* Main Content */}
-      <div className="content-card">
-        <div className="card-glow"></div>
-        <div className="card-content">
-          {/* Production Function Definition */}
-          <h3 className="highlight-gold">
-            <FaIndustry /> What is Production Function?
-          </h3>
-          <div className="definition-quote-box">
-            <p className="definition-text">
-              <strong>Production Function</strong> shows the technical relationship between physical inputs (factors of production) and physical output.
-              It represents the maximum output possible from given inputs under current technology.
-            </p>
-          </div>
-          <div className="formula-box">
-            <strong>Mathematical Form:</strong> <code>Q = f(L, K, T)</code>
-            <p className="text-muted">
-              Q = Output | L = Labor (Variable) | K = Capital (Fixed) | T = Technology
-            </p>
-          </div>
-
-          {/* Short-Run Focus */}
-          <h4 className="highlight-cyan">Short-Run Production (Focus of this Lesson)</h4>
-          <p>
-            In <strong>short-run</strong>, at least one factor is fixed (usually capital). We vary <strong>Labor (L)</strong>
-            and observe changes in output. This leads to the <strong>Law of Variable Proportions</strong> (Returns to a Factor).
+      {/* 1. Deep Dive: What is Production Function? */}
+      <div className="lesson-section-wrapper">
+        <h3 className="section-title-modern"><FaIndustry /> Concept of Production Function</h3>
+        <div className="definition-quote-box">
+          <p className="definition-text">
+            <strong>Production Function</strong> is the functional relationship between physical inputs (factors of production like labor, capital) and physical output of a good.
           </p>
+          <p className="definition-subtext mt-3">
+            It is a purely <em>technical</em> relation, not an economic one (it doesn't deal with prices or profits yet). It tells us the <strong>maximum output</strong> that can be produced with a given set of inputs and technology.
+          </p>
+        </div>
 
-          {/* Production Schedule Table */}
-          <div className="table-container">
-            <h5 className="text-center mb-3">
-              <FaTable /> Production Schedule (Fixed Capital, Variable Labor)
-            </h5>
-            <table className="production-table">
-              <thead>
-                <tr>
-                  <th>Labor Units</th>
-                  <th>Total Product (TP)</th>
-                  <th>Average Product (AP)</th>
-                  <th>Marginal Product (MP)</th>
-                  <th>Stage</th>
-                </tr>
-              </thead>
-              <tbody>
-                {productionData.map((row, idx) => (
-                  <tr key={idx}>
-                    <td>{row.labor}</td>
-                    <td className="text-gold font-bold">{row.tp}</td>
-                    <td>{row.ap}</td>
-                    <td className={row.mp > 0 ? 'text-green' : row.mp < 0 ? 'text-red' : 'text-gold'}>{row.mp}</td>
-                    <td className="font-bold">
-                      {idx === 0 ? 'Zero' : idx <= 2 ? 'I (Increasing)' : idx <= 6 ? 'II (Diminishing)' : 'III (Negative)'}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="formula-box mt-4">
+          <h4 className="text-gold mb-2">Mathematical Expression:</h4>
+          <code className="text-2xl">Qₓ = f(L, K)</code>
+          <ul className="mt-3 text-sm text-gray-400 space-y-1">
+            <li><strong>Qₓ</strong> = Physical quantity of output of commodity X</li>
+            <li><strong>f</strong> = Functional relationship</li>
+            <li><strong>L</strong> = Units of Labor (Variable Factor)</li>
+            <li><strong>K</strong> = Units of Capital (Fixed Factor)</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* 2. Fixed vs Variable Factors */}
+      <div className="lesson-section-wrapper">
+        <h3 className="section-title-modern"><FaCubes /> Factors of Production</h3>
+        <p className="mb-6 text-lg text-gray-300">
+          To produce goods, a firm needs inputs. In the short run, we classify these inputs into two categories based on their adjustability.
+        </p>
+
+        <div className="assumptions-grid-modern">
+          <div className="stage-card-modern" style={{ minHeight: 'auto', marginTop: '0' }}>
+            <h4 className="text-xl font-bold text-green-400 mb-3">Variable Factors</h4>
+            <p className="text-sm mb-4">Inputs that <strong>can be changed</strong> in the short run to change the level of output.</p>
+            <ul className="modern-list check-list text-left">
+              <li>Raw materials</li>
+              <li>Casual labor</li>
+              <li>Power and fuel</li>
+            </ul>
+            <p className="text-xs text-gray-500 mt-2">Output is zero if variable factors are zero.</p>
           </div>
 
-          {/* Formulas */}
-          <div className="formula-box-grid">
-            <div>
-              <strong>AP = TP / L</strong>
-              <p>Average Product per worker</p>
-            </div>
-            <div>
-              <strong>MP = ΔTP / ΔL</strong>
-              <p>Marginal Product of labor</p>
-            </div>
-          </div>
-
-          {/* Three Stages */}
-          <h3 className="highlight-green">Three Stages of Production</h3>
-          <div className="stages-grid">
-            <div className="stage-card stage-1">
-              <h4>Stage I: Increasing Returns</h4>
-              <p>MP ↑, AP ↑ | Specialization begins</p>
-            </div>
-            <div className="stage-card stage-2">
-              <h4>Stage II: Diminishing Returns</h4>
-              <p>MP ↓, AP ↓ but &gt;0 | Optimal range</p>
-            </div>
-            <div className="stage-card stage-3">
-              <h4>Stage III: Negative Returns</h4>
-              <p>MP &lt; 0 | Overcrowding</p>
-            </div>
-          </div>
-
-          {/* Graph Placeholder */}
-          <div className="graph-container">
-            <h5>TP, AP, MP Curves (Interactive Graph Coming Soon)</h5>
-            <div className="graph-placeholder">
-              <FaChartLine className="placeholder-icon" />
-              <p>TP: Inverted U | AP: Bell | MP: Hill → Negative</p>
-            </div>
-          </div>
-
-          {/* Assumptions */}
-          <div className="assumptions-list">
-            <div className="assumption-item">
-              <span className="assumption-number">1</span>
-              <div>
-                <h5>One Variable Factor</h5>
-                <p>Labor varies, capital fixed</p>
-              </div>
-            </div>
-            <div className="assumption-item">
-              <span className="assumption-number">2</span>
-              <div>
-                <h5>Technology Constant</h5>
-                <p>State of art unchanged</p>
-              </div>
-            </div>
-            {/* Add more */}
-          </div>
-
-          {/* Real-World Example */}
-          <div className="highlight-card">
-            <h4>🌾 Real-World: Farmer with Fixed Land</h4>
-            <p>Adding workers initially increases output rapidly (Stage I). After optimal labor, each additional worker adds less (Stage II). Too many workers → overcrowding (Stage III).</p>
-          </div>
-
-          {/* Practice Problem */}
-          <div className="example-box">
-            <h5>Practice: From TP= [0,10,25,36,44], calculate AP/MP</h5>
-            <p><strong>Solution:</strong> MP₁=10, MP₂=15... Identify stages.</p>
+          <div className="stage-card-modern" style={{ minHeight: 'auto', marginTop: '0' }}>
+            <h4 className="text-xl font-bold text-gold mb-3">Fixed Factors</h4>
+            <p className="text-sm mb-4">Inputs that <strong>cannot be changed</strong> in the short run. They remain constant regardless of output.</p>
+            <ul className="modern-list dot-list text-left">
+              <li>Land & Building</li>
+              <li>Machinery & Plant</li>
+              <li>Permanent staff</li>
+            </ul>
+            <p className="text-xs text-gray-500 mt-2">Costs are incurred even if output is zero.</p>
           </div>
         </div>
       </div>
 
-      {/* Navigation */}
+      {/* 3. Short Run vs Long Run */}
+      <div className="lesson-section-wrapper">
+        <h3 className="section-title-modern"><FaClock /> Time Periods in Production</h3>
+        <p className="mb-4 text-gray-300">
+          In economics, the distinction between short run and long run isn't about days or years, but about the flexibility of factors.
+        </p>
+
+        <div className="comparison-table-wrapper rounded-xl overflow-hidden border border-white/10">
+          <table className="production-table-modern">
+            <thead>
+              <tr>
+                <th className="w-1/3">Basis</th>
+                <th className="w-1/3 text-green-400">Short Run</th>
+                <th className="w-1/3 text-gold">Long Run</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="font-bold">Definition</td>
+                <td>Period where at least one factor is fixed.</td>
+                <td>Period where all factors are variable.</td>
+              </tr>
+              <tr>
+                <td className="font-bold">Factor Classification</td>
+                <td>Factors are Fixed vs Variable.</td>
+                <td>All factors are Variable.</td>
+              </tr>
+              <tr>
+                <td className="font-bold">Output Change</td>
+                <td>Output changed by varying variable inputs only.</td>
+                <td>Output changed by varying scale (all inputs).</td>
+              </tr>
+              <tr>
+                <td className="font-bold">Relevant Law</td>
+                <td><strong>Returns to a Factor</strong> (Law of Variable Proportions).</td>
+                <td><strong>Returns to Scale</strong>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Navigation Hint */}
       <div className="section-navigation">
         <div className="nav-hint">
-          Previous: Consumer Equilibrium | Next: Isoquants
+          Next Section: Production Schedule &rsaquo;
         </div>
       </div>
+
     </section>
   );
 }
