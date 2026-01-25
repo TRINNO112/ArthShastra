@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaArrowLeft, FaDollarSign, FaTable, FaChartLine, FaBalanceScale, FaClock, FaFactory, FaCalculator, FaQuestionCircle } from 'react-icons/fa';
+import { FaArrowLeft, FaDollarSign, FaTable, FaChartLine, FaBalanceScale, FaClock, FaIndustry, FaCalculator, FaQuestionCircle, FaProjectDiagram } from 'react-icons/fa';
 import { lesson8Data } from '../data/lesson8Data';
 import { logLessonProgress } from '../../../services/firebase';
 import '../css/lessons.css';
 // Components (add as created)
-import { CostSchedule } from './components';
+import { CostSchedule, CostCurvesChart, FixedVariableCosts, ShortLongRun, RealWorldExamples, PracticeProblems, Quiz, CostRelationships } from './components';
 
 const sections = lesson8Data.sections;
 
@@ -29,7 +29,7 @@ function Lesson8() {
     const saved = localStorage.getItem('lesson8-activeSection');
     return saved || 'intro';
   });
-  const [startTime] = useState(Date.now());
+  const [startTime] = useState(() => Date.now());
   const lessonId = 'micro11-8';
 
   useEffect(() => {
@@ -51,13 +51,15 @@ function Lesson8() {
     curves: FaChartLine,
     'fixed-variable': FaBalanceScale,
     'short-long': FaClock,
-    examples: FaFactory,
+    examples: FaIndustry,
     practice: FaCalculator,
-    quiz: FaQuestionCircle
+    quiz: FaQuestionCircle,
+    relationships: FaProjectDiagram
   };
 
   const renderActiveSection = () => {
     switch (activeSection) {
+      case 'intro':
       case 'intro':
         return (
           <section className="lesson-section">
@@ -66,8 +68,44 @@ function Lesson8() {
               <h2 className="section-title-lesson">Introduction to Costs</h2>
               <p className="section-subtitle-lesson">Understand fixed, variable, total costs & their curves in short-run production.</p>
             </div>
-            <div className="content-card">
-              <p>Costs are payments for factors of production. Short-run: some fixed, some variable.</p>
+
+            <div className="content-card featured-card">
+              <div className="card-glow"></div>
+              <div className="card-content">
+                <h3 className="card-title">
+                  <FaDollarSign className="title-icon gold" /> What is Cost?
+                </h3>
+                <p className="intro-text">
+                  In economics, <strong>Cost</strong> is the expenditure incurred by a producer on factor inputs (land, labor, capital) and non-factor inputs (raw materials) to produce a given amount of output.
+                </p>
+                <p className="intro-text">
+                  Cost Function: <span className="highlight-cyan">C = f(Q)</span>, where Cost depends on Output (Q).
+                </p>
+              </div>
+            </div>
+
+            <div className="intro-grid">
+              <div className="intro-card">
+                <h4><FaBalanceScale style={{ color: '#ffd700', marginRight: '8px' }} /> Explicit Cost</h4>
+                <p>Actual money expenditure on inputs. Also called <strong>Money Cost</strong> or Out-of-pocket cost.</p>
+                <div style={{ marginTop: '10px', fontSize: '0.9rem', color: '#aaa' }}>e.g., Wages, Rent, Materials.</div>
+              </div>
+
+              <div className="intro-card">
+                <h4><FaIndustry style={{ color: '#00ff88', marginRight: '8px' }} /> Implicit Cost</h4>
+                <p>Estimated value of inputs owned by the firm itself. Also called <strong>Imputed Cost</strong>.</p>
+                <div style={{ marginTop: '10px', fontSize: '0.9rem', color: '#aaa' }}>e.g., Rent of own land, Owner's salary.</div>
+              </div>
+            </div>
+
+            <div className="content-card" style={{ marginTop: '30px' }}>
+              <h4 style={{ color: '#fff', marginBottom: '15px' }}>Total Cost (TC)</h4>
+              <p style={{ color: '#ccc', marginBottom: '20px' }}>
+                Total Cost = Explicit Cost + Implicit Cost + Normal Profit.
+              </p>
+              <div style={{ background: 'rgba(255,255,255,0.05)', padding: '15px', borderRadius: '12px', borderLeft: '4px solid #00bfff' }}>
+                <strong>Opportunity Cost:</strong> Cost is the value of the next best alternative foregone.
+              </div>
             </div>
           </section>
         );
@@ -79,12 +117,14 @@ function Lesson8() {
         return <FixedVariableCosts />;
       case 'short-long':
         return <ShortLongRun />;
+      case 'relationships':
+        return <CostRelationships />;
       case 'examples':
-        return <div className="content-card"><h3>Examples (Coming Soon)</h3></div>;
+        return <RealWorldExamples />;
       case 'practice':
-        return <div className="content-card"><h3>Practice (Coming Soon)</h3></div>;
+        return <PracticeProblems />;
       case 'quiz':
-        return <div className="content-card"><h3>Quiz (Coming Soon - uses lesson8Data)</h3></div>;
+        return <Quiz mcqQuestions={lesson8Data.mcqQuestions} tfQuestions={lesson8Data.tfQuestions} />;
       default:
         return null;
     }

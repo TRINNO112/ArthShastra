@@ -41,7 +41,11 @@ const CostCurvesChart = ({ data }) => {
       .range([0, innerWidth]);
 
     const yScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d => Math.max(d.tc, d.ac, d.avc, d.afc || 0))])
+      .domain([0, d3.max(data, d => Math.max(
+        Number(d.tc) || 0,
+        d.ac !== '-' ? Number(d.ac) : 0,
+        d.avc !== '-' ? Number(d.avc) : 0
+      )) * 1.1])
       .range([innerHeight, 0]);
 
     // Gradients
@@ -107,6 +111,7 @@ const CostCurvesChart = ({ data }) => {
 
     // Line generator
     const lineGenerator = (key) => d3.line()
+      .defined(d => d[key] !== '-' && d[key] !== null && !isNaN(d[key]))
       .x(d => xScale(d.output))
       .y(d => yScale(d[key]))
       .curve(d3.curveMonotoneX);
@@ -166,6 +171,7 @@ const CostCurvesChart = ({ data }) => {
       .style("box-shadow", "0 4px 12px rgba(0,0,0,0.5)");
 
     // Dots
+    // Dots & Tooltip Interaction
     paths.forEach(p => {
       g.selectAll(`.dot-${p.key}`)
         .data(data)
@@ -192,6 +198,51 @@ const CostCurvesChart = ({ data }) => {
           d3.select(event.currentTarget).attr('r', 4).attr('fill', '#1a1a2e');
         });
     });
+
+    // --- Highlight Minimum Points (Intersections) ---
+    const validData = data.filter(d => d.ac !== '-' && d.avc !== '-' && !isNaN(d.ac) && !isNaN(d.avc));
+    if (validData.length > 0) {
+      // Find min AC/AVC
+      const minACPoint = validData.reduce((prev, curr) => (parseFloat(curr.ac) < parseFloat(prev.ac) ? curr : prev));
+      const minAVCPoint = validData.reduce((prev, curr) => (parseFloat(curr.avc) < parseFloat(prev.avc) ? curr : prev));
+
+      const keyPoints = [
+        { pt: minACPoint, label: 'Min AC', color: '#ffd700', yVal: minACPoint.ac },
+        { pt: minAVCPoint, label: 'Shut-down', color: '#00bfff', yVal: minAVCPoint.avc }
+      ];
+
+      keyPoints.forEach(kp => {
+        // Dotted vertical line from axis up to curve
+        g.append('line')
+          .attr('x1', xScale(kp.pt.output))
+          .attr('x2', xScale(kp.pt.output))
+          .attr('y1', innerHeight)
+          .attr('y2', yScale(kp.yVal))
+          .attr('stroke', kp.color)
+          .attr('stroke-width', 1.5)
+          .attr('stroke-dasharray', '4,4')
+          .attr('opacity', 0.6);
+
+        // Highlight Circle
+        g.append('circle')
+          .attr('cx', xScale(kp.pt.output))
+          .attr('cy', yScale(kp.yVal))
+          .attr('r', 6)
+          .attr('fill', 'none')
+          .attr('stroke', kp.color)
+          .attr('stroke-width', 2);
+
+        // Label
+        g.append('text')
+          .attr('x', xScale(kp.pt.output))
+          .attr('y', yScale(kp.yVal) - 10)
+          .attr('fill', kp.color)
+          .attr('text-anchor', 'middle')
+          .style('font-size', '11px')
+          .style('font-weight', 'bold')
+          .text(kp.label);
+      });
+    }
   }, [dimensions, data]);
 
   return (
@@ -203,46 +254,40 @@ const CostCurvesChart = ({ data }) => {
       </div>
 
       <div className="content-card">
-        <div ref={containerRef} className="chart-wrapper-flex">
-          <svg ref={svgRef} className="chart-container-d3"></svg>
-          <div className="chart-legend-side">
-            <h4 className="legend-title">Key</h4>
-            <div className="legend-item-group">
-              <div className="legend-row">
-                <span className="legend-line" style={{ background: '#00ff88', height: '3px' }}></span>
-                <div className="legend-text">
-                  <span className="legend-label">Total Cost (TC)</span>
-                  <span className="legend-desc">FC + VC (always rising)</span>
-                </div>
+        <div ref={containerRef} className="chart-wrapper-flex" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <svg ref={svgRef} className="chart-container-d3" style={{ height: '450px' }}></svg>
+
+          <div className="chart-legend-bottom" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', padding: '15px', background: 'rgba(0,0,0,0.3)', borderRadius: '12px' }}>
+            <h4 className="legend-title" style={{ width: '100%', textAlign: 'center', marginBottom: '5px' }}>Key</h4>
+
+            <div className="legend-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span className="legend-line" style={{ background: '#00ff88', width: '30px', height: '3px' }}></span>
+              <div style={{ fontSize: '0.9rem', color: '#ccc' }}>
+                <strong>TC</strong> (Total Cost)
               </div>
             </div>
-            <div className="legend-item-group">
-              <div className="legend-row">
-                <span className="legend-line" style={{ background: '#ff6b6b', height: '2px' }}></span>
-                <div className="legend-text">
-                  <span className="legend-label">Marginal Cost (MC)</span>
-                  <span className="legend-desc">ΔTC/ΔQ (U-shape)</span>
-                </div>
+
+            <div className="legend-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span className="legend-line" style={{ background: '#ff6b6b', width: '30px', height: '2px' }}></span>
+              <div style={{ fontSize: '0.9rem', color: '#ccc' }}>
+                <strong>MC</strong> (Marginal Cost)
               </div>
             </div>
-            <div className="legend-item-group">
-              <div className="legend-row">
-                <span className="legend-line" style={{ borderTop: '2px dashed #ffd700' }}></span>
-                <div className="legend-text">
-                  <span className="legend-label">Average Cost (AC)</span>
-                  <span className="legend-desc">TC/Q (U-min at MC intersect)</span>
-                </div>
+
+            <div className="legend-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span className="legend-line" style={{ borderTop: '2px dashed #ffd700', width: '30px' }}></span>
+              <div style={{ fontSize: '0.9rem', color: '#ccc' }}>
+                <strong>AC</strong> (Average Cost)
               </div>
             </div>
-            <div className="legend-item-group">
-              <div className="legend-row">
-                <span className="legend-line" style={{ borderTop: '2px dashed #00bfff' }}></span>
-                <div className="legend-text">
-                  <span className="legend-label">Average Variable Cost (AVC)</span>
-                  <span className="legend-desc">VC/Q (U-shape)</span>
-                </div>
+
+            <div className="legend-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span className="legend-line" style={{ borderTop: '2px dashed #00bfff', width: '30px' }}></span>
+              <div style={{ fontSize: '0.9rem', color: '#ccc' }}>
+                <strong>AVC</strong> (Avg Variable Cost)
               </div>
             </div>
+
           </div>
         </div>
       </div>

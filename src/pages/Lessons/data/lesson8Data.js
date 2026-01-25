@@ -1,3 +1,5 @@
+import { FaDollarSign, FaTable, FaChartLine, FaBalanceScale, FaClock, FaIndustry, FaCalculator, FaQuestionCircle, FaProjectDiagram } from 'react-icons/fa';
+
 export const lesson8Data = {
   title: "Concepts of Cost",
   subtitle: "Short-run costs, TC/FC/VC, AC/MC curves (NCERT/VK Ohri Class 11)",
@@ -7,7 +9,8 @@ export const lesson8Data = {
     { id: 'curves', name: 'Cost Curves', icon: FaChartLine },
     { id: 'fixed-variable', name: 'Fixed vs Variable Costs', icon: FaBalanceScale },
     { id: 'short-long', name: 'Short vs Long Run', icon: FaClock },
-    { id: 'examples', name: 'Real-World Examples', icon: FaFactory },
+    { id: 'relationships', name: 'Relationships', icon: FaProjectDiagram },
+    { id: 'examples', name: 'Real-World Examples', icon: FaIndustry },
     { id: 'practice', name: 'Practice Problems', icon: FaCalculator },
     { id: 'quiz', name: 'Quiz', icon: FaQuestionCircle }
   ],

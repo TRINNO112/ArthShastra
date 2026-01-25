@@ -11,13 +11,16 @@ const FixedVariableCosts = () => {
         <p className="section-subtitle-lesson">Understand FC (don't change with output) vs VC (rise with production).</p>
       </div>
 
-      <div className="content-card">
+      <div className="content-card featured-card">
         <div className="card-glow"></div>
         <div className="card-content">
-          <h3 className="highlight-gold">
-            Fixed Costs <FaLock /> vs Variable Costs <FaUnlockAlt />
+          <h3 className="card-title">
+            <FaLock className="title-icon gold" /> Fixed Costs vs <FaUnlockAlt className="title-icon green" /> Variable Costs
           </h3>
-          <p>Short-run: FC fixed, VC vary with Q. TC = FC + VC.</p>
+          <p className="intro-text">
+            In the short-run, some costs are fixed (factory, machinery) while others vary (labor, materials).
+            <strong> Total Cost = Fixed Cost + Variable Cost</strong>.
+          </p>
         </div>
       </div>
 
@@ -57,39 +60,43 @@ const FixedVariableCosts = () => {
       </div>
 
       {/* Comparison Table */}
-      <div className="expanded-content">
-        <h4 className="highlight-cyan">Quick Comparison</h4>
-        <table className="comparison-table">
-          <thead>
-            <tr>
-              <th>Aspect</th>
-              <th>Fixed Costs</th>
-              <th>Variable Costs</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Dependence on Q</strong></td>
-              <td>Independent</td>
-              <td>Directly proportional</td>
-            </tr>
-            <tr>
-              <td><strong>At Q=0</strong></td>
-              <td>Paid (100%)</td>
-              <td>Zero</td>
-            </tr>
-            <tr>
-              <td><strong>Average Behavior</strong></td>
-              <td>AFC ↓ continuously</td>
-              <td>AVC U-shaped</td>
-            </tr>
-            <tr>
-              <td><strong>Examples</strong></td>
-              <td>Rent, Salaries</td>
-              <td>Wages, Materials</td>
-            </tr>
-          </tbody>
-        </table>
+      <div className="content-card">
+        <h4 className="highlight-cyan" style={{ textAlign: 'center', marginBottom: '20px' }}>
+          Quick Comparison
+        </h4>
+        <div className="table-responsive">
+          <table className="comparison-table">
+            <thead>
+              <tr>
+                <th>Aspect</th>
+                <th>Fixed Costs</th>
+                <th>Variable Costs</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Dependence on Q</strong></td>
+                <td>Independent</td>
+                <td>Directly proportional</td>
+              </tr>
+              <tr>
+                <td><strong>At Q=0</strong></td>
+                <td>Paid (100%)</td>
+                <td>Zero</td>
+              </tr>
+              <tr>
+                <td><strong>Average Behavior</strong></td>
+                <td>AFC ↓ continuously</td>
+                <td>AVC U-shaped</td>
+              </tr>
+              <tr>
+                <td><strong>Examples</strong></td>
+                <td>Rent, Salaries</td>
+                <td>Wages, Materials</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   );

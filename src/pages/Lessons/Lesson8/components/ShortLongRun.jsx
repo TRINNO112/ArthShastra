@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaClock, FaBuilding, FaChartArea, FaInfinity } from 'react-icons/fa';
+import LACEnvelopeChart from './LACEnvelopeChart';
 import './component.css';
 
 const ShortLongRun = () => {
@@ -11,13 +12,16 @@ const ShortLongRun = () => {
         <p className="section-subtitle-lesson">Short-run: fixed factors. Long-run: all variable. Cost curves differ.</p>
       </div>
 
-      <div className="content-card">
+      <div className="content-card featured-card">
         <div className="card-glow"></div>
         <div className="card-content">
-          <h3 className="highlight-gold">
-            Time Horizon <FaClock /> Matters
+          <h3 className="card-title">
+            <FaClock className="title-icon gold" /> Time Horizon Matters
           </h3>
-          <p>Short-run: Can't change all inputs (fixed plant). Long-run: Adjust everything (build new plant).</p>
+          <p className="intro-text">
+            <span className="highlight-gold">Short-run:</span> Can't change all inputs (fixed plant).<br />
+            <span className="highlight-green">Long-run:</span> Adjust everything (build new plant).
+          </p>
         </div>
       </div>
 
@@ -27,62 +31,47 @@ const ShortLongRun = () => {
           <FaClock className="time-icon" />
           <h5>Short Run</h5>
           <p><strong>At least one fixed factor</strong> (usually plant/capital).</p>
-          <ul>
+          <ul className="bullet-list">
             <li>Fixed plant size</li>
-            <li>FC > 0</li>
-            <li>MC/AC/AVC U-curves</li>
+            <li>Fixed Costs {`>`} 0</li>
+            <li>MC/AC/AVC are U-shaped</li>
             <li>Time to adjust labor only</li>
           </ul>
-          <div className="run-note">
-            "Plant capacity fixed"
-          </div>
+          <div className="run-note">"Plant capacity is fixed"</div>
         </div>
 
         <div className="insight-card long-run-card">
           <FaInfinity className="time-icon" />
           <h5>Long Run</h5>
           <p><strong>All factors variable</strong> (no fixed costs).</p>
-          <ul>
+          <ul className="bullet-list merits">
             <li>Adjust plant size</li>
-            <li>FC = 0</li>
-            <li>LAC envelope of SACs</li>
-            <li>Sufficient time for all changes</li>
+            <li>Fixed Costs = 0</li>
+            <li>LAC is envelope of SACs</li>
+            <li>Time to change scale</li>
           </ul>
-          <div className="run-note">
-            "Planning horizon"
-          </div>
+          <div className="run-note">"Planning horizon"</div>
         </div>
       </div>
 
       {/* Cost Curves Envelope Diagram */}
-      <div className="expanded-content">
-        <h4 className="highlight-cyan">Long Run Average Cost (LAC)</h4>
-        <p>LAC is envelope of Short Run AC (SAC) curves for different plant sizes.</p>
-        <div className="curve-diagram">
-          <svg viewBox="0 0 400 200" className="envelope-svg">
-            <defs>
-              <linearGradient id="lac-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#ffd700"/>
-                <stop offset="100%" stop-color="#ffaa00"/>
-              </linearGradient>
-            </defs>
-            {/* SAC1 */}
-            <path d="M 50 180 Q 120 120 180 100 Q 250 110 320 150 L 380 180" stroke="#00ff88" stroke-width="3" fill="none"/>
-            {/* SAC2 */}
-            <path d="M 50 170 Q 100 100 160 80 Q 220 90 300 140 L 380 170" stroke="#ff6b6b" stroke-width="3" fill="none" stroke-dasharray="5,5"/>
-            {/* LAC Envelope */}
-            <path d="M 50 170 Q 100 100 160 80 Q 200 75 250 85 Q 320 110 380 150" stroke="url(#lac-gradient)" stroke-width="4" fill="none"/>
-            <text x="200" y="20" text-anchor="middle" fill="#ffd700" font-weight="bold" font-size="14">LAC (Envelope)</text>
-            <text x="100" y="190" fill="#00ff88" font-size="12">SAC1 (Small Plant)</text>
-            <text x="250" y="190" fill="#ff6b6b" font-size="12">SAC2 (Large Plant)</text>
-          </svg>
-        </div>
+      <div className="content-card">
+        <h4 className="highlight-cyan" style={{ textAlign: 'center', marginBottom: '20px' }}>
+          Long Run Average Cost (LAC)
+        </h4>
+        <p style={{ textAlign: 'center', color: '#ccc', marginBottom: '30px' }}>
+          The LAC curve is the "envelope" that holds all possible Short Run Average Cost (SAC) curves.
+          It represents the lowest possible cost for any output level when plant size can be varied.
+        </p>
+
+        {/* New D3 Chart */}
+        <LACEnvelopeChart />
+
       </div>
 
       {/* Summary Table */}
-      <div className="practice-section">
-        <h4>Summary</h4>
-        <table className="summary-table">
+      <div className="table-responsive">
+        <table className="practice-table">
           <thead>
             <tr>
               <th>Feature</th>
@@ -103,7 +92,7 @@ const ShortLongRun = () => {
             </tr>
             <tr>
               <td>FC</td>
-              <td>>0</td>
+              <td>{`>`}0</td>
               <td>=0</td>
             </tr>
             <tr>

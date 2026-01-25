@@ -42,27 +42,30 @@ const CostSchedule = ({ data }) => {
         <p className="section-subtitle-lesson">TC = FC + VC | MC = ΔTC/ΔQ | AC = TC/Q | Hover for calculations.</p>
       </div>
 
-      <div className="content-card">
+      <div className="content-card featured-card">
         <div className="card-glow"></div>
         <div className="card-content">
-          <h3 className="highlight-gold">
-            <FaTable /> Interactive Cost Schedule <FaCalculator />
+          <h3 className="card-title">
+            <FaTable className="title-icon gold" /> Interactive Cost Schedule
           </h3>
-          <p>Fixed FC, rising VC. Watch MC/AC/AVC U-shapes. Optimal where MC = min AC.</p>
+          <p className="intro-text">
+            Observe the behavior of costs as output increases. Hover over rows to see calculations.
+            Notice how <strong>MC cuts AC at its minimum point</strong>.
+          </p>
 
           <div className="table-stable-container" ref={tableRef}>
             <table className="cost-table stable">
               <thead>
                 <tr>
-                  <th style={{width: '10%'}}>Q</th>
-                  <th style={{width: '12%'}}>FC</th>
-                  <th style={{width: '12%'}}>VC</th>
-                  <th style={{width: '12%'}}>TC</th>
-                  <th style={{width: '12%'}}>MC</th>
-                  <th style={{width: '12%'}}>AC</th>
-                  <th style={{width: '12%'}}>AVC</th>
-                  <th style={{width: '12%'}}>AFC</th>
-                  <th style={{width: '16%'}}>Stage</th>
+                  <th style={{ width: '10%' }}>Q</th>
+                  <th style={{ width: '12%' }}>FC</th>
+                  <th style={{ width: '12%' }}>VC</th>
+                  <th style={{ width: '12%' }}>TC</th>
+                  <th style={{ width: '12%' }}>MC</th>
+                  <th style={{ width: '12%' }}>AC</th>
+                  <th style={{ width: '12%' }}>AVC</th>
+                  <th style={{ width: '12%' }}>AFC</th>
+                  <th style={{ width: '16%' }}>Stage</th>
                 </tr>
               </thead>
               <tbody>
@@ -119,14 +122,18 @@ const CostSchedule = ({ data }) => {
       })()}
 
       {/* Formulas */}
-      <div className="expanded-content">
-        <h4 className="highlight-cyan">Formulas</h4>
-        <div className="formula-pair">
-          <div className="formula-ac">
-            AC = <span className="formula-highlight">TC / Q</span>
+      <div className="content-card">
+        <h4 className="highlight-cyan" style={{ textAlign: 'center', marginBottom: '20px' }}>
+          Key Relationships
+        </h4>
+        <div className="formula-pair" style={{ display: 'flex', justifyContent: 'center', gap: '30px', flexWrap: 'wrap' }}>
+          <div style={{ background: 'rgba(255,215,0,0.1)', padding: '20px', borderRadius: '16px', border: '1px solid rgba(255,215,0,0.3)', minWidth: '200px', textAlign: 'center' }}>
+            <h5 style={{ color: '#ffd700', marginBottom: '10px' }}>Average Cost</h5>
+            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fff' }}>AC = TC / Q</div>
           </div>
-          <div className="formula-mc">
-            MC = <span className="formula-highlight">ΔTC / ΔQ</span>
+          <div style={{ background: 'rgba(0,255,136,0.1)', padding: '20px', borderRadius: '16px', border: '1px solid rgba(0,255,136,0.3)', minWidth: '200px', textAlign: 'center' }}>
+            <h5 style={{ color: '#00ff88', marginBottom: '10px' }}>Marginal Cost</h5>
+            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fff' }}>MC = ΔTC / ΔQ</div>
           </div>
         </div>
       </div>
