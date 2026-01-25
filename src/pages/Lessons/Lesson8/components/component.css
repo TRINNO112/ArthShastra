@@ -1,0 +1,249 @@
+@import '../css/lessons.css';
+
+/* Cost Schedule Table - Adapted from ProductionSchedule */
+.table-stable-container {
+  position: relative;
+  overflow-x: auto;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  background: linear-gradient(145deg, rgba(0,0,0,0.7), rgba(26,26,46,0.9));
+  margin: 2.5rem 0;
+  min-width: 900px;
+}
+
+.cost-table.stable {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.cost-table.stable th {
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  color: #1a1a2e;
+  font-weight: 800;
+  padding: 1.6rem 1.2rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.cost-table.stable td {
+  padding: 1.5rem 1.2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  vertical-align: middle;
+  transition: background 0.3s ease;
+}
+
+.stable-row {
+  position: relative;
+}
+
+.stable-row:hover {
+  background: linear-gradient(90deg, rgba(255,215,0,0.15), rgba(255,215,0,0.08)) !important;
+}
+
+.stage-i { border-left: 6px solid #00ff88; }
+.stage-ii { border-left: 6px solid #ffd700; }
+.stage-iii { border-left: 6px solid #ff6b6b; }
+
+.fc-bold, .tc-bold { color: #00ff88; font-weight: 900; font-size: 1.15rem; }
+.ac-cell { color: #ffd700; font-weight: 700; }
+.mc-pos { color: #00ff88; font-weight: 900; }
+.mc-neg { color: #ff6b6b; font-weight: 900; }
+.mc-zero { color: #ffd700; font-weight: 700; }
+
+/* Tooltip - Viewport fixed */
+.stable-tooltip {
+  position: fixed;
+  z-index: 10000;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(0,0,0,0.98), rgba(20,20,40,0.98));
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 24px;
+  padding: 1.5rem 1.8rem;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.8);
+  max-width: 300px;
+  font-size: 0.95rem;
+}
+
+.tooltip-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  text-align: left;
+}
+
+.mc-info, .ac-info {
+  padding: 0.5rem 0;
+}
+
+.mc-info strong { color: #ff6b6b; }
+.ac-info strong { color: #ffd700; }
+
+.mc-val, .ac-val { font-weight: bold; font-size: 1.2rem; }
+
+/* Formulas */
+.expanded-content {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: linear-gradient(145deg, rgba(0,0,0,0.5), rgba(26,26,46,0.8));
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.highlight-cyan {
+  background: linear-gradient(135deg, #00bfff, #1e90ff, #00ffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.formula-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.formula-ac, .formula-mc {
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.formula-ac {
+  background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,215,0,0.1));
+  border-left: 6px solid #ffd700;
+}
+
+.formula-mc {
+  background: linear-gradient(135deg, rgba(0,255,136,0.2), rgba(0,255,136,0.1));
+  border-left: 6px solid #00ff88;
+}
+
+.formula-ac:hover, .formula-mc:hover {
+  transform: translateY(-8px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .table-stable-container {
+    min-width: 100%;
+  }
+
+  .cost-table.stable th, .cost-table.stable td {
+    padding: 1.2rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .formula-pair {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .stable-tooltip {
+    max-width: 280px;
+    left: 50% !important;
+  }
+
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* FixedVariableCosts Styles */
+.fc-card, .vc-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.fc-card::before {
+  background: linear-gradient(90deg, #ffd700, #ffaa00);
+}
+
+.vc-card::before {
+  background: linear-gradient(90deg, #00ff88, #00cc66);
+}
+
+.fc-card:hover, .vc-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+}
+
+.fc-icon { color: #ffd700; font-size: 2.5rem; margin-bottom: 1rem; }
+.vc-icon { color: #00ff88; font-size: 2.5rem; margin-bottom: 1rem; }
+
+.fc-list, .vc-list {
+  text-align: left;
+  margin: 1.5rem 0;
+}
+
+.fc-list li, .vc-list li {
+  margin-bottom: 0.8rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.fc-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #ffd700;
+  font-weight: bold;
+}
+
+.vc-list li::before {
+  content: '⚡';
+  position: absolute;
+  left: 0;
+  color: #00ff88;
+  font-weight: bold;
+}
+
+.fc-note, .vc-note {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.falling { color: #ffd700; }
+.u-shape { color: #ff6b6b; }
+
+.comparison-table {
+  margin-top: 2rem;
+  width: 100%;
+  background: rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.comparison-table th {
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  color: #1a1a2e;
+  padding: 1rem 1.5rem;
+  font-weight: 800;
+}
+
+.comparison-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}

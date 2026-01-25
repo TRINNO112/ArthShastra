@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { FaChartLine, FaInfoCircle } from 'react-icons/fa';
+import { FaChartLine, FaInfoCircle, FaSearch, FaProjectDiagram } from 'react-icons/fa';
 import './component.css';
 
 const productionData = [
@@ -225,49 +225,95 @@ const ReturnsToFactorChart = () => {
   }, [dimensions]);
 
   return (
-    <div className="chart-wrapper-flex">
-      <div className="chart-container-d3" ref={containerRef}>
-        <svg ref={svgRef}></svg>
+    <div className='chart-section-wrapper'>
+      <div className="chart-wrapper-flex">
+        <div className="chart-container-d3" ref={containerRef}>
+          <svg ref={svgRef}></svg>
+        </div>
+
+        <div className="chart-legend-side">
+          <h4 className="legend-title">Key</h4>
+
+          <div className="legend-item-group">
+            <div className="legend-row">
+              <span className="legend-line" style={{ background: '#00ff88', height: '3px' }}></span>
+              <div className="legend-text">
+                <span className="legend-label">Total Product (TP)</span>
+                <span className="legend-desc">Total output produced</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="legend-item-group">
+            <div className="legend-row">
+              <span className="legend-line" style={{ borderTop: '2px dashed #ffd700' }}></span>
+              <div className="legend-text">
+                <span className="legend-label">Average Product (AP)</span>
+                <span className="legend-desc">Output per worker</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="legend-item-group">
+            <div className="legend-row">
+              <span className="legend-line" style={{ background: '#ff6b6b', height: '2px' }}></span>
+              <div className="legend-text">
+                <span className="legend-label">Marginal Product (MP)</span>
+                <span className="legend-desc">Change in output from last worker</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="legend-stages">
+            <h5>Stages</h5>
+            <div className="stage-mini"><span className="stage-dot s1"></span> Stage I: Increasing</div>
+            <div className="stage-mini"><span className="stage-dot s2"></span> Stage II: Diminishing</div>
+            <div className="stage-mini"><span className="stage-dot s3"></span> Stage III: Negative</div>
+          </div>
+        </div>
       </div>
 
-      <div className="chart-legend-side">
-        <h4 className="legend-title">Key</h4>
+      <div className="lesson-section-wrapper mt-8">
+        <div className="analysis-card animate-fade-in">
+          <div className="analysis-header">
+            <FaSearch /> Analysis of the Curves
+          </div>
 
-        <div className="legend-item-group">
-          <div className="legend-row">
-            <span className="legend-line" style={{ background: '#00ff88', height: '3px' }}></span>
-            <div className="legend-text">
-              <span className="legend-label">Total Product (TP)</span>
-              <span className="legend-desc">Total output produced</span>
+          <div className="analysis-point">
+            <FaChartLine className="analysis-icon text-green" />
+            <div>
+              <strong className="text-green">Total Product (TP) Curve:</strong>
+              <p>Starts from origin, increases at an increasing rate (convex shape), then increases at a diminishing rate (concave shape), reaches a maximum, and finally falls.</p>
             </div>
           </div>
-        </div>
 
-        <div className="legend-item-group">
-          <div className="legend-row">
-            <span className="legend-line" style={{ borderTop: '2px dashed #ffd700' }}></span>
-            <div className="legend-text">
-              <span className="legend-label">Average Product (AP)</span>
-              <span className="legend-desc">Output per worker</span>
+          <div className="analysis-point">
+            <FaChartLine className="analysis-icon text-red" />
+            <div>
+              <strong className="text-red">Marginal Product (MP) Curve:</strong>
+              <p>Inverted 'U' shape. It rises, reaches a maximum (before AP), and then falls. <strong>It cuts the X-axis (becomes zero) when TP is maximum.</strong></p>
             </div>
           </div>
-        </div>
 
-        <div className="legend-item-group">
-          <div className="legend-row">
-            <span className="legend-line" style={{ background: '#ff6b6b', height: '2px' }}></span>
-            <div className="legend-text">
-              <span className="legend-label">Marginal Product (MP)</span>
-              <span className="legend-desc">Change in output from last worker</span>
+          <div className="analysis-point">
+            <FaChartLine className="analysis-icon text-gold" />
+            <div>
+              <strong className="text-gold">Average Product (AP) Curve:</strong>
+              <p>Also inverted 'U' shape. It rises, reaches a maximum, and then falls. Importantly, <strong>MP intersects AP at its maximum point</strong>. Even when MP becomes negative, AP remains positive.</p>
             </div>
           </div>
-        </div>
 
-        <div className="legend-stages">
-          <h5>Stages</h5>
-          <div className="stage-mini"><span className="stage-dot s1"></span> Stage I: Increasing</div>
-          <div className="stage-mini"><span className="stage-dot s2"></span> Stage II: Diminishing</div>
-          <div className="stage-mini"><span className="stage-dot s3"></span> Stage III: Negative</div>
+          <div className="p-4 bg-white/5 rounded-lg border border-gold/20 mt-4 flex gap-4 items-start">
+            <FaProjectDiagram className="text-3xl text-gold mt-1 flex-shrink-0" />
+            <div>
+              <h5 className="text-gold font-bold mb-1">Key Relationship: MP vs AP</h5>
+              <p className="text-sm text-gray-300">
+                When MP &gt; AP, AP rises.<br />
+                When MP = AP, AP is at its maximum.<br />
+                When MP &lt; AP, AP falls.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

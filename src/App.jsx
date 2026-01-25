@@ -16,6 +16,7 @@ import Lesson4 from './pages/Lessons/Lesson4';
 import Lesson5 from './pages/Lessons/Lesson5';
 import Lesson6 from './pages/Lessons/Lesson6';
 import Lesson7 from './pages/Lessons/Lesson7';
+// import Lesson8 from './pages/Lessons/Lesson8/Lesson8'; // Direct import to bypass index.js error
 // Styles
 import './styles/variables.css';
 import './App.css';
@@ -43,7 +44,6 @@ function App() {
               <Route path="/lesson/micro11-5" element={<Lesson5 />} />
               <Route path="/lesson/micro11-6" element={<Lesson6 />} />
               <Route path="/lesson/micro11-7" element={<Lesson7 />} />
-
               {/* TODO: Add more lesson routes */}
               {/* <Route path="/quiz" element={<Quiz />} /> */}
               {/* <Route path="/progress" element={<Progress />} /> */}

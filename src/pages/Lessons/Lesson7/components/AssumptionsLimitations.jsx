@@ -1,45 +1,87 @@
 import React from 'react';
-import { FaClipboardCheck, FaTimesCircle } from 'react-icons/fa';
+import { FaBalanceScale, FaBan, FaMicrochip, FaClock, FaExclamationTriangle, FaCheckDouble } from 'react-icons/fa';
 import './component.css';
 
 const AssumptionsLimitations = () => {
     return (
-        <div className="assumptions-grid-modern">
-            {/* Assumptions */}
-            <div className="assumption-column">
-                <h4 className="column-title"><FaClipboardCheck /> Assumptions</h4>
-                <ul className="modern-list check-list">
-                    <li>
-                        <strong>One Variable Factor:</strong> Only labor changes; land & capital are fixed.
-                    </li>
-                    <li>
-                        <strong>Constant Technology:</strong> No new inventions improving efficiency.
-                    </li>
-                    <li>
-                        <strong>Homogeneous Units:</strong> Every worker is equally skilled and efficient.
-                    </li>
-                    <li>
-                        <strong>Short Run:</strong> Period is too short to change fixed factors.
-                    </li>
-                </ul>
+        <section className="lesson-section-wrapper">
+            <div className="section-header-lesson mb-8">
+                <h3 className="section-title-modern"><FaBalanceScale /> Assumptions & Limitations</h3>
+                <p className="section-subtitle-lesson">The boundaries within which the Law of Variable Proportions operates.</p>
             </div>
 
-            {/* Causes (Why it happens) */}
-            <div className="assumption-column causes-column">
-                <h4 className="column-title">💡 Why Diminishing Returns?</h4>
-                <ul className="modern-list dot-list">
-                    <li>
-                        <strong>Fixity of Factors:</strong> Land cannot stretch to accommodate more workers.
-                    </li>
-                    <li>
-                        <strong>Imperfect Substitutes:</strong> Labor cannot perfectly replace Capital.
-                    </li>
-                    <li>
-                        <strong>Poor Coordination:</strong> Too many cooks spoil the broth (Management issues).
-                    </li>
-                </ul>
+            <div className="assumptions-grid-modern">
+                {/* Assumption 1 */}
+                <div className="analysis-card animate-fade-in" style={{ animationDelay: '0.1s' }}>
+                    <div className="analysis-header text-gold">
+                        <FaMicrochip /> Constant Technology
+                    </div>
+                    <div className="p-2">
+                        <p className="text-gray-300 mb-4">
+                            We assume the <strong>state of technology remains unchanged</strong>. If technology improves, the same inputs could produce more output, invalidating the law.
+                        </p>
+                        <div className="example-box-small">
+                            <strong>Example:</strong> Replacing manual looms with power looms would instantly increase output, disrupting the schedule.
+                        </div>
+                    </div>
+                </div>
+
+                {/* Assumption 2 */}
+                <div className="analysis-card animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                    <div className="analysis-header text-gold">
+                        <FaCheckDouble /> Homogeneous Factors
+                    </div>
+                    <div className="p-2">
+                        <p className="text-gray-300 mb-4">
+                            All units of the variable factor (e.g., Labor) are assumed to be <strong>identical in efficiency and skill</strong>.
+                        </p>
+                        <div className="example-box-small">
+                            <strong>Example:</strong> If the 4th worker is an expert and the 1st was a novice, productivity might rise instead of falling.
+                        </div>
+                    </div>
+                </div>
+
+                {/* Assumption 3 */}
+                <div className="analysis-card animate-fade-in" style={{ animationDelay: '0.3s' }}>
+                    <div className="analysis-header text-gold">
+                        <FaClock /> Short Run Only
+                    </div>
+                    <div className="p-2">
+                        <p className="text-gray-300 mb-4">
+                            The law operates only in the <strong>Short Run</strong> where some factors (like Land/Capital) are fixed and only one is variable.
+                        </p>
+                        <div className="example-box-small">
+                            <strong>Example:</strong> We cannot suddenly buy a new factory building (Fixed Factor) to increase production overnight.
+                        </div>
+                    </div>
+                </div>
+
+                {/* Assumption 4 */}
+                <div className="analysis-card animate-fade-in" style={{ animationDelay: '0.4s' }}>
+                    <div className="analysis-header text-gold">
+                        <FaExclamationTriangle /> Variable Proportions
+                    </div>
+                    <div className="p-2">
+                        <p className="text-gray-300 mb-4">
+                            The ratio between fixed and variable factors <strong>must be alterable</strong>. If factors must be used in a fixed ratio (e.g., 1 Driver per 1 Truck), this law doesn't apply.
+                        </p>
+                        <div className="example-box-small">
+                            <strong>Example:</strong> 2 Drivers for 1 Truck doesn't necessarily double output; the ratio must limit the variable factor.
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+
+            <div className="critical-limitation-card">
+                <FaBan className="critical-icon" />
+                <div>
+                    <h4 className="critical-title">Critical Limitation</h4>
+                    <p className="critical-text">
+                        This law fails if the <strong>Fixed Factor is indivisible</strong> or if the factors are <strong>perfect substitutes</strong> for each other. It strictly relies on the imperfect substitutability between Labor and Capital.
+                    </p>
+                </div>
+            </div>
+        </section>
     );
 };
 

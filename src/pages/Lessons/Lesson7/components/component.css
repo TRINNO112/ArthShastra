@@ -8,6 +8,14 @@
 }
 
 /* Sections */
+.quiz-section {
+    background-color: #0f0f1a; /* Enforce dark background */
+    color: #e0e0e0;
+    padding: 2rem;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+}
+
 .lesson-section-wrapper {
     margin-bottom: 4rem;
     background: linear-gradient(145deg, rgba(20, 20, 35, 0.6), rgba(20, 20, 35, 0.3));
@@ -202,7 +210,7 @@
     align-items: center;
     text-align: center;
     min-height: 380px;
-    margin-top: 30px; /* INCREASED: Added more margin top to fully clear the badge */
+    margin-top: 30px; 
 }
 
 /* FIX: Ensure icon wrapper doesn't get squished */
@@ -251,11 +259,11 @@
 /* Badge fix for Stage 2 */
 .stage-badge-top {
     position: absolute;
-    top: -18px; /* Moved up slightly */
+    top: -18px; 
     background: #ffd700;
     color: #000;
     font-weight: 800;
-    padding: 8px 24px; /* Even more padding */
+    padding: 8px 24px; 
     border-radius: 20px;
     font-size: 0.85rem;
     text-transform: uppercase;
@@ -437,16 +445,16 @@
     display: inline-block;
 }
 
-
+/* Bullet Fix: Remove default list-style */
 .modern-list {
-    list-style: none; /* Remove default bullets */
+    list-style: none !important; /* Force remove default bullets */
     padding: 0;
     margin: 0;
 }
 
 .modern-list li {
     margin-bottom: 1rem;
-    padding-left: 1.5rem; /* Make space for custom icon */
+    padding-left: 1.5rem; /* Space for custom icon */
     position: relative;
     line-height: 1.6;
 }
@@ -454,7 +462,7 @@
 .check-list li::before {
     content: '✓';
     position: absolute;
-    left: -10px;
+    left: 0; /* Adjusted for new padding */
     color: #00ff88;
     font-weight: 800;
 }
@@ -462,66 +470,360 @@
 .dot-list li::before {
     content: '•';
     position: absolute;
-    left: -10px;
+    left: 0; /* Adjusted for new padding */
     color: #ffd700;
     font-weight: 800;
 }
 
-.practice-section-modern {
-    background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(20,20,30,0.9));
+/* --- Practice Problems Layout --- */
+.expanded-layout {
+    display: flex;
+    gap: 2rem;
+    min-height: 500px;
+}
+
+.practice-sidebar {
+    width: 200px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    padding-right: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    margin-bottom: 1.5rem;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sidebar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.problem-sidebar-item {
+    background: rgba(255,255,255,0.05);
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.problem-sidebar-item:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.problem-sidebar-item.active {
+    background: rgba(255,215,0,0.15);
+    border-color: #ffd700;
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.practice-content-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.problem-card-large {
+    background: rgba(0,0,0,0.3);
     border-radius: 20px;
     padding: 2.5rem;
-    border: 1px solid rgba(255,215,0,0.3);
+    flex: 1;
 }
 
-.problem-card {
-    background: rgba(0,0,0,0.3);
-    padding: 2rem;
-    border-radius: 16px;
-    margin-top: 1.5rem;
+.problem-header-large {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
-.btn-reveal {
-    margin-top: 1.5rem;
-    background: transparent;
-    border: 2px solid #ffd700;
-    color: #ffd700;
-    padding: 0.6rem 1.5rem;
-    border-radius: 30px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.btn-reveal:hover {
+.badge-problem.large {
     background: #ffd700;
     color: #000;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
 }
 
-.solution-panel {
-    margin-top: 1.5rem;
+.problem-card-large h3 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin: 0;
+}
+
+.problem-text-large {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #ddd;
+    margin-bottom: 1rem;
+}
+
+.problem-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 2rem;
+}
+
+.btn-reveal.large {
+    font-size: 1rem;
+    padding: 0.8rem 2rem;
+}
+
+/* NEW: Enhanced Button Style */
+.btn-reveal-enhanced {
+    background: linear-gradient(135deg, #ffd700, #ffaa00);
+    color: #000;
+    font-weight: 800;
+    padding: 12px 30px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-reveal-enhanced:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+}
+
+.hint-text {
+    font-style: italic;
+    color: #bbb;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.solution-panel-large {
+    background: rgba(0,255,136,0.05);
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid rgba(0,255,136,0.2);
+}
+
+.solution-title {
+    color: #00ff88;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.solution-steps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.step-box {
+    background: rgba(0,0,0,0.2);
     padding: 1rem;
-    background: rgba(0,255,136,0.1);
     border-radius: 12px;
-    border-left: 4px solid #00ff88;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-    .chart-wrapper-flex {
+.step-label {
+    display: block;
+    color: #888;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.final-answer-box {
+    text-align: center;
+    background: #00ff88;
+    color: #004d26;
+    padding: 1rem;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.navigation-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+.btn-nav-problem {
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-nav-problem:hover:not(:disabled) {
+    background: rgba(255,255,255,0.2);
+}
+
+.btn-nav-problem:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* NEW: Analysis Card Style */
+.analysis-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.analysis-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    color: #ffd700;
+    font-size: 1.4rem;
+    font-weight: 800;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 1rem;
+}
+
+.analysis-point {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    color: #ccc;
+    font-size: 0.95rem;
+}
+
+.analysis-icon {
+    font-size: 1.2rem;
+    margin-top: 4px; /* Align with text */
+}
+
+/* NEW: Interactive Table Cells */
+.mini-table {
+    width: 100%;
+    margin-bottom: 2rem;
+    border-collapse: collapse;
+    background: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.mini-table th, .mini-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.mini-table th {
+    background: rgba(255,255,255,0.08);
+    color: #ffd700;
+}
+.cell-missing {
+    color: #ff6b6b;
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 1.1rem;
+}
+.cell-highlight {
+    animation: glow-pulse 1.5s infinite alternate;
+    background: rgba(0, 255, 136, 0.1);
+    border: 2px solid #00ff88;
+}
+
+@keyframes glow-pulse {
+    from { box-shadow: inset 0 0 5px rgba(0,255,136,0.2); }
+    to { box-shadow: inset 0 0 20px rgba(0,255,136,0.6); }
+}
+
+/* Example Box Small */
+.example-box-small {
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 2px solid #ffd700;
+    padding: 0.8rem;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.85rem;
+    color: #aaa;
+    margin-top: 0.5rem;
+}
+
+/* NEW: Critical Limitation Card */
+.critical-limitation-card {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(139, 0, 0, 0.15); /* Dark Red bg */
+    border: 1px solid rgba(255, 99, 71, 0.4); /* Light Red border */
+    border-radius: 16px;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.critical-icon {
+    font-size: 2.5rem;
+    color: #ff6b6b;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+
+.critical-title {
+    color: #ff6b6b;
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.critical-text {
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+
+/* Responsive Practice */
+@media (max-width: 768px) {
+    .expanded-layout {
         flex-direction: column;
     }
-    .chart-container-d3 {
+    .practice-sidebar {
         width: 100%;
-        height: 350px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 1rem;
+        padding-right: 0;
     }
-    .chart-legend-side {
-        width: 100%;
+    .sidebar-list {
+        flex-direction: row;
+        overflow-x: auto;
     }
-    .simulator-grid {
+    .problem-sidebar-item {
+        min-width: 50px;
+    }
+    .solution-steps-grid {
         grid-template-columns: 1fr;
     }
-    .assumptions-grid-modern {
-        grid-template-columns: 1fr;
+    .critical-limitation-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 }

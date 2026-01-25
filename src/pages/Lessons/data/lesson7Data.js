@@ -55,6 +55,41 @@ export const lesson7Data = {
       question: "In stage I, both AP and MP are:",
       options: ["Decreasing", "Increasing", "Constant", "Negative"],
       correct: 1
+    },
+    {
+      question: "Point of Inflexion is a point where:",
+      options: ["TP stops increasing", "MP is maximum", "TP changes slope from convex to concave", "AP is maximum"],
+      correct: 2
+    },
+    {
+      question: "Which of the following is a cause of Increasing Returns to a Factor?",
+      options: ["Fixity of factors", "Poor coordination", "Fuller utilization of fixed factor", "Managerial inefficiency"],
+      correct: 2
+    },
+    {
+      question: "When MP is zero, Total Product (TP) is:",
+      options: ["Zero", "Minimum", "Maximum and constant", "Falling"],
+      correct: 2
+    },
+    {
+      question: "The period in which all factors of production are variable is called:",
+      options: ["Short Run", "Market Period", "Long Run", "Very Short Run"],
+      correct: 2
+    },
+    {
+      question: "If Total Product (TP) is increasing at a decreasing rate, then Marginal Product (MP) must be:",
+      options: ["Rising", "Falling but positive", "Negative", "Zero"],
+      correct: 1
+    },
+    {
+      question: "Which curve is known as the 'Envelope Curve' in the long run? (Bonus Concept)",
+      options: ["LAC Curve", "TFC Curve", "AVC Curve", "SMC Curve"],
+      correct: 0
+    },
+    {
+      question: "What happens to AP when MP > AP?",
+      options: ["AP falls", "AP remains constant", "AP rises", "AP becomes negative"],
+      correct: 2
     }
   ],
   tfQuestions: [
@@ -65,6 +100,22 @@ export const lesson7Data = {
     {
       question: "Diminishing returns occur only after the point where MP is maximum.",
       correct: true
+    },
+    {
+      question: "Marginal Product can never be negative in the short run.",
+      correct: false
+    },
+    {
+      question: "The Law of Variable Proportions applies to agriculture only.",
+      correct: false
+    },
+    {
+      question: "When TP is maximum, the slope of the TP curve is zero.",
+      correct: true
+    },
+    {
+      question: "Ideally, a firm should operate in Stage I where returns are increasing.",
+      correct: false
     }
   ]
 };
