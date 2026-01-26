@@ -209,36 +209,47 @@ const BreakEvenShutdown = () => {
                     <svg ref={svgRef} className="chart-container-d3" style={{ height: '100%' }}></svg>
                 </div>
 
-                <div className="explanation-content" style={{ marginTop: '30px', color: '#e0e0e0' }}>
-                    <h3 className="text-xl font-bold mb-4 text-gold">Detailed Analysis</h3>
+                <div className="explanation-content" style={{ marginTop: '30px', color: '#e0e0e0', background: 'rgba(255,255,255,0.03)', padding: '25px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.08)' }}>
+                    <h3 className="text-xl font-bold mb-4 text-gold" style={{ color: '#ffd700', fontSize: '1.4rem', borderBottom: '1px solid rgba(255,215,0,0.3)', paddingBottom: '10px', marginBottom: '20px' }}>Detailed Analysis</h3>
 
-                    <div className="concept-block mb-6">
-                        <h4 className="text-lg font-semibold text-[#ffd700] mb-2">1. Break-Even Point (Point E)</h4>
-                        <p className="mb-2">
+                    <div className="concept-block mb-6" style={{ marginBottom: '25px' }}>
+                        <h4 style={{ color: '#ffd700', fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ background: 'rgba(255,215,0,0.2)', padding: '2px 8px', borderRadius: '4px', fontSize: '0.9rem' }}>1</span>
+                            Break-Even Point (Point E)
+                        </h4>
+                        <p style={{ lineHeight: '1.7', color: '#ccc', marginBottom: '10px' }}>
                             Occurs where <strong>Price (AR) = Minimum AC</strong> (and MC intersects AC).
                         </p>
-                        <ul className="list-disc pl-5 space-y-1 text-gray-300">
-                            <li>At this price (P₁), Total Revenue (TR) exactly equals Total Cost (TC).</li>
-                            <li> The firm earns <strong>Normal Profit</strong> (Zero Economic Profit).</li>
-                            <li>If Price &gt; Min AC, the firm earns <span className="text-green-400">Super-normal Profit</span>.</li>
-                            <li>If Price &lt; Min AC, the firm incurs a <span className="text-red-400">Loss</span>.</li>
+                        <ul style={{ listStyle: 'none', paddingLeft: '0' }}>
+                            <li style={{ marginBottom: '8px', paddingLeft: '15px', borderLeft: '2px solid #ffd700' }}>At this price (P₁), Total Revenue (TR) exactly equals Total Cost (TC).</li>
+                            <li style={{ marginBottom: '8px', paddingLeft: '15px', borderLeft: '2px solid #ffd700' }}>The firm earns <strong style={{ color: '#fff' }}>Normal Profit</strong> (Zero Economic Profit).</li>
+                            <li style={{ marginBottom: '8px', paddingLeft: '15px', borderLeft: '2px solid #4ade80' }}>If Price &gt; Min AC, the firm earns <span style={{ color: '#4ade80' }}>Super-normal Profit</span>.</li>
+                            <li style={{ paddingLeft: '15px', borderLeft: '2px solid #f87171' }}>If Price &lt; Min AC, the firm incurs a <span style={{ color: '#f87171' }}>Loss</span>.</li>
                         </ul>
                     </div>
 
                     <div className="concept-block">
-                        <h4 className="text-lg font-semibold text-[#00bfff] mb-2">2. Shutdown Point (Point S)</h4>
-                        <p className="mb-2">
+                        <h4 style={{ color: '#00bfff', fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ background: 'rgba(0,191,255,0.2)', padding: '2px 8px', borderRadius: '4px', fontSize: '0.9rem' }}>2</span>
+                            Shutdown Point (Point S)
+                        </h4>
+                        <p style={{ lineHeight: '1.7', color: '#ccc', marginBottom: '10px' }}>
                             Occurs where <strong>Price (AR) = Minimum AVC</strong> (and MC intersects AVC).
                         </p>
-                        <ul className="list-disc pl-5 space-y-1 text-gray-300">
-                            <li>At this price (P₂), the firm covers <em>only</em> its Variable Costs. It loses its entire Fixed Cost.</li>
-                            <li><strong>Decision Rule:</strong>
-                                <ul className="list-circle pl-5 mt-1">
-                                    <li>If <strong>P &ge; Min AVC</strong>: The firm continues to produce in the short run to minimize losses (Loss &le; TFC).</li>
-                                    <li>If <strong>P &lt; Min AVC</strong>: The firm shuts down immediately because producing would increase losses beyond TFC.</li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <div style={{ background: 'rgba(0,191,255,0.05)', padding: '15px', borderRadius: '8px' }}>
+                            <p style={{ marginBottom: '10px', color: '#ccc' }}>At this price (P₂), the firm covers <em>only</em> its Variable Costs. It loses its entire Fixed Cost.</p>
+                            <strong style={{ color: '#fff', display: 'block', marginBottom: '5px' }}>Decision Rule:</strong>
+                            <ul style={{ listStyle: 'none', paddingLeft: '0' }}>
+                                <li style={{ marginBottom: '8px', display: 'flex', gap: '10px' }}>
+                                    <span style={{ color: '#4ade80' }}>✔</span>
+                                    <span>If <strong>P &ge; Min AVC</strong>: The firm continues to produce in the short run to minimize losses (Loss &le; TFC).</span>
+                                </li>
+                                <li style={{ display: 'flex', gap: '10px' }}>
+                                    <span style={{ color: '#f87171' }}>✖</span>
+                                    <span>If <strong>P &lt; Min AVC</strong>: The firm shuts down immediately because producing would increase losses beyond TFC.</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
