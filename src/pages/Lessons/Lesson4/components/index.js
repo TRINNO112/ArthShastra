@@ -13,4 +13,4 @@ export { default as BudgetLine } from './BudgetLine';             // Section 5: 
 export { default as ConsumerEquilibriumIC } from './ConsumerEquilibriumIC'; // Section 6: Equilibrium Conditions
 
 // Quiz Component
-export { default as Quiz } from '../../Lesson3/components/Quiz';
+export { default as Quiz } from './Quiz';

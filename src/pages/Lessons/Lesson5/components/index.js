@@ -7,4 +7,4 @@ export { default as MovementVsShift } from './MovementVsShift';
 export { default as FactorsAffectingElasticity } from './FactorsAffectingElasticity';
 
 // Re-using quiz component
-export { default as Quiz } from '../../Lesson3/components/Quiz';
+export { default as Quiz } from './Quiz';

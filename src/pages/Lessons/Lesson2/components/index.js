@@ -10,4 +10,4 @@ export { default as PPCScenario } from './PPCScenario';
 export { default as AttainableUnattainable } from './AttainableUnattainable';
 export { default as TabularRepresentation } from './TabularRepresentation';
 export { default as SlopeMOC } from './SlopeMOC';
-export { default as Quiz } from '../../Lesson1/components/Quiz'; // Reusing Quiz component
+export { default as Quiz } from './Quiz';
