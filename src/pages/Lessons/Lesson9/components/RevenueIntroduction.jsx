@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaMoneyBillWave, FaChartPie, FaChartLine, FaInfoCircle } from 'react-icons/fa';
+import { FaMoneyBillWave, FaChartPie, FaChartLine, FaWallet, FaArrowRight, FaLightbulb } from 'react-icons/fa';
 import '../../css/lessons.css';
 
 const RevenueIntroduction = () => {
@@ -56,48 +56,89 @@ const RevenueIntroduction = () => {
 
             </div>
 
-            {/* Interactive Distinction */}
-            <div className="content-card mt-5">
-                <h4 className="card-title"><FaInfoCircle className="text-blue-400" /> Revenue vs. Profit</h4>
-                <p className="mb-4 text-gray-300">Click the buttons to see the difference:</p>
+            {/* Redesigned Dashboard Component */}
+            <div className="rev-profit-dashboard">
+                <div className={`dashboard-glow ${activeTab === 'profit' ? 'profit-glow' : ''}`}></div>
+                <div className="dashboard-inner">
 
-                <div className="premium-toggle-group">
-                    <button
-                        className={`premium-toggle-btn ${activeTab === 'revenue' ? 'active' : ''}`}
-                        onClick={() => setActiveTab('revenue')}
-                    >
-                        Show Revenue
-                    </button>
-                    <button
-                        className={`premium-toggle-btn ${activeTab === 'profit' ? 'active' : ''}`}
-                        onClick={() => setActiveTab('profit')}
-                    >
-                        Show Profit
-                    </button>
-                </div>
+                    {/* Header with Toggle */}
+                    <div className="dashboard-header-row">
+                        <div className="dashboard-title">
+                            <FaWallet className={activeTab === 'revenue' ? 'text-gold' : 'text-green-400'} />
+                            <span>Financial Snapshot</span>
+                        </div>
+                        <div className="premium-toggle-group" style={{ margin: 0 }}>
+                            <button
+                                className={`premium-toggle-btn ${activeTab === 'revenue' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('revenue')}
+                            >
+                                Revenue View
+                            </button>
+                            <button
+                                className={`premium-toggle-btn ${activeTab === 'profit' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('profit')}
+                            >
+                                Profit View
+                            </button>
+                        </div>
+                    </div>
 
-                <div className="comparison-container" style={{ minHeight: '300px', display: 'flex', justifyContent: 'center', width: '100%' }}>
+                    {/* Dynamic Content */}
                     {activeTab === 'revenue' ? (
-                        <div className="animate-fade-in w-full flex flex-col items-center">
-                            <h5 className="comparison-value text-gradient-gold">₹ 10,000</h5>
-                            <div className="comparison-label">Total Sales (100 units @ ₹100)</div>
-                            <p className="comparison-quote" style={{ borderLeftColor: '#00ff88', color: '#00ff88' }}>"This is the Top Line"</p>
-                            <p className="mt-6 text-sm text-gray-300 leading-relaxed max-w-lg mx-auto">
-                                Revenue is the raw income from sales <strong>before</strong> any expenses are deducted.
-                                It shows the pure market demand for the product.
-                            </p>
+                        <div className="animate-fade-in">
+                            <div className="metric-display-container">
+                                <div className="metric-label">Total Sales (Top Line)</div>
+                                <div className="metric-value-giant metric-gold">₹ 10,000</div>
+                                <div className="metric-subtext">100 Units sold @ ₹100 each</div>
+                            </div>
+
+                            <div className="deep-dive-box" style={{ borderColor: '#ffd700' }}>
+                                <div className="deep-dive-title">
+                                    <FaLightbulb className="text-gold" /> Why "Top Line"?
+                                </div>
+                                <p className="deep-dive-text">
+                                    Revenue sits at the very top of an Income Statement. It represents the <strong>Gross Income</strong> before any expenses (Rent, Wages, Raw Material) are paid.
+                                    High revenue means high demand, but not necessarily high wealth.
+                                </p>
+                            </div>
                         </div>
                     ) : (
-                        <div className="animate-fade-in w-full flex flex-col items-center">
-                            <h5 className="comparison-value text-gradient-green">₹ 2,000</h5>
-                            <div className="comparison-label">Total Sales (₹10,000) - Total Cost (₹8,000)</div>
-                            <p className="comparison-quote" style={{ borderLeftColor: '#ffd700', color: '#ffd700' }}>"This is the Bottom Line"</p>
-                            <div className="mt-6 text-sm text-gray-300 leading-relaxed max-w-lg mx-auto">
-                                <p className="mb-2 text-lg font-bold text-white">Profit = TR - TC</p>
-                                <p>It represents the actual financial gain of the firm after paying for all inputs (Land, Labor, Capital).</p>
+                        <div className="animate-fade-in">
+                            <div className="metric-display-container">
+                                <div className="metric-label">Net Gain (Bottom Line)</div>
+                                <div className="metric-value-giant metric-green">₹ 2,000</div>
+
+                                {/* Waterfall Visual */}
+                                <div className="waterfall-container">
+                                    <div className="waterfall-step">
+                                        <div className="waterfall-box wf-revenue">₹10,000</div>
+                                        <small>Revenue</small>
+                                    </div>
+                                    <div className="wf-operator">-</div>
+                                    <div className="waterfall-step">
+                                        <div className="waterfall-box wf-cost">₹8,000</div>
+                                        <small>Costs</small>
+                                    </div>
+                                    <div className="wf-operator">=</div>
+                                    <div className="waterfall-step">
+                                        <div className="waterfall-box wf-profit">₹2,000</div>
+                                        <small>Profit</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="deep-dive-box" style={{ borderColor: '#00ff88' }}>
+                                <div className="deep-dive-title">
+                                    <FaLightbulb className="text-green-400" /> Why "Bottom Line"?
+                                </div>
+                                <p className="deep-dive-text">
+                                    Profit is what remains after all obligations are met. It is the <strong>Net Income</strong>.
+                                    A firm maximizes PROFIT, not just Revenue. If costs are higher than revenue, the firm makes a Loss.
+                                </p>
                             </div>
                         </div>
                     )}
+
                 </div>
             </div>
 
