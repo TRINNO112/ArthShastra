@@ -5,7 +5,7 @@ import { lesson8Data } from '../data/lesson8Data';
 import { logLessonProgress } from '../../../services/firebase';
 import '../css/lessons.css';
 // Components (add as created)
-import { CostSchedule, CostCurvesChart, FixedVariableCosts, ShortLongRun, RealWorldExamples, PracticeProblems, Quiz, CostRelationships } from './components';
+import { CostSchedule, CostCurvesChart, FixedVariableCosts, ShortLongRun, RealWorldExamples, PracticeProblems, Quiz, CostRelationships, TotalCostCurves } from './components';
 
 const sections = lesson8Data.sections;
 
@@ -111,7 +111,14 @@ function Lesson8() {
       case 'schedule':
         return <CostSchedule data={costData} />;
       case 'curves':
-        return <CostCurvesChart data={costData} />;
+        return (
+          <>
+            <CostCurvesChart data={costData} />
+            <div style={{ marginTop: '40px' }}>
+              <TotalCostCurves />
+            </div>
+          </>
+        );
       case 'fixed-variable':
         return <FixedVariableCosts />;
       case 'short-long':

@@ -20,63 +20,172 @@ const CostCurvesChart = ({ data }) => {
   }, []);
 
   useEffect(() => {
-    if (!dimensions.width || !data || data.length === 0) return;
+    // --- FIXED SCHEDULE DATA (Textbook Example) ---
+    // Q=0 to 10. TFC=10.
+    // We construct a schedule where MC cuts AC at min.
+    // Q: 0, 1,  2,  3,  4,  5,  6,  7,  8,  9, 10
+    // TC: 10,20, 28, 34, 38, 42, 48, 56, 68, 84, 105 (Adjusted for smooth curves)
+
+    const fixedData = [
+      { output: 0, tc: 10, tvc: 0, ac: '-', avc: '-', mc: '-' },
+      { output: 1, tc: 20, tvc: 10, ac: 20, avc: 10, mc: 10 },
+      { output: 2, tc: 28, tvc: 18, ac: 14, avc: 9, mc: 8 },
+      { output: 3, tc: 34, tvc: 24, ac: 11.33, avc: 8, mc: 6 },
+      { output: 4, tc: 38, tvc: 28, ac: 9.5, avc: 7, mc: 4 },
+      { output: 5, tc: 42, tvc: 32, ac: 8.4, avc: 6.4, mc: 4 },
+      { output: 6, tc: 48, tvc: 38, ac: 8, avc: 6.33, mc: 6 }, // Min AC around here
+      { output: 7, tc: 56, tvc: 46, ac: 8, avc: 6.57, mc: 8 },
+      { output: 8, tc: 66, tvc: 56, ac: 8.25, avc: 7, mc: 10 },
+      { output: 9, tc: 78, tvc: 68, ac: 8.66, avc: 7.55, mc: 12 },
+      { output: 10, tc: 92, tvc: 82, ac: 9.2, avc: 8.2, mc: 14 }
+    ];
+
+    const chartData = fixedData; // Use fixed data instead of props
 
     const svg = d3.select(svgRef.current);
     svg.selectAll('*').remove();
 
     const { width, height } = dimensions;
-    const margin = { top: 40, right: 30, bottom: 60, left: 70 };
+    // Increased margins to "compress" the graph and ensure arrows/labels are visible
+    const margin = { top: 40, right: 80, bottom: 80, left: 70 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
     svg.attr('width', width).attr('height', height);
 
+    // Define Arrow Marker
+    svg.append('defs').append('marker')
+      .attr('id', 'arrow')
+      .attr('viewBox', '0 0 10 10')
+      .attr('refX', 5)
+      .attr('refY', 5)
+      .attr('markerWidth', 6)
+      .attr('markerHeight', 6)
+      .attr('orient', 'auto-start-reverse')
+      .append('path')
+      .attr('d', 'M 0 0 L 10 5 L 0 10 z')
+      .attr('fill', '#999');
+
     const g = svg.append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
-    // Scales
+    // --- Scales ---
     const xScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.output)])
+      .domain([0, 10])
       .range([0, innerWidth]);
 
     const yScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d => Math.max(
-        d.ac !== '-' ? Number(d.ac) : 0,
-        d.avc !== '-' ? Number(d.avc) : 0,
-        Number(d.mc) || 0
-      )) * 1.1])
+      .domain([0, 100]) // Fixed domain as requested (max TC is 92, so 100 is safe)
       .range([innerHeight, 0]);
 
-    // Gradients (Removed TC gradient)
+    // --- Axes ---
+    // X Axis
+    const xAxis = d3.axisBottom(xScale)
+      .ticks(10)
+      .tickFormat(d => `Q${d}`);
 
-    // Grid ... (Keep as is)
-    // ...
+    // Custom X Arrow (visible length extended)
+    g.append('line')
+      .attr('x1', 0)
+      .attr('y1', innerHeight)
+      .attr('x2', innerWidth + 20) // Extend further into right margin
+      .attr('y2', innerHeight)
+      .attr('stroke', '#888')
+      .attr('stroke-width', 1.5)
+      .attr('marker-end', 'url(#arrow)');
 
-    // Line generator
+    // Custom Y Arrow
+    g.append('line')
+      .attr('x1', 0)
+      .attr('y1', innerHeight)
+      .attr('x2', 0)
+      .attr('y2', -20) // Extend further up
+      .attr('stroke', '#888')
+      .attr('stroke-width', 1.5)
+      .attr('marker-end', 'url(#arrow)');
+
+    g.append('g')
+      .attr('transform', `translate(0,${innerHeight})`)
+      .call(xAxis)
+      .attr('color', '#888')
+      .style('font-size', '12px')
+      .select(".domain").remove();
+
+    // Y Axis (Every 10 units)
+    const yAxis = d3.axisLeft(yScale)
+      .tickValues(d3.range(0, 101, 10)) // 0, 10, 20... 100
+      .tickFormat(d => `₹${d}`);
+
+    g.append('g')
+      .call(yAxis)
+      .attr('color', '#888')
+      .style('font-size', '12px')
+      .select(".domain").remove();
+
+    // Axis Labels
+    g.append('text')
+      .attr('x', innerWidth / 2)
+      .attr('y', innerHeight + 40)
+      .attr('fill', '#ccc')
+      .style('font-size', '14px')
+      .style('text-anchor', 'middle')
+      .text('Output (Units)');
+
+    g.append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('x', -innerHeight / 2)
+      .attr('y', -45)
+      .attr('fill', '#ccc')
+      .style('font-size', '14px')
+      .style('text-anchor', 'middle')
+      .text('Cost (₹)');
+
+    // --- Gridlines ---
+    const makeXGrid = () => d3.axisBottom(xScale).ticks(10);
+    const makeYGrid = () => d3.axisLeft(yScale).tickValues(d3.range(0, 101, 10));
+
+    g.append('g')
+      .attr('class', 'grid')
+      .attr('transform', `translate(0,${innerHeight})`)
+      .call(makeXGrid().tickSize(-innerHeight).tickFormat(''))
+      .attr('stroke-opacity', 0.1);
+
+    g.append('g')
+      .attr('class', 'grid')
+      .call(makeYGrid().tickSize(-innerWidth).tickFormat(''))
+      .attr('stroke-opacity', 0.1);
+
+    // --- Line Generator ---
     const lineGenerator = (key) => d3.line()
-      .defined(d => d[key] !== '-' && d[key] !== null && !isNaN(d[key]))
+      .defined(d => d[key] !== '-' && d[key] !== null)
       .x(d => xScale(d.output))
       .y(d => yScale(d[key]))
       .curve(d3.curveMonotoneX);
 
-    // Paths (Removed TC)
+    // --- Paths ---
     const paths = [
+      { key: 'tc', color: '#00ff88', width: 3, label: 'TC' },
       { key: 'mc', color: '#ff6b6b', width: 3, label: 'MC' },
       { key: 'ac', color: '#ffd700', width: 2, dash: '5,5', label: 'AC' },
       { key: 'avc', color: '#00bfff', width: 2, dash: '3,3', label: 'AVC' }
     ];
 
     paths.forEach(p => {
+      // For MC, we typically filtering out Q=0 anyway since it is '-', 
+      // but explicitly ensuring it starts at Q=1 purely for visual clarity if needed.
+      // Our data has '-' for MC at Q=0, so d3 defined() handles it.
+
       const path = g.append('path')
-        .datum(data)
+        .datum(chartData)
         .attr('fill', 'none')
         .attr('stroke', p.color)
         .attr('stroke-width', p.width)
         .attr('d', lineGenerator(p.key));
+      // Removed marker-end from here
 
       if (p.dash) path.attr('stroke-dasharray', p.dash);
 
+      // Animation
       const length = path.node().getTotalLength();
       path.attr("stroke-dasharray", p.dash ? `${p.dash} ${length}` : `${length} ${length}`)
         .attr("stroke-dashoffset", length)
@@ -86,28 +195,24 @@ const CostCurvesChart = ({ data }) => {
         .attr("stroke-dashoffset", 0);
     });
 
-    // Area under TC (REMOVED to prevent scale skewing)
-
-
-    // Tooltip
+    // --- Tooltip ---
     const tooltip = d3.select(containerRef.current)
       .append("div")
       .style("position", "absolute")
       .style("visibility", "hidden")
-      .style("background", "rgba(0,0,0,0.85)")
+      .style("background", "rgba(0,0,0,0.9)")
       .style("color", "#fff")
-      .style("padding", "12px")
-      .style("border-radius", "8px")
+      .style("padding", "10px")
+      .style("border-radius", "6px")
       .style("font-size", "12px")
       .style("pointer-events", "none")
       .style("z-index", "1000")
-      .style("box-shadow", "0 4px 12px rgba(0,0,0,0.5)");
+      .style("border", "1px solid rgba(255,255,255,0.2)");
 
-    // Dots
-    // Dots & Tooltip Interaction
+    // --- Interaction Points ---
     paths.forEach(p => {
       g.selectAll(`.dot-${p.key}`)
-        .data(data)
+        .data(chartData.filter(d => d[p.key] !== '-'))
         .enter()
         .append('circle')
         .attr('cx', d => xScale(d.output))
@@ -118,7 +223,7 @@ const CostCurvesChart = ({ data }) => {
         .attr('stroke-width', 2)
         .on("mouseover", (event, d) => {
           tooltip.style("visibility", "visible")
-            .html(`<strong>Q: ${d.output}</strong><br/>${p.label}: ₹${d[p.key]}`);
+            .html(`<strong>Output: ${d.output}</strong><br/>${p.label}: ₹${d[p.key]}`);
           d3.select(event.currentTarget).attr('r', 6).attr('fill', p.color);
         })
         .on("mousemove", (event) => {
@@ -131,52 +236,7 @@ const CostCurvesChart = ({ data }) => {
           d3.select(event.currentTarget).attr('r', 4).attr('fill', '#1a1a2e');
         });
     });
-
-    // --- Highlight Minimum Points (Intersections) ---
-    const validData = data.filter(d => d.ac !== '-' && d.avc !== '-' && !isNaN(d.ac) && !isNaN(d.avc));
-    if (validData.length > 0) {
-      // Find min AC/AVC
-      const minACPoint = validData.reduce((prev, curr) => (parseFloat(curr.ac) < parseFloat(prev.ac) ? curr : prev));
-      const minAVCPoint = validData.reduce((prev, curr) => (parseFloat(curr.avc) < parseFloat(prev.avc) ? curr : prev));
-
-      const keyPoints = [
-        { pt: minACPoint, label: 'Min AC', color: '#ffd700', yVal: minACPoint.ac },
-        { pt: minAVCPoint, label: 'Shut-down', color: '#00bfff', yVal: minAVCPoint.avc }
-      ];
-
-      keyPoints.forEach(kp => {
-        // Dotted vertical line from axis up to curve
-        g.append('line')
-          .attr('x1', xScale(kp.pt.output))
-          .attr('x2', xScale(kp.pt.output))
-          .attr('y1', innerHeight)
-          .attr('y2', yScale(kp.yVal))
-          .attr('stroke', kp.color)
-          .attr('stroke-width', 1.5)
-          .attr('stroke-dasharray', '4,4')
-          .attr('opacity', 0.6);
-
-        // Highlight Circle
-        g.append('circle')
-          .attr('cx', xScale(kp.pt.output))
-          .attr('cy', yScale(kp.yVal))
-          .attr('r', 6)
-          .attr('fill', 'none')
-          .attr('stroke', kp.color)
-          .attr('stroke-width', 2);
-
-        // Label
-        g.append('text')
-          .attr('x', xScale(kp.pt.output))
-          .attr('y', yScale(kp.yVal) - 10)
-          .attr('fill', kp.color)
-          .attr('text-anchor', 'middle')
-          .style('font-size', '11px')
-          .style('font-weight', 'bold')
-          .text(kp.label);
-      });
-    }
-  }, [dimensions, data]);
+  }, [dimensions]);
 
   return (
     <section className="lesson-section">
