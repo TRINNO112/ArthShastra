@@ -61,24 +61,24 @@ const RevenueIntroduction = () => {
                 <h4 className="card-title"><FaInfoCircle className="text-blue-400" /> Revenue vs. Profit</h4>
                 <p className="mb-4 text-gray-300">Click the buttons to see the difference:</p>
 
-                <div className="flex gap-4 mb-4">
+                <div className="premium-toggle-group">
                     <button
-                        className={`option-btn ${activeTab === 'revenue' ? 'selected' : ''}`}
+                        className={`premium-toggle-btn ${activeTab === 'revenue' ? 'active' : ''}`}
                         onClick={() => setActiveTab('revenue')}
                     >
                         Show Revenue
                     </button>
                     <button
-                        className={`option-btn ${activeTab === 'profit' ? 'selected' : ''}`}
+                        className={`premium-toggle-btn ${activeTab === 'profit' ? 'active' : ''}`}
                         onClick={() => setActiveTab('profit')}
                     >
                         Show Profit
                     </button>
                 </div>
 
-                <div className="comparison-container">
+                <div className="comparison-container" style={{ minHeight: '300px', display: 'flex', justifyContent: 'center', width: '100%' }}>
                     {activeTab === 'revenue' ? (
-                        <div className="animate-fade-in w-full">
+                        <div className="animate-fade-in w-full flex flex-col items-center">
                             <h5 className="comparison-value text-gradient-gold">₹ 10,000</h5>
                             <div className="comparison-label">Total Sales (100 units @ ₹100)</div>
                             <p className="comparison-quote" style={{ borderLeftColor: '#00ff88', color: '#00ff88' }}>"This is the Top Line"</p>
@@ -88,7 +88,7 @@ const RevenueIntroduction = () => {
                             </p>
                         </div>
                     ) : (
-                        <div className="animate-fade-in w-full">
+                        <div className="animate-fade-in w-full flex flex-col items-center">
                             <h5 className="comparison-value text-gradient-green">₹ 2,000</h5>
                             <div className="comparison-label">Total Sales (₹10,000) - Total Cost (₹8,000)</div>
                             <p className="comparison-quote" style={{ borderLeftColor: '#ffd700', color: '#ffd700' }}>"This is the Bottom Line"</p>
