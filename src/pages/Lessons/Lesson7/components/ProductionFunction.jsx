@@ -50,7 +50,7 @@ function ProductionFunction() {
         </p>
 
         <div className="assumptions-grid-modern">
-          <div className="stage-card-modern" style={{ minHeight: 'auto', marginTop: '0' }}>
+          <div className="stage-card-modern no-margin-top auto-height">
             <h4 className="text-xl font-bold text-green-400 mb-3">Variable Factors</h4>
             <p className="text-sm mb-4">Inputs that <strong>can be changed</strong> in the short run to change the level of output.</p>
             <ul className="modern-list check-list text-left">
@@ -61,7 +61,7 @@ function ProductionFunction() {
             <p className="text-xs text-gray-500 mt-2">Output is zero if variable factors are zero.</p>
           </div>
 
-          <div className="stage-card-modern" style={{ minHeight: 'auto', marginTop: '0' }}>
+          <div className="stage-card-modern no-margin-top auto-height">
             <h4 className="text-xl font-bold text-gold mb-3">Fixed Factors</h4>
             <p className="text-sm mb-4">Inputs that <strong>cannot be changed</strong> in the short run. They remain constant regardless of output.</p>
             <ul className="modern-list dot-list text-left">

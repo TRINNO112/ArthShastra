@@ -13,37 +13,93 @@ An interactive economics learning platform built with React and Vite, featuring 
 
 ---
 
-## 🏗️ Project Architecture (The "Clean" Structure)
+## 📊 Project Health Audit (Jan 2026)
 
-This project follows a component-based architecture where each "Lesson" is a self-contained module, BUT they share critical infrastructure to avoid duplication.
+### Inline CSS Status
+- **Total Inline Styles**: ~902 instances.
+- **Verdict**: **Manageable / Safe**.
+- **Assessment**: While high, React handles inline styles efficiently. The visual "lag" concerns are unfounded at this scale. For future lessons, prefer `lessons.css` classes for complex layouts to keep code clean, but use inline styles for dynamic values (animations, charts) without fear.
 
-### Directory Map
+### 🏗️ Scalability Strategy: "The Factory Model"
+To reach the goal of **1 Lesson Per Day**, we are shifting from "Hand-Crafted Components" to "Templated Content".
 
-```
-ArthShastra/
-├── src/
-│   ├── components/          # Global UI components
-│   ├── pages/
-│   │   ├── Lessons.jsx      # Main Lessons Hub
-│   │   │
-│   │   └── Lessons/         # The Core Content
-│   │       ├── css/
-│   │       │   ├── lessons.css  # The 'Mother' CSS file (All shared styles)
-│   │       │   └── quiz.css     # Shared Quiz Styles
-│   │       │
-│   │       ├── components/
-│   │       │   └── SharedQuiz.jsx  # The Universal Quiz Logic
-│   │       │
-│   │       ├── data/        # Quiz Data Files
-│   │       │   ├── lesson1Data.js
-│   │       │   └── ...
-│   │       │
-│   │       ├── Lesson1/     # Lesson Module
-│   │       │   ├── components/
-│   │       │   │   ├── TopicXYZ.jsx
-│   │       │   │   └── Quiz.jsx
-│   │       │
-│   │       └── Lesson[N]/   # Consistent structure
+**The Plan:**
+1. **Create Reusable Layouts**: Instead of building `<div>` structures for every page, we will build generic components like `<LessonPage>`, `<ConceptCard>`, `<InteractiveGraph>`.
+2. **Data-Driven Content**: Future lessons can be defined in JSON/JS files, which the templates render automatically.
+3. **Unified Styling**: All new lessons will strictly use `lessons.css` classes, reducing decision fatigue.
+
+---
+
+## 🌳 The Ultra-Large Project Map
+
+A detailed view of the current Microeconomics curriculum implementation.
+
+```text
+src/pages/Lessons/
+├── css/
+│   ├── lessons.css          # (5000+ lines) The Master Stylesheet
+│   └── quiz.css             # Unified Quiz Styles
+│
+├── components/
+│   └── SharedQuiz.jsx       # The Universal Quiz Engine
+│
+├── Lesson1/ (Introduction)
+│   ├── Lesson1.jsx
+│   └── components/
+│       ├── Introduction.jsx
+│       ├── Scarcity.jsx
+│       └── Quiz.jsx
+│
+├── Lesson2/ (Central Problems)
+│   ├── Lesson2.jsx
+│   └── components/
+│       ├── WhatHowForWhom.jsx
+│       ├── PPCurve.jsx      # Production Possibility Curve Logic
+│       └── OpportunityCost.jsx
+│
+├── Lesson3/ (Consumer Equilibrium - Utility)
+│   ├── Lesson3.jsx
+│   └── components/
+│       ├── ConceptOfUtility.jsx
+│       ├── DiminishingMarginalUtility.jsx (Law of DMU)
+│       ├── ConsumerEquilibrium.jsx
+│       └── TwoCommodityChart.jsx
+│
+├── Lesson4/ (Indifference Curve Analysis)
+│   ├── Lesson4.jsx
+│   └── components/
+│       ├── IndifferenceCurve.jsx
+│       ├── BudgetLine.jsx
+│       └── OptimalChoice.jsx
+│
+├── Lesson5/ (Theory of Demand)
+│   ├── Lesson5.jsx
+│   └── components/
+│       ├── DemandSchedule.jsx
+│       ├── LawOfDemand.jsx
+│       └── ShiftVsMovement.jsx
+│
+├── Lesson6/ (Elasticity of Demand)
+│   ├── Lesson6.jsx
+│   └── components/
+│       ├── PriceElasticity.jsx
+│       ├── GeometricMethod.jsx
+│       └── InteractiveSimulator.jsx
+│
+├── Lesson7/ (Production Function)
+│   ├── Lesson7.jsx
+│   └── components/
+│       ├── ReturnsToFactor.jsx
+│       ├── StagesOfProduction.jsx # The 3 Stages Visualizer
+│       └── ProductionSimulator.jsx
+│
+└── Lesson8/ (Cost Analysis)
+    ├── Lesson8.jsx
+    └── components/
+        ├── ShortRunCosts.jsx
+        ├── LongRunCosts.jsx
+        ├── CostCurvesChart.jsx  # Complex D3/Recharts Visualization
+        └── BreakEvenPoint.jsx
 ```
 
 ---
@@ -61,20 +117,6 @@ To prevent the "CSS Mess" of the past, we now use a consolidated styling strateg
 2.  **`quiz.css`**: Dedicated styles for the Quiz interface.
 
 3.  **Local CSS**: Individual component CSS files (e.g., inside `Lesson3/components/`) are **DEPRECATED**. Do not import them. Always import `../../css/lessons.css`.
-
-### How to Style New Content
-- Use existing classes from `lessons.css` whenever possible.
-- If you need a new style, add it to `src/pages/Lessons/css/lessons.css` with a comment indicating the lesson it belongs to.
-- **DO NOT** create a new `component.css` in your lesson folder.
-
----
-
-## 🧩 Shared Component Architecture
-
-### Quizzes
-All quizzes are wrappers around `SharedQuiz.jsx`.
-- Logic: `src/pages/Lessons/components/SharedQuiz.jsx`
-- Data: `src/pages/Lessons/data/lesson[N]Data.js`
 
 ---
 

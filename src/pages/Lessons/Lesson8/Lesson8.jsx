@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaArrowLeft, FaDollarSign, FaTable, FaChartLine, FaBalanceScale, FaClock, FaIndustry, FaCalculator, FaQuestionCircle, FaProjectDiagram } from 'react-icons/fa';
+import { FaArrowLeft, FaDollarSign, FaTable, FaChartLine, FaBalanceScale, FaClock, FaIndustry, FaCalculator, FaQuestionCircle, FaProjectDiagram, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { lesson8Data } from '../data/lesson8Data';
 import { logLessonProgress } from '../../../services/firebase';
 import '../css/lessons.css';
@@ -202,16 +202,35 @@ function Lesson8() {
       </main>
 
       <footer className="lesson-footer">
-        {currentIndex > 0 && (
-          <button className="nav-btn prev" onClick={() => setActiveSection(sections[currentIndex - 1].id)}>
-            Previous
+        <div className="footer-container">
+          <button
+            className={`footer-btn prev ${currentIndex === 0 ? 'disabled' : ''}`}
+            onClick={() => setActiveSection(sections[currentIndex - 1].id)}
+            disabled={currentIndex === 0}
+          >
+            <FaChevronLeft />
+            <span>Previous</span>
           </button>
-        )}
-        {currentIndex < sections.length - 1 && (
-          <button className="nav-btn next" onClick={() => setActiveSection(sections[currentIndex + 1].id)}>
-            Next
+
+          <div className="progress-indicator">
+            {sections.map((section, index) => (
+              <span
+                key={section.id}
+                className={`progress-dot ${index === currentIndex ? 'active' : ''} ${index <= currentIndex ? 'completed' : ''}`}
+                onClick={() => setActiveSection(section.id)}
+              ></span>
+            ))}
+          </div>
+
+          <button
+            className={`footer-btn next ${currentIndex === sections.length - 1 ? 'disabled' : ''}`}
+            onClick={() => setActiveSection(sections[currentIndex + 1].id)}
+            disabled={currentIndex === sections.length - 1}
+          >
+            <span>Next</span>
+            <FaChevronRight />
           </button>
-        )}
+        </div>
       </footer>
     </div>
   );
