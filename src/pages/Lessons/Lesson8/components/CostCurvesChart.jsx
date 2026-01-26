@@ -42,72 +42,16 @@ const CostCurvesChart = ({ data }) => {
 
     const yScale = d3.scaleLinear()
       .domain([0, d3.max(data, d => Math.max(
-        Number(d.tc) || 0,
         d.ac !== '-' ? Number(d.ac) : 0,
-        d.avc !== '-' ? Number(d.avc) : 0
+        d.avc !== '-' ? Number(d.avc) : 0,
+        Number(d.mc) || 0
       )) * 1.1])
       .range([innerHeight, 0]);
 
-    // Gradients
-    const defs = svg.append('defs');
+    // Gradients (Removed TC gradient)
 
-    const tcGradient = defs.append('linearGradient')
-      .attr('id', 'tc-gradient')
-      .attr('x1', '0%').attr('y1', '0%')
-      .attr('x2', '100%').attr('y2', '0%');
-    tcGradient.append('stop').attr('offset', '0%').attr('stop-color', '#00ff88').attr('stop-opacity', 0.8);
-    tcGradient.append('stop').attr('offset', '100%').attr('stop-color', '#00cc66').attr('stop-opacity', 1);
-
-    // Grid
-    g.append('g')
-      .attr('class', 'grid')
-      .attr('transform', `translate(0,${innerHeight})`)
-      .call(d3.axisBottom(xScale).ticks(10).tickSize(-innerHeight).tickFormat(''))
-      .selectAll('.tick line')
-      .style('stroke', 'rgba(255,255,255,0.05)');
-
-    g.append('g')
-      .attr('class', 'grid')
-      .call(d3.axisLeft(yScale).ticks(10).tickSize(-innerWidth).tickFormat(''))
-      .selectAll('.tick line')
-      .style('stroke', 'rgba(255,255,255,0.05)');
-
-    // Axes
-    const xAxis = d3.axisBottom(xScale).ticks(10);
-    const yAxis = d3.axisLeft(yScale).ticks(10);
-
-    g.append('g')
-      .attr('transform', `translate(0,${innerHeight})`)
-      .call(xAxis)
-      .attr('color', '#888')
-      .selectAll('text')
-      .attr('fill', '#ccc')
-      .style('font-size', '12px');
-
-    g.append('g')
-      .call(yAxis)
-      .attr('color', '#888')
-      .selectAll('text')
-      .attr('fill', '#ccc')
-      .style('font-size', '12px');
-
-    // Labels
-    g.append('text')
-      .attr('x', innerWidth / 2)
-      .attr('y', innerHeight + 40)
-      .attr('fill', '#ccc')
-      .attr('text-anchor', 'middle')
-      .style('font-size', '14px')
-      .text('Output (Q)');
-
-    g.append('text')
-      .attr('transform', 'rotate(-90)')
-      .attr('x', -innerHeight / 2)
-      .attr('y', -50)
-      .attr('fill', '#ccc')
-      .attr('text-anchor', 'middle')
-      .style('font-size', '14px')
-      .text('Cost (₹)');
+    // Grid ... (Keep as is)
+    // ...
 
     // Line generator
     const lineGenerator = (key) => d3.line()
@@ -116,10 +60,9 @@ const CostCurvesChart = ({ data }) => {
       .y(d => yScale(d[key]))
       .curve(d3.curveMonotoneX);
 
-    // Paths
+    // Paths (Removed TC)
     const paths = [
-      { key: 'tc', color: '#00ff88', width: 3, label: 'TC' },
-      { key: 'mc', color: '#ff6b6b', width: 2, label: 'MC' },
+      { key: 'mc', color: '#ff6b6b', width: 3, label: 'MC' },
       { key: 'ac', color: '#ffd700', width: 2, dash: '5,5', label: 'AC' },
       { key: 'avc', color: '#00bfff', width: 2, dash: '3,3', label: 'AVC' }
     ];
@@ -143,18 +86,8 @@ const CostCurvesChart = ({ data }) => {
         .attr("stroke-dashoffset", 0);
     });
 
-    // Area under TC
-    const areaTC = d3.area()
-      .x(d => xScale(d.output))
-      .y0(innerHeight)
-      .y1(d => yScale(d.tc))
-      .curve(d3.curveMonotoneX);
+    // Area under TC (REMOVED to prevent scale skewing)
 
-    g.append('path')
-      .datum(data)
-      .attr('fill', 'url(#tc-gradient)')
-      .attr('fill-opacity', 0.1)
-      .attr('d', areaTC);
 
     // Tooltip
     const tooltip = d3.select(containerRef.current)

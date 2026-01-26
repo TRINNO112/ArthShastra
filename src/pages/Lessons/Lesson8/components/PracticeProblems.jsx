@@ -1,109 +1,129 @@
 import React, { useState } from 'react';
-import { FaCalculator, FaCheckCircle, FaChartLine } from 'react-icons/fa';
+import { FaCalculator, FaCheckCircle, FaTimesCircle, FaLightbulb } from 'react-icons/fa';
 import './component.css';
 
 const PracticeProblems = () => {
-  const [showSolution1, setShowSolution1] = useState(false);
-  const [showSolution2, setShowSolution2] = useState(false);
+  const [answers, setAnswers] = useState({ q1: '', q2: '', q3: '', q4: '', q5: '' });
+  const [feedback, setFeedback] = useState({});
+
+  const checkAnswer = (qId, correctVal) => {
+    const val = answers[qId]?.trim().toLowerCase();
+    const isCorrect = val === String(correctVal).toLowerCase();
+    setFeedback({ ...feedback, [qId]: isCorrect ? 'correct' : 'incorrect' });
+  };
 
   return (
     <section className="lesson-section">
       <div className="section-header-lesson">
         <span className="section-badge-lesson">Chapter 8</span>
-        <h2 className="section-title-lesson">Practice Problems</h2>
-        <p className="section-subtitle-lesson">Calculate costs from data. Click "Show Solution".</p>
+        <h2 className="section-title-lesson">Practice Area</h2>
+        <p className="section-subtitle-lesson">Master Cost Concepts with these interactive problems.</p>
       </div>
 
-      <div className="content-card featured-card">
-        <div className="card-glow"></div>
-        <div className="card-content">
-          <h3 className="card-title">
-            <FaCalculator className="title-icon gold" /> Cost Calculations
-          </h3>
-          <p className="intro-text">Master the formulas. Calculate costs from data. Click "Show Solution" to verify your answers.</p>
+      {/* Q1: Concept */}
+      <div className="content-card">
+        <h4 className="card-title"><span className="highlight-gold">Q1.</span> Concept Check</h4>
+        <p>If Total Cost (TC) is zero at zero output, what is the value of Fixed Cost (FC)?</p>
+        <div className="input-group">
+          <input
+            type="text"
+            placeholder="Enter value"
+            className="premium-input"
+            value={answers.q1}
+            onChange={(e) => setAnswers({ ...answers, q1: e.target.value })}
+          />
+          <button className="action-btn" onClick={() => checkAnswer('q1', '0')}>Check</button>
         </div>
-      </div>
-
-      {/* Problem 1 */}
-      <div className="practice-card">
-        <h4><FaCalculator style={{ marginRight: '10px', color: '#ffd700' }} /> Problem 1: Basic Costs</h4>
-        <p>Given: <strong>Fixed Cost (FC) = ₹100</strong>, and <strong>Variable Cost (VC) at Q=3 is ₹120</strong>.</p>
-        <p>Calculate Total Cost (TC) and Average Cost (AC) at Q=3.</p>
-        <button className="btn-reveal" onClick={() => setShowSolution1(!showSolution1)}>
-          {showSolution1 ? 'Hide Solution' : 'Show Solution'}
-        </button>
-        {showSolution1 && (
-          <div className="solution-box">
-            <p><strong>TC = FC + VC</strong> = 100 + 120 = <span className="highlight-gold">₹220</span></p>
-            <p><strong>AC = TC / Q</strong> = 220 / 3 = <span className="highlight-gold">₹73.33</span></p>
-            <p className="note-text stage-ii">Note: Falling AC suggests economies of scale or spreading FC.</p>
+        {feedback.q1 && (
+          <div className={`feedback ${feedback.q1}`}>
+            {feedback.q1 === 'correct' ? <><FaCheckCircle className="icon" /> Correct! If TC=0, FC must be 0 (Long Run).</> : <><FaTimesCircle className="icon" /> Try again. Hint: In Short Run FC {'>'} 0. But if TC=0, then FC=0. Correct answer is 0.</>}
           </div>
         )}
       </div>
 
-      {/* Problem 2 */}
-      <div className="practice-card">
-        <h4><FaChartLine style={{ marginRight: '10px', color: '#00ff88' }} /> Problem 2: Marginal Cost</h4>
-        <p>TC at Q=4 is <strong>₹280</strong>. TC at Q=5 is <strong>₹360</strong>.</p>
-        <p>Calculate Marginal Cost (MC) for the 5th unit.</p>
-        <button className="btn-reveal" onClick={() => setShowSolution2(!showSolution2)}>
-          {showSolution2 ? 'Hide Solution' : 'Show Solution'}
-        </button>
-        {showSolution2 && (
-          <div className="solution-box">
-            <p><strong>MC = ΔTC / ΔQ</strong></p>
-            <p>MC = (360 - 280) / (5 - 4) = 80 / 1 = <span className="highlight-cyan">₹80</span></p>
-            <p className="note-text u-shape">Rising MC indicates diminishing returns have set in.</p>
+      {/* Q2: Calculation */}
+      <div className="content-card">
+        <h4 className="card-title"><span className="highlight-cyan">Q2.</span> Calculate MC</h4>
+        <p>If TC at Q=4 is 200 and TC at Q=5 is 260, calculate Marginal Cost (MC) for the 5th unit.</p>
+        <div className="input-group">
+          <input
+            type="number"
+            placeholder="MC = ?"
+            className="premium-input"
+            value={answers.q2}
+            onChange={(e) => setAnswers({ ...answers, q2: e.target.value })}
+          />
+          <button className="action-btn" onClick={() => checkAnswer('q2', '60')}>Check</button>
+        </div>
+        {feedback.q2 && (
+          <div className={`feedback ${feedback.q2}`}>
+            {feedback.q2 === 'correct' ? <><FaCheckCircle className="icon" /> Correct! (260 - 200) = 60.</> : <><FaTimesCircle className="icon" /> Incorrect. MC = TC(n) - TC(n-1).</>}
           </div>
         )}
       </div>
 
-      {/* Data Table Practice */}
-      <div className="practice-card">
-        <h4>Practice Table</h4>
-        <p>Complete the missing values in the cost schedule below:</p>
-
-        <div className="table-responsive">
-          <table className="practice-table">
-            <thead>
-              <tr>
-                <th>Q</th>
-                <th>FC</th>
-                <th>VC</th>
-                <th>TC</th>
-                <th>MC</th>
-                <th>AC</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>2</td>
-                <td>100</td>
-                <td>80</td>
-                <td>180</td>
-                <td className="highlight-cyan">?</td>
-                <td className="highlight-gold">?</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>100</td>
-                <td>120</td>
-                <td>220</td>
-                <td>40</td>
-                <td>73.33</td>
-              </tr>
-            </tbody>
-          </table>
+      {/* Q3: Classification */}
+      <div className="content-card">
+        <h4 className="card-title"><span className="highlight-green">Q3.</span> Fixed vs Variable</h4>
+        <p>Which cost curve is a horizontal straight line parallel to the X-axis?</p>
+        <div className="options-grid">
+          {['TFC', 'TVC', 'AC', 'MC'].map(opt => (
+            <button
+              key={opt}
+              className={`option-btn ${answers.q3 === opt ? 'selected' : ''}`}
+              onClick={() => {
+                setAnswers({ ...answers, q3: opt });
+                if (opt === 'TFC') setFeedback({ ...feedback, q3: 'correct' });
+                else setFeedback({ ...feedback, q3: 'incorrect' });
+              }}
+            >
+              {opt}
+            </button>
+          ))}
         </div>
-
-        <div className="solution-box" style={{ marginTop: '20px' }}>
-          <strong>Solution:</strong>
-          <ul className="bullet-list merits">
-            <li><strong>MC (at Q=2)</strong>: Assuming TC(1) was known, or if asking for Q2-Q3 range: MC(3) = 40.</li>
-            <li><strong>AC (at Q=2)</strong>: TC / Q = 180 / 2 = <span className="highlight-gold">90</span></li>
-          </ul>
-        </div>
+        {feedback.q3 && (
+          <div className={`feedback ${feedback.q3}`}>
+            {feedback.q3 === 'correct' ? <><FaCheckCircle className="icon" /> Correct! Total Fixed Cost is constant.</> : <><FaTimesCircle className="icon" /> Incorrect.</>}
+          </div>
+        )}
       </div>
+
+      {/* Q4: Table Logic */}
+      <div className="content-card">
+        <h4 className="card-title"><span className="highlight-purple">Q4.</span> Table Logic</h4>
+        <p>If Average Variable Cost (AVC) is constant at ₹10 for all levels of output, what is the shape of MC?</p>
+        <div className="input-group">
+          <input
+            type="text"
+            placeholder="Horizontal / U-shaped / Rising"
+            className="premium-input"
+            value={answers.q4}
+            onChange={(e) => setAnswers({ ...answers, q4: e.target.value })}
+          />
+          <button className="action-btn" onClick={() => checkAnswer('q4', 'horizontal')}>Check</button>
+        </div>
+        {feedback.q4 && (
+          <div className={`feedback ${feedback.q4}`}>
+            {feedback.q4 === 'correct' ? <><FaCheckCircle className="icon" /> Correct! If AVC is constant, MC = AVC (Horizontal).</> : <><FaTimesCircle className="icon" /> Incorrect. If Average is constant, Marginal equals Average.</>}
+          </div>
+        )}
+      </div>
+
+      {/* Q5: Relationship */}
+      <div className="content-card">
+        <h4 className="card-title"><span className="highlight-gold">Q5.</span> Relationship Check</h4>
+        <p>True or False: The distance between AC and AVC curves remains constant as output increases.</p>
+        <div className="options-grid">
+          <button className={`option-btn ${answers.q5 === 'True' ? 'selected' : ''}`} onClick={() => { setAnswers({ ...answers, q5: 'True' }); setFeedback({ ...feedback, q5: 'incorrect' }); }}>True</button>
+          <button className={`option-btn ${answers.q5 === 'False' ? 'selected' : ''}`} onClick={() => { setAnswers({ ...answers, q5: 'False' }); setFeedback({ ...feedback, q5: 'correct' }); }}>False</button>
+        </div>
+        {feedback.q5 && (
+          <div className={`feedback ${feedback.q5}`}>
+            {feedback.q5 === 'correct' ? <><FaCheckCircle className="icon" /> Correct! Dimensions decrease because AFC falls.</> : <><FaTimesCircle className="icon" /> Incorrect. Vertical distance is AFC, which falls continuously.</>}
+          </div>
+        )}
+      </div>
+
     </section>
   );
 };

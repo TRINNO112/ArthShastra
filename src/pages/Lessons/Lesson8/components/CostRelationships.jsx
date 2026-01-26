@@ -30,12 +30,12 @@ const CostRelationships = () => {
                     Relationship between AC and MC
                 </h4>
 
-                <div className="relationship-layout" style={{ display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'center' }}>
-                    <div style={{ width: '100%', maxWidth: '400px' }}>
+                <div className="relationship-layout">
+                    <div className="graph-container-flex">
                         <RelationGraph type="ac-mc" />
                     </div>
 
-                    <div className="relationship-text" style={{ width: '100%' }}>
+                    <div className="relationship-text">
                         <div className="practice-card" style={{ borderLeft: '4px solid #00ff88', marginBottom: '10px' }}>
                             <p><strong>1. When MC {'<'} AC, AC falls</strong></p>
                             <p style={{ fontSize: '0.9rem', color: '#ccc' }}>The marginal unit is cheaper, pulling the average down.</p>
@@ -58,27 +58,27 @@ const CostRelationships = () => {
                     Relationship between TC and MC
                 </h4>
 
-                <div className="relationship-layout" style={{ display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'center' }}>
-                    <div style={{ width: '100%', maxWidth: '400px' }}>
+                <div className="relationship-layout">
+                    <div className="graph-container-flex">
                         <RelationGraph type="tc-mc" />
                     </div>
 
-                    <div className="intro-grid" style={{ width: '100%' }}>
+                    <div className="intro-grid">
                         <div className="intro-card">
                             <div style={{ color: '#00bfff', fontWeight: 'bold', marginBottom: '5px' }}>Phase 1</div>
                             <p>TC increases at a <strong>diminishing rate</strong>.</p>
-                            <div style={{ fontSize: '0.9rem', color: '#888' }}>MC implies falling</div>
+                            <div style={{ fontSize: '0.9rem', color: '#888' }}>MC falls (Slope decreases)</div>
                         </div>
                         <div className="intro-card">
                             <div style={{ color: '#ffd700', fontWeight: 'bold', marginBottom: '5px' }}>Phase 2</div>
                             <p>TC increases at an <strong>increasing rate</strong>.</p>
-                            <div style={{ fontSize: '0.9rem', color: '#888' }}>MC implies rising</div>
+                            <div style={{ fontSize: '0.9rem', color: '#888' }}>MC rises (Slope increases)</div>
                         </div>
                     </div>
                 </div>
 
                 <div className="solution-box" style={{ marginTop: '20px' }}>
-                    <strong>Note:</strong> MC is the slope of the TC curve.
+                    <strong>Note:</strong> MC is the slope of variable cost and total cost curves at any point.
                 </div>
             </div>
 
@@ -87,11 +87,18 @@ const CostRelationships = () => {
                 <h4 className="highlight-gold" style={{ textAlign: 'center', marginBottom: '20px' }}>
                     AC and AVC
                 </h4>
-                <ul className="bullet-list" style={{ color: '#ddd' }}>
-                    <li style={{ marginBottom: '10px' }}><strong>Both are U-shaped</strong> due to the Law of Variable Proportions.</li>
-                    <li style={{ marginBottom: '10px' }}><strong>Vertical distance decreases</strong> as output increases (because AFC falls).</li>
-                    <li style={{ marginBottom: '10px' }}><strong>They never touch</strong> because AFC is never zero.</li>
-                </ul>
+
+                <div className="relationship-layout">
+                    <div className="graph-container-flex">
+                        <RelationGraph type="ac-avc" />
+                    </div>
+
+                    <ul className="bullet-list" style={{ color: '#ddd', width: '100%', paddingLeft: '20px' }}>
+                        <li style={{ marginBottom: '10px' }}><strong>Both are U-shaped</strong> due to Law of Variable Proportions.</li>
+                        <li style={{ marginBottom: '10px' }}><strong>Gap decreases</strong> as output increases because Average Fixed Cost (AFC) falls continuously.</li>
+                        <li style={{ marginBottom: '10px' }}><strong>Never intersect</strong> because AFC is never zero. AC is always greater than AVC.</li>
+                    </ul>
+                </div>
             </div>
 
         </section>

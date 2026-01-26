@@ -60,7 +60,6 @@ function Lesson8() {
   const renderActiveSection = () => {
     switch (activeSection) {
       case 'intro':
-      case 'intro':
         return (
           <section className="lesson-section">
             <div className="section-header-lesson">
