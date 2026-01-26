@@ -5300,3 +5300,23 @@
   margin-top: 10px;
 }
 
+
+/* --- Footer Container Fix --- */
+.lesson-footer {
+  width: 100%;
+  margin-top: 50px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex !important;
+  justify-content: center !important; /* Centers the container */
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  width: 100%;
+  padding: 0 var(--container-padding);
+}
+
