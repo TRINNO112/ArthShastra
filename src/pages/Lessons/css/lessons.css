@@ -356,6 +356,7 @@
   border: 1px solid var(--border-color);
   padding: 30px;
   margin-bottom: 25px;
+  margin-top: 25px;
   position: relative;
   overflow: visible; /* Prevent clipping of large interactive graphs */
   transition: all var(--transition-base);
@@ -5098,7 +5099,7 @@
  * Reuses Lesson 3 styles by relative import if necessary, or provides local overrides.
  */
 
-@import "../../Lesson3/components/component.css";
+
 
 /* Lesson 4 Specific Styles */
 
@@ -5318,5 +5319,157 @@
   max-width: 1400px;
   width: 100%;
   padding: 0 var(--container-padding);
+}
+
+
+/* =============================================
+   LESSON 9: REVENUE SPECIFIC STYLES
+   ============================================= */
+
+/* --- Graphs & Charts --- */
+.chart-container-fixed {
+  width: 100%;
+  height: 300px;
+  margin-top: 20px;
+}
+
+.chart-caption {
+  text-align: center;
+  margin-top: 15px;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+/* --- Interactive Options (Revenue Introduction) --- */
+.interactive-comparison-box {
+  padding: 30px;
+  background-color: rgba(0,0,0,0.3);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.comparison-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.comparison-label {
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.comparison-quote {
+  margin-top: 15px;
+  font-style: italic;
+}
+
+/* --- Phase Buttons (TR-MR Relationship) --- */
+.phase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.phase-btn {
+  text-align: left;
+  transition: all 0.3s;
+  cursor: pointer;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.phase-btn:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.phase-btn.active {
+  background: rgba(255,255,255,0.08);
+  opacity: 1;
+}
+
+.phase-btn.inactive {
+  opacity: 0.7;
+}
+
+.phase-visual {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+}
+
+.phase-icon {
+  font-size: 4rem;
+  margin-bottom: 25px;
+  transition: color 0.5s;
+}
+
+/* --- Real World Examples --- */
+.example-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.example-icon-box {
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+}
+
+.example-details-box {
+  background: rgba(0,0,0,0.3);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.example-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.example-row:last-child {
+  margin-bottom: 0;
+}
+
+/* --- Calculator Table --- */
+.calc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.formula-grid {
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.input-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.input-cell-field {
+  width: 80px;
+  text-align: center;
+  padding: 5px;
 }
 

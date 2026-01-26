@@ -9,27 +9,39 @@ import {
     FaBalanceScale,
     FaClipboardList,
     FaChevronRight,
-    FaChevronLeft
+    FaChevronLeft,
+    FaCalculator,
+    FaGlobeAmericas,
+    FaProjectDiagram
 } from 'react-icons/fa';
 import {
-    Quiz // We will create this as a wrapper
+    RevenueIntroduction,
+    RevenueCalculations,
+    RevenueCurvesPerfect,
+    RevenueCurvesImperfect,
+    TRMRRelationship,
+    RealWorldExamples,
+    PracticeProblems,
+    Quiz
 } from './components';
-import { lesson9Data } from '../data/lesson9Data';
 import { logLessonProgress } from '../../../services/firebase';
 import '../css/lessons.css';
 
 const sections = [
-    { id: 'introduction', name: 'Introduction to Revenue', icon: FaCoins },
-    { id: 'concepts', name: 'Three Concepts: TR, AR, MR', icon: FaLightbulb },
-    { id: 'relationships', name: 'Relationship between AR & MR', icon: FaChartLine },
-    // Add more sections as we build them
+    { id: 'intro', name: 'Introduction to Revenue', icon: FaCoins },
+    { id: 'calculations', name: 'Calculations', icon: FaCalculator },
+    { id: 'curves-perfect', name: 'Perfect Competition', icon: FaChartLine },
+    { id: 'curves-imperfect', name: 'Imperfect Competition', icon: FaBalanceScale },
+    { id: 'relationships', name: 'TR-MR Relationship', icon: FaProjectDiagram },
+    { id: 'examples', name: 'Real World Examples', icon: FaGlobeAmericas },
+    { id: 'practice', name: 'Practice Problems', icon: FaLightbulb },
     { id: 'quiz', name: 'Quiz', icon: FaClipboardList }
 ];
 
 function Lesson9() {
     const [activeSection, setActiveSection] = useState(() => {
         const saved = localStorage.getItem('lesson9-activeSection');
-        return saved || 'introduction';
+        return saved || 'intro';
     });
     const [startTime] = useState(() => Date.now());
     const lessonId = 'micro11-9';
@@ -50,29 +62,17 @@ function Lesson9() {
 
     const currentIndex = sections.findIndex(s => s.id === activeSection);
 
-    const goToPrevious = () => {
-        if (currentIndex > 0) setActiveSection(sections[currentIndex - 1].id);
-    };
-
-    const goToNext = () => {
-        if (currentIndex < sections.length - 1) setActiveSection(sections[currentIndex + 1].id);
-    };
-
-    const handleSectionChange = (sectionId) => setActiveSection(sectionId);
-
     const renderActiveSection = () => {
         switch (activeSection) {
-            case 'introduction':
-                return (
-                    <div className="content-card">
-                        <h2>Welcome to Lesson 9: Concept of Revenue</h2>
-                        <p>This lesson is under construction. We are building the factory! 🏭</p>
-                    </div>
-                );
-            case 'quiz':
-                return <Quiz />;
-            default:
-                return <div className="content-card">Section coming soon...</div>;
+            case 'intro': return <RevenueIntroduction />;
+            case 'calculations': return <RevenueCalculations />;
+            case 'curves-perfect': return <RevenueCurvesPerfect />;
+            case 'curves-imperfect': return <RevenueCurvesImperfect />;
+            case 'relationships': return <TRMRRelationship />;
+            case 'examples': return <RealWorldExamples />;
+            case 'practice': return <PracticeProblems />;
+            case 'quiz': return <Quiz />;
+            default: return <RevenueIntroduction />;
         }
     };
 
@@ -104,13 +104,13 @@ function Lesson9() {
             <nav className="lesson-nav">
                 <div className="nav-container">
                     <div className="nav-scroll">
-                        {sections.map((section, index) => {
+                        {sections.map((section) => {
                             const Icon = section.icon;
                             return (
                                 <button
                                     key={section.id}
                                     className={`nav-item ${activeSection === section.id ? 'active' : ''}`}
-                                    onClick={() => handleSectionChange(section.id)}
+                                    onClick={() => setActiveSection(section.id)}
                                 >
                                     <span className="nav-icon"><Icon /></span>
                                     <span className="nav-text">{section.name}</span>
@@ -129,15 +129,29 @@ function Lesson9() {
 
             <footer className="lesson-footer">
                 <div className="footer-container">
-                    <button className={`footer-btn prev ${(currentIndex === 0) ? 'disabled' : ''}`} onClick={goToPrevious} disabled={currentIndex === 0}>
+                    <button
+                        className={`footer-btn prev ${(currentIndex === 0) ? 'disabled' : ''}`}
+                        onClick={() => setActiveSection(sections[currentIndex - 1].id)}
+                        disabled={currentIndex === 0}
+                    >
                         <FaChevronLeft /> <span>Previous</span>
                     </button>
+
                     <div className="progress-indicator">
                         {sections.map((section, index) => (
-                            <span key={section.id} className={`progress-dot ${index === currentIndex ? 'active' : ''}`} onClick={() => handleSectionChange(section.id)}></span>
+                            <span
+                                key={section.id}
+                                className={`progress-dot ${index === currentIndex ? 'active' : ''} ${index <= currentIndex ? 'completed' : ''}`}
+                                onClick={() => setActiveSection(section.id)}
+                            ></span>
                         ))}
                     </div>
-                    <button className={`footer-btn next ${(currentIndex === sections.length - 1) ? 'disabled' : ''}`} onClick={goToNext} disabled={currentIndex === sections.length - 1}>
+
+                    <button
+                        className={`footer-btn next ${(currentIndex === sections.length - 1) ? 'disabled' : ''}`}
+                        onClick={() => setActiveSection(sections[currentIndex + 1].id)}
+                        disabled={currentIndex === sections.length - 1}
+                    >
                         <span>Next</span> <FaChevronRight />
                     </button>
                 </div>
