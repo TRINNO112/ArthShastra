@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaTractor, FaUserPlus, FaUndo } from 'react-icons/fa';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 const RealWorldExamples = () => {
     // Simulator State

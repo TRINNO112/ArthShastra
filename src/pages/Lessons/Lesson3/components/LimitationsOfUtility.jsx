@@ -5,7 +5,8 @@
  */
 
 import { FaRuler, FaUserSecret, FaExchangeAlt, FaQuestionCircle, FaExclamationTriangle, FaBalanceScale } from 'react-icons/fa';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 function LimitationsOfUtility() {
   return (

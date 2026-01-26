@@ -63,7 +63,8 @@ import {
   PolarRadiusAxis,
   Radar
 } from 'recharts';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 import './IntroToIC.css';
 
 // ═══════════════════════════════════════════════════════════════

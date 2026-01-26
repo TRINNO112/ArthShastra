@@ -4,7 +4,8 @@
  */
 import { FaBezierCurve, FaTable, FaMap, FaInfoCircle } from 'react-icons/fa';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceDot } from 'recharts';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 // Helper to generate smooth hyperbolic data
 const generateICData = (utility, startX, endX, step = 0.5) => {
@@ -100,20 +101,20 @@ function MeaningOfIC() {
             </div>
 
             <div className="graph-container" style={{ flex: 1.5, minWidth: '350px', background: 'rgba(0,0,0,0.2)', padding: '1rem', borderRadius: '12px' }}>
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                    <XAxis type="number" dataKey="x" domain={[0, 13]} label={{ value: 'Apples (Good X)', position: 'bottom', fill: '#00ffff' }} stroke="#00ffff" />
-                    <YAxis type="number" domain={[0, 13]} label={{ value: 'Oranges (Good Y)', angle: -90, position: 'left', fill: '#ffd700' }} stroke="#ffd700" />
-                    <Tooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #ffd700' }} />
-                    <Line data={IC_SMOOTH_DATA} type="monotone" dataKey="y" stroke="#ffd700" strokeWidth={3} dot={false} animationDuration={1500} />
-                    {/* Specific Points */}
-                    {IC_DATA.slice(0,4).map((pt, i) => (
-                      <ReferenceDot key={i} x={pt.x} y={pt.y} r={5} fill="#ffd700" stroke="white" />
-                    ))}
-                  </LineChart>
-                </ResponsiveContainer>
-                <p style={{ textAlign: 'center', marginTop: '0.5rem', color: '#ffd700', fontSize: '0.9rem' }}>Fig 1: Convex Indifference Curve</p>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                  <XAxis type="number" dataKey="x" domain={[0, 13]} label={{ value: 'Apples (Good X)', position: 'bottom', fill: '#00ffff' }} stroke="#00ffff" />
+                  <YAxis type="number" domain={[0, 13]} label={{ value: 'Oranges (Good Y)', angle: -90, position: 'left', fill: '#ffd700' }} stroke="#ffd700" />
+                  <Tooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #ffd700' }} />
+                  <Line data={IC_SMOOTH_DATA} type="monotone" dataKey="y" stroke="#ffd700" strokeWidth={3} dot={false} animationDuration={1500} />
+                  {/* Specific Points */}
+                  {IC_DATA.slice(0, 4).map((pt, i) => (
+                    <ReferenceDot key={i} x={pt.x} y={pt.y} r={5} fill="#ffd700" stroke="white" />
+                  ))}
+                </LineChart>
+              </ResponsiveContainer>
+              <p style={{ textAlign: 'center', marginTop: '0.5rem', color: '#ffd700', fontSize: '0.9rem' }}>Fig 1: Convex Indifference Curve</p>
             </div>
           </div>
 
@@ -123,20 +124,20 @@ function MeaningOfIC() {
             <div className="limitation-item" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '12px', padding: '2rem' }}>
               <div className="two-column-layout" style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap-reverse' }}>
                 <div style={{ flex: 1 }}>
-                    <h4 style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '1.4rem' }}>
-                       <FaMap style={{ color: '#00ff88' }} /> What is an Indifference Map?
-                    </h4>
-                    <p style={{ fontSize: '1.1rem', lineHeight: '1.8', margin: '1.5rem 0' }}>
-                      A set or family of indifference curves is known as an <strong>Indifference Map</strong>.
-                    </p>
-                    <ul className="bullet-list" style={{ lineHeight: '2' }}>
-                      <li><strong style={{ color: '#00ff88' }}>IC₃ (Highest):</strong> Represents the highest level of satisfaction.</li>
-                      <li><strong style={{ color: '#00ffff' }}>IC₂ (Middle):</strong> Moderate satisfaction.</li>
-                      <li><strong style={{ color: '#ff4444' }}>IC₁ (Lowest):</strong> Lower satisfaction compared to others.</li>
-                    </ul>
-                    <div className="note-text" style={{ marginTop: '2rem', padding: '1rem', borderLeft: '4px solid #00ff88', background: 'rgba(0, 255, 136, 0.1)' }}>
-                      <strong>Key Rule:</strong> Higher IC corresponds to higher income/consumption potential, thus higher satisfaction.
-                    </div>
+                  <h4 style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '1.4rem' }}>
+                    <FaMap style={{ color: '#00ff88' }} /> What is an Indifference Map?
+                  </h4>
+                  <p style={{ fontSize: '1.1rem', lineHeight: '1.8', margin: '1.5rem 0' }}>
+                    A set or family of indifference curves is known as an <strong>Indifference Map</strong>.
+                  </p>
+                  <ul className="bullet-list" style={{ lineHeight: '2' }}>
+                    <li><strong style={{ color: '#00ff88' }}>IC₃ (Highest):</strong> Represents the highest level of satisfaction.</li>
+                    <li><strong style={{ color: '#00ffff' }}>IC₂ (Middle):</strong> Moderate satisfaction.</li>
+                    <li><strong style={{ color: '#ff4444' }}>IC₁ (Lowest):</strong> Lower satisfaction compared to others.</li>
+                  </ul>
+                  <div className="note-text" style={{ marginTop: '2rem', padding: '1rem', borderLeft: '4px solid #00ff88', background: 'rgba(0, 255, 136, 0.1)' }}>
+                    <strong>Key Rule:</strong> Higher IC corresponds to higher income/consumption potential, thus higher satisfaction.
+                  </div>
                 </div>
 
                 <div className="graph-container" style={{ flex: 1, minWidth: '300px' }}>
@@ -146,7 +147,7 @@ function MeaningOfIC() {
                       <XAxis dataKey="x" type="number" domain={[0, 10]} stroke="#ffffff" hide />
                       <YAxis domain={[0, 30]} stroke="#ffffff" hide />
                       <Tooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #00ff88' }} />
-                      <Legend verticalAlign="top" height={36}/>
+                      <Legend verticalAlign="top" height={36} />
 
                       <Line type="monotone" dataKey="ic1" name="IC₁ (Low)" stroke="#ff4444" strokeWidth={2} dot={false} />
                       <Line type="monotone" dataKey="ic2" name="IC₂ (Medium)" stroke="#00ffff" strokeWidth={2} dot={false} />

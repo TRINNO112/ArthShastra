@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaCalculator, FaCheckCircle, FaTimesCircle, FaLightbulb } from 'react-icons/fa';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 const PracticeProblems = () => {
   const [answers, setAnswers] = useState({ q1: '', q2: '', q3: '', q4: '', q5: '' });

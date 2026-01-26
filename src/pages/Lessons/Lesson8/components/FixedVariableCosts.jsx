@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaLock, FaUnlockAlt, FaBuilding, FaUsers, FaTools } from 'react-icons/fa';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 const FixedVariableCosts = () => {
   return (

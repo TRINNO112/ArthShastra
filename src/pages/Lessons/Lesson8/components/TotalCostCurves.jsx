@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 const TotalCostCurves = () => {
     const svgRef = useRef();

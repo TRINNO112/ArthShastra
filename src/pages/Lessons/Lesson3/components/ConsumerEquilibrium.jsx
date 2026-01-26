@@ -14,7 +14,8 @@
 import { FaBalanceScale, FaEquals, FaBoxOpen, FaShoppingBag, FaChartLine, FaArrowRight } from 'react-icons/fa';
 import SingleCommodityChart from './SingleCommodityChart';
 import TwoCommodityChart from './TwoCommodityChart';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 // Generate Data for Single Commodity (10 Units)
 const getSingleCommodityData = () => {

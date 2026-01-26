@@ -33,7 +33,8 @@ import {
   FaTimesCircle,
   FaInfoCircle
 } from 'react-icons/fa';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 // ============================================================================
 // UTILITY DATA CONFIGURATION
@@ -1234,50 +1235,50 @@ function DiminishingMarginalUtility() {
 
             {/* Saturation SVG Graph */}
             <div className="graph-container" style={{ background: 'rgba(0,0,0,0.2)', borderRadius: '16px', padding: '1rem', overflowX: 'auto' }}>
-               <div style={{ minWidth: '600px', margin: '0 auto', position: 'relative' }}>
-                  <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', fontFamily: 'sans-serif' }}>
+              <div style={{ minWidth: '600px', margin: '0 auto', position: 'relative' }}>
+                <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: 'auto', fontFamily: 'sans-serif' }}>
 
-                    {/* Background & Definitions */}
-                    <defs>
-                      <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                        <polygon points="0 0, 10 3.5, 0 7" fill="#dc3545" />
-                      </marker>
-                    </defs>
+                  {/* Background & Definitions */}
+                  <defs>
+                    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                      <polygon points="0 0, 10 3.5, 0 7" fill="#dc3545" />
+                    </marker>
+                  </defs>
 
-                    {/* --- LEFT GRAPH: TOTAL UTILITY --- */}
-                    <g transform="translate(60, 40)">
-                       <text x="150" y="-15" textAnchor="middle" fill="#ccc" fontSize="16" fontWeight="bold">Total Utility (TU)</text>
-                       <line x1="0" y1="300" x2="300" y2="300" stroke="#fff" strokeWidth="2" /> {/* X Axis */}
-                       <line x1="0" y1="0" x2="0" y2="300" stroke="#fff" strokeWidth="2" />   {/* Y Axis */}
-                       <text x="150" y="340" textAnchor="middle" fill="#aaa" fontSize="14">Quantity (Q)</text>
-                       <text x="-30" y="150" textAnchor="middle" transform="rotate(-90, -30, 150)" fill="#aaa" fontSize="14">Total Utility</text>
+                  {/* --- LEFT GRAPH: TOTAL UTILITY --- */}
+                  <g transform="translate(60, 40)">
+                    <text x="150" y="-15" textAnchor="middle" fill="#ccc" fontSize="16" fontWeight="bold">Total Utility (TU)</text>
+                    <line x1="0" y1="300" x2="300" y2="300" stroke="#fff" strokeWidth="2" /> {/* X Axis */}
+                    <line x1="0" y1="0" x2="0" y2="300" stroke="#fff" strokeWidth="2" />   {/* Y Axis */}
+                    <text x="150" y="340" textAnchor="middle" fill="#aaa" fontSize="14">Quantity (Q)</text>
+                    <text x="-30" y="150" textAnchor="middle" transform="rotate(-90, -30, 150)" fill="#aaa" fontSize="14">Total Utility</text>
 
-                       {/* Y Marks */}
-                       <text x="-10" y="65" textAnchor="end" fill="#fff" fontSize="12">40</text>
-                       <circle cx="200" cy="60" r="6" fill="#003366" stroke="#fff" strokeWidth="2" />
-                       <text x="215" y="55" fill="#0056b3" fontWeight="bold" fontSize="14">Saturation Point (Max TU)</text>
-                       <path d="M 0 300 Q 100 60 200 60 T 320 200" fill="none" stroke="#0056b3" strokeWidth="4" />
-                       <line x1="200" y1="60" x2="200" y2="300" stroke="#aaa" strokeDasharray="5 5" />
-                       <text x="200" y="320" textAnchor="middle" fill="#fff" fontSize="14">4</text>
-                    </g>
+                    {/* Y Marks */}
+                    <text x="-10" y="65" textAnchor="end" fill="#fff" fontSize="12">40</text>
+                    <circle cx="200" cy="60" r="6" fill="#003366" stroke="#fff" strokeWidth="2" />
+                    <text x="215" y="55" fill="#0056b3" fontWeight="bold" fontSize="14">Saturation Point (Max TU)</text>
+                    <path d="M 0 300 Q 100 60 200 60 T 320 200" fill="none" stroke="#0056b3" strokeWidth="4" />
+                    <line x1="200" y1="60" x2="200" y2="300" stroke="#aaa" strokeDasharray="5 5" />
+                    <text x="200" y="320" textAnchor="middle" fill="#fff" fontSize="14">4</text>
+                  </g>
 
-                    {/* --- RIGHT GRAPH: MARGINAL UTILITY --- */}
-                    <g transform="translate(450, 40)">
-                       <text x="150" y="-15" textAnchor="middle" fill="#ccc" fontSize="16" fontWeight="bold">Marginal Utility (MU)</text>
-                       <line x1="0" y1="180" x2="300" y2="180" stroke="#fff" strokeWidth="2" /> {/* X Axis (Shifted up for negative y) */}
-                       <line x1="0" y1="0" x2="0" y2="300" stroke="#fff" strokeWidth="2" />   {/* Y Axis */}
-                       <text x="150" y="340" textAnchor="middle" fill="#aaa" fontSize="14">Quantity (Q)</text>
-                       <text x="-30" y="150" textAnchor="middle" transform="rotate(-90, -30, 150)" fill="#aaa" fontSize="14">Marginal Utility</text>
+                  {/* --- RIGHT GRAPH: MARGINAL UTILITY --- */}
+                  <g transform="translate(450, 40)">
+                    <text x="150" y="-15" textAnchor="middle" fill="#ccc" fontSize="16" fontWeight="bold">Marginal Utility (MU)</text>
+                    <line x1="0" y1="180" x2="300" y2="180" stroke="#fff" strokeWidth="2" /> {/* X Axis (Shifted up for negative y) */}
+                    <line x1="0" y1="0" x2="0" y2="300" stroke="#fff" strokeWidth="2" />   {/* Y Axis */}
+                    <text x="150" y="340" textAnchor="middle" fill="#aaa" fontSize="14">Quantity (Q)</text>
+                    <text x="-30" y="150" textAnchor="middle" transform="rotate(-90, -30, 150)" fill="#aaa" fontSize="14">Marginal Utility</text>
 
-                       {/* MU Line */}
-                       <line x1="0" y1="60" x2="280" y2="228" stroke="#dc3545" strokeWidth="4" />
-                       <circle cx="200" cy="180" r="6" fill="#800000" stroke="#fff" strokeWidth="2" />
-                       <text x="215" y="170" fill="#dc3545" fontWeight="bold" fontSize="14">Zero MU (Saturation)</text>
-                       <line x1="200" y1="180" x2="200" y2="180" stroke="#aaa" strokeDasharray="5 5" /> {/* Alignment check */}
-                       <text x="200" y="200" textAnchor="middle" fill="#fff" fontSize="14">4</text>
-                    </g>
-                  </svg>
-               </div>
+                    {/* MU Line */}
+                    <line x1="0" y1="60" x2="280" y2="228" stroke="#dc3545" strokeWidth="4" />
+                    <circle cx="200" cy="180" r="6" fill="#800000" stroke="#fff" strokeWidth="2" />
+                    <text x="215" y="170" fill="#dc3545" fontWeight="bold" fontSize="14">Zero MU (Saturation)</text>
+                    <line x1="200" y1="180" x2="200" y2="180" stroke="#aaa" strokeDasharray="5 5" /> {/* Alignment check */}
+                    <text x="200" y="200" textAnchor="middle" fill="#fff" fontSize="14">4</text>
+                  </g>
+                </svg>
+              </div>
             </div>
           </div>
 

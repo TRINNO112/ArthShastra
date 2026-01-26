@@ -5,7 +5,8 @@
 
 import React from 'react';
 import { FaIndustry, FaClock, FaCubes } from 'react-icons/fa';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 function ProductionFunction() {
   return (

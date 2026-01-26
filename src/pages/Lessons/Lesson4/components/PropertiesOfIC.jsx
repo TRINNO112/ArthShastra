@@ -42,7 +42,8 @@ import {
   Scatter,
   Tooltip
 } from 'recharts';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 import './PropertiesOfIC.css';
 
 // ═══════════════════════════════════════════════════════════════

@@ -23,7 +23,8 @@ import {
   ReferenceLine,
   ReferenceDot
 } from 'recharts';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 // ============================================
 // UTILITY SCHEDULE DATA - This is the foundation
@@ -120,7 +121,7 @@ function ConceptOfUtility() {
                 { icon: '👴', label: 'For elderly (unfamiliar with tech)', desc: 'Low utility, may prefer a basic phone', colorClass: 'text-orange', borderClass: 'border-orange' },
                 { icon: '📱📱📱', label: 'Person with 3 phones', desc: 'Very low marginal utility from a 4th phone', colorClass: 'text-red', borderClass: 'border-red' },
               ].map((item, idx) => (
-                <div key={idx} className={`cou-example-grid-item ${item.borderClass}`} style={{borderLeft: '3px solid', borderLeftColor: idx === 0 ? '#ffd700' : idx === 1 ? '#00ffff' : idx === 2 ? '#ff8c00' : '#ff6b6b'}}>
+                <div key={idx} className={`cou-example-grid-item ${item.borderClass}`} style={{ borderLeft: '3px solid', borderLeftColor: idx === 0 ? '#ffd700' : idx === 1 ? '#00ffff' : idx === 2 ? '#ff8c00' : '#ff6b6b' }}>
                   <strong className={item.colorClass}>{item.icon} {item.label}:</strong>
                   <p className="mt-1 text-sm">{item.desc}</p>
                 </div>
@@ -195,534 +196,534 @@ function ConceptOfUtility() {
             <p><strong>Scenario:</strong> You're eating samosas at a party. Let's track your total satisfaction:</p>
 
             <div className="table-container">
-  <div className="samosa-grid-container flex-column gap-sm mt-2">
-              {[
-                { unit: '1st samosa', desc: "You're hungry", mu: 50, tu: 50, colorClass: 'text-green', borderColor: '#00ff88' },
-                { unit: '2nd samosa', desc: "Still tasty", mu: 40, tu: 90, colorClass: 'text-green', borderColor: '#00ff88' },
-                { unit: '3rd samosa', desc: "Starting to feel full", mu: 25, tu: 115, colorClass: 'text-gold', borderColor: '#ffd700' },
-                { unit: '4th samosa', desc: "Almost full", mu: 10, tu: 125, colorClass: 'text-orange', borderColor: '#ff8c00' },
-                { unit: '5th samosa', desc: "Feeling too full", mu: 0, tu: 125, colorClass: 'text-red', borderColor: '#ff6b6b' },
-                { unit: '6th samosa', desc: "Uncomfortable (Disutility)", mu: -15, tu: 110, colorClass: 'text-red', borderColor: '#ff4444' },
-              ].map((item, idx) => (
-                <div key={idx} className="cou-example-grid-item" style={{
-                  display: 'grid',
-                  gridTemplateColumns: '140px 1fr 100px 100px',
-                  gap: '12px',
-                  alignItems: 'center',
-                  background: 'rgba(0,0,0,0.2)',
-                  borderLeftStyle: 'solid',
-                  borderLeftWidth: '3px',
-                  borderLeftColor: item.borderColor,
-                }}>
-                  <strong className={item.colorClass}>{item.unit}</strong>
-                  <span className="text-muted">{item.desc}</span>
-                  <span className={item.mu >= 0 ? 'text-green' : 'text-red'}>MU: {item.mu}</span>
-                  <span className="text-cyan font-bold">TU: {item.tu}</span>
-                </div>
-              ))}
-            </div>
+              <div className="samosa-grid-container flex-column gap-sm mt-2">
+                {[
+                  { unit: '1st samosa', desc: "You're hungry", mu: 50, tu: 50, colorClass: 'text-green', borderColor: '#00ff88' },
+                  { unit: '2nd samosa', desc: "Still tasty", mu: 40, tu: 90, colorClass: 'text-green', borderColor: '#00ff88' },
+                  { unit: '3rd samosa', desc: "Starting to feel full", mu: 25, tu: 115, colorClass: 'text-gold', borderColor: '#ffd700' },
+                  { unit: '4th samosa', desc: "Almost full", mu: 10, tu: 125, colorClass: 'text-orange', borderColor: '#ff8c00' },
+                  { unit: '5th samosa', desc: "Feeling too full", mu: 0, tu: 125, colorClass: 'text-red', borderColor: '#ff6b6b' },
+                  { unit: '6th samosa', desc: "Uncomfortable (Disutility)", mu: -15, tu: 110, colorClass: 'text-red', borderColor: '#ff4444' },
+                ].map((item, idx) => (
+                  <div key={idx} className="cou-example-grid-item" style={{
+                    display: 'grid',
+                    gridTemplateColumns: '140px 1fr 100px 100px',
+                    gap: '12px',
+                    alignItems: 'center',
+                    background: 'rgba(0,0,0,0.2)',
+                    borderLeftStyle: 'solid',
+                    borderLeftWidth: '3px',
+                    borderLeftColor: item.borderColor,
+                  }}>
+                    <strong className={item.colorClass}>{item.unit}</strong>
+                    <span className="text-muted">{item.desc}</span>
+                    <span className={item.mu >= 0 ? 'text-green' : 'text-red'}>MU: {item.mu}</span>
+                    <span className="text-cyan font-bold">TU: {item.tu}</span>
+                  </div>
+                ))}
+              </div>
 
-            <p className="mt-2 italic text-gold">
-              📊 Notice how total satisfaction increased initially, reached maximum at 5 samosas (TU = 125),
-              then decreased when you ate too much!
-            </p>
-          </div>
-
-          {/* ============================================ */}
-          {/* SECTION 3: MARGINAL UTILITY */}
-          {/* ============================================ */}
-
-          <h3 className="highlight-gold">Marginal Utility (MU)</h3>
-
-          <div className="definition-quote-box mu">
-            <span className="definition-quote-icon"><FaQuoteLeft /></span>
-            <p className="definition-text">
-              <span className="key-term-gold">Marginal Utility (MU)</span> is the additional satisfaction
-              that a consumer derives from consuming one more unit of a commodity.
-            </p>
-          </div>
-
-          <p>
-            MU is the change in total utility resulting from the consumption of one additional unit.
-            It measures the incremental or extra satisfaction gained from each successive unit.
-            The word "marginal" in economics always means "additional" or "extra." So marginal
-            utility is simply the extra utility you get from consuming one more unit.
-          </p>
-
-          {/* Formula Box for MU */}
-          <div className="cou-formula-box-styled green">
-            <p className="text-lg mb-1">
-              <strong className="text-green">Formula 1:</strong>{' '}
-              <span className="font-mono text-gold text-lg">
-                MU<sub>n</sub> = TU<sub>n</sub> - TU<sub>n-1</sub>
-              </span>
-            </p>
-            <p className="text-lg mb-2">
-              <strong className="text-green">Formula 2:</strong>{' '}
-              <span className="font-mono text-gold text-lg">
-                MU = ΔTU / ΔQ
-              </span>
-              <span className="text-muted ml-2 text-sm">
-                (Change in Total Utility / Change in Quantity)
-              </span>
-            </p>
-            <div className="bg-tertiary p-2 rounded mt-2">
-              <p className="text-secondary text-sm m-0">
-                <strong>Example:</strong> If TU from 3 units = 45 utils, and TU from 4 units = 50 utils,<br />
-                then MU<sub>4</sub> = 50 - 45 = <strong className="text-gold">5 utils</strong>
+              <p className="mt-2 italic text-gold">
+                📊 Notice how total satisfaction increased initially, reached maximum at 5 samosas (TU = 125),
+                then decreased when you ate too much!
               </p>
             </div>
-          </div>
 
-          {/* Real Example for MU - Cold Drinks */}
-          <div className="note-text blue">
-            <h4 className="text-cyan">🥤 Real-World Example - Marginal Utility:</h4>
-            <p><strong>Scenario:</strong> You're buying bottles of cold drinks on a hot summer day:</p>
+            {/* ============================================ */}
+            {/* SECTION 3: MARGINAL UTILITY */}
+            {/* ============================================ */}
 
-            <div className="cou-icon-grid">
-              {[
-                { bottle: '1st', mu: 100, emoji: '🔥', desc: 'Very thirsty' },
-                { bottle: '2nd', mu: 60, emoji: '😊', desc: 'Still refreshing' },
-                { bottle: '3rd', mu: 30, emoji: '😐', desc: 'Feeling full' },
-                { bottle: '4th', mu: 10, emoji: '😕', desc: 'Barely want it' },
-                { bottle: '5th', mu: 0, emoji: '🛑', desc: 'Saturation' },
-                { bottle: '6th', mu: -20, emoji: '🤢', desc: 'Disutility!' },
-              ].map((item, idx) => (
-                <div key={idx} className="cou-icon-item" style={{
-                  background: item.mu > 0 ? 'rgba(0, 255, 136, 0.1)' :
-                    item.mu === 0 ? 'rgba(255, 215, 0, 0.1)' : 'rgba(255, 68, 68, 0.1)',
-                  borderStyle: 'solid',
-                  borderWidth: '1px',
-                  borderColor: item.mu > 0 ? '#00ff88' : item.mu === 0 ? '#ffd700' : '#ff4444',
-                }}>
-                  <div className="text-xxl mb-1">{item.emoji}</div>
-                  <div className="font-bold mt-1">{item.bottle}</div>
-                  <div className={`font-bold mt-1 text-lg ${item.mu > 0 ? 'text-green' : item.mu === 0 ? 'text-gold' : 'text-red'}`}>
-                    MU: {item.mu}
-                  </div>
-                  <div className="text-xs text-muted mt-1">
-                    {item.desc}
-                  </div>
-                </div>
-              ))}
+            <h3 className="highlight-gold">Marginal Utility (MU)</h3>
+
+            <div className="definition-quote-box mu">
+              <span className="definition-quote-icon"><FaQuoteLeft /></span>
+              <p className="definition-text">
+                <span className="key-term-gold">Marginal Utility (MU)</span> is the additional satisfaction
+                that a consumer derives from consuming one more unit of a commodity.
+              </p>
             </div>
 
-            <div className="bg-gold p-2 rounded border-gold mt-2">
-              <strong className="text-gold">💡 Key Insight:</strong>{' '}
-              <span className="text-secondary">
-                Notice how marginal utility keeps falling with each bottle? This is the
-                <strong className="text-green"> Law of Diminishing Marginal Utility</strong> -
-                as you consume more, extra satisfaction from each unit decreases!
-              </span>
-            </div>
-          </div>
-
-          {/* ============================================ */}
-          {/* SECTION 4: RELATIONSHIP BETWEEN TU AND MU */}
-          {/* ============================================ */}
-
-          <h3 className="highlight-cyan">Relationship Between TU and MU</h3>
-          <p>
-            The relationship between Total Utility and Marginal Utility is fundamental to understanding
-            consumer behavior. These concepts are interconnected - changes in one affect the other.
-            Let us first create a <strong>utility schedule (table)</strong> and then derive the
-            <strong> graph</strong> from it.
-          </p>
-
-          {/* ============================================ */}
-          {/* STEP 1: THE UTILITY SCHEDULE (TABLE) */}
-          {/* ============================================ */}
-
-          <div className="table-container">
-            <h3 className="subsection-title">
-              <FaTable />
-              Step 1: Utility Schedule (Table)
-            </h3>
-            <p className="text-center text-muted mb-2">
-              📋 This schedule shows TU and MU for consuming ice cream on a hot summer day
+            <p>
+              MU is the change in total utility resulting from the consumption of one additional unit.
+              It measures the incremental or extra satisfaction gained from each successive unit.
+              The word "marginal" in economics always means "additional" or "extra." So marginal
+              utility is simply the extra utility you get from consuming one more unit.
             </p>
 
-            <div className="table-container">
-              <table className="utility-table">
-                <thead>
-                  <tr>
-                    <th className="text-cyan">
-                      Units of Ice Cream 🍦
-                    </th>
-                    <th className="text-green border-green">
-                      Marginal Utility (MU)<br />
-                      <span className="text-xs font-normal">(Utils)</span>
-                    </th>
-                    <th className="text-gold border-gold">
-                      Total Utility (TU)<br />
-                      <span className="text-xs font-normal">(Utils)</span>
-                    </th>
-                    <th className="text-orange border-orange">
-                      Observation
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {utilitySchedule.map((row, idx) => {
-                    const isSaturation = isSaturationPoint(row.MU);
-                    const observations = [
-                      'No consumption, no utility',
-                      'First unit gives highest MU, TU starts rising',
-                      'MU decreases but positive, TU continues to increase',
-                      'MU continues to fall, TU still rising',
-                      'MU approaching zero, TU rising at slower rate',
-                      '⭐ SATURATION POINT: MU = 0, TU is MAXIMUM',
-                      'MU becomes negative (Disutility), TU starts falling',
-                      'MU more negative, TU falls further',
-                    ];
-
-                    const muClass = row.MU > 10 ? 'text-green' : row.MU > 0 ? 'text-green' : row.MU === 0 ? 'text-gold' : row.MU < 0 ? 'text-red' : '';
-
-                    return (
-                      <tr
-                        key={idx}
-                        className={isSaturation ? 'bg-gold' : idx % 2 === 0 ? 'bg-tertiary' : ''}
-                      >
-                        <td className="font-bold text-lg text-center">
-                          {row.units}
-                        </td>
-                        <td className={`font-bold text-lg text-center ${muClass}`}>
-                          {row.MU !== null ? row.MU : '—'}
-                        </td>
-                        <td className="font-bold text-lg text-center text-gold">
-                          {row.TU}
-                        </td>
-                        <td className={`text-left text-sm ${isSaturation ? 'text-gold font-bold' : 'text-muted'}`}>
-                          {observations[idx]}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Calculation Explanation */}
-            <div className="bg-cyan p-2 rounded border-cyan mt-3 border-dashed">
-              <h4 className="text-cyan mb-1">📐 How to Calculate:</h4>
-              <div className="flex-column gap-xs">
-                <p className="m-0">
-                  <strong className="text-gold">TU Calculation:</strong>{' '}
-                  TU<sub>n</sub> = TU<sub>n-1</sub> + MU<sub>n</sub>
-                </p>
-                <p className="m-0 text-muted">
-                  Example: TU<sub>3</sub> = TU<sub>2</sub> + MU<sub>3</sub> = 35 + 10 = <strong className="text-gold">45 utils</strong>
-                </p>
-                <p className="mt-1 mb-0">
-                  <strong className="text-green">MU Calculation:</strong>{' '}
+            {/* Formula Box for MU */}
+            <div className="cou-formula-box-styled green">
+              <p className="text-lg mb-1">
+                <strong className="text-green">Formula 1:</strong>{' '}
+                <span className="font-mono text-gold text-lg">
                   MU<sub>n</sub> = TU<sub>n</sub> - TU<sub>n-1</sub>
-                </p>
-                <p className="m-0 text-muted">
-                  Example: MU<sub>4</sub> = TU<sub>4</sub> - TU<sub>3</sub> = 50 - 45 = <strong className="text-green">5 utils</strong>
+                </span>
+              </p>
+              <p className="text-lg mb-2">
+                <strong className="text-green">Formula 2:</strong>{' '}
+                <span className="font-mono text-gold text-lg">
+                  MU = ΔTU / ΔQ
+                </span>
+                <span className="text-muted ml-2 text-sm">
+                  (Change in Total Utility / Change in Quantity)
+                </span>
+              </p>
+              <div className="bg-tertiary p-2 rounded mt-2">
+                <p className="text-secondary text-sm m-0">
+                  <strong>Example:</strong> If TU from 3 units = 45 utils, and TU from 4 units = 50 utils,<br />
+                  then MU<sub>4</sub> = 50 - 45 = <strong className="text-gold">5 utils</strong>
                 </p>
               </div>
             </div>
-          </div>
 
-          {/* ============================================ */}
-          {/* STEP 2: THE GRAPH (DERIVED FROM TABLE) */}
-          {/* ============================================ */}
+            {/* Real Example for MU - Cold Drinks */}
+            <div className="note-text blue">
+              <h4 className="text-cyan">🥤 Real-World Example - Marginal Utility:</h4>
+              <p><strong>Scenario:</strong> You're buying bottles of cold drinks on a hot summer day:</p>
 
-          <div className="graph-container">
-            <h3 className="subsection-title">
-              <FaChartLine />
-              Step 2: TU and MU Curves (Derived from the Schedule)
-            </h3>
-            <p className="text-center text-muted mb-2">
-              📈 This graph is plotted using the data from the utility schedule above
+              <div className="cou-icon-grid">
+                {[
+                  { bottle: '1st', mu: 100, emoji: '🔥', desc: 'Very thirsty' },
+                  { bottle: '2nd', mu: 60, emoji: '😊', desc: 'Still refreshing' },
+                  { bottle: '3rd', mu: 30, emoji: '😐', desc: 'Feeling full' },
+                  { bottle: '4th', mu: 10, emoji: '😕', desc: 'Barely want it' },
+                  { bottle: '5th', mu: 0, emoji: '🛑', desc: 'Saturation' },
+                  { bottle: '6th', mu: -20, emoji: '🤢', desc: 'Disutility!' },
+                ].map((item, idx) => (
+                  <div key={idx} className="cou-icon-item" style={{
+                    background: item.mu > 0 ? 'rgba(0, 255, 136, 0.1)' :
+                      item.mu === 0 ? 'rgba(255, 215, 0, 0.1)' : 'rgba(255, 68, 68, 0.1)',
+                    borderStyle: 'solid',
+                    borderWidth: '1px',
+                    borderColor: item.mu > 0 ? '#00ff88' : item.mu === 0 ? '#ffd700' : '#ff4444',
+                  }}>
+                    <div className="text-xxl mb-1">{item.emoji}</div>
+                    <div className="font-bold mt-1">{item.bottle}</div>
+                    <div className={`font-bold mt-1 text-lg ${item.mu > 0 ? 'text-green' : item.mu === 0 ? 'text-gold' : 'text-red'}`}>
+                      MU: {item.mu}
+                    </div>
+                    <div className="text-xs text-muted mt-1">
+                      {item.desc}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-gold p-2 rounded border-gold mt-2">
+                <strong className="text-gold">💡 Key Insight:</strong>{' '}
+                <span className="text-secondary">
+                  Notice how marginal utility keeps falling with each bottle? This is the
+                  <strong className="text-green"> Law of Diminishing Marginal Utility</strong> -
+                  as you consume more, extra satisfaction from each unit decreases!
+                </span>
+              </div>
+            </div>
+
+            {/* ============================================ */}
+            {/* SECTION 4: RELATIONSHIP BETWEEN TU AND MU */}
+            {/* ============================================ */}
+
+            <h3 className="highlight-cyan">Relationship Between TU and MU</h3>
+            <p>
+              The relationship between Total Utility and Marginal Utility is fundamental to understanding
+              consumer behavior. These concepts are interconnected - changes in one affect the other.
+              Let us first create a <strong>utility schedule (table)</strong> and then derive the
+              <strong> graph</strong> from it.
             </p>
 
-            {/* The Recharts Graph */}
-            <ResponsiveContainer width="100%" height={420}>
-              <LineChart
-                data={utilitySchedule}
-                margin={{ top: 20, right: 40, left: 20, bottom: 30 }}
-              >
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  stroke="rgba(255,255,255,0.1)"
-                  vertical={true}
-                  horizontal={true}
-                />
+            {/* ============================================ */}
+            {/* STEP 1: THE UTILITY SCHEDULE (TABLE) */}
+            {/* ============================================ */}
 
-                {/* X-Axis */}
-                <XAxis
-                  dataKey="units"
-                  stroke="#00ffff"
-                  tick={{ fill: '#00ffff', fontSize: 12 }}
-                  axisLine={{ stroke: '#00ffff', strokeWidth: 2 }}
-                  tickLine={{ stroke: '#00ffff' }}
-                  label={{
-                    value: 'Units of Ice Cream Consumed →',
-                    position: 'bottom',
-                    offset: 10,
-                    fill: '#00ffff',
-                    fontSize: 13
-                  }}
-                />
+            <div className="table-container">
+              <h3 className="subsection-title">
+                <FaTable />
+                Step 1: Utility Schedule (Table)
+              </h3>
+              <p className="text-center text-muted mb-2">
+                📋 This schedule shows TU and MU for consuming ice cream on a hot summer day
+              </p>
 
-                {/* Y-Axis with proper consistent scale */}
-                <YAxis
-                  stroke="#00ffff"
-                  tick={{ fill: '#00ffff', fontSize: 12 }}
-                  axisLine={{ stroke: '#00ffff', strokeWidth: 2 }}
-                  tickLine={{ stroke: '#00ffff' }}
-                  domain={[-10, 60]}
-                  ticks={[-10, 0, 10, 20, 30, 40, 50, 60]}
-                  label={{
-                    value: 'Utility (Utils) →',
-                    angle: -90,
-                    position: 'insideLeft',
-                    fill: '#00ffff',
-                    fontSize: 13,
-                    offset: 10
-                  }}
-                />
+              <div className="table-container">
+                <table className="utility-table">
+                  <thead>
+                    <tr>
+                      <th className="text-cyan">
+                        Units of Ice Cream 🍦
+                      </th>
+                      <th className="text-green border-green">
+                        Marginal Utility (MU)<br />
+                        <span className="text-xs font-normal">(Utils)</span>
+                      </th>
+                      <th className="text-gold border-gold">
+                        Total Utility (TU)<br />
+                        <span className="text-xs font-normal">(Utils)</span>
+                      </th>
+                      <th className="text-orange border-orange">
+                        Observation
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {utilitySchedule.map((row, idx) => {
+                      const isSaturation = isSaturationPoint(row.MU);
+                      const observations = [
+                        'No consumption, no utility',
+                        'First unit gives highest MU, TU starts rising',
+                        'MU decreases but positive, TU continues to increase',
+                        'MU continues to fall, TU still rising',
+                        'MU approaching zero, TU rising at slower rate',
+                        '⭐ SATURATION POINT: MU = 0, TU is MAXIMUM',
+                        'MU becomes negative (Disutility), TU starts falling',
+                        'MU more negative, TU falls further',
+                      ];
 
-                {/* Custom Tooltip */}
-                <Tooltip content={<CustomTooltip />} />
+                      const muClass = row.MU > 10 ? 'text-green' : row.MU > 0 ? 'text-green' : row.MU === 0 ? 'text-gold' : row.MU < 0 ? 'text-red' : '';
 
-                {/* Zero Reference Line (X-axis at Y=0) */}
-                <ReferenceLine
-                  y={0}
-                  stroke="#ff6b6b"
-                  strokeDasharray="8 4"
-                  strokeWidth={2}
-                  label={{
-                    value: 'MU = 0 (Zero Line)',
-                    fill: '#ff6b6b',
-                    fontSize: 11,
-                    position: 'right'
-                  }}
-                />
+                      return (
+                        <tr
+                          key={idx}
+                          className={isSaturation ? 'bg-gold' : idx % 2 === 0 ? 'bg-tertiary' : ''}
+                        >
+                          <td className="font-bold text-lg text-center">
+                            {row.units}
+                          </td>
+                          <td className={`font-bold text-lg text-center ${muClass}`}>
+                            {row.MU !== null ? row.MU : '—'}
+                          </td>
+                          <td className="font-bold text-lg text-center text-gold">
+                            {row.TU}
+                          </td>
+                          <td className={`text-left text-sm ${isSaturation ? 'text-gold font-bold' : 'text-muted'}`}>
+                            {observations[idx]}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
 
-                {/* Saturation Point Vertical Line (at x=5) */}
-                <ReferenceLine
-                  x={5}
-                  stroke="#ffd700"
-                  strokeDasharray="8 4"
-                  strokeWidth={2}
-                  label={{
-                    value: 'Saturation Point',
-                    fill: '#ffd700',
-                    fontSize: 11,
-                    position: 'top'
-                  }}
-                />
-
-                {/* TU Curve - Gold */}
-                <Line
-                  type="monotone"
-                  dataKey="TU"
-                  stroke="#ffd700"
-                  strokeWidth={3}
-                  dot={{
-                    fill: '#ffd700',
-                    strokeWidth: 2,
-                    r: 6,
-                    stroke: '#fff'
-                  }}
-                  activeDot={{
-                    r: 10,
-                    stroke: '#ffd700',
-                    strokeWidth: 3,
-                    fill: '#fff'
-                  }}
-                  name="Total Utility (TU)"
-                />
-
-                {/* MU Curve - Green */}
-                <Line
-                  type="monotone"
-                  dataKey="MU"
-                  stroke="#00ff88"
-                  strokeWidth={3}
-                  dot={{
-                    fill: '#00ff88',
-                    strokeWidth: 2,
-                    r: 6,
-                    stroke: '#fff'
-                  }}
-                  activeDot={{
-                    r: 10,
-                    stroke: '#00ff88',
-                    strokeWidth: 3,
-                    fill: '#fff'
-                  }}
-                  name="Marginal Utility (MU)"
-                  connectNulls={false}
-                />
-
-                {/* Special Point: Maximum TU */}
-                <ReferenceDot
-                  x={5}
-                  y={50}
-                  r={10}
-                  fill="#ffd700"
-                  stroke="#fff"
-                  strokeWidth={3}
-                />
-
-                {/* Special Point: MU = 0 */}
-                <ReferenceDot
-                  x={5}
-                  y={0}
-                  r={10}
-                  fill="#00ff88"
-                  stroke="#fff"
-                  strokeWidth={3}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-
-            {/* Custom Legend */}
-            <div style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '40px',
-              marginTop: '20px',
-              flexWrap: 'wrap',
-            }}>
-              {[
-                { color: '#ffd700', label: 'Total Utility (TU) Curve' },
-                { color: '#00ff88', label: 'Marginal Utility (MU) Curve' },
-                { color: '#ff6b6b', label: 'Zero Line (MU = 0)', isDashed: true },
-              ].map((item, idx) => (
-                <div key={idx} style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  color: item.color,
-                  fontWeight: '600',
-                }}>
-                  {item.isDashed ? (
-                    <span style={{
-                      width: '24px',
-                      height: '3px',
-                      background: `repeating-linear-gradient(90deg, ${item.color} 0px, ${item.color} 6px, transparent 6px, transparent 10px)`
-                    }}></span>
-                  ) : (
-                    <span style={{
-                      width: '14px',
-                      height: '14px',
-                      borderRadius: '50%',
-                      background: item.color,
-                      boxShadow: `0 0 10px ${item.color}`,
-                    }}></span>
-                  )}
-                  <span>{item.label}</span>
+              {/* Calculation Explanation */}
+              <div className="bg-cyan p-2 rounded border-cyan mt-3 border-dashed">
+                <h4 className="text-cyan mb-1">📐 How to Calculate:</h4>
+                <div className="flex-column gap-xs">
+                  <p className="m-0">
+                    <strong className="text-gold">TU Calculation:</strong>{' '}
+                    TU<sub>n</sub> = TU<sub>n-1</sub> + MU<sub>n</sub>
+                  </p>
+                  <p className="m-0 text-muted">
+                    Example: TU<sub>3</sub> = TU<sub>2</sub> + MU<sub>3</sub> = 35 + 10 = <strong className="text-gold">45 utils</strong>
+                  </p>
+                  <p className="mt-1 mb-0">
+                    <strong className="text-green">MU Calculation:</strong>{' '}
+                    MU<sub>n</sub> = TU<sub>n</sub> - TU<sub>n-1</sub>
+                  </p>
+                  <p className="m-0 text-muted">
+                    Example: MU<sub>4</sub> = TU<sub>4</sub> - TU<sub>3</sub> = 50 - 45 = <strong className="text-green">5 utils</strong>
+                  </p>
                 </div>
-              ))}
+              </div>
             </div>
 
-            {/* Graph Explanation Points */}
-            <div className="cou-example-grid">
-              {[
-                {
-                  color: '#ffd700',
-                  title: 'TU Curve Behavior',
-                  text: 'Rises from origin, reaches maximum at unit 5 (50 utils), then starts falling'
-                },
-                {
-                  color: '#00ff88',
-                  title: 'MU Curve Behavior',
-                  text: 'Slopes downward continuously, starts positive, becomes zero at unit 5, then negative'
-                },
-                {
-                  color: '#00ffff',
-                  title: 'At Saturation Point',
-                  text: 'When MU = 0, TU reaches its maximum value. This is optimal consumption.'
-                },
-                {
-                  color: '#ff6b6b',
-                  title: 'Disutility Zone',
-                  text: 'Below zero line, MU is negative. Consuming more reduces total satisfaction.'
-                },
-              ].map((item, idx) => (
-                <div key={idx} className="cou-example-grid-item" style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '6px',
-                  padding: '14px 18px',
-                  background: 'rgba(0,0,0,0.3)',
-                  borderLeft: `4px solid ${item.color}`,
-                }}>
-                  <span style={{ color: item.color, fontWeight: 'bold', fontSize: '0.95rem' }}>
-                    {item.title}
-                  </span>
-                  <span className="text-muted text-sm">
-                    {item.text}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+            {/* ============================================ */}
+            {/* STEP 2: THE GRAPH (DERIVED FROM TABLE) */}
+            {/* ============================================ */}
 
-          {/* Key Relationships Summary */}
-          <div className="highlight-card gold">
-            <div className="highlight-icon"><FaChartLine /></div>
-            <div className="highlight-content">
-              <h3>Summary: Key Relationships Between TU and MU</h3>
-              <div className="flex-column gap-md mt-2">
+            <div className="graph-container">
+              <h3 className="subsection-title">
+                <FaChartLine />
+                Step 2: TU and MU Curves (Derived from the Schedule)
+              </h3>
+              <p className="text-center text-muted mb-2">
+                📈 This graph is plotted using the data from the utility schedule above
+              </p>
+
+              {/* The Recharts Graph */}
+              <ResponsiveContainer width="100%" height={420}>
+                <LineChart
+                  data={utilitySchedule}
+                  margin={{ top: 20, right: 40, left: 20, bottom: 30 }}
+                >
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke="rgba(255,255,255,0.1)"
+                    vertical={true}
+                    horizontal={true}
+                  />
+
+                  {/* X-Axis */}
+                  <XAxis
+                    dataKey="units"
+                    stroke="#00ffff"
+                    tick={{ fill: '#00ffff', fontSize: 12 }}
+                    axisLine={{ stroke: '#00ffff', strokeWidth: 2 }}
+                    tickLine={{ stroke: '#00ffff' }}
+                    label={{
+                      value: 'Units of Ice Cream Consumed →',
+                      position: 'bottom',
+                      offset: 10,
+                      fill: '#00ffff',
+                      fontSize: 13
+                    }}
+                  />
+
+                  {/* Y-Axis with proper consistent scale */}
+                  <YAxis
+                    stroke="#00ffff"
+                    tick={{ fill: '#00ffff', fontSize: 12 }}
+                    axisLine={{ stroke: '#00ffff', strokeWidth: 2 }}
+                    tickLine={{ stroke: '#00ffff' }}
+                    domain={[-10, 60]}
+                    ticks={[-10, 0, 10, 20, 30, 40, 50, 60]}
+                    label={{
+                      value: 'Utility (Utils) →',
+                      angle: -90,
+                      position: 'insideLeft',
+                      fill: '#00ffff',
+                      fontSize: 13,
+                      offset: 10
+                    }}
+                  />
+
+                  {/* Custom Tooltip */}
+                  <Tooltip content={<CustomTooltip />} />
+
+                  {/* Zero Reference Line (X-axis at Y=0) */}
+                  <ReferenceLine
+                    y={0}
+                    stroke="#ff6b6b"
+                    strokeDasharray="8 4"
+                    strokeWidth={2}
+                    label={{
+                      value: 'MU = 0 (Zero Line)',
+                      fill: '#ff6b6b',
+                      fontSize: 11,
+                      position: 'right'
+                    }}
+                  />
+
+                  {/* Saturation Point Vertical Line (at x=5) */}
+                  <ReferenceLine
+                    x={5}
+                    stroke="#ffd700"
+                    strokeDasharray="8 4"
+                    strokeWidth={2}
+                    label={{
+                      value: 'Saturation Point',
+                      fill: '#ffd700',
+                      fontSize: 11,
+                      position: 'top'
+                    }}
+                  />
+
+                  {/* TU Curve - Gold */}
+                  <Line
+                    type="monotone"
+                    dataKey="TU"
+                    stroke="#ffd700"
+                    strokeWidth={3}
+                    dot={{
+                      fill: '#ffd700',
+                      strokeWidth: 2,
+                      r: 6,
+                      stroke: '#fff'
+                    }}
+                    activeDot={{
+                      r: 10,
+                      stroke: '#ffd700',
+                      strokeWidth: 3,
+                      fill: '#fff'
+                    }}
+                    name="Total Utility (TU)"
+                  />
+
+                  {/* MU Curve - Green */}
+                  <Line
+                    type="monotone"
+                    dataKey="MU"
+                    stroke="#00ff88"
+                    strokeWidth={3}
+                    dot={{
+                      fill: '#00ff88',
+                      strokeWidth: 2,
+                      r: 6,
+                      stroke: '#fff'
+                    }}
+                    activeDot={{
+                      r: 10,
+                      stroke: '#00ff88',
+                      strokeWidth: 3,
+                      fill: '#fff'
+                    }}
+                    name="Marginal Utility (MU)"
+                    connectNulls={false}
+                  />
+
+                  {/* Special Point: Maximum TU */}
+                  <ReferenceDot
+                    x={5}
+                    y={50}
+                    r={10}
+                    fill="#ffd700"
+                    stroke="#fff"
+                    strokeWidth={3}
+                  />
+
+                  {/* Special Point: MU = 0 */}
+                  <ReferenceDot
+                    x={5}
+                    y={0}
+                    r={10}
+                    fill="#00ff88"
+                    stroke="#fff"
+                    strokeWidth={3}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+
+              {/* Custom Legend */}
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '40px',
+                marginTop: '20px',
+                flexWrap: 'wrap',
+              }}>
+                {[
+                  { color: '#ffd700', label: 'Total Utility (TU) Curve' },
+                  { color: '#00ff88', label: 'Marginal Utility (MU) Curve' },
+                  { color: '#ff6b6b', label: 'Zero Line (MU = 0)', isDashed: true },
+                ].map((item, idx) => (
+                  <div key={idx} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    color: item.color,
+                    fontWeight: '600',
+                  }}>
+                    {item.isDashed ? (
+                      <span style={{
+                        width: '24px',
+                        height: '3px',
+                        background: `repeating-linear-gradient(90deg, ${item.color} 0px, ${item.color} 6px, transparent 6px, transparent 10px)`
+                      }}></span>
+                    ) : (
+                      <span style={{
+                        width: '14px',
+                        height: '14px',
+                        borderRadius: '50%',
+                        background: item.color,
+                        boxShadow: `0 0 10px ${item.color}`,
+                      }}></span>
+                    )}
+                    <span>{item.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Graph Explanation Points */}
+              <div className="cou-example-grid">
                 {[
                   {
-                    condition: 'When MU > 0 (Positive)',
-                    result: 'TU is Rising',
-                    desc: 'Each additional unit adds to total satisfaction.',
-                    icon: '📈',
-                    color: '#00ff88'
+                    color: '#ffd700',
+                    title: 'TU Curve Behavior',
+                    text: 'Rises from origin, reaches maximum at unit 5 (50 utils), then starts falling'
                   },
                   {
-                    condition: 'When MU = 0 (Zero)',
-                    result: 'TU is Maximum',
-                    desc: 'Saturation point reached. Optimal consumption.',
-                    icon: '⭐',
-                    color: '#ffd700'
+                    color: '#00ff88',
+                    title: 'MU Curve Behavior',
+                    text: 'Slopes downward continuously, starts positive, becomes zero at unit 5, then negative'
                   },
                   {
-                    condition: 'When MU < 0 (Negative)',
-                    result: 'TU is Falling',
-                    desc: 'Disutility zone. Consuming more reduces satisfaction.',
-                    icon: '📉',
-                    color: '#ff6b6b'
+                    color: '#00ffff',
+                    title: 'At Saturation Point',
+                    text: 'When MU = 0, TU reaches its maximum value. This is optimal consumption.'
                   },
                   {
-                    condition: 'When MU is Diminishing',
-                    result: 'TU rises at decreasing rate',
-                    desc: 'Law of Diminishing Marginal Utility in action.',
-                    icon: '📐',
-                    color: '#00ffff'
+                    color: '#ff6b6b',
+                    title: 'Disutility Zone',
+                    text: 'Below zero line, MU is negative. Consuming more reduces total satisfaction.'
                   },
                 ].map((item, idx) => (
                   <div key={idx} className="cou-example-grid-item" style={{
                     display: 'flex',
-                    gap: '14px',
-                    alignItems: 'flex-start',
-                    background: 'rgba(0,0,0,0.2)',
+                    flexDirection: 'column',
+                    gap: '6px',
+                    padding: '14px 18px',
+                    background: 'rgba(0,0,0,0.3)',
                     borderLeft: `4px solid ${item.color}`,
                   }}>
-                    <span className="text-xl">{item.icon}</span>
-                    <div>
-                      <div className="flex-wrap gap-sm items-center">
-                        <strong style={{ color: item.color }}>{item.condition}</strong>
-                        <span className="text-muted">→</span>
-                        <strong className="text-white">{item.result}</strong>
-                      </div>
-                      <p className="mt-1 text-muted text-sm m-0">{item.desc}</p>
-                    </div>
+                    <span style={{ color: item.color, fontWeight: 'bold', fontSize: '0.95rem' }}>
+                      {item.title}
+                    </span>
+                    <span className="text-muted text-sm">
+                      {item.text}
+                    </span>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            {/* Key Relationships Summary */}
+            <div className="highlight-card gold">
+              <div className="highlight-icon"><FaChartLine /></div>
+              <div className="highlight-content">
+                <h3>Summary: Key Relationships Between TU and MU</h3>
+                <div className="flex-column gap-md mt-2">
+                  {[
+                    {
+                      condition: 'When MU > 0 (Positive)',
+                      result: 'TU is Rising',
+                      desc: 'Each additional unit adds to total satisfaction.',
+                      icon: '📈',
+                      color: '#00ff88'
+                    },
+                    {
+                      condition: 'When MU = 0 (Zero)',
+                      result: 'TU is Maximum',
+                      desc: 'Saturation point reached. Optimal consumption.',
+                      icon: '⭐',
+                      color: '#ffd700'
+                    },
+                    {
+                      condition: 'When MU < 0 (Negative)',
+                      result: 'TU is Falling',
+                      desc: 'Disutility zone. Consuming more reduces satisfaction.',
+                      icon: '📉',
+                      color: '#ff6b6b'
+                    },
+                    {
+                      condition: 'When MU is Diminishing',
+                      result: 'TU rises at decreasing rate',
+                      desc: 'Law of Diminishing Marginal Utility in action.',
+                      icon: '📐',
+                      color: '#00ffff'
+                    },
+                  ].map((item, idx) => (
+                    <div key={idx} className="cou-example-grid-item" style={{
+                      display: 'flex',
+                      gap: '14px',
+                      alignItems: 'flex-start',
+                      background: 'rgba(0,0,0,0.2)',
+                      borderLeft: `4px solid ${item.color}`,
+                    }}>
+                      <span className="text-xl">{item.icon}</span>
+                      <div>
+                        <div className="flex-wrap gap-sm items-center">
+                          <strong style={{ color: item.color }}>{item.condition}</strong>
+                          <span className="text-muted">→</span>
+                          <strong className="text-white">{item.result}</strong>
+                        </div>
+                        <p className="mt-1 text-muted text-sm m-0">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
       {/* ============================================ */}
       {/* ADDITIONAL CONTENT CARD */}
@@ -882,7 +883,7 @@ function ConceptOfUtility() {
                     { step: 'TU₅', calc: '= TU₄ + MU₅ = 70 + 0 = 70 utils (Maximum!)', result: '70', formula: 'MU = 0 means TU is max' },
                   ].map((item, idx) => (
                     <div key={idx} className="bg-white-05 p-1 rounded flex gap-sm items-center grid-cols-auto-1fr">
-                      <strong className="text-gold" style={{minWidth: '60px'}}>{item.step}:</strong>
+                      <strong className="text-gold" style={{ minWidth: '60px' }}>{item.step}:</strong>
                       <div>
                         <span className="text-white-90">{item.calc}</span>
                         <div className="text-xs text-muted mt-1">
@@ -913,7 +914,7 @@ function ConceptOfUtility() {
                 { n: '5th', mu: 0 },
               ].map((item, idx) => (
                 <span key={idx} className="bg-white-10 px-2 py-1 rounded-full border-solid border"
-                  style={{borderColor: item.mu > 0 ? '#00ff88' : '#ffd700'}}>
+                  style={{ borderColor: item.mu > 0 ? '#00ff88' : '#ffd700' }}>
                   {item.n}: <strong className={item.mu > 0 ? 'text-green' : 'text-gold'}>{item.mu} utils</strong>
                 </span>
               ))}
@@ -999,11 +1000,11 @@ function ConceptOfUtility() {
                 borderClass: 'border-orange'
               },
             ].map((item, idx) => (
-              <div key={idx} className={`cou-takeaway-card`} style={{borderColor: item.color}}>
-                <div className="cou-takeaway-bg-icon" style={{background: item.color}}></div>
+              <div key={idx} className={`cou-takeaway-card`} style={{ borderColor: item.color }}>
+                <div className="cou-takeaway-bg-icon" style={{ background: item.color }}></div>
                 <div className="flex items-center gap-sm mb-1">
                   <span className="rounded-full flex-center font-bold text-black text-lg"
-                    style={{width: '36px', height: '36px', background: item.color}}>
+                    style={{ width: '36px', height: '36px', background: item.color }}>
                     {item.num}
                   </span>
                   <h4 className={`${item.colorClass} m-0`}>{item.title}</h4>

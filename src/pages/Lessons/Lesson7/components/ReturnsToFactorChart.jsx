@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { FaChartLine, FaInfoCircle, FaSearch, FaProjectDiagram } from 'react-icons/fa';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 const productionData = [
   { labor: 0, tp: 0, ap: 0, mp: 0 },

@@ -42,7 +42,8 @@ import {
   ReferenceLine,
   Label
 } from 'recharts';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 // Generate mathematically accurate data points
 const generateEquilibriumData = () => {

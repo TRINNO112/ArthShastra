@@ -12,7 +12,8 @@
  */
 
 import { FaUser, FaShoppingCart, FaIndustry, FaArrowRight } from 'react-icons/fa';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 function WhoIsConsumer() {
   return (

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { FaTable, FaCalculator, FaInfoCircle } from 'react-icons/fa';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 const CostSchedule = ({ data }) => {
   const [hoveredRow, setHoveredRow] = useState(null);

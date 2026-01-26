@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaTable, FaArrowUp, FaArrowDown, FaClipboardList, FaRocket, FaStop, FaBan } from 'react-icons/fa';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 const productionData = [
   { labor: 0, tp: 0, ap: 0, mp: 0, stage: 1 },

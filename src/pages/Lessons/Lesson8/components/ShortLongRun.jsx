@@ -1,7 +1,8 @@
 import React from 'react';
 import { FaClock, FaBuilding, FaChartArea, FaInfinity } from 'react-icons/fa';
 import LACEnvelopeChart from './LACEnvelopeChart';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 const ShortLongRun = () => {
   return (

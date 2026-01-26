@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaBalanceScale, FaBan, FaMicrochip, FaClock, FaExclamationTriangle, FaCheckDouble } from 'react-icons/fa';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 const AssumptionsLimitations = () => {
     return (

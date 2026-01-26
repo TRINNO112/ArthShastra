@@ -28,91 +28,53 @@ ArthShastra/
 │   │   │
 │   │   └── Lessons/         # The Core Content
 │   │       ├── css/
-│   │       │   ├── lessons.css  # Shared Lesson Styles
-│   │       │   └── quiz.css     # Shared Quiz Styles (Single Source of Truth)
+│   │       │   ├── lessons.css  # The 'Mother' CSS file (All shared styles)
+│   │       │   └── quiz.css     # Shared Quiz Styles
 │   │       │
 │   │       ├── components/
 │   │       │   └── SharedQuiz.jsx  # The Universal Quiz Logic
 │   │       │
-│   │       ├── data/        # Quiz Data Files (JSON-like objects)
+│   │       ├── data/        # Quiz Data Files
 │   │       │   ├── lesson1Data.js
 │   │       │   └── ...
 │   │       │
 │   │       ├── Lesson1/     # Lesson Module
-│   │       │   ├── Lesson1.jsx        # Main Layout
-│   │       │   ├── index.js           # Public Export
-│   │       │   └── components/
-│   │       │       ├── Introduction.jsx # Specific Content
-│   │       │       ├── TopicXYZ.jsx
-│   │       │       └── Quiz.jsx         # Wrapper for SharedQuiz
+│   │       │   ├── components/
+│   │       │   │   ├── TopicXYZ.jsx
+│   │       │   │   └── Quiz.jsx
 │   │       │
-│   │       └── Lesson[N]/   # Same structure repeats...
+│   │       └── Lesson[N]/   # Consistent structure
 ```
-
----
-
-## 🧩 Shared Component Architecture
-
-To prevent code duplication and "yellow box" visual bugs, we use a **Shared Quiz** system.
-
-### How Quizzes Work
-1.  **Logic**: All quiz logic (timer, analytics, scoring) lives in **`src/pages/Lessons/components/SharedQuiz.jsx`**.
-2.  **Style**: All quiz styling lives in **`src/pages/Lessons/css/quiz.css`**.
-3.  **Data**: Each lesson has a data file in `src/pages/Lessons/data/lesson[N]Data.js`.
-4.  **Usage**: Inside each Lesson folder, the `Quiz.jsx` component is just a thin wrapper.
-
-**Example of `Lesson8/components/Quiz.jsx`:**
-```javascript
-import { lesson8Data } from '../../data/lesson8Data';
-import SharedQuiz from '../../components/SharedQuiz';
-
-const Quiz = () => {
-    return (
-        <SharedQuiz
-            mcqQuestions={lesson8Data.mcqQuestions}
-            tfQuestions={lesson8Data.tfQuestions}
-            quizId="lesson8-quiz"
-            title="Cost Analysis Quiz"
-            subtitle="Test your cost curves knowledge"
-        />
-    );
-};
-```
-
-**Why this is better:**
-- If you want to change the timer logic, you edit **one file**.
-- If you want to fix a CSS bug, you edit **one file**.
-- No more "importing from Lesson 3". Every lesson is equal.
 
 ---
 
 ## 🎨 CSS Styling System
 
-### Main Files
-- **`variables.css`**: Color palette (`--neon-gold`, `--bg-primary`).
-- **`lessons.css`**: Layout for sections, cards, text, and headers.
-- **`quiz.css`**: Styles for the quiz interface, results, and progress bars.
+To prevent the "CSS Mess" of the past, we now use a consolidated styling strategy:
 
-### Common Classes
-- `.content-card`: Glassmorphic card container.
-- `.highlight-text`: Gold text.
-- `.neon-green`, `.neon-cyan`: Helper texts.
-- `.section-header-lesson`: Standard center-aligned header.
+1.  **`lessons.css`**: This is the **Single Source of Truth** for all lesson content.
+    - Generic Classes: `.content-card`, `.highlight-card`, `.bullet-list`
+    - Layouts: `.two-column`, `.flex-wrap`
+    - Themes: `.highlight-gold`, `.neon-green`
+    - Specifics: Lesson 7 Simulator, Lesson 8 Cost Curves, Lesson 4 Graphs.
+
+2.  **`quiz.css`**: Dedicated styles for the Quiz interface.
+
+3.  **Local CSS**: Individual component CSS files (e.g., inside `Lesson3/components/`) are **DEPRECATED**. Do not import them. Always import `../../css/lessons.css`.
+
+### How to Style New Content
+- Use existing classes from `lessons.css` whenever possible.
+- If you need a new style, add it to `src/pages/Lessons/css/lessons.css` with a comment indicating the lesson it belongs to.
+- **DO NOT** create a new `component.css` in your lesson folder.
 
 ---
 
-## 📝 How to Add a New Lesson
+## 🧩 Shared Component Architecture
 
-1.  **Create Folder**: `src/pages/Lessons/Lesson[N]/`
-2.  **Add Data**: Create `src/pages/Lessons/data/lesson[N]Data.js` with `mcqQuestions` and `tfQuestions`.
-3.  **Add Components**: Create your content components (`Topic1.jsx`, etc.).
-4.  **Add Quiz**: Copy `Quiz.jsx` from any other lesson and update the import to point to your new data file.
-    ```javascript
-    import { lesson[N]Data } from '../../data/lesson[N]Data';
-    // ... rest is standard
-    ```
-5.  **Export**: Update `components/index.js` to export all components.
-6.  **Route**: Add the route in `App.jsx` and the card in `Lessons.jsx`.
+### Quizzes
+All quizzes are wrappers around `SharedQuiz.jsx`.
+- Logic: `src/pages/Lessons/components/SharedQuiz.jsx`
+- Data: `src/pages/Lessons/data/lesson[N]Data.js`
 
 ---
 
@@ -125,4 +87,4 @@ npm run dev
 
 ---
 
-*Documentation updated: Jan 2026*
+*Documentation updated: Jan 2026 - CSS Architecture Consolidated*

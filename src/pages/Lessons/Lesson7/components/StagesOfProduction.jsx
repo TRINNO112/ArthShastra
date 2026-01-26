@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaRocket, FaBalanceScale, FaExclamationTriangle } from 'react-icons/fa';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 const StagesOfProduction = () => {
   return (

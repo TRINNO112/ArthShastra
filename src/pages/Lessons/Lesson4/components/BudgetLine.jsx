@@ -5,7 +5,8 @@
 import { useState } from 'react';
 import { FaChartLine, FaMoneyBillWave, FaArrowRight, FaSyncAlt } from 'react-icons/fa';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, AreaChart, Area, ReferenceDot, Label, Scatter, ScatterChart } from 'recharts';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 const BUDGET_DATA = [
   { x: 0, y: 10, label: 'Intercept (M/Py)' },

@@ -3,7 +3,8 @@
  * Marginal Rate of Substitution (MRS)
  */
 import { FaExchangeAlt, FaArrowDown, FaBalanceScale, FaInfoCircle } from 'react-icons/fa';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 function MRSConcept() {
   return (

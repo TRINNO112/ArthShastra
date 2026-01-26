@@ -1,7 +1,8 @@
 import React from 'react';
 import { FaProjectDiagram, FaArrowUp, FaArrowDown, FaEquals } from 'react-icons/fa';
 import RelationGraph from './RelationGraph';
-import './component.css';
+import '../../css/lessons.css';
+import '../../css/quiz.css';
 
 const CostRelationships = () => {
     return (
