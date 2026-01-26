@@ -11,38 +11,39 @@ const RealWorldExamples = () => {
                 <p className="section-subtitle-lesson">Understanding Revenue curves in different markets.</p>
             </div>
 
-            <div className="example-grid">
+            <div className="example-grid-premium">
 
                 {/* Example 1: Perfect Competition Proxy */}
-                <div className="content-card">
-                    <div className="example-header">
-                        <div className="example-icon-box bg-green-500/20 text-green-400"><FaGlobeAmericas /></div>
-                        <h4 className="text-xl font-bold text-white m-0">Commodity Markets (Wheat/Gold)</h4>
+                <div className="example-card-premium">
+                    <div className="example-icon-wrapper" style={{ background: 'rgba(0, 255, 136, 0.15)', color: '#00ff88' }}>
+                        <FaGlobeAmericas />
                     </div>
-                    <p className="text-gray-300 mb-4 text-sm leading-relaxed">
-                        In global commodity markets, individual farmers cannot influence the price. If the market price of wheat is ₹20/kg, they can sell 100kg or 1000kg at ₹20.
+                    <h4 className="text-xl font-bold text-white mb-3">Commodity Markets</h4>
+                    <p className="text-gray-300 mb-6 text-sm leading-relaxed">
+                        In global commodity markets like Wheat or Gold, sellers are "Price Takers".
+                        The market sets the price (e.g., ₹20/kg), and you can sell as much as you want at that price.
                     </p>
                     <div className="example-details-box">
                         <div className="example-row">
                             <span className="text-muted">Market Form:</span>
-                            <span className="text-green-400 font-bold">Near-Perfect Competition</span>
+                            <span className="text-green-400 font-bold">Perfect Competition</span>
                         </div>
                         <div className="example-row">
                             <span className="text-muted">Revenue Curve:</span>
-                            <span className="text-gold font-bold">Horizontal AR (P = MR)</span>
+                            <span className="text-gold font-bold">Horizontal (P = MR)</span>
                         </div>
                     </div>
                 </div>
 
-
                 {/* Example 2: Monopoly Proxy */}
-                <div className="content-card">
-                    <div className="example-header">
-                        <div className="example-icon-box bg-blue-500/20 text-blue-400"><FaTrain /></div>
-                        <h4 className="text-xl font-bold text-white m-0">Indian Railways</h4>
+                <div className="example-card-premium">
+                    <div className="example-icon-wrapper" style={{ background: 'rgba(96, 165, 250, 0.15)', color: '#60a5fa' }}>
+                        <FaTrain />
                     </div>
-                    <p className="text-gray-300 mb-4 text-sm leading-relaxed">
-                        As a monopoly service provider, Railways can set prices. However, to fill more seats in AC coaches (increase Quantity), they sometimes offer dynamic pricing or discounts.
+                    <h4 className="text-xl font-bold text-white mb-3">Indian Railways</h4>
+                    <p className="text-gray-300 mb-6 text-sm leading-relaxed">
+                        As a monopoly, Railways is a "Price Maker". But to increase passengers (Quantity),
+                        they might need to lower fares or offer discounts, making the price curve slope downwards.
                     </p>
                     <div className="example-details-box">
                         <div className="example-row">
@@ -51,13 +52,12 @@ const RealWorldExamples = () => {
                         </div>
                         <div className="example-row">
                             <span className="text-muted">Revenue Curve:</span>
-                            <span className="text-gold font-bold">Downward Sloping AR</span>
+                            <span className="text-gold font-bold">Downward Sloping</span>
                         </div>
                     </div>
                 </div>
 
             </div>
-
         </section>
     );
 };

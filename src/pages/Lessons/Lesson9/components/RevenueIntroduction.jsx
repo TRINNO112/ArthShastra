@@ -76,24 +76,24 @@ const RevenueIntroduction = () => {
                     </button>
                 </div>
 
-                <div className="p-4 bg-black/20 rounded-lg border border-white/10 text-center transition-all duration-300">
+                <div className="comparison-container">
                     {activeTab === 'revenue' ? (
-                        <div className="animate-fade-in">
-                            <h5 className="comparison-value text-gold">₹ 10,000</h5>
+                        <div className="animate-fade-in w-full">
+                            <h5 className="comparison-value text-gradient-gold">₹ 10,000</h5>
                             <div className="comparison-label">Total Sales (100 units @ ₹100)</div>
-                            <p className="comparison-quote text-green-400">"This is the Top Line"</p>
-                            <p className="mt-4 text-sm text-gray-300 px-4">
+                            <p className="comparison-quote" style={{ borderLeftColor: '#00ff88', color: '#00ff88' }}>"This is the Top Line"</p>
+                            <p className="mt-6 text-sm text-gray-300 leading-relaxed max-w-lg mx-auto">
                                 Revenue is the raw income from sales <strong>before</strong> any expenses are deducted.
-                                It shows the market demand for the product.
+                                It shows the pure market demand for the product.
                             </p>
                         </div>
                     ) : (
-                        <div className="animate-fade-in">
-                            <h5 className="comparison-value text-green-400">₹ 2,000</h5>
+                        <div className="animate-fade-in w-full">
+                            <h5 className="comparison-value text-gradient-green">₹ 2,000</h5>
                             <div className="comparison-label">Total Sales (₹10,000) - Total Cost (₹8,000)</div>
-                            <p className="comparison-quote text-gold">"This is the Bottom Line"</p>
-                            <div className="mt-4 text-sm text-gray-300 px-4">
-                                <p className="mb-2"><strong>Profit = Total Revenue (TR) - Total Cost (TC)</strong></p>
+                            <p className="comparison-quote" style={{ borderLeftColor: '#ffd700', color: '#ffd700' }}>"This is the Bottom Line"</p>
+                            <div className="mt-6 text-sm text-gray-300 leading-relaxed max-w-lg mx-auto">
+                                <p className="mb-2 text-lg font-bold text-white">Profit = TR - TC</p>
                                 <p>It represents the actual financial gain of the firm after paying for all inputs (Land, Labor, Capital).</p>
                             </div>
                         </div>

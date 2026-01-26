@@ -5473,3 +5473,202 @@
   padding: 5px;
 }
 
+
+/* =============================================
+   ENHANCED PREMIUM STYLES (Manual Fix)
+   ============================================= */
+
+/* --- Enhanced Cards --- */
+.premium-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle border */
+  border-radius: 16px; /* Reduced to standard rounded-2xl look */
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.premium-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 215, 0, 0.3); /* Gold hint on hover */
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.premium-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.5), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.premium-card:hover::before {
+  transform: translateX(100%);
+}
+
+/* --- Gradient Texts --- */
+.text-gradient-gold {
+  background: linear-gradient(to right, #ffd700, #ffaa00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* Standard */
+  font-weight: 800;
+}
+
+.text-gradient-green {
+   background: linear-gradient(to right, #00ff88, #00cc6a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+}
+
+.text-gradient-blue {
+   background: linear-gradient(to right, #60a5fa, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+}
+
+/* --- Revenue vs Profit Card Specifics --- */
+.comparison-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 20px;
+}
+
+.comparison-value {
+    font-size: 3rem;
+    font-weight: 900;
+    margin: 10px 0;
+    letter-spacing: -1px;
+    text-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.comparison-label {
+    font-size: 0.95rem;
+    color: #94a3b8; /* Slate-400 equivalent */
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.comparison-quote {
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    padding: 10px 20px;
+    border-left: 3px solid; /* color inherited or defined inline */
+    background: linear-gradient(90deg, rgba(255,255,255,0.05), transparent);
+}
+
+/* --- TR-MR Relationship: Enhanced Phase Grid --- */
+.phase-grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns on large screens */
+    gap: 40px;
+    align-items: stretch; /* Stretch to fill height */
+}
+
+@media (max-width: 1024px) {
+    .phase-grid-layout {
+        grid-template-columns: 1fr; /* Stack on smaller */
+    }
+}
+
+.phase-btn-premium {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 25px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+
+.phase-btn-premium:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateX(5px); /* Slide right effect */
+}
+
+.phase-btn-premium.active {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 215, 0, 0.5); /* Default fallback border */
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.phase-visual-premium {
+    background: rgba(0,0,0,0.4);
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    height: 100%;
+    min-height: 400px;
+}
+
+.phase-visual-premium .phase-icon {
+    font-size: 6rem;
+    margin-bottom: 30px;
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.3));
+}
+
+/* --- Real World Examples: Enhanced Grid --- */
+.example-grid-premium {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+@media (max-width: 768px) {
+    .example-grid-premium {
+        grid-template-columns: 1fr;
+    }
+}
+
+.example-card-premium {
+    background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px;
+    padding: 30px;
+    transition: all 0.3s;
+}
+
+.example-card-premium:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+    transform: translateY(-5px);
+}
+
+.example-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
