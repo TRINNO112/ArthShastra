@@ -7,3 +7,4 @@ export { default as PracticeProblems } from './PracticeProblems';
 export { default as Quiz } from './Quiz';
 export { default as CostRelationships } from './CostRelationships';
 export { default as TotalCostCurves } from './TotalCostCurves';
+export { default as BreakEvenShutdown } from './BreakEvenShutdown';

@@ -5,9 +5,11 @@ import { lesson8Data } from '../data/lesson8Data';
 import { logLessonProgress } from '../../../services/firebase';
 import '../css/lessons.css';
 // Components (add as created)
-import { CostSchedule, CostCurvesChart, FixedVariableCosts, ShortLongRun, RealWorldExamples, PracticeProblems, Quiz, CostRelationships, TotalCostCurves } from './components';
+import { CostSchedule, CostCurvesChart, FixedVariableCosts, ShortLongRun, RealWorldExamples, PracticeProblems, Quiz, CostRelationships, TotalCostCurves, BreakEvenShutdown } from './components';
 
 const sections = lesson8Data.sections;
+
+
 
 // Sample costData (expand as needed)
 const costData = [
@@ -54,7 +56,8 @@ function Lesson8() {
     examples: FaIndustry,
     practice: FaCalculator,
     quiz: FaQuestionCircle,
-    relationships: FaProjectDiagram
+    relationships: FaProjectDiagram,
+    shutdown: FaBalanceScale
   };
 
   const renderActiveSection = () => {
@@ -119,6 +122,8 @@ function Lesson8() {
             </div>
           </>
         );
+      case 'shutdown':
+        return <BreakEvenShutdown />;
       case 'fixed-variable':
         return <FixedVariableCosts />;
       case 'short-long':

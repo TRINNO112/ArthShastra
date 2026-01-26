@@ -251,6 +251,43 @@ const TotalCostCurves = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className="explanation-content" style={{ marginTop: '30px', color: '#e0e0e0' }}>
+                    <h3 className="text-xl font-bold mb-4 text-gold" style={{ color: '#ffd700', borderBottom: '1px solid #333', paddingBottom: '10px' }}>Analysis of Total Costs</h3>
+
+                    <div className="concept-block mb-6" style={{ marginBottom: '20px' }}>
+                        <h4 className="text-lg font-semibold text-[#00bfff] mb-2" style={{ color: '#00bfff', fontSize: '1.1rem' }}>1. TFC (Total Fixed Cost)</h4>
+                        <p className="mb-2" style={{ lineHeight: '1.6', color: '#ccc' }}>
+                            Represented by a straight horizontal line parallel to the X-axis.
+                        </p>
+                        <ul style={{ listStyleType: 'disc', paddingLeft: '20px', color: '#aaa', marginTop: '5px' }}>
+                            <li>It remains <strong>constant</strong> at all levels of output (even at Q=0).</li>
+                            <li>Includes costs like Rent, Interest, Salaries of permanent staff.</li>
+                        </ul>
+                    </div>
+
+                    <div className="concept-block mb-6" style={{ marginBottom: '20px' }}>
+                        <h4 className="text-lg font-semibold text-[#ff6b6b] mb-2" style={{ color: '#ff6b6b', fontSize: '1.1rem' }}>2. TVC (Total Variable Cost)</h4>
+                        <p className="mb-2" style={{ lineHeight: '1.6', color: '#ccc' }}>
+                            Starts from the origin (0,0) and increases as output increases.
+                        </p>
+                        <ul style={{ listStyleType: 'disc', paddingLeft: '20px', color: '#aaa', marginTop: '5px' }}>
+                            <li><strong>Inverse S-Shape:</strong> Initially increases at a diminishing rate (due to increasing returns), and later increases at an increasing rate (due to diminishing returns).</li>
+                            <li>Examples: Raw material cost, wages of casual labor.</li>
+                        </ul>
+                    </div>
+
+                    <div className="concept-block">
+                        <h4 className="text-lg font-semibold text-[#00ff88] mb-2" style={{ color: '#00ff88', fontSize: '1.1rem' }}>3. TC (Total Cost)</h4>
+                        <p className="mb-2" style={{ lineHeight: '1.6', color: '#ccc' }}>
+                            TC = TFC + TVC.
+                        </p>
+                        <ul style={{ listStyleType: 'disc', paddingLeft: '20px', color: '#aaa', marginTop: '5px' }}>
+                            <li>TC curve starts from the TFC intercept on the Y-axis (not zero), because fixed costs exist even at zero output.</li>
+                            <li>It runs <strong>parallel</strong> to the TVC curve. The vertical distance between TC and TVC is constant (= TFC).</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
     );

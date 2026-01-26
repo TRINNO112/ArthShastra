@@ -7,6 +7,7 @@ export const lesson8Data = {
     { id: 'intro', name: 'Introduction', icon: FaDollarSign },
     { id: 'schedule', name: 'Cost Schedule', icon: FaTable },
     { id: 'curves', name: 'Cost Curves', icon: FaChartLine },
+    { id: 'shutdown', name: 'Break-Even & Shutdown', icon: FaBalanceScale },
     { id: 'fixed-variable', name: 'Fixed vs Variable Costs', icon: FaBalanceScale },
     { id: 'short-long', name: 'Short vs Long Run', icon: FaClock },
     { id: 'relationships', name: 'Relationships', icon: FaProjectDiagram },

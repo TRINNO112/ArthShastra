@@ -1,0 +1,249 @@
+import React, { useEffect, useRef, useState } from 'react';
+import * as d3 from 'd3';
+import './component.css';
+
+const BreakEvenShutdown = () => {
+    const svgRef = useRef();
+    const containerRef = useRef();
+    const [dimensions, setDimensions] = useState({ width: 0, height: 450 });
+    const [activeScenario, setActiveScenario] = useState('all'); // all, breakeven, shutdown
+
+    useEffect(() => {
+        const updateWidth = () => {
+            if (containerRef.current) {
+                setDimensions(prev => ({ ...prev, width: containerRef.current.offsetWidth }));
+            }
+        };
+        window.addEventListener('resize', updateWidth);
+        updateWidth();
+        return () => window.removeEventListener('resize', updateWidth);
+    }, []);
+
+    useEffect(() => {
+        if (!dimensions.width) return;
+
+        const svg = d3.select(svgRef.current);
+        svg.selectAll('*').remove();
+
+        const { width, height } = dimensions;
+        const margin = { top: 40, right: 60, bottom: 60, left: 60 };
+        const innerWidth = width - margin.left - margin.right;
+        const innerHeight = height - margin.top - margin.bottom;
+
+        svg.attr('width', width).attr('height', height);
+
+        // --- Definitions ---
+        const defs = svg.append('defs');
+        defs.append('marker')
+            .attr('id', 'arrow')
+            .attr('viewBox', '0 0 10 10')
+            .attr('refX', 5)
+            .attr('refY', 5)
+            .attr('markerWidth', 6)
+            .attr('markerHeight', 6)
+            .attr('orient', 'auto-start-reverse')
+            .append('path')
+            .attr('d', 'M 0 0 L 10 5 L 0 10 z')
+            .attr('fill', '#888');
+
+        const g = svg.append('g').attr('transform', `translate(${margin.left},${margin.top})`);
+
+        // --- Scales ---
+        // Synthetic data to represent textbook curves
+        const xScale = d3.scaleLinear().domain([0, 10]).range([0, innerWidth]);
+        const yScale = d3.scaleLinear().domain([0, 25]).range([innerHeight, 0]);
+
+        // --- Data Generators ---
+        // AC = Q^2 - 8Q + 22 + 10/Q  (Min around Q=4.5)
+        // AVC = Q^2 - 8Q + 22        (Min around Q=4)
+        // MC = 3Q^2 - 16Q + 22       (Intersects min AC and min AVC)
+
+        // Let's use simpler quadratic forms for clean visual
+        // MC = 2Q - 6 (too simple, linear)
+        // Let's use plotted points for control:
+        const range = d3.range(0.5, 9.5, 0.1);
+
+        // Functions tuned for visual clarity
+        const avcFn = (q) => 0.5 * Math.pow(q - 4, 2) + 6; // Min at Q=4, Val=6
+        const acFn = (q) => avcFn(q) + 4 / q + 1; // AC > AVC
+        // Adjust AC so its min is distinct. 
+        // Let's try simpler:
+        // AVC min usually at lower Q than AC min? No, ATC min is at higher Q than AVC min.
+        // AVC min at Q=4, P=6.
+        // MC must pass through (4,6)
+
+        // MC function passing through (4,6) with slope 2*0.5*(q-4) -> slope 0 at 4.
+        // Actually MC slope is twice AVC slope.
+        // If TVC = 0.5(Q-4)^2*Q + 6Q ... too complex.
+
+        // Visual Approximation:
+        const avcData = range.map(q => ({ q, val: 0.4 * Math.pow(q - 4, 2) + 6 }));
+        const acData = range.map(q => ({ q, val: 0.4 * Math.pow(q - 4.5, 2) + 8.5 })); // Min at Q=4.5, P=8.5
+
+        // MC needs to cut AVC at (4, 6) and AC at (4.5, 8.5)
+        // Previous equation (1.33Q^2...) shot up to 70 at Q=9.5.
+        // Let's use a milder curve that still fits the intersection points but stays < 25.
+        // Maybe cubic? Or just clamped/adjusted range.
+        // Or change the function entirely. curve has to be J shaped.
+        // Let's force it to flatten or rise slower after the intersection.
+        // Or simply reduce the domain of the chart to focus on the key area (0-7?). 
+        // No, user wants J shape.
+
+        // Let's fit a parabola passing through (4,6), (4.5, 8.5) and say (8, 20).
+        // vertex form: a(x-h)^2 + k. 
+        // If min is at 2.5: a(4-2.5)^2 + k = 6?? No min is separate.
+
+        // Let's try 0.8 * Q^2 - 4 * Q + 10.
+        // Q=4: 0.8*16 - 16 + 10 = 12.8 - 6 = 6.8. Close.
+        // Q=9: 0.8*81 - 36 + 10 = 64.8 - 26 = 38 (Still high).
+
+        // Let's just Clamp it visually or stop the line earlier.
+        // The user complained about the "long red line".
+        // Let's cap the data generation at Q=7 or 8 where it hits the top.
+        // 1.33Q^2 - 6.32Q + 10 reaches 25 when: 1.33Q^2 - 6.32Q - 15 = 0.
+        // Q approx 6.5.
+        // So we strictly filter mcData to where val <= 25.
+
+        const mcFn = q => 1.33 * q * q - 6.32 * q + 10;
+        const mcData = range.map(q => ({ q, val: mcFn(q) })).filter(d => d.val <= 24); // Cut off before top
+
+
+        // --- Drawing Curves ---
+        const line = d3.line().x(d => xScale(d.q)).y(d => yScale(d.val)).curve(d3.curveBasis);
+
+        const addPath = (data, color, width, dash) => {
+            const p = g.append('path')
+                .datum(data)
+                .attr('fill', 'none')
+                .attr('stroke', color)
+                .attr('stroke-width', width)
+                .attr('d', line);
+
+            if (dash) p.attr('stroke-dasharray', dash);
+
+            // Animation
+            const len = p.node().getTotalLength();
+            p.attr("stroke-dasharray", dash ? `${dash} ${len}` : `${len} ${len}`)
+                .attr("stroke-dashoffset", len)
+                .transition()
+                .duration(2000)
+                .ease(d3.easeCubicOut)
+                .attr("stroke-dashoffset", 0);
+        };
+
+        // AVC
+        addPath(avcData, '#00bfff', 2, '5,5');
+
+        // AC
+        addPath(acData, '#ffd700', 2);
+
+        // MC
+        addPath(mcData, '#ff6b6b', 3);
+
+        // --- Points of Interest ---
+        const breakEvenPoint = { q: 4.5, p: 8.5 };
+        const shutdownPoint = { q: 4, p: 6 };
+
+        // --- Price Lines (Interactive) ---
+        const drawPriceLine = (point, label, color, id) => {
+            const isActive = activeScenario === 'all' || activeScenario === id;
+            if (isActive) {
+                // Dashed line from axis
+                g.append('line')
+                    .attr('x1', 0).attr('x2', innerWidth).attr('y1', yScale(point.p)).attr('y2', yScale(point.p))
+                    .attr('stroke', color).attr('stroke-width', 2).attr('stroke-dasharray', '4,4');
+
+                // Point
+                g.append('circle')
+                    .attr('cx', xScale(point.q)).attr('cy', yScale(point.p))
+                    .attr('r', 6).attr('fill', color).attr('stroke', '#fff');
+
+                // Label
+                g.append('text')
+                    .attr('x', innerWidth - 10).attr('y', yScale(point.p) - 8)
+                    .attr('text-anchor', 'end')
+                    .attr('fill', color).style('font-weight', 'bold')
+                    .text(label);
+            }
+        };
+
+        drawPriceLine(breakEvenPoint, 'P₁ = Min AC (Break-Even)', '#ffd700', 'breakeven');
+        drawPriceLine(shutdownPoint, 'P₂ = Min AVC (Shutdown)', '#00bfff', 'shutdown');
+
+        // --- Axes ---
+        g.append('line').attr('x1', 0).attr('y1', innerHeight).attr('x2', innerWidth + 20).attr('y2', innerHeight)
+            .attr('stroke', '#888').attr('stroke-width', 1.5).attr('marker-end', 'url(#arrow)');
+
+        g.append('line').attr('x1', 0).attr('y1', innerHeight).attr('x2', 0).attr('y2', -20)
+            .attr('stroke', '#888').attr('stroke-width', 1.5).attr('marker-end', 'url(#arrow)');
+
+        // Labels
+        g.append('text').attr('x', innerWidth / 2).attr('y', innerHeight + 40).attr('fill', '#ccc').text('Output (Q)').style('text-anchor', 'middle');
+        g.append('text').attr('transform', 'rotate(-90)').attr('x', -innerHeight / 2).attr('y', -40).attr('fill', '#ccc').text('Price / Cost').style('text-anchor', 'middle');
+
+        // Curve Labels
+        // Labels moved down as per user request
+        g.append('text').attr('x', xScale(9)).attr('y', yScale(acData[acData.length - 1].val) + 5).attr('fill', '#ffd700').text('AC').style('font-weight', 'bold');
+        g.append('text').attr('x', xScale(9)).attr('y', yScale(avcData[avcData.length - 1].val) + 35).attr('fill', '#00bfff').text('AVC').style('font-weight', 'bold');
+        g.append('text').attr('x', xScale(6.2)).attr('y', yScale(mcData[mcData.length - 1].val) - 10).attr('fill', '#ff6b6b').text('MC').style('font-weight', 'bold');
+
+
+    }, [dimensions, activeScenario]);
+
+    return (
+        <section className="lesson-section">
+            <div className="section-header-lesson">
+                <span className="section-badge-lesson">Concept</span>
+                <h2 className="section-title-lesson">Shutdown & Break-Even Points</h2>
+                <p className="section-subtitle-lesson">Critical price levels for decision making in the short run.</p>
+            </div>
+
+            <div className="content-card">
+                <div className="chart-controls" style={{ display: 'flex', gap: '10px', marginBottom: '15px', justifyContent: 'center' }}>
+                    <button className={`control-btn ${activeScenario === 'all' ? 'active' : ''}`} onClick={() => setActiveScenario('all')}>Show All</button>
+                    <button className={`control-btn ${activeScenario === 'breakeven' ? 'active' : ''}`} onClick={() => setActiveScenario('breakeven')}>Break-Even Only</button>
+                    <button className={`control-btn ${activeScenario === 'shutdown' ? 'active' : ''}`} onClick={() => setActiveScenario('shutdown')}>Shutdown Only</button>
+                </div>
+
+                <div ref={containerRef} className="chart-wrapper-flex" style={{ height: '450px' }}>
+                    <svg ref={svgRef} className="chart-container-d3" style={{ height: '100%' }}></svg>
+                </div>
+
+                <div className="explanation-content" style={{ marginTop: '30px', color: '#e0e0e0' }}>
+                    <h3 className="text-xl font-bold mb-4 text-gold">Detailed Analysis</h3>
+
+                    <div className="concept-block mb-6">
+                        <h4 className="text-lg font-semibold text-[#ffd700] mb-2">1. Break-Even Point (Point E)</h4>
+                        <p className="mb-2">
+                            Occurs where <strong>Price (AR) = Minimum AC</strong> (and MC intersects AC).
+                        </p>
+                        <ul className="list-disc pl-5 space-y-1 text-gray-300">
+                            <li>At this price (P₁), Total Revenue (TR) exactly equals Total Cost (TC).</li>
+                            <li> The firm earns <strong>Normal Profit</strong> (Zero Economic Profit).</li>
+                            <li>If Price &gt; Min AC, the firm earns <span className="text-green-400">Super-normal Profit</span>.</li>
+                            <li>If Price &lt; Min AC, the firm incurs a <span className="text-red-400">Loss</span>.</li>
+                        </ul>
+                    </div>
+
+                    <div className="concept-block">
+                        <h4 className="text-lg font-semibold text-[#00bfff] mb-2">2. Shutdown Point (Point S)</h4>
+                        <p className="mb-2">
+                            Occurs where <strong>Price (AR) = Minimum AVC</strong> (and MC intersects AVC).
+                        </p>
+                        <ul className="list-disc pl-5 space-y-1 text-gray-300">
+                            <li>At this price (P₂), the firm covers <em>only</em> its Variable Costs. It loses its entire Fixed Cost.</li>
+                            <li><strong>Decision Rule:</strong>
+                                <ul className="list-circle pl-5 mt-1">
+                                    <li>If <strong>P &ge; Min AVC</strong>: The firm continues to produce in the short run to minimize losses (Loss &le; TFC).</li>
+                                    <li>If <strong>P &lt; Min AVC</strong>: The firm shuts down immediately because producing would increase losses beyond TFC.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+export default BreakEvenShutdown;

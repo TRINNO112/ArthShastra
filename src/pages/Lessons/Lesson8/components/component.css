@@ -214,6 +214,7 @@
     padding: 25px;
     margin-bottom: 25px;
     transition: all 0.3s ease;
+    margin-top: 25px;
   }
   
   .btn-reveal {

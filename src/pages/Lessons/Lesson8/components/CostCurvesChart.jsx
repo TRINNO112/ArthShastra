@@ -283,6 +283,41 @@ const CostCurvesChart = ({ data }) => {
 
           </div>
         </div>
+
+        <div className="explanation-content" style={{ marginTop: '30px', color: '#e0e0e0' }}>
+          <h3 className="text-xl font-bold mb-4 text-gold" style={{ color: '#ffd700', borderBottom: '1px solid #333', paddingBottom: '10px' }}>Explained: Nature of Cost Curves</h3>
+
+          <div className="concept-block mb-6" style={{ marginBottom: '20px' }}>
+            <h4 className="text-lg font-semibold text-[#00ff88] mb-2" style={{ color: '#00ff88', fontSize: '1.1rem' }}>1. Why are AC, AVC, and MC U-shaped?</h4>
+            <p className="mb-2" style={{ lineHeight: '1.6', color: '#ccc' }}>
+              This is due to the <strong>Law of Variable Proportions</strong>:
+            </p>
+            <ul style={{ listStyleType: 'disc', paddingLeft: '20px', color: '#aaa', marginTop: '5px' }}>
+              <li style={{ marginBottom: '5px' }}><strong>Phase 1 (Falling Cost):</strong> Initially, as output increases, efficiency rises due to better utilization of fixed factors (Increasing Returns to Factor), so costs fall.</li>
+              <li><strong>Phase 2 (Rising Cost):</strong> Eventually, diminishing returns set in. Overcrowding of variable factors on fixed factors causes efficiency to drop, so costs rise.</li>
+            </ul>
+          </div>
+
+          <div className="concept-block mb-6" style={{ marginBottom: '20px' }}>
+            <h4 className="text-lg font-semibold text-[#ff6b6b] mb-2" style={{ color: '#ff6b6b', fontSize: '1.1rem' }}>2. Relationship between MC and AC</h4>
+            <ul style={{ listStyleType: 'disc', paddingLeft: '20px', color: '#ccc', lineHeight: '1.6' }}>
+              <li style={{ marginBottom: '8px' }}><strong>When MC &lt; AC:</strong> MC pulls AC down. (AC falls).</li>
+              <li style={{ marginBottom: '8px' }}><strong>When MC = AC:</strong> AC is at its minimum point. MC always cuts AC from below at its lowest point.</li>
+              <li><strong>When MC &gt; AC:</strong> MC pulls AC up. (AC rises).</li>
+            </ul>
+          </div>
+
+          <div className="concept-block">
+            <h4 className="text-lg font-semibold text-[#00bfff] mb-2" style={{ color: '#00bfff', fontSize: '1.1rem' }}>3. AC vs AVC</h4>
+            <p className="mb-2" style={{ lineHeight: '1.6', color: '#ccc' }}>
+              AC always lies above AVC because AC = AVC + AFC.
+            </p>
+            <ul style={{ listStyleType: 'disc', paddingLeft: '20px', color: '#aaa', marginTop: '5px' }}>
+              <li>The vertical gap between AC and AVC is equal to AFC (Average Fixed Cost).</li>
+              <li>As output rises, AFC falls continuously. Thus, the gap between AC and AVC keeps narrowing but <strong>they never intersect</strong> because AFC can never be zero.</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
   );
