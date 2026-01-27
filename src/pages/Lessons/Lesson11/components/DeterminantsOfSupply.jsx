@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FaIndustry, FaCogs, FaMoneyBillWave, FaBalanceScale, FaLightbulb, FaTruck, FaArrowUp, FaArrowDown, FaLandmark, FaBoxOpen, FaCrosshairs, FaRandom, FaCalendarAlt, FaArrowRight } from 'react-icons/fa';
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import '../../Lesson5/components/lesson5.css';
 
 const DeterminantsOfSupply = () => {
