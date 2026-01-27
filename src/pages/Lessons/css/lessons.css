@@ -6090,3 +6090,711 @@
     line-height: 1.7;
 }
 
+
+/* =============================================
+   LESSON 3 SPECIFIC STYLES (Restored)
+   ============================================= */
+
+/* Definition Box Enhanced */
+.definition-box-enhanced {
+  position: relative;
+  background: linear-gradient(135deg, rgba(20, 20, 25, 0.8), rgba(30, 30, 40, 0.9));
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 20px;
+  padding: 30px;
+  margin: 30px 0;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.corner-decor {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-style: solid;
+  border-color: rgba(255, 215, 0, 0.4);
+  pointer-events: none;
+}
+
+.corner-decor.top-left {
+  top: 0;
+  left: 0;
+  border-width: 2px 0 0 2px;
+  border-radius: 20px 0 0 0;
+}
+
+.corner-decor.bottom-right {
+  bottom: 0;
+  right: 0;
+  border-width: 0 2px 2px 0;
+  border-radius: 0 0 20px 0;
+}
+
+/* Utility Table */
+.utility-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  margin: 20px 0;
+}
+
+.utility-table th {
+  padding: 15px;
+  text-align: center;
+  font-weight: 700;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.utility-table td {
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.utility-table tr td:first-child { border-radius: 10px 0 0 10px; }
+.utility-table tr td:last-child { border-radius: 0 10px 10px 0; }
+
+.utility-table tr:hover td {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* COU Example Grid */
+.cou-example-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.cou-example-grid-item {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Formula Box */
+.cou-formula-box-styled {
+  background: rgba(30, 40, 50, 0.6);
+  border-left: 4px solid var(--neon-gold);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.cou-formula-box-styled.green {
+  border-left-color: var(--neon-green);
+}
+
+/* Icon Grid */
+.cou-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.cou-icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+/* Diamond Boxes */
+.cou-diamond-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.cou-diamond-water-item, .cou-diamond-diamond-item {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.text-xxl { font-size: 2.5rem; }
+.font-bold { font-weight: 700; }
+.font-mono { font-family: monospace; }
+.text-xs { font-size: 0.75rem; }
+.text-sm { font-size: 0.875rem; }
+.m-0 { margin: 0; }
+.mt-1 { margin-top: 0.25rem; }
+.mb-1 { margin-bottom: 0.25rem; }
+.p-2 { padding: 0.5rem; }
+.rounded { border-radius: 0.375rem; }
+
+.text-gold { color: var(--neon-gold) !important; }
+.text-green { color: var(--neon-green) !important; }
+.text-cyan { color: var(--neon-cyan) !important; }
+.text-red { color: #ff6b6b !important; }
+.text-orange { color: #ff8c00 !important; }
+.text-blue { color: #0099ff !important; }
+.bg-tertiary { background: rgba(255, 255, 255, 0.05); }
+
+@media (max-width: 768px) {
+  .cou-icon-grid, .cou-diamond-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ============================================================================
+   LESSON 3 COMPLETE STYLING RESTORATION
+   ============================================================================ */
+
+/* --- SHARED UTILITIES --- */
+.text-gold { color: #ffd700 !important; }
+.text-cyan { color: #00ffff !important; }
+.text-green { color: #00ff00 !important; }
+.text-orange { color: #ff8c00 !important; }
+.text-red { color: #ff6b6b !important; }
+.bg-tertiary { background: rgba(255, 255, 255, 0.05); }
+
+/* --- WHO IS A CONSUMER (Introduction) --- */
+.definition-box-enhanced {
+  position: relative;
+  background: linear-gradient(135deg, rgba(20, 20, 25, 0.9), rgba(30, 30, 45, 0.95));
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 20px;
+  padding: 30px;
+  margin: 30px 0;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.corner-decor {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  pointer-events: none;
+}
+
+.corner-decor.top-left { top: 10px; left: 10px; border-right: 0; border-bottom: 0; border-radius: 10px 0 0 0; }
+.corner-decor.bottom-right { bottom: 10px; right: 10px; border-left: 0; border-top: 0; border-radius: 0 0 10px 0; }
+
+/* --- CONCEPT OF UTILITY --- */
+.definition-quote-box {
+  background: rgba(255, 215, 0, 0.05);
+  border-left: 4px solid #ffd700;
+  padding: 2rem;
+  margin: 2rem 0;
+  border-radius: 0 12px 12px 0;
+  position: relative;
+}
+
+.definition-quote-icon {
+  position: absolute;
+  top: -15px;
+  left: 10px;
+  background: #1a1a2e;
+  padding: 5px 10px;
+  color: #ffd700;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  border: 1px solid #ffd700;
+}
+
+.definition-text {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #e0e0e0;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.key-term-gold {
+  color: #ffd700;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 215, 0, 0.3);
+}
+
+.cou-example-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.cou-example-grid-item {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1.5rem;
+  border-radius: 12px;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.cou-example-grid-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateY(-5px);
+}
+
+.cou-formula-box-styled {
+  background: linear-gradient(90deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2));
+  border: 1px solid rgba(255,255,255,0.1);
+  border-left: 5px solid #00ffff;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Utility Table */
+.utility-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  margin: 20px 0;
+}
+
+.utility-table th {
+  background: rgba(0, 86, 179, 0.3);
+  color: #fff;
+  padding: 15px;
+  text-align: center;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(0, 150, 255, 0.5);
+}
+
+.utility-table td {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 12px;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.utility-table tr:hover td {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Graph Container */
+.graph-container {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+  margin: 2rem 0;
+}
+
+.graph-tooltip-container {
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+/* Diamond Water Paradox */
+.cou-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.cou-icon-item {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cou-diamond-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin: 2rem 0;
+}
+
+.cou-diamond-water-item {
+  background: linear-gradient(135deg, rgba(0, 100, 255, 0.1), rgba(0, 50, 150, 0.1));
+  border: 1px solid rgba(0, 150, 255, 0.3);
+  padding: 25px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.cou-diamond-diamond-item {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(200, 150, 0, 0.1));
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  padding: 25px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+/* --- LAW OF DIMINISHING MARGINAL UTILITY --- */
+.reason-card {
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.reason-number {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 25px;
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.assumption-item {
+  display: flex;
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid;
+  border-radius: 0 8px 8px 0;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.assumption-number {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-weight: bold;
+  margin-right: 15px;
+}
+
+/* --- CONSUMER EQUILIBRIUM --- */
+.equilibrium-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.equilibrium-table th {
+  background: #0056b3;
+  color: #fff;
+  padding: 12px;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.equilibrium-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.9rem;
+}
+
+.steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.step-item {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.theory-box {
+  border-top: 4px solid #4da6ff;
+}
+
+.assumptions-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --- LIMITATIONS OF UTILITY --- */
+.limitation-item {
+  background: rgba(30, 30, 40, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  margin-bottom: 25px;
+  overflow: hidden;
+}
+
+.limitation-header {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.limitation-number {
+  background: #ff6b6b;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.limitation-content {
+  padding: 20px;
+}
+
+.explanation-box {
+  background: rgba(0, 0, 0, 0.2);
+  border-left: 3px solid #ff6b6b;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.scenario-timeline {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+  position: relative;
+}
+
+.scenario-timeline::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 0;
+}
+
+.timeline-step {
+  background: #1a1a2e;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  padding: 15px;
+  border-radius: 8px;
+  width: 48%;
+  z-index: 1;
+  position: relative;
+}
+
+.timeline-step.precious {
+  border-color: #ffd700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+}
+
+.limitations-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.limitations-table th {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  text-align: left;
+  color: #00ffff;
+}
+
+.limitations-table td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #ccc;
+}
+
+@media (max-width: 768px) {
+  .cou-diamond-grid, .cou-icon-grid { grid-template-columns: 1fr; }
+  .definition-box-enhanced { padding: 20px; }
+  .scenario-timeline { flex-direction: column; gap: 20px; }
+  .scenario-timeline::before { display: none; }
+  .timeline-step { width: 100%; }
+}
+
+
+/* ============================================================================
+   LESSON 3 FINISHING TOUCHES (Paradox, Practice, & Nav)
+   ============================================================================ */
+
+/* HIDE BROKEN INTERNAL NAVIGATION (Handled by Parent Lesson3.jsx) */
+.section-navigation {
+  display: none !important;
+}
+
+/* --- UTILITY COLORS & BACKGROUNDS --- */
+.bg-green { background: rgba(0, 255, 136, 0.1); }
+.bg-gold { background: rgba(255, 215, 0, 0.1); }
+.bg-cyan { background: rgba(0, 255, 255, 0.1); }
+.bg-red { background: rgba(255, 107, 107, 0.1); }
+.bg-white-05 { background: rgba(255, 255, 255, 0.05); }
+.bg-white-10 { background: rgba(255, 255, 255, 0.1); }
+.bg-tertiary { background: rgba(255, 255, 255, 0.03); }
+
+.text-white-90 { color: rgba(255, 255, 255, 0.9); }
+.text-white-95 { color: rgba(255, 255, 255, 0.95); }
+
+/* --- BORDERS --- */
+.border-green { border: 1px solid rgba(0, 255, 136, 0.3); }
+.border-gold { border: 1px solid rgba(255, 215, 0, 0.3); }
+.border-gold-dashed { border: 1px dashed rgba(255, 215, 0, 0.5); }
+.border-red { border: 1px solid rgba(255, 107, 107, 0.3); }
+.border-white-20 { border: 1px solid rgba(255, 255, 255, 0.2); }
+.border-cyan { border: 1px solid rgba(0, 255, 255, 0.3); }
+
+/* --- PRACTICE PROBLEMS SECTION --- */
+.practice-box {
+  background: rgba(0, 50, 80, 0.3);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 25px;
+}
+
+.practice-box.gold {
+  background: rgba(80, 60, 0, 0.2);
+  border-color: rgba(255, 215, 0, 0.2);
+}
+
+.solution-reveal {
+  cursor: pointer;
+  color: #00ff88;
+  font-weight: bold;
+  padding: 8px 0;
+  user-select: none;
+  outline: none;
+  list-style: none; /* Remove default triangle in Firefox */
+}
+
+/* Remove default triangle in Chrome/Safari */
+.solution-reveal::-webkit-details-marker {
+  display: none;
+}
+
+.solution-reveal:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.solution-content {
+  margin-top: 15px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- KEY TAKEAWAYS GRID --- */
+.cou-takeaway-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* --- UTILITY CLASSES --- */
+.flex-column { display: flex; flex-direction: column; }
+.flex-between { display: flex; justify-content: space-between; }
+.gap-sm { gap: 8px; }
+.gap-md { gap: 16px; }
+.rounded-full { border-radius: 9999px; }
+.w-full { width: 100%; }
+.m-0 { margin: 0; }
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.pl-4 { padding-left: 1rem; }
+.text-lg { font-size: 1.125rem; }
+.font-bold { font-weight: 700; }
+.items-center { align-items: center; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.grid-cols-auto-1fr { display: grid; grid-template-columns: auto 1fr; }
+.overflow-x-auto { overflow-x: auto; }
+
+/* --- DIAMOND WATER PARADOX --- */
+.cou-diamond-box {
+  background: rgba(20, 20, 25, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 25px;
+  margin: 20px 0;
+}
+
+
+/* ============================================================================
+   MISSING CLASSES RESTORATION (AUDIT RESULTS)
+   ============================================================================ */
+
+/* Utility Text Colors (Bootstrap-like) */
+.text-info { color: #17a2b8 !important; }
+.text-warning { color: #ffc107 !important; }
+
+/* Grids for DMU & Applications */
+.exceptions-grid, .applications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.graph-explanation-item, .relationship-step {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 3px solid #00ff88;
+  margin-bottom: 15px;
+}
+
+.step-number {
+  background: #0056b3;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.formulae-section, .formula-display {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 20px 0;
+  text-align: center;
+  font-family: 'Roboto Mono', monospace;
+  color: #00ffff;
+  font-size: 1.1rem;
+}
+
+/* Fix for any potential garbled names found in audit */
+.saturation-explanation {
+  background: rgba(255, 215, 0, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  margin-top: 15px;
+}
+

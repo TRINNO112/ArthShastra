@@ -1,0 +1,187 @@
+/* ============================================================================
+   LESSON 3: CLEAN DESIGN SYSTEM (Rebuild)
+   ============================================================================ */
+
+/* --- Variables --- */
+:root {
+  --l3-gold: #ffd700;
+  --l3-gold-dim: rgba(255, 215, 0, 0.1);
+  --l3-gold-glow: rgba(255, 215, 0, 0.3);
+  
+  --l3-cyan: #00ffff;
+  --l3-cyan-dim: rgba(0, 255, 255, 0.1);
+  
+  --l3-green: #00ff88;
+  --l3-green-dim: rgba(0, 255, 136, 0.1);
+  
+  --l3-red: #ff6b6b;
+  --l3-orange: #ff8c00;
+  
+  --l3-bg-card: rgba(255, 255, 255, 0.03);
+  --l3-border: rgba(255, 255, 255, 0.1);
+  --l3-border-light: rgba(255, 255, 255, 0.2);
+}
+
+/* --- Layout Containers --- */
+.lesson3-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Inter', sans-serif;
+  color: #e0e0e0;
+}
+
+.lesson3-card {
+  background: var(--l3-bg-card);
+  border: 1px solid var(--l3-border);
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 30px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.lesson3-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+}
+
+/* --- Typography --- */
+.l3-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff, #a5a5a5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.l3-subtitle {
+  font-size: 1.2rem;
+  color: #a0a0a0;
+  margin-bottom: 2rem;
+}
+
+.l3-heading-gold {
+  color: var(--l3-gold);
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--l3-border);
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+.l3-heading-cyan {
+  color: var(--l3-cyan);
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--l3-border);
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+/* --- Feature Components --- */
+.l3-definition-box {
+  background: linear-gradient(135deg, rgba(20, 20, 25, 0.9), rgba(30, 30, 40, 0.9));
+  border-left: 4px solid var(--l3-gold);
+  padding: 2rem;
+  border-radius: 0 12px 12px 0;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.l3-definition-text {
+  font-size: 1.3rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: #fff;
+}
+
+.l3-highlight-text {
+  color: var(--l3-gold);
+  font-weight: bold;
+}
+
+/* --- Grid Systems --- */
+.l3-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin: 20px 0;
+}
+
+.l3-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.l3-grid-item {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.l3-grid-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.l3-grid-item.gold { border-top: 3px solid var(--l3-gold); }
+.l3-grid-item.cyan { border-top: 3px solid var(--l3-cyan); }
+.l3-grid-item.green { border-top: 3px solid var(--l3-green); }
+
+/* --- Tables --- */
+.l3-table-container {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--l3-border);
+  margin: 20px 0;
+}
+
+.l3-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(0,0,0,0.2);
+}
+
+.l3-table th {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--l3-cyan);
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--l3-border);
+}
+
+.l3-table td {
+  padding: 15px;
+  border-bottom: 1px solid var(--l3-border);
+  color: #ccc;
+}
+
+/* --- Lists --- */
+.l3-list {
+  list-style: none;
+  padding: 0;
+}
+
+.l3-list li {
+  padding: 10px 0;
+  padding-left: 30px;
+  position: relative;
+}
+
+.l3-list li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: var(--l3-gold);
+}

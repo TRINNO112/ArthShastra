@@ -19,7 +19,8 @@ import {
   getDocs,
   serverTimestamp,
   arrayUnion,
-  enableIndexedDbPersistence
+  enableIndexedDbPersistence,
+  increment
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -106,41 +107,72 @@ export async function signInWithGoogle() {
 export async function updateUserStats(userId, statsUpdate) {
   try {
     const userRef = doc(db, 'users', userId);
-    const userSnap = await getDoc(userRef);
-    if (!userSnap.exists()) return;
 
-    const data = userSnap.data();
-    const stats = data.stats || {};
+    // Construct the deep update object
+    const updateObject = { stats: {} };
 
-    // Recursive merge for nested stats
-    const merge = (target, source) => {
+    // We expect statsUpdate to be partial objects (e.g. { lessons: { started: 1 } })
+    // We map numbers to increment() for counters
+    const processUpdate = (source, target) => {
       Object.keys(source).forEach(key => {
-        if (source[key] instanceof Object && key in target) {
-          merge(target[key], source[key]);
-        } else if (typeof source[key] === 'number' && typeof target[key] === 'number') {
-          target[key] += source[key];
+        if (typeof source[key] === 'object' && source[key] !== null && !Array.isArray(source[key])) {
+          target[key] = {};
+          processUpdate(source[key], target[key]);
+        } else if (typeof source[key] === 'number') {
+          // For stats, we assume numbers are increments unless specific keys
+          if (['bestScore'].includes(key)) {
+            target[key] = source[key];
+          } else {
+            target[key] = increment(source[key]);
+          }
         } else {
           target[key] = source[key];
         }
       });
     };
 
-    merge(stats, statsUpdate);
+    processUpdate(statsUpdate, updateObject.stats);
 
-    // Update streak
-    const today = new Date().toISOString().split('T')[0];
-    const streak = stats.streak || { current: 0, longest: 0, lastActiveDate: null };
-    if (streak.lastActiveDate === new Date(Date.now() - 86400000).toISOString().split('T')[0]) {
-      streak.current++;
-      if (streak.current > streak.longest) streak.longest = streak.current;
-    } else if (streak.lastActiveDate !== today) {
-      streak.current = 1;
+    // Add last active timestamp
+    updateObject.lastActiveDate = serverTimestamp();
+
+    // -- Streak Logic (Simplified for atomic safety) --
+    // Streaks require reading daily state. If we want to be fully safe, we have to read.
+    // Given the user report of 0,0,0, let's just create the basic structure first.
+    // For now, let's read safely just for the streak calculation, but use setDoc for writing.
+
+    const userSnap = await getDoc(userRef);
+    if (userSnap.exists()) {
+      const currentStats = userSnap.data().stats || {};
+      const streak = currentStats.streak || { current: 0, longest: 0, lastActiveDate: null };
+      const today = new Date().toISOString().split('T')[0];
+      const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+
+      let newCurrent = streak.current;
+      let newLongest = streak.longest;
+
+      if (streak.lastActiveDate === yesterday) {
+        newCurrent++;
+        if (newCurrent > newLongest) newLongest = newCurrent;
+      } else if (streak.lastActiveDate !== today) {
+        newCurrent = 1;
+      }
+
+      // Force update streak fields
+      updateObject.stats.streak = {
+        current: newCurrent,
+        longest: newLongest,
+        lastActiveDate: today
+      };
+    } else {
+      // First time user? processUpdate handles the counters, we just set initial streak
+      updateObject.stats.streak = { current: 1, longest: 1, lastActiveDate: new Date().toISOString().split('T')[0] };
+      updateObject.createdAt = serverTimestamp(); // New user safeguard
     }
-    streak.lastActiveDate = today;
-    stats.streak = streak;
 
-    await updateDoc(userRef, { stats, lastActiveDate: serverTimestamp() });
-    return { success: true, stats };
+    // Atomic Merge - safe for concurrent writes to different fields
+    await setDoc(userRef, updateObject, { merge: true });
+    return { success: true };
   } catch (error) {
     console.error('Update stats error:', error);
     return { success: false };
