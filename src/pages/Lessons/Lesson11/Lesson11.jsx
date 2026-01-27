@@ -7,8 +7,11 @@ import {
     DeterminantsOfSupply,
     LawOfSupply,
     MovementVsShiftSupply,
+    ElasticityOfSupply,
     Quiz
 } from './components';
+import PracticeProblemsSupply from './components/PracticeProblemsSupply';
+import MarketSupplyDerivation from './components/MarketSupplyDerivation';
 import { lesson11Data } from '../data/lesson11Data';
 import { logLessonProgress } from '../../../services/firebase';
 import '../css/lessons.css'; // Shared lesson styles
@@ -42,7 +45,10 @@ function Lesson11() {
             case 'concept-supply': return <ConceptOfSupply />;
             case 'determinants': return <DeterminantsOfSupply />;
             case 'law-supply': return <LawOfSupply />;
+            case 'market-supply': return <MarketSupplyDerivation />;
+            case 'elasticity': return <ElasticityOfSupply />;
             case 'movement-shift': return <MovementVsShiftSupply />;
+            case 'practice': return <PracticeProblemsSupply />;
             case 'quiz': return <Quiz mcqQuestions={lesson11Data.mcqQuestions} tfQuestions={lesson11Data.tfQuestions} quizId="lesson11" />;
             default: return <ConceptOfSupply />;
         }

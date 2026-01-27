@@ -19,6 +19,16 @@ const WhoIsConsumer = () => {
           </p>
         </div>
 
+        <div style={{ marginTop: '15px', padding: '10px', background: 'rgba(0, 255, 255, 0.05)', borderRadius: '8px', fontSize: '0.9rem' }}>
+          <strong>Note: Consumer vs Customer</strong>
+          <br />
+          A <em>Customer</em> buys the good (e.g., Mom buys milk).
+          <br />
+          A <em>Consumer</em> uses the good (e.g., Baby drinks milk).
+          <br />
+          You can be both!
+        </div>
+
         <div className="l3-grid-2">
           <div className="l3-grid-item cyan">
             <h4 style={{ color: 'var(--l3-cyan)', marginBottom: '10px' }}>In Simple Terms</h4>

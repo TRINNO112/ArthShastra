@@ -1,5 +1,5 @@
 // Data for Lesson 11: Theory of Supply
-import { FaTruck, FaChartLine, FaClipboardList, FaIndustry, FaExchangeAlt } from 'react-icons/fa';
+import { FaTruck, FaChartLine, FaClipboardList, FaIndustry, FaExchangeAlt, FaUsers } from 'react-icons/fa';
 
 export const lesson11Data = {
     title: "Theory of Supply",
@@ -10,7 +10,10 @@ export const lesson11Data = {
         { id: 'concept-supply', name: 'Concept of Supply', icon: FaTruck },
         { id: 'determinants', name: 'Determinants', icon: FaIndustry },
         { id: 'law-supply', name: 'Law of Supply', icon: FaChartLine },
+        { id: 'market-supply', name: 'Market Supply', icon: FaUsers },
+        { id: 'elasticity', name: 'Price Elasticity', icon: FaChartLine },
         { id: 'movement-shift', name: 'Movement vs Shift', icon: FaExchangeAlt },
+        { id: 'practice', name: 'Practice Problems', icon: FaClipboardList },
         { id: 'quiz', name: 'Quiz', icon: FaClipboardList }
     ],
 

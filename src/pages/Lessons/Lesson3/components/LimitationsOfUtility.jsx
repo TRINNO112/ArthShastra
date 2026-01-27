@@ -43,6 +43,51 @@ const LimitationsOfUtility = () => {
           </p>
         </div>
       </section>
+
+      {/* Comparison: Cardinal vs Ordinal */}
+      <section className="lesson3-card">
+        <h3 className="l3-heading-cyan">Comparison: Cardinal vs Ordinal Approach</h3>
+        <p className="mb-4">How economists evolved their thinking about utility:</p>
+
+        <div className="l3-table-container">
+          <table className="l3-table">
+            <thead>
+              <tr>
+                <th>Basis</th>
+                <th style={{ color: 'var(--l3-gold)' }}>Cardinal Utility</th>
+                <th style={{ color: 'var(--l3-cyan)' }}>Ordinal Utility</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Concept</strong></td>
+                <td>Utility can be <strong>measured</strong> in numbers (1, 2, 3...)</td>
+                <td>Utility can only be <strong>ranked</strong> (1st, 2nd, 3rd...)</td>
+              </tr>
+              <tr>
+                <td><strong>Unit</strong></td>
+                <td>Hypothetical "Utils"</td>
+                <td>Ranks / Preferences</td>
+              </tr>
+              <tr>
+                <td><strong>Assumption</strong></td>
+                <td>Satisfaction is quantifiable</td>
+                <td>Satisfaction is psychological & relative</td>
+              </tr>
+              <tr>
+                <td><strong>Realism</strong></td>
+                <td>Less Realistic (Subjective)</td>
+                <td>More Realistic</td>
+              </tr>
+              <tr>
+                <td><strong>Main Economist</strong></td>
+                <td>Alfred Marshall</td>
+                <td>J.R. Hicks & R.G.D. Allen</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </div>
   );
 };

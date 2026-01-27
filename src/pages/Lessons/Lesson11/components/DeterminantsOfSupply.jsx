@@ -1,22 +1,9 @@
 import React, { useState } from 'react';
-import { FaIndustry, FaCogs, FaMoneyBillWave, FaBalanceScale, FaLightbulb, FaTruck, FaArrowUp, FaArrowDown, FaLandmark, FaBoxOpen, FaCrosshairs, FaRandom, FaCalendarAlt } from 'react-icons/fa';
+import { FaIndustry, FaCogs, FaMoneyBillWave, FaBalanceScale, FaLightbulb, FaTruck, FaArrowUp, FaArrowDown, FaLandmark, FaBoxOpen, FaCrosshairs, FaRandom, FaCalendarAlt, FaArrowRight } from 'react-icons/fa';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import '../../Lesson5/components/lesson5.css';
 
-const INPUT_PRICE_DATA = [
-    { priceInput: 10, supply: 60 },
-    { priceInput: 20, supply: 50 },
-    { priceInput: 30, supply: 40 },
-    { priceInput: 40, supply: 30 },
-    { priceInput: 50, supply: 20 },
-];
-
 const DeterminantsOfSupply = () => {
-    const [inputPrice, setInputPrice] = useState(30);
-    const [techLevel, setTechLevel] = useState('standard');
-
-    const calculateSupplyFromInput = (cost) => Math.max(0, 70 - cost);
-
     return (
         <div className="lesson-section">
             <div className="section-header-lesson animate-fadeInUp">
@@ -32,143 +19,250 @@ const DeterminantsOfSupply = () => {
                     <div className="formula-box-animated">
                         <div className="formula-main" style={{ fontSize: '1.8rem' }}>Sx = f(Px, Pr, Pi, T, G, Pf, Gp)</div>
                         <div className="formula-explanation">
-                            Supply depends on Own Price (Px), Related Goods (Pr), Input Prices (Pi), Technology (T), Govt Policy (G), Future Price (Pf), and Goals (Gp).
+                            Supply of X (Sx) depends on Price (Px), Related Goods (Pr), Inputs (Pi), Technology (T), Govt Policy (G), Future Price (Pf), and Goals (Gp).
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="reasons-grid-enhanced">
+            {/* EXPANDED REASONS GRID */}
+            <h3 style={{ margin: '40px 0 20px', textAlign: 'center', color: '#fff', textTransform: 'uppercase', letterSpacing: '1px' }}>Detailed Analysis</h3>
+
+            <div className="reasons-list-vertical">
+
                 {/* 1. Own Price */}
-                <div className="reason-card-interactive gold">
-                    <div className="card-icon"><FaMoneyBillWave /></div>
-                    <h4>1. Own Price (Px)</h4>
-                    <p>Positively related. Higher Price → Higher Profit → More Supply.</p>
+                <div className="detailed-card gold animate-fadeInUp">
+                    <div className="card-header-row">
+                        <div className="icon-badge gold"><FaMoneyBillWave /></div>
+                        <h3>1. Own Price of the Commodity (Px)</h3>
+                    </div>
+                    <div className="card-body-row">
+                        <p><strong>Concept:</strong> The price of the good itself is the most important determinant. It has a <strong>Positive Relationship</strong> with quantity supplied.</p>
+
+                        <div className="logic-chain" style={{ background: 'rgba(255, 215, 0, 0.1)', padding: '15px', borderRadius: '8px', margin: '15px 0', borderLeft: '3px solid #ffd700' }}>
+                            <strong><FaLightbulb /> The Logic Chain:</strong>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '10px', color: '#ffd700' }}>
+                                <span>Price Rises (Px <FaArrowUp />)</span>
+                                <FaArrowRight />
+                                <span>Profit Margin per Unit Rises</span>
+                                <FaArrowRight />
+                                <span>Incentive to Produce More</span>
+                                <FaArrowRight />
+                                <span>Quantity Supplied Rises (Qs <FaArrowUp />)</span>
+                            </div>
+                        </div>
+
+                        <div className="impact-tag">
+                            <span className="tag-movement">Impact: Movement along the Curve (Extension/Contraction)</span>
+                        </div>
+                    </div>
                 </div>
 
                 {/* 2. Price of Inputs */}
-                <div className="reason-card-interactive red">
-                    <div className="card-icon"><FaBoxOpen /></div>
-                    <h4>2. Price of Inputs (Pi)</h4>
-                    <p>Negatively related. Costly inputs → Lower Profit → Less Supply.</p>
+                <div className="detailed-card red animate-fadeInUp">
+                    <div className="card-header-row">
+                        <div className="icon-badge red"><FaBoxOpen /></div>
+                        <h3>2. Price of Inputs (Pi)</h3>
+                    </div>
+                    <div className="card-body-row">
+                        <p><strong>Concept:</strong> Also called "Cost of Factors of Production" (Land, Labor, Capital). There is an <strong>Inverse Relationship</strong>.</p>
+
+                        <div className="example-box">
+                            <strong><FaTruck /> Real-World Example:</strong>
+                            Consider a Textile Mill. The price of <strong>Cotton (Raw Material)</strong> rises significantly.
+                        </div>
+
+                        <div className="logic-chain" style={{ background: 'rgba(255, 68, 68, 0.1)', padding: '15px', borderRadius: '8px', margin: '15px 0', borderLeft: '3px solid #ff4444' }}>
+                            <strong><FaLightbulb /> The Logic Chain:</strong>
+                            <div style={{ marginTop: '10px', color: '#ffcccb' }}>
+                                1. Price of Input (Cotton) Rises <FaArrowUp /> <br />
+                                2. Cost of Production (COP) Rises <FaArrowUp /> <br />
+                                3. Profit Margin (Price - Cost) Falls <FaArrowDown /> <br />
+                                4. Producer reduces output to minimize risk/loss. <br />
+                                5. <strong>Supply Curve Shifts LEFT (Decrease)</strong>
+                            </div>
+                        </div>
+
+                        <div className="impact-tag">
+                            <span className="tag-shift left">Impact: Shift (Decrease/Increase)</span>
+                        </div>
+                    </div>
                 </div>
 
                 {/* 3. Technology */}
-                <div className="reason-card-interactive cyan">
-                    <div className="card-icon"><FaCogs /></div>
-                    <h4>3. Technology (T)</h4>
-                    <p>Advanced Tech → Low Cost → More Supply.</p>
+                <div className="detailed-card cyan animate-fadeInUp">
+                    <div className="card-header-row">
+                        <div className="icon-badge cyan"><FaCogs /></div>
+                        <h3>3. State of Technology (T)</h3>
+                    </div>
+                    <div className="card-body-row">
+                        <p><strong>Concept:</strong> Technology determines the efficiency of converting inputs into outputs. Technological progress reduces cost.</p>
+
+                        <div className="comparison-grid">
+                            <div className="comparison-item positive">
+                                <strong>Upgrade (Innovation):</strong>
+                                <p>Introduction of AI/Automation → Faster Production + Lower Wastage → Cost Falls → <strong>Supply Increases (Right Shift)</strong>.</p>
+                            </div>
+                            <div className="comparison-item negative">
+                                <strong>Degradation:</strong>
+                                <p>breakdown of machinery or using obsolete tech → High Cost → <strong>Supply Decreases</strong>.</p>
+                            </div>
+                        </div>
+
+                        <div className="impact-tag">
+                            <span className="tag-shift right">Impact: Shift due to Tech</span>
+                        </div>
+                    </div>
                 </div>
 
                 {/* 4. Govt Policy */}
-                <div className="reason-card-interactive green">
-                    <div className="card-icon"><FaLandmark /></div>
-                    <h4>4. Govt Policy (G)</h4>
-                    <p>Taxes reduce supply (Left Shift). Subsidies increase supply (Right Shift).</p>
+                <div className="detailed-card green animate-fadeInUp">
+                    <div className="card-header-row">
+                        <div className="icon-badge green"><FaLandmark /></div>
+                        <h3>4. Government Policy (G)</h3>
+                    </div>
+                    <div className="card-body-row">
+                        <p><strong>Concept:</strong> Fiscal policy (Taxation & Subsidies) alters the effective cost for producers.</p>
+
+                        <div className="logic-chain" style={{ background: 'rgba(0, 255, 0, 0.1)', padding: '15px', borderRadius: '8px', margin: '15px 0', borderLeft: '3px solid #00ff00' }}>
+                            <strong><FaLightbulb /> Mechanism: Impact of GST (Tax)</strong>
+                            <div style={{ marginTop: '10px', color: '#ccffcc' }}>
+                                Govt increases GST on Cars <FaArrowUp /> <br />
+                                → Production Cost Includes Tax, so Cost Rises <FaArrowUp /> <br />
+                                → Profitability Falls <FaArrowDown /> <br />
+                                → <strong>Supply Decreases (Left Shift)</strong>
+                            </div>
+                        </div>
+
+                        <div className="logic-chain" style={{ background: 'rgba(0, 255, 255, 0.1)', padding: '15px', borderRadius: '8px', margin: '15px 0', borderLeft: '3px solid #00ffff' }}>
+                            <strong><FaLightbulb /> Mechanism: Impact of Subsidy</strong>
+                            <div style={{ marginTop: '10px', color: '#e0ffff' }}>
+                                Govt gives Subsidy on Solar Panels <FaArrowDown /> <br />
+                                → Effective Cost for producer Falls <FaArrowDown /> <br />
+                                → Profitability Rises <FaArrowUp /> <br />
+                                → <strong>Supply Increases (Right Shift)</strong>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* 5. Related Goods */}
-                <div className="reason-card-interactive purple">
-                    <div className="card-icon"><FaRandom /></div>
-                    <h4>5. Price of Related Goods (Pr)</h4>
-                    <p>If price of Substitute Good (e.g. Wheat) rises, farmer shifts land to Wheat. Supply of Rice falls.</p>
+                <div className="detailed-card purple animate-fadeInUp">
+                    <div className="card-header-row">
+                        <div className="icon-badge purple"><FaRandom /></div>
+                        <h3>5. Price of Related Goods (Pr)</h3>
+                    </div>
+                    <div className="card-body-row">
+                        <p><strong>Concept:</strong> Firms can use their resources (Land/Labor) to produce alternative goods. They choose the most profitable one.</p>
+
+                        <div className="example-box">
+                            <strong><FaBalanceScale /> The "Tea vs Coffee" Dilemma:</strong>
+                            A farmer has 10 acres of land. He can grow Tea or Coffee.
+                            <br /><br />
+                            Suppose <strong>Price of Coffee Rises</strong> in the market. <br />
+                            → Growing Coffee becomes more profitable. <br />
+                            → Farmer shifts land from Tea to Coffee. <br />
+                            → <strong>Supply of Tea Falls</strong> (even though Tea price is constant).
+                        </div>
+
+                        <div className="impact-tag">
+                            <span className="tag-shift left">Impact: Inverse Relation with Substitute's Price</span>
+                        </div>
+                    </div>
                 </div>
 
                 {/* 6. Goals of Firm */}
-                <div className="reason-card-interactive gold">
-                    <div className="card-icon"><FaCrosshairs /></div>
-                    <h4>6. Goal of the Firm (Gp)</h4>
-                    <p>Profit Max? Low Supply at low price. Sales Max? High Supply even at low price.</p>
+                <div className="detailed-card gold animate-fadeInUp">
+                    <div className="card-header-row">
+                        <div className="icon-badge gold"><FaCrosshairs /></div>
+                        <h3>6. Goal of the Firm (Gp)</h3>
+                    </div>
+                    <div className="card-body-row">
+                        <p><strong>Concept:</strong> Not all firms want just profit. Objectives define supply behavior.</p>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginTop: '15px' }}>
+                            <div style={{ background: 'rgba(255,215,0,0.1)', padding: '10px', borderRadius: '8px', border: '1px solid #ffd700' }}>
+                                <h4 style={{ color: '#ffd700', fontSize: '1rem' }}>Profit Max</h4>
+                                <p style={{ fontSize: '0.9rem', color: '#ddd' }}>Will only supply more if Price is high. follows Law of Supply.</p>
+                            </div>
+                            <div style={{ background: 'rgba(0,255,255,0.1)', padding: '10px', borderRadius: '8px', border: '1px solid #00ffff' }}>
+                                <h4 style={{ color: '#00ffff', fontSize: '1rem' }}>Sales / Welfare</h4>
+                                <p style={{ fontSize: '0.9rem', color: '#ddd' }}>Will supply more even at lower prices (e.g., Jio initially, or Govt Ration Shops).</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* 7. Future Expectations */}
-                <div className="reason-card-interactive red">
-                    <div className="card-icon"><FaCalendarAlt /></div>
-                    <h4>7. Future Expectations (Pf)</h4>
-                    <p>Expect price rise soon? Hoard stock now (Supply ↓). Sell later.</p>
-                </div>
-            </div>
+                <div className="detailed-card red animate-fadeInUp">
+                    <div className="card-header-row">
+                        <div className="icon-badge red"><FaCalendarAlt /></div>
+                        <h3>7. Future Expectations (Pf)</h3>
+                    </div>
+                    <div className="card-body-row">
+                        <p><strong>Concept:</strong> Sellers speculate on future price movements.</p>
 
-
-            {/* --- INTERACTIVE DEMO: INPUT PRICE --- */}
-            <div className="content-card animate-fadeInUp" style={{ animationDelay: '0.5s', marginTop: '2rem' }}>
-                <div className="card-content">
-                    <h3 className="highlight-red"><FaBalanceScale /> Deep Dive: Input Prices</h3>
-                    <p>Let's see why this relationship is <strong>INVERSE</strong>. When costs go up, supply goes down.</p>
-
-                    <div className="interactive-slider-section">
-                        <div className="slider-header">
-                            <h5>🎛️ Interactive Demo: Raw Material Cost</h5>
-                        </div>
-                        <div className="slider-control">
-                            <label>Cost: ₹{inputPrice}</label>
-                            <input
-                                type="range" min="10" max="50" value={inputPrice}
-                                onChange={(e) => setInputPrice(Number(e.target.value))}
-                                className="price-slider red"
-                            />
-                        </div>
-
-                        <div className="demand-display">
-                            <div className="demand-metric">
-                                <FaBoxOpen size={32} color="#ff4444" />
-                                <div>
-                                    <div className="metric-label">Supply Output</div>
-                                    <div className="metric-value red">{calculateSupplyFromInput(inputPrice)} units</div>
-                                </div>
-                            </div>
-                            <div className="relationship-indicator">
-                                {inputPrice > 30 ? (
-                                    <div className="indicator negative"><FaArrowDown /> Cost Rise → Profit Drop → Supply Falls</div>
-                                ) : inputPrice < 30 ? (
-                                    <div className="indicator positive"><FaArrowUp /> Cost Fall → Profit Rise → Supply Rises</div>
-                                ) : (
-                                    <div className="indicator neutral">Base Level</div>
-                                )}
+                        <div className="logic-chain" style={{ background: 'rgba(255, 68, 68, 0.1)', padding: '15px', borderRadius: '8px', margin: '15px 0', borderLeft: '3px solid #ff4444' }}>
+                            <strong><FaLightbulb /> Bullish Expectation (Price Will Rise):</strong>
+                            <div style={{ marginTop: '10px', color: '#ffcccb' }}>
+                                Think: "Why sell cheap today when I can sell dear tomorrow?" <br />
+                                → <strong>Action:</strong> Hoard/Stockpile goods. <br />
+                                → <strong>Current Supply Decreases (Left Shift)</strong>.
                             </div>
                         </div>
 
-                        <div className="graph-container-small" style={{ width: '100%', height: '250px', marginTop: '1.5rem', background: 'rgba(0,0,0,0.2)', borderRadius: '12px', padding: '10px' }}>
-                            <h5 style={{ textAlign: 'center', marginBottom: '10px' }}>Supply vs Input Cost (Inverse)</h5>
-                            <ResponsiveContainer width="100%" height="100%">
-                                <LineChart data={INPUT_PRICE_DATA}>
-                                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                                    <XAxis dataKey="priceInput" stroke="#fff" label={{ value: 'Input Price (Cost)', position: 'insideBottom', offset: -5, fill: '#aaa' }} />
-                                    <YAxis stroke="#fff" label={{ value: 'Supply Qty', angle: -90, position: 'insideLeft', fill: '#aaa' }} />
-                                    <Tooltip contentStyle={{ backgroundColor: '#333' }} />
-                                    <Line type="monotone" dataKey="supply" stroke="#ff4444" strokeWidth={3} dot={{ r: 4 }} />
-                                </LineChart>
-                            </ResponsiveContainer>
+                        <div className="logic-chain" style={{ background: 'rgba(0, 255, 0, 0.1)', padding: '15px', borderRadius: '8px', margin: '15px 0', borderLeft: '3px solid #00ff00' }}>
+                            <strong><FaLightbulb /> Bearish Expectation (Price Will Fall):</strong>
+                            <div style={{ marginTop: '10px', color: '#ccffcc' }}>
+                                Think: "Better sell now before price crashes!" <br />
+                                → <strong>Action:</strong> Clear stock immediately. <br />
+                                → <strong>Current Supply Increases (Right Shift)</strong>.
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
-            {/* --- TECHNOLOGY SECTION --- */}
-            <div className="content-card animate-fadeInUp" style={{ animationDelay: '0.6s' }}>
+            {/* QUICK SUMMARY TABLE */}
+            <div className="content-card animate-fadeInUp" style={{ marginTop: '40px' }}>
                 <div className="card-content">
-                    <h3 className="highlight-cyan"><FaCogs /> Deep Dive: Technology</h3>
-
-                    <div className="interactive-toggle-container">
-                        <button className={`toggle-btn ${techLevel === 'standard' ? 'active-gold' : ''}`} onClick={() => setTechLevel('standard')}>
-                            <FaIndustry /> Standard Tech
-                        </button>
-                        <button className={`toggle-btn ${techLevel === 'advanced' ? 'active-cyan' : ''}`} onClick={() => setTechLevel('advanced')}>
-                            <FaCogs /> Advanced Automation
-                        </button>
-                    </div>
-
-                    <div style={{ textAlign: 'center', padding: '2rem', background: 'rgba(0,0,0,0.3)', borderRadius: '12px', border: techLevel === 'advanced' ? '2px solid #00ffff' : '1px solid #555' }}>
-                        <div style={{ fontSize: '3rem', marginBottom: '1rem', transition: 'all 0.3s' }}>
-                            {techLevel === 'advanced' ? '🚀' : '🚜'}
-                        </div>
-                        <h4>{techLevel === 'advanced' ? 'Supply Shift: RIGHT (Increase)' : 'Base Supply Level'}</h4>
-                        <p style={{ color: techLevel === 'advanced' ? '#00ffff' : '#aaa' }}>
-                            {techLevel === 'advanced'
-                                ? "Innovation reduces Per-Unit Cost. Profit margin increases. Producers supply MORE at the same price."
-                                : "Traditional methods keep costs standard."}
-                        </p>
-                    </div>
+                    <h3 className="highlight-cyan" style={{ textAlign: 'center', marginBottom: '20px' }}>Quick Summary Reference</h3>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', color: '#ddd' }}>
+                        <thead>
+                            <tr style={{ borderBottom: '2px solid rgba(255,255,255,0.1)', color: '#00ffff' }}>
+                                <th style={{ padding: '10px', textAlign: 'left' }}>Factor</th>
+                                <th style={{ padding: '10px', textAlign: 'left' }}>Change</th>
+                                <th style={{ padding: '10px', textAlign: 'right' }}>Effect on Supply</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                <td style={{ padding: '10px' }}>Own Price (Px)</td>
+                                <td style={{ padding: '10px' }}>Increase <FaArrowUp /></td>
+                                <td style={{ padding: '10px', textAlign: 'right', color: '#00ff00' }}>Extension (Q rises)</td>
+                            </tr>
+                            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                <td style={{ padding: '10px' }}>Input Price (Pi)</td>
+                                <td style={{ padding: '10px' }}>Increase <FaArrowUp /></td>
+                                <td style={{ padding: '10px', textAlign: 'right', color: '#ff4444' }}>Decrease (Left Shift)</td>
+                            </tr>
+                            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                <td style={{ padding: '10px' }}>Technology (T)</td>
+                                <td style={{ padding: '10px' }}>Improvement</td>
+                                <td style={{ padding: '10px', textAlign: 'right', color: '#00ff00' }}>Increase (Right Shift)</td>
+                            </tr>
+                            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                <td style={{ padding: '10px' }}>Tax (G)</td>
+                                <td style={{ padding: '10px' }}>Increase <FaArrowUp /></td>
+                                <td style={{ padding: '10px', textAlign: 'right', color: '#ff4444' }}>Decrease (Left Shift)</td>
+                            </tr>
+                            <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                <td style={{ padding: '10px' }}>Subsidy (G)</td>
+                                <td style={{ padding: '10px' }}>Increase <FaArrowUp /></td>
+                                <td style={{ padding: '10px', textAlign: 'right', color: '#00ff00' }}>Increase (Right Shift)</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

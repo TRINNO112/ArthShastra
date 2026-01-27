@@ -1492,3 +1492,131 @@
     word-wrap: break-word;
   }
 }
+
+/* ==========================================
+   DETAILED CARD STYLES (Added for Lesson 11)
+   ========================================== */
+
+.reasons-list-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.detailed-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detailed-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.detailed-card .card-header-row {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.detailed-card .card-body-row {
+  padding: 2rem;
+}
+
+.detailed-card h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-left: 1rem;
+}
+
+.detailed-card.gold { border-color: rgba(255, 215, 0, 0.3); }
+.detailed-card.gold:hover { border-color: rgba(255, 215, 0, 0.6); }
+.detailed-card.gold h3 { color: #ffd700; }
+
+.detailed-card.red { border-color: rgba(255, 68, 68, 0.3); }
+.detailed-card.red:hover { border-color: rgba(255, 68, 68, 0.6); }
+.detailed-card.red h3 { color: #ff4444; }
+
+.detailed-card.cyan { border-color: rgba(0, 255, 255, 0.3); }
+.detailed-card.cyan:hover { border-color: rgba(0, 255, 255, 0.6); }
+.detailed-card.cyan h3 { color: #00ffff; }
+
+.detailed-card.green { border-color: rgba(0, 255, 0, 0.3); }
+.detailed-card.green:hover { border-color: rgba(0, 255, 0, 0.6); }
+.detailed-card.green h3 { color: #00ff00; }
+
+.detailed-card.purple { border-color: rgba(167, 139, 250, 0.3); }
+.detailed-card.purple:hover { border-color: rgba(167, 139, 250, 0.6); }
+.detailed-card.purple h3 { color: #a78bfa; }
+
+.icon-badge {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+.icon-badge.gold { background: rgba(255, 215, 0, 0.1); color: #ffd700; }
+.icon-badge.red { background: rgba(255, 68, 68, 0.1); color: #ff4444; }
+.icon-badge.cyan { background: rgba(0, 255, 255, 0.1); color: #00ffff; }
+.icon-badge.green { background: rgba(0, 255, 0, 0.1); color: #00ff00; }
+.icon-badge.purple { background: rgba(167, 139, 250, 0.1); color: #a78bfa; }
+
+.example-box {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem 1.5rem;
+  margin-top: 1rem;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.95rem;
+  color: #ddd;
+  line-height: 1.6;
+}
+
+.impact-tag {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tag-movement, .tag-shift {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.tag-movement { background: rgba(255, 215, 0, 0.15); color: #ffd700; }
+.tag-shift.left { background: rgba(255, 68, 68, 0.15); color: #ff4444; }
+.tag-shift.right { background: rgba(0, 255, 0, 0.15); color: #00ff00; }
+
+.bullet-list-large li {
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border-left: 2px solid rgba(255,255,255,0.1);
+}
+
+.comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+@media (max-width: 768px) {
+    .comparison-grid { grid-template-columns: 1fr; }
+}
+
+.comparison-item { padding: 15px; border-radius: 12px; }
+.comparison-item.negative { background: rgba(255, 68, 68, 0.1); border: 1px solid rgba(255,68,68,0.3); }
+.comparison-item.positive { background: rgba(0, 255, 0, 0.1); border: 1px solid rgba(0,255,0,0.3); }

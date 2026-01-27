@@ -20,6 +20,7 @@ import {
   DiminishingMarginalUtility,
   ConsumerEquilibrium,
   LimitationsOfUtility,
+  PracticeProblems,
   Quiz
 } from './components';
 import { lesson3Data } from '../data/lesson3Data';
@@ -43,6 +44,7 @@ const sections = [
   { id: 'dmu', name: 'Law of DMU', icon: FaArrowDown },
   { id: 'consumer-equilibrium', name: 'Consumer Equilibrium', icon: FaBalanceScale },
   { id: 'limitations', name: 'Limitations', icon: FaRuler },
+  { id: 'practice', name: 'Practice', icon: FaClipboardList },
   { id: 'quiz', name: 'Quiz', icon: FaClipboardList }
 ];
 
@@ -101,6 +103,8 @@ function Lesson3() {
         return <ConsumerEquilibrium />;
       case 'limitations':
         return <LimitationsOfUtility />;
+      case 'practice':
+        return <PracticeProblems />;
       case 'quiz':
         return <Quiz
           mcqQuestions={lesson3Data.mcqQuestions}
