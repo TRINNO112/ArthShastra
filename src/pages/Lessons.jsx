@@ -86,10 +86,10 @@ const lessonsData = {
       { id: 'micro11-7', title: 'Production Function and Returns to a Factor', description: 'Short run costs - TFC, TVC, TC, AFC, AVC, AC, MC; relationship', duration: '40 min', questions: 20, completed: false, difficulty: 'Hard' },
       { id: 'micro11-8', title: 'Concepts of Cost', description: 'TR, AR, MR; relationship between AR and MR curves', duration: '30 min', questions: 15, completed: false, difficulty: 'Medium' },
       { id: 'micro11-9', title: 'Concept of Revenue', description: 'MC-MR approach; profit maximization; break-even point', duration: '30 min', questions: 15, completed: false, difficulty: 'Medium' },
-      { id: 'micro11-10', title: 'Producer’s Equilibrium', description: 'Law of supply, supply curve, determinants, elasticity of supply', duration: '30 min', questions: 15, completed: false, difficulty: 'Easy' },
-      { id: 'micro11-11', title: 'Theory of Supply', description: 'Perfect competition, monopoly, monopolistic competition, oligopoly', duration: '35 min', questions: 18, completed: false, difficulty: 'Medium' },
-      { id: 'micro11-12', title: 'Forms of Market', description: 'Equilibrium price, effects of shifts in demand and supply', duration: '35 min', questions: 18, completed: false, difficulty: 'Medium' },
-      { id: 'micro11-13', title: 'Market Equilibrium Under Perfect Competition and Effects of Shifts in Demand and Supply', description: 'Price ceiling, price floor, and their effects on market', duration: '25 min', questions: 12, completed: false, difficulty: 'Easy' },
+      { id: 'micro11-10', title: 'Producer’s Equilibrium', description: 'MC-MR approach; profit maximization; break-even point', duration: '30 min', questions: 15, completed: false, difficulty: 'Easy' },
+      { id: 'micro11-11', title: 'Theory of Supply', description: 'Concepts of Supply, Law of Supply, Determinants, Elasticity', duration: '35 min', questions: 18, completed: false, difficulty: 'Medium' },
+      { id: 'micro11-12', title: 'Forms of Market', description: 'Perfect Competition, Monopoly, Monopolistic Comp, Oligopoly', duration: '40 min', questions: 20, completed: false, difficulty: 'Hard' },
+      { id: 'micro11-13', title: 'Market Equilibrium', description: 'Equilibrium price, effects of shifts in demand and supply', duration: '25 min', questions: 12, completed: false, difficulty: 'Easy' },
     ]
   },
   // ============== CLASS 12 ==============
@@ -218,7 +218,7 @@ function Lessons() {
 
   // Get difficulty color
   const getDifficultyColor = (difficulty) => {
-    switch(difficulty) {
+    switch (difficulty) {
       case 'Easy': return 'difficulty-easy';
       case 'Medium': return 'difficulty-medium';
       case 'Hard': return 'difficulty-hard';
