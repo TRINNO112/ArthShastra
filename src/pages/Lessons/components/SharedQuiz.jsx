@@ -1,23 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { FaCheckCircle, FaTimesCircle, FaTrophy, FaRedo, FaArrowRight, FaQuestionCircle, FaClock, FaChartLine, FaExclamationTriangle } from 'react-icons/fa';
-import { submitDetailedQuizAttempt, getQuizAnalytics } from '../../../services/firebase'; // Adjust path if needed
+import { FaCheckCircle, FaTimesCircle, FaTrophy, FaRedo, FaArrowRight, FaQuestionCircle, FaClock, FaChartLine, FaExclamationTriangle, FaMedal } from 'react-icons/fa';
+import { submitDetailedQuizAttempt, getQuizAnalytics } from '../../../services/firebase';
 import '../css/quiz.css';
 
 /**
- * Shared Quiz Component
- * 
- * Reusable component for all lessons.
- * Handles:
- * - MCQs and True/False questions
- * - Timer and Score tracking
- * - Firebase Analytics integration
- * - Responsive UI
- * 
- * @param {Array} mcqQuestions - Array of MCQ objects
- * @param {Array} tfQuestions - Array of True/False objects
- * @param {String} quizId - Unique ID for the quiz (e.g., 'lesson1-quiz')
- * @param {String} title - Display title (default: 'Test Your Knowledge')
- * @param {String} subtitle - Display subtitle
+ * Shared Quiz Component - Zen Premium Edition
  */
 function SharedQuiz({
     mcqQuestions = [],
@@ -43,7 +30,6 @@ function SharedQuiz({
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [analyticsResult, setAnalyticsResult] = useState(null);
     const [previousAttempts, setPreviousAttempts] = useState(null);
-    const [showAnalytics, setShowAnalytics] = useState(false);
 
     // Timer interval ref
     const timerRef = useRef(null);
@@ -54,7 +40,7 @@ function SharedQuiz({
         setStartTime(now);
         setCurrentQuestionStart(now);
 
-        // Load previous analytics if user is logged in (handled by service)
+        // Load previous analytics if user is logged in
         loadPreviousAnalytics();
 
         // Start live timer
@@ -178,7 +164,7 @@ function SharedQuiz({
                 setIsSubmitting(false);
             }
         } else {
-            setIsSubmitting(false); // No ID, just local show
+            setIsSubmitting(false);
         }
 
         // Scroll to results
@@ -193,7 +179,6 @@ function SharedQuiz({
         setShowResults(false);
         setScore(0);
         setAnalyticsResult(null);
-        setShowAnalytics(false);
         setQuestionTimes({});
 
         // Reset timer
@@ -228,180 +213,148 @@ function SharedQuiz({
     };
 
     const getFeedback = () => {
-        if (percentage >= 90) return { text: "Excellent! You've mastered this topic!", class: "excellent" };
-        if (percentage >= 75) return { text: "Great job! Keep up the good work!", class: "good" };
-        if (percentage >= 50) return { text: "Good effort! Review the content for better understanding.", class: "average" };
-        return { text: "Keep trying! Go through the lesson again.", class: "poor" };
+        if (percentage >= 90) return { text: "Outstanding! Absolute mastery.", class: "excellent" };
+        if (percentage >= 75) return { text: "Great work! Solid understanding.", class: "good" };
+        if (percentage >= 50) return { text: "Good start. Review the tricky parts.", class: "average" };
+        return { text: "Keep learning. You got this.", class: "poor" };
     };
 
     return (
         <section className="lesson-section quiz-section">
-            {/* Section Header */}
-            <div className="section-header-lesson">
-                <span className="section-badge-lesson">Quiz</span>
-                <h2 className="section-title-lesson">{title}</h2>
-                <p className="section-subtitle-lesson">{subtitle}</p>
-            </div>
+            <div className="quiz-container">
+                {/* Section Header */}
+                <div className="section-header-lesson" style={{ textAlign: 'center', marginBottom: '40px' }}>
+                    <span className="section-badge-lesson" style={{ background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(5px)' }}>Assessment</span>
+                    <h2 className="section-title-lesson" style={{ fontSize: '2.5rem', marginTop: '10px' }}>{title}</h2>
+                    <p className="section-subtitle-lesson" style={{ color: 'rgba(255,255,255,0.6)' }}>{subtitle}</p>
+                </div>
 
-            {/* Previous Attempts Banner */}
-            {previousAttempts && (
-                <div className="previous-attempts-banner">
-                    <div className="attempts-info">
-                        <FaChartLine className="attempts-icon" />
-                        <span>
-                            Previous attempts: <strong>{previousAttempts.totalAttempts}</strong> |
-                            Best score: <strong>{previousAttempts.bestPercentage}%</strong>
-                        </span>
+                {/* Progress Indicator with Timer */}
+                <div className="quiz-progress-card animate-fadeInUp">
+                    <div className="progress-info">
+                        <span className="progress-count">Question {Math.min(answeredCount + 1, totalQuestions)} of {totalQuestions}</span>
+                        <span className="progress-percentage">{Math.round((answeredCount / totalQuestions) * 100)}% Complete</span>
                     </div>
+                    <div className="progress-bar-container">
+                        <div
+                            className="progress-bar-fill"
+                            style={{
+                                width: `${(answeredCount / totalQuestions) * 100}%`
+                            }}
+                        ></div>
+                    </div>
+                    {!showResults && (
+                        <div className="quiz-timer">
+                            <FaClock className="timer-icon" />
+                            <span className="timer-text">{formatTime(totalTimeSpent)}</span>
+                        </div>
+                    )}
                 </div>
-            )}
 
-            {/* Progress Indicator with Timer */}
-            <div className="quiz-progress-card">
-                <div className="progress-info">
-                    <span className="progress-label">Questions Answered</span>
-                    <span className="progress-count">
-                        {answeredCount} / {totalQuestions}
-                    </span>
-                </div>
-                <div className="progress-bar-container">
-                    <div
-                        className="progress-bar-fill"
-                        style={{
-                            width: `${(answeredCount / totalQuestions) * 100}%`
-                        }}
-                    ></div>
-                </div>
-                {!showResults && (
-                    <div className="quiz-timer">
-                        <FaClock className="timer-icon" />
-                        <span className="timer-text">{formatTime(totalTimeSpent)}</span>
+                {/* MCQ Section */}
+                {mcqQuestions.length > 0 && (
+                    <div className="quiz-block animate-fadeInUp">
+                        <div className="questions-container">
+                            {mcqQuestions.map((q, index) => (
+                                <div key={q.id || index} className={`question-card ${showResults ? 'show-result' : ''}`}>
+                                    <div className="question-header">
+                                        <span className="question-number">Q{index + 1}</span>
+                                        {showResults && (
+                                            mcqAnswers[q.id] === q.correct
+                                                ? <FaCheckCircle className="result-icon correct" />
+                                                : <FaTimesCircle className="result-icon wrong" />
+                                        )}
+                                    </div>
+                                    <p className="question-text">{q.question}</p>
+
+                                    <div className="options-grid">
+                                        {q.options.map((opt, idx) => (
+                                            <button
+                                                key={idx}
+                                                className={`option-btn ${mcqAnswers[q.id] === idx ? 'selected' : ''}
+                            ${showResults && idx === q.correct ? 'correct' : ''}
+                            ${showResults && mcqAnswers[q.id] === idx && idx !== q.correct ? 'wrong' : ''}`}
+                                                onClick={() => handleMcqAnswer(q.id, idx)}
+                                                disabled={showResults}
+                                            >
+                                                <span className="option-letter">{String.fromCharCode(65 + idx)}</span>
+                                                <span className="option-text">{opt}</span>
+                                                {showResults && idx === q.correct && <FaCheckCircle className="option-icon correct" />}
+                                                {showResults && mcqAnswers[q.id] === idx && idx !== q.correct && <FaTimesCircle className="option-icon wrong" />}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 )}
-            </div>
 
-            {/* MCQ Section */}
-            {mcqQuestions.length > 0 && (
-                <div className="quiz-block">
-                    <div className="quiz-block-header">
-                        <FaQuestionCircle className="quiz-block-icon" />
-                        <h3>Multiple Choice Questions</h3>
-                        <span className="question-count">{mcqQuestions.length} Questions</span>
-                    </div>
+                {/* True/False Section */}
+                {tfQuestions.length > 0 && (
+                    <div className="quiz-block animate-fadeInUp">
+                        <div className="questions-container">
+                            {tfQuestions.map((q, index) => (
+                                <div key={q.id || index} className={`question-card tf-card ${showResults ? 'show-result' : ''}`}>
+                                    <div className="question-header">
+                                        <span className="question-number">Q{mcqQuestions.length + index + 1}</span>
+                                        {showResults && (
+                                            tfAnswers[q.id] === q.correct
+                                                ? <FaCheckCircle className="result-icon correct" />
+                                                : <FaTimesCircle className="result-icon wrong" />
+                                        )}
+                                    </div>
+                                    <p className="question-text">{q.question}</p>
 
-                    <div className="questions-container">
-                        {mcqQuestions.map((q, index) => (
-                            <div key={q.id || index} className={`question-card ${showResults ? 'show-result' : ''}`}>
-                                <div className="question-header">
-                                    <span className="question-number">Q{index + 1}</span>
-                                    {showResults && (
-                                        mcqAnswers[q.id] === q.correct
-                                            ? <FaCheckCircle className="result-icon correct" />
-                                            : <FaTimesCircle className="result-icon wrong" />
-                                    )}
-                                </div>
-                                <p className="question-text">{q.question}</p>
-
-                                <div className="options-grid">
-                                    {q.options.map((opt, idx) => (
+                                    <div className="tf-options" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                                         <button
-                                            key={idx}
-                                            className={`option-btn ${mcqAnswers[q.id] === idx ? 'selected' : ''}
-                        ${showResults && idx === q.correct ? 'correct' : ''}
-                        ${showResults && mcqAnswers[q.id] === idx && idx !== q.correct ? 'wrong' : ''}`}
-                                            onClick={() => handleMcqAnswer(q.id, idx)}
+                                            className={`tf-btn ${tfAnswers[q.id] === true ? 'selected' : ''}
+                            ${showResults && q.correct === true ? 'correct' : ''}
+                            ${showResults && tfAnswers[q.id] === true && !q.correct ? 'wrong' : ''}`}
+                                            onClick={() => handleTfAnswer(q.id, true)}
                                             disabled={showResults}
                                         >
-                                            <span className="option-letter">{String.fromCharCode(65 + idx)}</span>
-                                            <span className="option-text">{opt}</span>
-                                            {showResults && idx === q.correct && <FaCheckCircle className="option-icon correct" />}
-                                            {showResults && mcqAnswers[q.id] === idx && idx !== q.correct && <FaTimesCircle className="option-icon wrong" />}
+                                            <FaCheckCircle className="tf-icon" style={{ marginRight: '10px' }} />
+                                            True
                                         </button>
-                                    ))}
+                                        <button
+                                            className={`tf-btn ${tfAnswers[q.id] === false ? 'selected' : ''}
+                            ${showResults && q.correct === false ? 'correct' : ''}
+                            ${showResults && tfAnswers[q.id] === false && q.correct ? 'wrong' : ''}`}
+                                            onClick={() => handleTfAnswer(q.id, false)}
+                                            disabled={showResults}
+                                        >
+                                            <FaTimesCircle className="tf-icon" style={{ marginRight: '10px' }} />
+                                            False
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            {/* True/False Section */}
-            {tfQuestions.length > 0 && (
-                <div className="quiz-block">
-                    <div className="quiz-block-header">
-                        <FaQuestionCircle className="quiz-block-icon" />
-                        <h3>True or False</h3>
-                        <span className="question-count">{tfQuestions.length} Questions</span>
-                    </div>
-
-                    <div className="questions-container">
-                        {tfQuestions.map((q, index) => (
-                            <div key={q.id || index} className={`question-card tf-card ${showResults ? 'show-result' : ''}`}>
-                                <div className="question-header">
-                                    <span className="question-number">Q{mcqQuestions.length + index + 1}</span>
-                                    {showResults && (
-                                        tfAnswers[q.id] === q.correct
-                                            ? <FaCheckCircle className="result-icon correct" />
-                                            : <FaTimesCircle className="result-icon wrong" />
-                                    )}
-                                </div>
-                                <p className="question-text">{q.question}</p>
-
-                                <div className="tf-options">
-                                    <button
-                                        className={`tf-btn ${tfAnswers[q.id] === true ? 'selected' : ''}
-                        ${showResults && q.correct === true ? 'correct' : ''}
-                        ${showResults && tfAnswers[q.id] === true && !q.correct ? 'wrong' : ''}`}
-                                        onClick={() => handleTfAnswer(q.id, true)}
-                                        disabled={showResults}
-                                    >
-                                        <FaCheckCircle className="tf-icon" />
-                                        True
-                                    </button>
-                                    <button
-                                        className={`tf-btn ${tfAnswers[q.id] === false ? 'selected' : ''}
-                        ${showResults && q.correct === false ? 'correct' : ''}
-                        ${showResults && tfAnswers[q.id] === false && q.correct ? 'wrong' : ''}`}
-                                        onClick={() => handleTfAnswer(q.id, false)}
-                                        disabled={showResults}
-                                    >
-                                        <FaTimesCircle className="tf-icon" />
-                                        False
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            {/* Submit / Results Section */}
-            {!showResults ? (
-                <div className="submit-section">
-                    <button
-                        className={`submit-btn ${hasAtLeastOneAnswer ? 'ready' : 'disabled'}`}
-                        onClick={handleSubmit}
-                        disabled={!hasAtLeastOneAnswer}
-                    >
-                        {hasAtLeastOneAnswer ? (
-                            <>Submit Quiz ({answeredCount}/{totalQuestions} answered) <FaArrowRight className="btn-icon" /></>
-                        ) : (
-                            <>Answer at least 1 question to submit</>
-                        )}
-                    </button>
-
-                </div>
-            ) : (
-                <div className="quiz-results">
-                    <div className="results-card">
-                        <div className="results-header">
-                            <FaTrophy className="trophy-icon" />
-                            <h3>Quiz Complete!</h3>
-                            {isSubmitting && <span className="saving-indicator">Saving results...</span>}
+                            ))}
                         </div>
+                    </div>
+                )}
 
-                        <div className="score-display">
-                            <div className="score-circle" data-percentage={percentage}>
+                {/* Submit / Results Section */}
+                {!showResults ? (
+                    <div className="submit-section animate-fadeInUp">
+                        <button
+                            className={`submit-btn ${hasAtLeastOneAnswer ? 'ready' : 'disabled'}`}
+                            onClick={handleSubmit}
+                            disabled={!hasAtLeastOneAnswer}
+                        >
+                            {hasAtLeastOneAnswer ? (
+                                <>Submit Quiz ({answeredCount}/{totalQuestions}) <FaArrowRight /></>
+                            ) : (
+                                <>Select an answer to submit</>
+                            )}
+                        </button>
+
+                    </div>
+                ) : (
+                    <div className="quiz-results animate-fadeInUp">
+                        <div className="results-card">
+
+                            <div className="score-circle">
                                 <svg viewBox="0 0 100 100">
                                     <circle className="score-bg" cx="50" cy="50" r="45" />
                                     <circle
@@ -409,63 +362,43 @@ function SharedQuiz({
                                         cx="50" cy="50" r="45"
                                         style={{
                                             strokeDasharray: `${percentage * 2.83} 283`,
-                                            stroke: percentage >= 75 ? 'var(--neon-green)' : percentage >= 50 ? 'var(--neon-gold)' : 'var(--error)'
+                                            stroke: percentage >= 75 ? '#34c759' : percentage >= 50 ? '#ffcc00' : '#ff3b30'
                                         }}
                                     />
                                 </svg>
-                                <div className="score-text">
+                                <div style={{ position: 'absolute', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                     <span className="score-number">{percentage}%</span>
-                                    <span className="score-label">{score}/{totalQuestions}</span>
+                                    <span className="score-label">{score}/{totalQuestions} Correct</span>
                                 </div>
                             </div>
-                        </div>
 
-                        {/* Time Stats */}
-                        <div className="time-stats">
-                            <FaClock className="time-stats-icon" />
-                            <span>Total time: {formatTime(totalTimeSpent)}</span>
-                        </div>
-
-                        <div className={`feedback-message ${getFeedback().class}`}>
-                            <p>{getFeedback().text}</p>
-                        </div>
-
-                        {/* New Best Score Indicator */}
-                        {analyticsResult?.isNewBestScore && (
-                            <div className="new-best-score">
-                                <FaTrophy className="best-icon" />
-                                <span>New Personal Best!</span>
+                            <div className={`feedback-message`}>
+                                <p>{getFeedback().text}</p>
                             </div>
-                        )}
 
-                        <div className="results-breakdown">
-                            <div className="breakdown-item">
-                                <span className="breakdown-label">MCQ Score</span>
-                                <span className="breakdown-value">
-                                    {mcqQuestions.filter(q => mcqAnswers[q.id] === q.correct).length}/{Object.keys(mcqAnswers).length}
-                                </span>
-                            </div>
-                            <div className="breakdown-item">
-                                <span className="breakdown-label">True/False Score</span>
-                                <span className="breakdown-value">
-                                    {tfQuestions.filter(q => tfAnswers[q.id] === q.correct).length}/{Object.keys(tfAnswers).length}
-                                </span>
-                            </div>
-                            {analyticsResult && (
+                            <div className="results-breakdown">
                                 <div className="breakdown-item">
-                                    <span className="breakdown-label">Attempt #</span>
-                                    <span className="breakdown-value">{analyticsResult.attemptNumber}</span>
+                                    <span className="breakdown-value" style={{ color: '#4facfe' }}>
+                                        {formatTime(totalTimeSpent)}
+                                    </span>
+                                    <span className="breakdown-label">Time</span>
                                 </div>
-                            )}
-                        </div>
+                                <div className="breakdown-item">
+                                    <span className="breakdown-value" style={{ color: '#34c759' }}>
+                                        {mcqQuestions.filter(q => mcqAnswers[q.id] === q.correct).length}
+                                    </span>
+                                    <span className="breakdown-label">MCQ Correct</span>
+                                </div>
+                            </div>
 
-                        <button className="retry-btn" onClick={handleReset}>
-                            <FaRedo className="btn-icon" />
-                            Retry Quiz
-                        </button>
+                            <button className="retry-btn" onClick={handleReset}>
+                                <FaRedo className="btn-icon" style={{ marginRight: '8px' }} />
+                                Try Again
+                            </button>
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
         </section>
     );
 }

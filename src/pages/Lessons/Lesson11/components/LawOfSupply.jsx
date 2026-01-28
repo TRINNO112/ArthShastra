@@ -122,29 +122,58 @@ const LawOfSupply = () => {
                 </div>
             </div>
 
-            {/* REASONS FOR UPWARD SLOPE */}
-            <div className="content-card animate-fadeInUp hover-lift" style={{ animationDelay: '0.6s' }}>
-                <div className="content-card">
-                    <div className="card-content">
-                        <h3 className="highlight-cyan animate-fadeInLeft"><FaSearchPlus /> Why does Supply Curve Slope Upward?</h3>
-                        <div className="reasons-grid-enhanced" style={{ marginTop: '1.5rem' }}>
-                            <div className="reason-card-interactive gold">
-                                <div className="card-icon"><FaMoneyBillWave /></div>
-                                <h4>1. Profit Motive</h4>
-                                <p>Higher price → Higher profit margin. This is the biggest incentive for any producer to sell more.</p>
-                            </div>
-                            <div className="reason-card-interactive cyan">
-                                <div className="card-icon"><FaCheckCircle /></div>
-                                <h4>2. Stock Release</h4>
-                                <p>Producers hold back stock when prices are low. When prices rise, they release stock from warehouses.</p>
-                            </div>
-                            <div className="reason-card-interactive purple">
-                                <div className="card-icon"><FaArrowUp /></div>
-                                <h4>3. New Entrants</h4>
-                                <p>Rising prices signal a booming market. New firms enter to grab profits, increasing total market supply.</p>
-                            </div>
+            {/* REASONS FOR UPWARD SLOPE - COMIC STYLE */}
+            <div className="content-card animate-fadeInUp hover-lift" style={{ animationDelay: '0.6s', marginTop: '30px', background: 'transparent', boxShadow: 'none', border: 'none' }}>
+                <div className="section-header-lesson" style={{ textAlign: 'center', marginBottom: '20px' }}>
+                    <h3 className="highlight-cyan animate-fadeInLeft" style={{ fontFamily: '"Bangers", cursive', fontSize: '2.5rem', textShadow: '2px 2px 0px #000' }}>
+                        <FaSearchPlus /> WHY UPWARD SLOPING? (3 REASONS)
+                    </h3>
+                </div>
+
+                <div className="comic-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '25px' }}>
+
+                    {/* REASON 1: PROFIT */}
+                    <div className="comic-panel" style={{ background: '#fff', color: '#000', padding: '20px', borderRadius: '12px', border: '3px solid #000', boxShadow: '8px 8px 0px #000' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '3px solid #ffd700', paddingBottom: '10px', marginBottom: '10px' }}>
+                            <h4 style={{ margin: 0, fontFamily: '"Bangers", cursive', fontSize: '1.5rem' }}>1. PROFIT MOTIVE</h4>
+                            <FaMoneyBillWave style={{ fontSize: '1.5rem', color: '#ffd700' }} />
+                        </div>
+                        <p style={{ fontFamily: '"Comic Neue", cursive', fontSize: '1.1rem', fontWeight: 'bold' }}>
+                            "Price is High? My Profit Margin is HUGE!"
+                        </p>
+                        <div style={{ background: '#ffd700', padding: '5px', textAlign: 'center', fontWeight: 'bold', borderRadius: '5px', border: '1px solid #000' }}>
+                            So I sell MORE!
                         </div>
                     </div>
+
+                    {/* REASON 2: STOCK */}
+                    <div className="comic-panel" style={{ background: '#fff', color: '#000', padding: '20px', borderRadius: '12px', border: '3px solid #000', boxShadow: '8px 8px 0px #000' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '3px solid #00ffff', paddingBottom: '10px', marginBottom: '10px' }}>
+                            <h4 style={{ margin: 0, fontFamily: '"Bangers", cursive', fontSize: '1.5rem' }}>2. STOCK RELEASE</h4>
+                            <FaCheckCircle style={{ fontSize: '1.5rem', color: '#00ffff' }} />
+                        </div>
+                        <p style={{ fontFamily: '"Comic Neue", cursive', fontSize: '1.1rem', fontWeight: 'bold' }}>
+                            "I was hiding stock in my warehouse... waiting for this moment."
+                        </p>
+                        <div style={{ background: '#00ffff', padding: '5px', textAlign: 'center', fontWeight: 'bold', borderRadius: '5px', border: '1px solid #000' }}>
+                            Price Rise = Stock Released!
+                        </div>
+                    </div>
+
+                    {/* REASON 3: NEW ENTRANTS */}
+                    <div className="comic-panel" style={{ background: '#fff', color: '#000', padding: '20px', borderRadius: '12px', border: '3px solid #000', boxShadow: '8px 8px 0px #000' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '3px solid #bf00ff', paddingBottom: '10px', marginBottom: '10px' }}>
+                            <h4 style={{ margin: 0, fontFamily: '"Bangers", cursive', fontSize: '1.5rem' }}>3. NEW ENTRANTS</h4>
+                            <FaArrowUp style={{ fontSize: '1.5rem', color: '#bf00ff' }} />
+                        </div>
+                        <p style={{ fontFamily: '"Comic Neue", cursive', fontSize: '1.1rem', fontWeight: 'bold' }}>
+                            "Did someone say PROFITS? We are joining the market too!"
+                        </p>
+                        <div style={{ background: '#bf00ff', color: '#fff', padding: '5px', textAlign: 'center', fontWeight: 'bold', borderRadius: '5px', border: '1px solid #000' }}>
+                            New Firms = More Total Supply
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
