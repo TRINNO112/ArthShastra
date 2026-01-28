@@ -27,20 +27,21 @@ const SupplyMovementChart = ({ type }) => {
         const xAxis = d3.axisBottom(xScale).ticks(6);
         const yAxis = d3.axisLeft(yScale).ticks(6);
 
+        // Axes - DARK GREY for visibility on white
         g.append("g")
             .attr("transform", `translate(0,${innerHeight})`)
-            .call(xAxis).attr("font-size", "12px").attr("color", "#fff")
-            .append("text").attr("x", innerWidth / 2).attr("y", 40).attr("fill", "#fff").attr("font-weight", "bold").text("Quantity Supplied (Units)");
+            .call(xAxis).attr("font-size", "12px").attr("color", "#333")
+            .append("text").attr("x", innerWidth / 2).attr("y", 40).attr("fill", "#000").attr("font-weight", "bold").text("Quantity Supplied (Units)");
 
         g.append("g")
-            .call(yAxis).attr("font-size", "12px").attr("color", "#fff")
-            .append("text").attr("transform", "rotate(-90)").attr("x", -innerHeight / 2).attr("y", -45).attr("fill", "#fff").attr("font-weight", "bold").attr("text-anchor", "middle").text("Price (₹)");
+            .call(yAxis).attr("font-size", "12px").attr("color", "#333")
+            .append("text").attr("transform", "rotate(-90)").attr("x", -innerHeight / 2).attr("y", -45).attr("fill", "#000").attr("font-weight", "bold").attr("text-anchor", "middle").text("Price (₹)");
 
-        // Grid
-        g.append("g").attr("class", "grid").attr("opacity", 0.1)
-            .call(d3.axisLeft(yScale).tickSize(-innerWidth).tickFormat("")).style("stroke-dasharray", "3 3");
-        g.append("g").attr("class", "grid").attr("opacity", 0.1).attr("transform", `translate(0,${innerHeight})`)
-            .call(d3.axisBottom(xScale).tickSize(-innerHeight).tickFormat("")).style("stroke-dasharray", "3 3");
+        // Grid - Darker
+        g.append("g").attr("class", "grid").attr("opacity", 0.2)
+            .call(d3.axisLeft(yScale).tickSize(-innerWidth).tickFormat("")).style("stroke-dasharray", "3 3").attr("color", "#000");
+        g.append("g").attr("class", "grid").attr("opacity", 0.2).attr("transform", `translate(0,${innerHeight})`)
+            .call(d3.axisBottom(xScale).tickSize(-innerHeight).tickFormat("")).style("stroke-dasharray", "3 3").attr("color", "#000");
 
         // Supply Curve: Q = 10P
         const supplyCurve = [{ p: 0, q: 0 }, { p: 6, q: 60 }];
@@ -50,8 +51,8 @@ const SupplyMovementChart = ({ type }) => {
         g.append("path")
             .datum(supplyCurve)
             .attr("fill", "none")
-            .attr("stroke", "#00ff00")
-            .attr("stroke-width", 3)
+            .attr("stroke", "#006400") // DARK GREEN
+            .attr("stroke-width", 4)
             .attr("d", lineGenerator);
 
         // Points
@@ -61,14 +62,14 @@ const SupplyMovementChart = ({ type }) => {
         const drawPoint = (point, color) => {
             const cx = xScale(point.q);
             const cy = yScale(point.p);
-            g.append("line").attr("x1", cx).attr("y1", cy).attr("x2", cx).attr("y2", innerHeight).attr("stroke", color).attr("stroke-dasharray", "4 4");
-            g.append("line").attr("x1", 0).attr("y1", cy).attr("x2", cx).attr("y2", cy).attr("stroke", color).attr("stroke-dasharray", "4 4");
+            g.append("line").attr("x1", cx).attr("y1", cy).attr("x2", cx).attr("y2", innerHeight).attr("stroke", "#555").attr("stroke-dasharray", "4 4");
+            g.append("line").attr("x1", 0).attr("y1", cy).attr("x2", cx).attr("y2", cy).attr("stroke", "#555").attr("stroke-dasharray", "4 4");
             g.append("circle").attr("cx", cx).attr("cy", cy).attr("r", 6).attr("fill", color);
-            g.append("text").attr("x", cx + 10).attr("y", cy).attr("fill", color).attr("font-weight", "bold").text(`${point.label} (${point.q}, ₹${point.p})`);
+            g.append("text").attr("x", cx + 10).attr("y", cy).attr("fill", "#000").attr("font-weight", "bold").text(`${point.label} (${point.q}, ₹${point.p})`);
         };
 
-        drawPoint(pointLow, "#ffd700");
-        drawPoint(pointHigh, "#ffd700");
+        drawPoint(pointLow, "#ff8c00"); // Dark Orange
+        drawPoint(pointHigh, "#ff8c00");
 
         // Animation Arrow
         svg.append("defs").append("marker")
@@ -77,7 +78,7 @@ const SupplyMovementChart = ({ type }) => {
             .attr("refX", 5).attr("refY", 5)
             .attr("markerWidth", 6).attr("markerHeight", 6)
             .attr("orient", "auto-start-reverse")
-            .append("path").attr("d", "M 0 0 L 10 5 L 0 10 z").attr("fill", type === 'extension' ? "#00ff00" : "#ff4444");
+            .append("path").attr("d", "M 0 0 L 10 5 L 0 10 z").attr("fill", type === 'extension' ? "#006400" : "#cc0000");
 
         if (type === 'extension') {
             // Expansion: A -> B (Upward)
@@ -89,7 +90,7 @@ const SupplyMovementChart = ({ type }) => {
             g.append("line")
                 .attr("x1", x1).attr("y1", y1)
                 .attr("x2", x1).attr("y2", y1)
-                .attr("stroke", "#00ff00").attr("stroke-width", 3)
+                .attr("stroke", "#006400").attr("stroke-width", 3) // Dark Green
                 .attr("marker-end", "url(#arrow)")
                 .transition().duration(1000)
                 .attr("x2", x2).attr("y2", y2);
@@ -103,7 +104,7 @@ const SupplyMovementChart = ({ type }) => {
             g.append("line")
                 .attr("x1", x1).attr("y1", y1)
                 .attr("x2", x1).attr("y2", y1)
-                .attr("stroke", "#ff4444").attr("stroke-width", 3)
+                .attr("stroke", "#cc0000").attr("stroke-width", 3) // Dark Red
                 .attr("marker-end", "url(#arrow)")
                 .transition().duration(1000)
                 .attr("x2", x2).attr("y2", y2);

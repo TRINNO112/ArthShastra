@@ -1,0 +1,162 @@
+/* ==========================================================================
+   Lesson 10: The Silicon Valley Startup Theme 💻
+   Terminal, Glassmorphism, and Cyberpunk Aesthetics
+   ========================================================================== */
+
+/* Neon Utility Colors */
+:root {
+  --neon-cyan: #00ffff;
+  --neon-purple: #bd00ff;
+  --neon-green: #00ff00;
+  --neon-red: #ff0055;
+  --terminal-bg: #0d1117;
+  --glass-bg: rgba(22, 27, 34, 0.7);
+}
+
+/* TERMINAL FONT */
+.lesson-section {
+  font-family: 'Fira Code', 'Courier New', monospace; 
+}
+
+/* STARTUP HEADER */
+.startup-header {
+  text-align: center;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+.startup-title {
+  font-size: 4rem;
+  background: -webkit-linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  filter: drop-shadow(0 0 10px rgba(189, 0, 255, 0.5));
+}
+
+.startup-subtitle {
+  background: var(--terminal-bg);
+  border: 1px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  padding: 5px 15px;
+  display: inline-block;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+/* TERMINAL CARD */
+.terminal-card {
+  background: var(--terminal-bg);
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  margin-bottom: 30px;
+  transition: transform 0.3s ease;
+}
+
+.terminal-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--neon-purple);
+  box-shadow: 0 0 20px rgba(189, 0, 255, 0.3);
+}
+
+.terminal-header {
+  background: #161b22;
+  padding: 10px 15px;
+  border-bottom: 1px solid #30363d;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.dot.red { background: #ff5f56; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green { background: #27c93f; }
+
+.terminal-title {
+  color: #8b949e;
+  font-size: 0.9rem;
+  margin-left: 10px;
+}
+
+.terminal-body {
+  padding: 20px;
+  color: #c9d1d9;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  line-height: 1.6;
+}
+
+/* CODE BLOCK */
+.code-block {
+  background: #0d1117;
+  border-left: 3px solid var(--neon-cyan);
+  padding: 15px;
+  margin: 15px 0;
+  color: #fff;
+  font-family: monospace;
+}
+
+.code-keyword { color: var(--neon-purple); font-weight: bold; }
+.code-string { color: var(--neon-green); }
+.code-func { color: var(--neon-cyan); }
+
+/* PITCH DECK CARD */
+.pitch-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 30px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.pitch-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+}
+
+.pitch-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: var(--neon-cyan);
+  filter: drop-shadow(0 0 10px var(--neon-cyan));
+}
+
+/* DASHBOARD GRID */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+/* DATA VISUALIZATION BARS */
+.progress-bar {
+  background: #30363d;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.progress-fill {
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+  height: 100%;
+}
