@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { FaCalculator } from 'react-icons/fa';
-import '../../css/lessons.css';
+import { FaLaptopCode, FaRobot, FaCogs } from 'react-icons/fa';
+import '../lesson9.css';
 
 const RevenueCalculations = () => {
     const [inputs, setInputs] = useState([{ q: 1, p: 10 }, { q: 2, p: 9 }, { q: 3, p: 8 }]);
-    const [showFormulas, setShowFormulas] = useState(false);
 
+    // Auto-calculate logic
     const calculate = (q, p, prevTR) => {
         const tr = q * p;
-        const ar = tr / q;
+        const ar = q > 0 ? tr / q : 0;
         const mr = prevTR !== null ? tr - prevTR : '-';
         return { tr, ar, mr };
     };
@@ -21,71 +21,90 @@ const RevenueCalculations = () => {
         prevTR = tr;
     });
 
+    const updatePrice = (index, val) => {
+        const newInputs = [...inputs];
+        newInputs[index].p = parseFloat(val) || 0;
+        setInputs(newInputs);
+    };
+
     return (
         <section className="lesson-section">
-            <div className="section-header-lesson">
-                <span className="section-badge-lesson">Interactive</span>
-                <h2 className="section-title-lesson">Revenue Calculator</h2>
-                <p className="section-subtitle-lesson">See how TR, AR, and MR change with Price and Output.</p>
+            <div className="market-header">
+                <span className="market-status" style={{ borderColor: 'var(--trade-blue)', color: 'var(--trade-blue)' }}>● LIVE EXECUTION</span>
+                <h2 className="market-title">THE ALGO-BOT 🤖</h2>
+                <p style={{ color: '#aaa' }}>QUANTITATIVE ANALYSIS TERMINAL</p>
             </div>
 
-            <div className="content-card">
-                <div className="calc-header">
-                    <h4 className="card-title text-gold m-0"><FaCalculator className="title-icon" /> Live Calculation Table</h4>
-                    <button className="option-btn text-sm px-3" onClick={() => setShowFormulas(!showFormulas)}>
-                        {showFormulas ? 'Hide Formulas' : 'Show Formulas'}
-                    </button>
-                </div>
+            <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
 
-                {showFormulas && (
-                    <div className="quote-box formula-grid">
-                        <div>TR = Price × Q</div>
-                        <div>AR = TR ÷ Q</div>
-                        <div>MR = TR<sub>n</sub> - TR<sub>n-1</sub></div>
+                <div className="trading-card blue">
+                    <div className="card-header-row">
+                        <span className="stock-symbol text-blue-400">{`>> ALGO_TRADING_SEQUENCE_INIT`}</span>
+                        <FaCogs style={{ color: 'var(--trade-blue)', animation: 'spin 10s linear infinite' }} />
                     </div>
-                )}
 
-                <div className="table-responsive">
-                    <table className="practice-table">
-                        <thead>
-                            <tr>
-                                <th>Output (Q)</th>
-                                <th>Price (AR)</th>
-                                <th>Total Revenue (TR)</th>
-                                <th>Marginal Revenue (MR)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {rows.map((row, i) => (
-                                <tr key={i}>
-                                    <td>{row.q}</td>
-                                    <td>
-                                        <div className="input-cell">
-                                            <span className="text-gold">₹</span>
-                                            <input
-                                                type="number"
-                                                value={row.p}
-                                                onChange={(e) => {
-                                                    const newInputs = [...inputs];
-                                                    newInputs[i].p = parseFloat(e.target.value) || 0;
-                                                    setInputs(newInputs);
-                                                }}
-                                                className="premium-input input-cell-field"
-                                            />
-                                        </div>
-                                    </td>
-                                    <td className="font-bold text-green-400">₹ {row.tr}</td>
-                                    <td className={`font-bold ${parseFloat(row.mr) < 0 ? 'text-red-400' : 'text-cyan-400'}`}>
-                                        {row.mr !== '-' ? `₹ ${row.mr}` : '-'}
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <div style={{ background: '#000', padding: '20px', borderRadius: '4px', border: '1px solid #333', fontFamily: 'monospace' }}>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: '0.5fr 1fr 1.5fr 1.5fr', borderBottom: '1px solid #333', paddingBottom: '10px', color: '#666', fontSize: '0.9rem' }}>
+                            <div>QTY (Q)</div>
+                            <div>PRICE (P)</div>
+                            <div style={{ textAlign: 'right' }}>TOTAL REV (TR)</div>
+                            <div style={{ textAlign: 'right' }}>MARGINAL REV (MR)</div>
+                        </div>
+
+                        {rows.map((row, i) => (
+                            <div key={i} style={{ display: 'grid', gridTemplateColumns: '0.5fr 1fr 1.5fr 1.5fr', padding: '15px 0', borderBottom: '1px dashed #222', alignItems: 'center' }}>
+
+                                {/* Q */}
+                                <div style={{ color: '#fff' }}>{row.q}</div>
+
+                                {/* P Input */}
+                                <div>
+                                    <input
+                                        type="number"
+                                        value={row.p}
+                                        onChange={(e) => updatePrice(i, e.target.value)}
+                                        style={{
+                                            background: '#111', border: '1px solid #444', color: 'var(--trade-gold)',
+                                            width: '80px', padding: '5px', textAlign: 'center', fontFamily: 'monospace'
+                                        }}
+                                    />
+                                </div>
+
+                                {/* TR Result */}
+                                <div style={{ textAlign: 'right', color: 'var(--trade-green)', fontWeight: 'bold' }}>
+                                    ₹ {row.tr.toFixed(2)}
+                                </div>
+
+                                {/* MR Result */}
+                                <div style={{ textAlign: 'right', fontWeight: 'bold', color: row.mr === '-' ? '#666' : parseFloat(row.mr) < 0 ? 'var(--trade-red)' : 'var(--trade-blue)' }}>
+                                    {row.mr !== '-' ? `₹ ${parseFloat(row.mr).toFixed(2)}` : '-'}
+                                </div>
+
+                            </div>
+                        ))}
+
+                    </div>
+
+                    <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ fontSize: '0.8rem', color: '#666' }}>
+                            STATUS: <span style={{ color: 'var(--trade-green)' }}>ONLINE</span> | LATENCY: 12ms
+                        </div>
+                        <button
+                            onClick={() => setInputs([...inputs, { q: inputs.length + 1, p: 0 }])}
+                            className="trade-btn active"
+                            style={{ fontSize: '0.8rem' }}
+                        >
+                            + ADD EXECUTION ROW
+                        </button>
+                    </div>
+
                 </div>
-                <p className="note-text text-center">
-                    * Edit the Price column to simulate different market conditions (Perfect vs Imperfect competition).
-                </p>
+
+                <div className="trading-card" style={{ border: '1px dashed #333', textAlign: 'center', color: '#666' }}>
+                    <p>TYPE IN THE "PRICE" COLUMN TO SIMULATE MARKET CONDITIONS.</p>
+                </div>
+
             </div>
         </section>
     );

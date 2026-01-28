@@ -1,0 +1,235 @@
+/* ==========================================================================
+   Lesson 9: The High-Stakes Trading Floor 💸
+   Stock Market, Bloomberg Terminal, & Wolf of Wall Street Aesthetics
+   ========================================================================== */
+
+/* Trading Floor Palette */
+:root {
+  --trade-bg: #05080f; /* Deep Dark Blue/Black */
+  --trade-card-bg: #111621;
+  --trade-gold: #ffd700; /* Wealth */
+  --trade-green: #00ff9d; /* Profit/Growth */
+  --trade-red: #ff3b3b;   /* Loss/Drop */
+  --trade-blue: #00e5ff;  /* Tech/Info */
+  --trade-border: #2a2f3d;
+}
+
+/* MAIN LAYOUT */
+.lesson-section {
+  background-color: var(--trade-bg);
+  color: #e0e6ed;
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+  padding-bottom: 50px;
+}
+
+/* TYPOGRAPHY */
+.ticker-font {
+  font-family: 'Share Tech Mono', 'Fira Code', monospace;
+  letter-spacing: 1px;
+}
+
+/* TRADING HEADER */
+.market-header {
+  text-align: center;
+  padding: 40px 20px;
+  border-bottom: 1px solid var(--trade-border);
+  background: radial-gradient(circle at center, rgba(0, 229, 255, 0.05) 0%, transparent 70%);
+}
+
+.market-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #fff, #888);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+
+.market-status {
+  display: inline-block;
+  background: rgba(0, 255, 157, 0.1);
+  border: 1px solid var(--trade-green);
+  color: var(--trade-green);
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 255, 157, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(0, 255, 157, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 255, 157, 0); }
+}
+
+/* STOCK TICKER TAPE */
+.ticker-tape-container {
+  background: #000;
+  border-top: 1px solid var(--trade-border);
+  border-bottom: 1px solid var(--trade-border);
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 8px 0;
+  margin-bottom: 30px;
+}
+
+.ticker-content {
+  display: inline-block;
+  animation: ticker 30s linear infinite;
+  padding-left: 100%;
+}
+
+.ticker-item {
+  display: inline-block;
+  padding: 0 30px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.1rem;
+}
+
+.ticker-value.up { color: var(--trade-green); }
+.ticker-value.down { color: var(--trade-red); }
+.ticker-value.neutral { color: var(--trade-blue); }
+
+@keyframes ticker {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-100%, 0, 0); }
+}
+
+/* TRADING CARDS */
+.trading-card {
+  background: var(--trade-card-bg);
+  border: 1px solid var(--trade-border);
+  border-radius: 4px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.trading-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 4px; height: 100%;
+  background: var(--trade-border);
+}
+
+.trading-card.gold::before { background: var(--trade-gold); }
+.trading-card.green::before { background: var(--trade-green); }
+.trading-card.blue::before { background: var(--trade-blue); }
+.trading-card.red::before { background: var(--trade-red); }
+
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 10px;
+}
+
+.stock-symbol {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.stock-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* DASHBOARD GRID */
+.market-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  padding: 0 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* FORMULA BADGE */
+.formula-badge {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px;
+  border-radius: 4px;
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--trade-gold);
+  text-align: center;
+  margin-top: 15px;
+  border: 1px dashed var(--trade-border);
+}
+
+/* INTERACTIVE TOGGLES (Buy/Sell Styling) */
+.trade-btn-group {
+  display: flex;
+  background: #000;
+  border-radius: 4px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.trade-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: #666;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: 'Share Tech Mono', monospace;
+  transition: all 0.2s;
+}
+
+.trade-btn.active {
+  background: var(--trade-blue);
+  color: #000;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+}
+
+.trade-btn.active.profit {
+  background: var(--trade-green);
+  box-shadow: 0 0 10px rgba(0, 255, 157, 0.4);
+}
+
+/* CHART CONTAINER */
+.terminal-chart {
+  background: #000;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px;
+  position: relative;
+}
+
+.terminal-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: rgba(255, 255, 255, 0.2);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.8rem;
+  pointer-events: none;
+}
+
+/* ANIMATIONS */
+@keyframes feedbackReveal {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.feedback-reveal {
+    animation: feedbackReveal 0.4s ease-out forwards;
+}

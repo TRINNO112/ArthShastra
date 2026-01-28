@@ -1,7 +1,7 @@
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label, ReferenceLine } from 'recharts';
-import { FaStore } from 'react-icons/fa';
-import '../../css/lessons.css';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label } from 'recharts';
+import { FaStore, FaChartLine } from 'react-icons/fa';
+import '../lesson9.css';
 
 const data = [
     { q: 0, tr: 0, ar: 10, mr: 10 },
@@ -15,63 +15,72 @@ const data = [
 const RevenueCurvesPerfect = () => {
     return (
         <section className="lesson-section">
-            <div className="section-header-lesson">
-                <span className="section-badge-lesson text-green-400">Case 1</span>
-                <h2 className="section-title-lesson">Perfect Competition</h2>
-                <p className="section-subtitle-lesson">When Price remains constant (Firm is a Price Taker).</p>
+            <div className="market-header">
+                <span className="market-status" style={{ borderColor: 'var(--trade-blue)', color: 'var(--trade-blue)' }}>● CASE STUDY 1</span>
+                <h2 className="market-title">Perfect Competition</h2>
+                <p style={{ color: '#aaa' }}>MARKET CONDITION: <strong>PRICE TAKER</strong> (Stable Price)</p>
             </div>
 
-            <div className="feature-grid">
+            <div className="market-grid">
 
-                {/* AR & MR Curve */}
-                <div className="content-card">
-                    <h4 className="card-title text-center text-gold">AR and MR Curves</h4>
-                    <div className="chart-container-fixed">
-                        <ResponsiveContainer>
+                {/* AR & MR Chart */}
+                <div className="trading-card green">
+                    <div className="card-header-row">
+                        <span className="stock-symbol text-green-400">AR & MR</span>
+                        <span className="stock-price">$10.00</span>
+                    </div>
+
+                    <div className="terminal-chart">
+                        <span className="terminal-overlay">LIVE MARKET DATA</span>
+                        <ResponsiveContainer width="100%" height={300}>
                             <LineChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                                <XAxis dataKey="q" stroke="#ccc"><Label value="Output" position="bottom" fill="#ccc" offset={0} /></XAxis>
-                                <YAxis stroke="#ccc" domain={[0, 15]}><Label value="Price/Revenue" angle={-90} position="insideLeft" fill="#ccc" /></YAxis>
-                                <Tooltip contentStyle={{ backgroundColor: '#000', border: '1px solid #333' }} />
+                                <CartesianGrid strokeDasharray="3 3" stroke="#222" />
+                                <XAxis dataKey="q" stroke="#666"><Label value="Output (Q)" position="bottom" fill="#666" /></XAxis>
+                                <YAxis stroke="#666" domain={[0, 15]}><Label value="Price ($)" angle={-90} position="insideLeft" fill="#666" /></YAxis>
+                                <Tooltip contentStyle={{ backgroundColor: '#000', border: '1px solid #333', color: '#fff' }} />
                                 <Line type="monotone" dataKey="ar" stroke="#00ff88" strokeWidth={3} name="AR = Price" />
                                 <Line type="monotone" dataKey="mr" stroke="#ffd700" strokeWidth={3} strokeDasharray="5 5" name="MR" />
                             </LineChart>
                         </ResponsiveContainer>
                     </div>
-                    <p className="chart-caption">
-                        <span className="text-green-400 font-bold">AR</span> and <span className="text-gold font-bold">MR</span> coincide and are horizontal (Perfectly Elastic).
-                    </p>
+
+                    <div style={{ marginTop: '20px', padding: '15px', background: 'rgba(0, 255, 136, 0.05)', borderLeft: '3px solid #00ff88' }}>
+                        <h4 style={{ color: '#fff', margin: 0 }}>MARKET ANALYSIS</h4>
+                        <p style={{ color: '#aaa', margin: '5px 0 0 0' }}>
+                            AR is <strong>Horizontal</strong> (Perfectly Elastic). Since Price is constant, MR coincides with AR.
+                        </p>
+                    </div>
                 </div>
 
-                {/* TR Curve */}
-                <div className="content-card">
-                    <h4 className="card-title text-center text-cyan-400">Total Revenue (TR) Curve</h4>
-                    <div className="chart-container-fixed">
-                        <ResponsiveContainer>
+                {/* TR Chart */}
+                <div className="trading-card blue">
+                    <div className="card-header-row">
+                        <span className="stock-symbol" style={{ color: 'var(--trade-blue)' }}>TOTAL REVENUE</span>
+                        <FaChartLine style={{ color: 'var(--trade-blue)' }} />
+                    </div>
+
+                    <div className="terminal-chart">
+                        <span className="terminal-overlay">ACCUMULATION</span>
+                        <ResponsiveContainer width="100%" height={300}>
                             <LineChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                                <XAxis dataKey="q" stroke="#ccc"><Label value="Output" position="bottom" fill="#ccc" offset={0} /></XAxis>
-                                <YAxis stroke="#ccc"><Label value="Total Revenue" angle={-90} position="insideLeft" fill="#ccc" /></YAxis>
-                                <Tooltip contentStyle={{ backgroundColor: '#000', border: '1px solid #333' }} />
+                                <CartesianGrid strokeDasharray="3 3" stroke="#222" />
+                                <XAxis dataKey="q" stroke="#666"><Label value="Output (Q)" position="bottom" fill="#666" /></XAxis>
+                                <YAxis stroke="#666"><Label value="Revenue ($)" angle={-90} position="insideLeft" fill="#666" /></YAxis>
+                                <Tooltip contentStyle={{ backgroundColor: '#000', border: '1px solid #333', color: '#fff' }} />
                                 <Line type="monotone" dataKey="tr" stroke="#00e5ff" strokeWidth={3} name="TR" />
                             </LineChart>
                         </ResponsiveContainer>
                     </div>
-                    <p className="chart-caption">
-                        <span className="text-cyan-400 font-bold">TR</span> is a straight line passing through origin (Constant slope).
-                    </p>
+
+                    <div style={{ marginTop: '20px', padding: '15px', background: 'rgba(0, 229, 255, 0.05)', borderLeft: '3px solid #00e5ff' }}>
+                        <h4 style={{ color: '#fff', margin: 0 }}>TREND LINE</h4>
+                        <p style={{ color: '#aaa', margin: '5px 0 0 0' }}>
+                            TR increases at a <strong>constant rate</strong>. It is a straight line passing through the origin.
+                        </p>
+                    </div>
                 </div>
 
             </div>
-
-            <div className="content-card mt-6 border-l-4 border-gold">
-                <ul className="bullet-list">
-                    <li>Price is constant, so <strong className="text-gold">AR = Previous MR = Current MR</strong>.</li>
-                    <li>Firm can sell any quantity at the prevailing market price.</li>
-                    <li>TR increases at a constant rate.</li>
-                </ul>
-            </div>
-
         </section>
     );
 };

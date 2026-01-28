@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { FaQuestionCircle, FaCheck, FaTimes } from 'react-icons/fa';
+import { FaBug, FaCheckCircle, FaTimesCircle, FaCode, FaTrophy } from 'react-icons/fa';
+import '../lesson10.css';
 
 const PracticeProblems = () => {
     const [answers, setAnswers] = useState({});
@@ -8,69 +9,109 @@ const PracticeProblems = () => {
     const problems = [
         {
             id: 1,
-            scenario: "A producer finds that at the current level of output of 100 units, MR is ₹50 and MC is ₹40. What should the producer do to maximize profit?",
+            scenario: "BUG REPORT #101: Producer is maximizing profit where MR=50 and MC=40.",
             options: [
-                { id: 'a', text: "Stop production immediately", correct: false },
-                { id: 'b', text: "Decrease output to reduce costs", correct: false },
-                { id: 'c', text: "Increase output", correct: true },
-                { id: 'd', text: "Keep output constant", correct: false }
+                { id: 'a', text: "FIX: Stop production immediately", correct: false },
+                { id: 'b', text: "FIX: Decrease output to reduce costs", correct: false },
+                { id: 'c', text: "FIX: Increase output (Scale Up)", correct: true },
+                { id: 'd', text: "FIX: Do nothing", correct: false }
             ],
-            explanation: "Since MR (50) > MC (40), producing more units will add more to revenue than to cost, increasing total profit. The rational decision is to increase output."
+            explanation: "LOGIC: MR(50) > MC(40). The system is profitable! Expanding output adds more total profit. 'Scaling Up' is the correct patch."
         },
         {
             id: 2,
-            scenario: "At an output of 50 units, MC = MR = ₹20. However, for the 51st unit, MC falls to ₹18. Is the producer in equilibrium at 50 units?",
+            scenario: "BUG REPORT #404: MC = MR = 20. But for next unit, MC falls to 18.",
             options: [
-                { id: 'a', text: "Yes, because MC = MR", correct: false },
-                { id: 'b', text: "No, because MC is falling", correct: true },
-                { id: 'c', text: "Yes, because profit is positive", correct: false }
+                { id: 'a', text: "STATUS: System Stable (Equilibrium)", correct: false },
+                { id: 'b', text: "STATUS: System Unstable (MC needs to rise!)", correct: true },
+                { id: 'c', text: "STATUS: Profit is Maximized", correct: false }
             ],
-            explanation: "No. Although MR = MC, the second condition (MC should be rising) is not met. If MC falls for the next unit, producing more will increase profit (since MC < MR). Equilibrium is not yet reached."
+            explanation: "LOGIC: The 2nd Condition fails! MC must CUT MR from BELOW (Rising). Falling MC means costs are dropping, so you should keeping producing to grab more profit."
         },
         {
             id: 3,
-            scenario: "In a perfectly competitive market, MR is constant. If MC is rising and currently equals ₹15 (where MR=15), what happens if output increases by 1 unit?",
+            scenario: "BUG REPORT #500: Firm is producing where MC > MR.",
             options: [
-                { id: 'a', text: "Profit increases dramatically", correct: false },
-                { id: 'b', text: "MC will exceed MR, reducing total profit", correct: true },
-                { id: 'c', text: "MR will rise to match MC", correct: false }
+                { id: 'a', text: "FIX: Increase production", correct: false },
+                { id: 'b', text: "FIX: Reduce production (Stop Loss)", correct: true },
+                { id: 'c', text: "FIX: Maintain current level", correct: false }
             ],
-            explanation: "Since MC is rising, producing the next unit implies MC > 15. Since MR is constant at 15, the cost of the next unit exceeds revenue, reducing total profit."
+            explanation: "LOGIC: Critical Error! Cost of last unit > Revenue. You are burning cash. Reducing output saves more cost than revenue lost."
         },
         {
             id: 4,
-            scenario: "If a firm is producing where MC > MR, which of the following is true?",
+            scenario: "BUG REPORT #503: Price is less than Average Variable Cost (P < AVC).",
             options: [
-                { id: 'a', text: "The firm is maximizing profit", correct: false },
-                { id: 'b', text: "The firm should increase output", correct: false },
-                { id: 'c', text: "The firm should reduce output", correct: true }
+                { id: 'a', text: "STATUS: Continue (Hope for better days)", correct: false },
+                { id: 'b', text: "STATUS: Shutdown Immediately", correct: true },
+                { id: 'c', text: "STATUS: Increase Price", correct: false }
             ],
-            explanation: "When MC > MR, the last units produced cost more than they earned. Reducing output saves more in cost than it loses in revenue, thereby increasing total profit."
+            explanation: "LOGIC: Shutdown Point Reached! If you cannot even cover variable costs (wages, raw material), every unit produced adds to loss. Shut down to minimize loss to Fixed Cost only."
         },
         {
             id: 5,
-            scenario: "Can equilibrium be achieved when TR is maximized?",
+            scenario: "BUG REPORT #200: Total Revenue (TR) = Total Cost (TC).",
             options: [
-                { id: 'a', text: "Yes, always", correct: false },
-                { id: 'b', text: "No, profit max is different from revenue max", correct: true },
-                { id: 'c', text: "Only in monopoly", correct: false }
+                { id: 'a', text: "STATUS: Break-Even Point (Normal Profit)", correct: true },
+                { id: 'b', text: "STATUS: Maximum Profit Point", correct: false },
+                { id: 'c', text: "STATUS: Loss incurred", correct: false }
             ],
-            explanation: "Profit maximization (MR=MC) is not the same as Revenue maximization (MR=0). A firm cares about the gap between TR and TC, not just TR."
+            explanation: "LOGIC: System is breaking even. You are earning Normal Profit (included in TC). No Super-normal profit, but no loss either."
         },
         {
             id: 6,
-            scenario: "Why is the condition 'MC must be rising' called the sufficient condition?",
+            scenario: "BUG REPORT #301: In Perfect Competition, Firm wants to sell at P > MR.",
             options: [
-                { id: 'a', text: "Because MR=MC happens at two points", correct: true },
-                { id: 'b', text: "It is the only condition that matters", correct: false },
-                { id: 'c', text: "Because MC is always rising", correct: false }
+                { id: 'a', text: "ALLOW: It's a free market", correct: false },
+                { id: 'b', text: "DENY: In Perfect Competition, P = MR = AR", correct: true },
+                { id: 'c', text: "ALLOW: If quality is high", correct: false }
             ],
-            explanation: "Often MC cuts MR twice (once falling, once rising). The first intersection is not equilibrium. The second (rising MC) is the stable equilibrium."
+            explanation: "LOGIC: In Perfect Competition, the firm is a price taker. P is fixed by the industry. Therefore P always equals Marginal Revenue (MR)."
+        },
+        {
+            id: 7,
+            scenario: "BUG REPORT #400: MC curve cuts MR curve from ABOVE.",
+            options: [
+                { id: 'a', text: "STATUS: Equilibrium Achieved", correct: false },
+                { id: 'b', text: "STATUS: Unstable Equilibrium (Keep Producing)", correct: true },
+                { id: 'c', text: "STATUS: Shutdown", correct: false }
+            ],
+            explanation: "LOGIC: If MC cuts from above, MC is falling. Producing more will lower costs further, increasing profit. True equilibrium is when MC cuts from BELOW (rising)."
+        },
+        {
+            id: 8,
+            scenario: "BUG REPORT #418: Output is zero, but Total Cost is positive.",
+            options: [
+                { id: 'a', text: "BUG: Calculation Error", correct: false },
+                { id: 'b', text: "STATUS: Normal (Fixed Costs exist)", correct: true },
+                { id: 'c', text: "STATUS: Impossible state", correct: false }
+            ],
+            explanation: "LOGIC: Even at shutdown (Q=0), Fixed Costs (Rent, Machines) must be paid. Loss = TFC."
+        },
+        {
+            id: 9,
+            scenario: "BUG REPORT #402: Gross Profit vs Economic Profit confusion.",
+            options: [
+                { id: 'a', text: "FIX: Ignore Implicit Costs", correct: false },
+                { id: 'b', text: "FIX: Deduct both Explicit and Implicit Costs", correct: true },
+                { id: 'c', text: "FIX: Only deduct production costs", correct: false }
+            ],
+            explanation: "LOGIC: Economic Profit (Pure Profit) = TR - (Explicit Costs + Implicit Costs). Accounting profit often ignores implicit costs."
+        },
+        {
+            id: 10,
+            scenario: "BUG REPORT #999: Producer aims to maximize TR instead of Profit.",
+            options: [
+                { id: 'a', text: "STATUS: Valid Goal", correct: false },
+                { id: 'b', text: "STATUS: Invalid Goal (Profit != Revenue)", correct: true },
+                { id: 'c', text: "STATUS: Same thing", correct: false }
+            ],
+            explanation: "LOGIC: Maximizing sales (Revenue) doesn't mean maximizing profit if costs are too high. The goal is always the varying difference: TR - TC."
         }
     ];
 
     const handleSelect = (probId, optionId) => {
-        if (showResults[probId]) return; // Prevent changing after showing result
+        if (showResults[probId]) return;
         setAnswers({ ...answers, [probId]: optionId });
     };
 
@@ -80,62 +121,61 @@ const PracticeProblems = () => {
     };
 
     return (
-        <div className="section-container">
-            <div className="section-header-lesson">
-                <span className="section-badge-lesson">Test Your Knowledge</span>
-                <h2 className="section-title-lesson">Practice Problems</h2>
-                <p className="section-subtitle-lesson">
-                    Apply the conditions of equilibrium to these scenarios.
-                </p>
+        <div className="lesson-section">
+            <div className="startup-header">
+                <span className="startup-subtitle">UNIT_TESTING</span>
+                <h2 className="startup-title" style={{ fontSize: '2.5rem' }}>BUG BOUNTY HUNTER 🐞</h2>
+                <p style={{ color: '#888' }}>Find logical errors in production decisions and patch them!</p>
             </div>
 
-            <div className="example-grid-premium">
+            <div style={{ maxWidth: '800px', margin: '0 auto' }}>
                 {problems.map((problem) => (
-                    <div key={problem.id} className="premium-card">
-                        <h4 style={{ color: 'var(--text-primary)', marginBottom: '15px', lineHeight: '1.5' }}>
-                            <FaQuestionCircle style={{ color: 'var(--neon-gold)', marginRight: '10px' }} />
+                    <div key={problem.id} className="bug-ticket animate-fadeInUp">
+                        <div className="bug-header">
+                            <span><FaBug /> ISSUE TRACKER</span>
+                            <span>ID: {problem.id}</span>
+                        </div>
+
+                        <h4 style={{ color: '#e6e6e6', marginBottom: '20px', fontFamily: '"Fira Code", monospace' }}>
                             {problem.scenario}
                         </h4>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                             {problem.options.map(option => (
-                                <button
+                                <div
                                     key={option.id}
                                     onClick={() => handleSelect(problem.id, option.id)}
-                                    className={`premium-toggle-btn ${answers[problem.id] === option.id ? 'active' : ''}`}
+                                    className={`bug-option ${answers[problem.id] === option.id ? 'selected' : ''}`}
                                     style={{
-                                        textAlign: 'left',
-                                        width: '100%',
-                                        background: showResults[problem.id]
-                                            ? (option.correct ? 'rgba(0, 255, 136, 0.2)' : (answers[problem.id] === option.id ? 'rgba(255, 107, 107, 0.2)' : 'transparent'))
-                                            : undefined,
-                                        borderColor: showResults[problem.id]
-                                            ? (option.correct ? 'var(--neon-green)' : (answers[problem.id] === option.id ? 'var(--error)' : 'rgba(255,255,255,0.1)'))
-                                            : undefined
+                                        borderColor: showResults[problem.id] && option.correct ? 'var(--neon-green)' : (showResults[problem.id] && answers[problem.id] === option.id && !option.correct ? 'var(--neon-red)' : undefined)
                                     }}
-                                    disabled={showResults[problem.id]}
                                 >
+                                    <span style={{ marginRight: '10px', color: '#555' }}>[{option.id.toUpperCase()}]</span>
                                     {option.text}
-                                    {showResults[problem.id] && option.correct && <FaCheck style={{ float: 'right', color: 'var(--neon-green)' }} />}
-                                    {showResults[problem.id] && !option.correct && answers[problem.id] === option.id && <FaTimes style={{ float: 'right', color: 'var(--error)' }} />}
-                                </button>
+                                    {showResults[problem.id] && option.correct && <FaCheckCircle style={{ float: 'right', color: 'var(--neon-green)' }} />}
+                                    {showResults[problem.id] && !option.correct && answers[problem.id] === option.id && <FaTimesCircle style={{ float: 'right', color: 'var(--neon-red)' }} />}
+                                </div>
                             ))}
                         </div>
 
                         {!showResults[problem.id] && (
                             <button
                                 onClick={() => checkAnswer(problem.id)}
-                                className="phase-btn-premium"
-                                style={{ marginTop: '20px', width: '100%', textAlign: 'center', padding: '10px' }}
+                                className="startup-subtitle"
+                                style={{ marginTop: '20px', width: '100%', textAlign: 'center', padding: '10px', cursor: 'pointer', background: 'var(--terminal-bg)', color: '#fff' }}
                                 disabled={!answers[problem.id]}
                             >
-                                Check Answer
+                                <FaCode /> RUN TEST
                             </button>
                         )}
 
                         {showResults[problem.id] && (
-                            <div className="quote-box" style={{ marginTop: '20px', borderLeftColor: 'var(--neon-cyan)' }}>
-                                <p style={{ fontSize: '1rem', fontStyle: 'normal' }}>{problem.explanation}</p>
+                            <div className="bug-solved animate-fadeIn">
+                                {problems[problem.id - 1]?.options.find(o => o.id === answers[problem.id])?.correct ? (
+                                    <span><FaTrophy /> BOUNTY CLAIMED! {problem.explanation}</span>
+                                ) : (
+                                    <span style={{ color: 'var(--neon-red)' }}>❌ PATCH FAILED. {problem.explanation}</span>
+                                )}
                             </div>
                         )}
                     </div>

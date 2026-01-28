@@ -1,145 +1,145 @@
 import React, { useState } from 'react';
-import { FaMoneyBillWave, FaChartPie, FaChartLine, FaWallet, FaArrowRight, FaLightbulb } from 'react-icons/fa';
-import '../../css/lessons.css';
+import { FaMoneyBillWave, FaChartPie, FaChartLine, FaWallet, FaArrowRight, FaLightbulb, FaBuilding, FaGlobeAmericas } from 'react-icons/fa';
+import '../lesson9.css';
 
 const RevenueIntroduction = () => {
     const [activeTab, setActiveTab] = useState('revenue');
 
     return (
         <section className="lesson-section">
-            <div className="section-header-lesson">
-                <span className="section-badge-lesson">Concept</span>
-                <h2 className="section-title-lesson">Introduction to Revenue</h2>
-                <p className="section-subtitle-lesson">Understanding the money a firm earns from sales.</p>
+            <div className="market-header">
+                <span className="market-status">● MARKET OPEN</span>
+                <h2 className="market-title">Concept of Revenue</h2>
+                <p style={{ color: '#888', letterSpacing: '1px' }}>TICKER: <strong>REV</strong> | SECTOR: <strong>FINANCE</strong></p>
             </div>
 
-            {/* Hero Definition */}
-            <div className="content-card featured-card">
-                <div className="card-glow"></div>
-                <div className="card-content">
-                    <h3 className="card-title">
-                        <FaMoneyBillWave className="title-icon gold" /> What is Revenue?
-                    </h3>
-                    <p className="intro-text">
-                        <strong>Revenue</strong> refers to the money receipts of a firm from the sale of its output. It is the sales proceeds or sales turnover of a firm.
-                    </p>
-                    <div className="quote-box">
-                        <p>"Revenue is not Profit. Revenue is the income generated, while Profit is the income left after covering all costs."</p>
+            {/* TICKER TAPE */}
+            <div className="ticker-tape-container">
+                <div className="ticker-content">
+                    <span className="ticker-item">TR = P × Q <span className="ticker-value up">▲ 2.5%</span></span>
+                    <span className="ticker-item">AR = TR / Q <span className="ticker-value neutral">● 0.0%</span></span>
+                    <span className="ticker-item">MR = ΔTR / ΔQ <span className="ticker-value down">▼ 1.2%</span></span>
+                    <span className="ticker-item">PROFIT = TR - TC <span className="ticker-value up">▲ 5.0%</span></span>
+                    <span className="ticker-item">TR = P × Q <span className="ticker-value up">▲ 2.5%</span></span>
+                    <span className="ticker-item">AR = TR / Q <span className="ticker-value neutral">● 0.0%</span></span>
+                    <span className="ticker-item">MR = ΔTR / ΔQ <span className="ticker-value down">▼ 1.2%</span></span>
+                </div>
+            </div>
+
+            <div className="market-grid">
+
+                {/* INTRO CARD IPO */}
+                <div className="trading-card gold animate-fadeInLeft">
+                    <div className="card-header-row">
+                        <span className="stock-symbol text-gold">WHAT IS REVENUE?</span>
+                        <FaGlobeAmericas style={{ color: '#444', fontSize: '1.5rem' }} />
+                    </div>
+                    <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                        <FaBuilding style={{ fontSize: '3rem', color: '#333' }} />
+                        <div>
+                            <p style={{ color: '#ccc', lineHeight: '1.6' }}>
+                                Revenue is the <strong>Top Line</strong> income generated from sales.
+                                Think of it as the total cash flowing into the company before bills are paid.
+                            </p>
+                            <div className="formula-badge">
+                                "Sales Turnover" or "Receipts"
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {/* The 3 Concepts */}
-            <h3 className="subsection-title text-center mt-5 mb-4">The Three Concepts of Revenue</h3>
-            <div className="feature-grid three-col"> {/* Reusing grid styles */}
-
-                <div className="feature-item">
-                    <div className="feature-icon gold"><FaChartPie /></div>
-                    <h4>Total Revenue (TR)</h4>
-                    <p>Total amount of money received from selling a specific quantity of output.</p>
-                    <div className="formula-box">TR = Price × Quantity</div>
-                </div>
-
-                <div className="feature-item">
-                    <div className="feature-icon cyan"><FaChartLine /></div>
-                    <h4>Average Revenue (AR)</h4>
-                    <p>Revenue earned per unit of output. It is the same as the <strong>Price</strong> of the commodity.</p>
-                    <div className="formula-box">AR = TR / Q = Price</div>
-                </div>
-
-                <div className="feature-item">
-                    <div className="feature-icon green"><FaMoneyBillWave /></div>
-                    <h4>Marginal Revenue (MR)</h4>
-                    <p>Addition to Total Revenue derived from selling one more unit of output.</p>
-                    <div className="formula-box">MR = TR<sub>n</sub> - TR<sub>n-1</sub></div>
-                </div>
-
-            </div>
-
-            {/* Redesigned Dashboard Component */}
-            <div className="rev-profit-dashboard">
-                <div className={`dashboard-glow ${activeTab === 'profit' ? 'profit-glow' : ''}`}></div>
-                <div className="dashboard-inner">
-
-                    {/* Header with Toggle */}
-                    <div className="dashboard-header-row">
-                        <div className="dashboard-title">
-                            <FaWallet className={activeTab === 'revenue' ? 'text-gold' : 'text-green-400'} />
-                            <span>Financial Snapshot</span>
-                        </div>
-                        <div className="premium-toggle-group" style={{ margin: 0 }}>
+                {/* COMPARISON DASHBOARD */}
+                <div className="trading-card green animate-fadeInRight">
+                    <div className="card-header-row">
+                        <span className="stock-symbol text-green-400">FINANCIAL SNAPSHOT</span>
+                        <div className="trade-btn-group">
                             <button
-                                className={`premium-toggle-btn ${activeTab === 'revenue' ? 'active' : ''}`}
+                                className={`trade-btn ${activeTab === 'revenue' ? 'active' : ''}`}
                                 onClick={() => setActiveTab('revenue')}
                             >
-                                Revenue View
+                                TOP LINE
                             </button>
                             <button
-                                className={`premium-toggle-btn ${activeTab === 'profit' ? 'active' : ''}`}
+                                className={`trade-btn ${activeTab === 'profit' ? 'active profit' : ''}`}
                                 onClick={() => setActiveTab('profit')}
                             >
-                                Profit View
+                                BOTTOM LINE
                             </button>
                         </div>
                     </div>
 
-                    {/* Dynamic Content */}
                     {activeTab === 'revenue' ? (
                         <div className="animate-fade-in">
-                            <div className="metric-display-container">
-                                <div className="metric-label">Total Sales (Top Line)</div>
-                                <div className="metric-value-giant metric-gold">₹ 10,000</div>
-                                <div className="metric-subtext">100 Units sold @ ₹100 each</div>
-                            </div>
-
-                            <div className="deep-dive-box" style={{ borderColor: '#ffd700' }}>
-                                <div className="deep-dive-title">
-                                    <FaLightbulb className="text-gold" /> Why "Top Line"?
-                                </div>
-                                <p className="deep-dive-text">
-                                    Revenue sits at the very top of an Income Statement. It represents the <strong>Gross Income</strong> before any expenses (Rent, Wages, Raw Material) are paid.
-                                    High revenue means high demand, but not necessarily high wealth.
-                                </p>
-                            </div>
+                            <h1 className="ticker-font text-gold" style={{ fontSize: '3rem', margin: '10px 0' }}>
+                                $1,000,000
+                            </h1>
+                            <p className="text-gray-400">TOTAL REVENUE (GROSS)</p>
+                            <p className="text-sm mt-2" style={{ color: '#666' }}>
+                                All money received from customers. No expenses deducted yet.
+                            </p>
                         </div>
                     ) : (
                         <div className="animate-fade-in">
-                            <div className="metric-display-container">
-                                <div className="metric-label">Net Gain (Bottom Line)</div>
-                                <div className="metric-value-giant metric-green">₹ 2,000</div>
-
-                                {/* Waterfall Visual */}
-                                <div className="waterfall-container">
-                                    <div className="waterfall-step">
-                                        <div className="waterfall-box wf-revenue">₹10,000</div>
-                                        <small>Revenue</small>
-                                    </div>
-                                    <div className="wf-operator">-</div>
-                                    <div className="waterfall-step">
-                                        <div className="waterfall-box wf-cost">₹8,000</div>
-                                        <small>Costs</small>
-                                    </div>
-                                    <div className="wf-operator">=</div>
-                                    <div className="waterfall-step">
-                                        <div className="waterfall-box wf-profit">₹2,000</div>
-                                        <small>Profit</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="deep-dive-box" style={{ borderColor: '#00ff88' }}>
-                                <div className="deep-dive-title">
-                                    <FaLightbulb className="text-green-400" /> Why "Bottom Line"?
-                                </div>
-                                <p className="deep-dive-text">
-                                    Profit is what remains after all obligations are met. It is the <strong>Net Income</strong>.
-                                    A firm maximizes PROFIT, not just Revenue. If costs are higher than revenue, the firm makes a Loss.
-                                </p>
+                            <h1 className="ticker-font text-green-400" style={{ fontSize: '3rem', margin: '10px 0' }}>
+                                $200,000
+                            </h1>
+                            <p className="text-gray-400">NET PROFIT</p>
+                            <p className="text-sm mt-2" style={{ color: '#666' }}>
+                                What remains after paying Wages, Rent, and Materials.
+                            </p>
+                            <div style={{ marginTop: '10px', fontSize: '0.9rem', color: '#ff4444' }}>
+                                - $800,000 Expenses Deducted
                             </div>
                         </div>
                     )}
-
                 </div>
+
+            </div>
+
+            {/* THE BIG THREE CONCEPTS */}
+            <h3 style={{ textAlign: 'center', marginTop: '50px', letterSpacing: '2px', color: '#666' }}>MARKET FUNDAMENTALS</h3>
+
+            <div className="market-grid" style={{ marginTop: '20px' }}>
+
+                {/* TR */}
+                <div className="trading-card blue">
+                    <div className="card-header-row">
+                        <span className="stock-symbol" style={{ color: 'var(--trade-blue)' }}>TR</span>
+                        <FaChartPie style={{ color: '#333' }} />
+                    </div>
+                    <h4>Total Revenue</h4>
+                    <p style={{ color: '#aaa', fontSize: '0.9rem' }}>Total receipts from sale of Q units.</p>
+                    <div className="formula-badge" style={{ color: 'var(--trade-blue)', borderColor: 'var(--trade-blue)' }}>
+                        TR = Price × Quantity
+                    </div>
+                </div>
+
+                {/* AR */}
+                <div className="trading-card green">
+                    <div className="card-header-row">
+                        <span className="stock-symbol" style={{ color: 'var(--trade-green)' }}>AR</span>
+                        <FaChartLine style={{ color: '#333' }} />
+                    </div>
+                    <h4>Average Revenue</h4>
+                    <p style={{ color: '#aaa', fontSize: '0.9rem' }}>Revenue per unit. <strong>Always equals Price.</strong></p>
+                    <div className="formula-badge" style={{ color: 'var(--trade-green)', borderColor: 'var(--trade-green)' }}>
+                        AR = TR / Q = Price
+                    </div>
+                </div>
+
+                {/* MR */}
+                <div className="trading-card gold">
+                    <div className="card-header-row">
+                        <span className="stock-symbol" style={{ color: 'var(--trade-gold)' }}>MR</span>
+                        <FaMoneyBillWave style={{ color: '#333' }} />
+                    </div>
+                    <h4>Marginal Revenue</h4>
+                    <p style={{ color: '#aaa', fontSize: '0.9rem' }}>Extra revenue from selling 1 more unit.</p>
+                    <div className="formula-badge" style={{ color: 'var(--trade-gold)', borderColor: 'var(--trade-gold)' }}>
+                        MR = TRn - TRn-1
+                    </div>
+                </div>
+
             </div>
 
         </section>
