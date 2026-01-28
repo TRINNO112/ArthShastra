@@ -1,0 +1,197 @@
+/* Lesson 13 Trading Terminal Theme */
+:root {
+    --term-bg: #0d1117;
+    --term-green: #00ff88;
+    --term-red: #ff4444;
+    --term-blue: #00bfff;
+    --term-gold: #ffd700;
+    --term-text: #c9d1d9;
+    --term-panel: #161b22;
+}
+
+.lesson-page.terminal-theme {
+    background-color: var(--term-bg);
+    color: var(--term-text);
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    min-height: 100vh;
+}
+
+.terminal-section {
+    padding: 20px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.terminal-header-strip {
+    background: var(--term-panel);
+    border-bottom: 1px solid #30363d;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.stock-ticker-container {
+    background: #000;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    height: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: var(--term-green);
+    display: flex;
+    align-items: center;
+}
+
+.stock-ticker-content {
+    animation: ticker 20s linear infinite;
+    display: inline-block;
+}
+
+.stock-ticker-content span {
+    margin-right: 40px;
+}
+
+@keyframes ticker {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+.terminal-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.terminal-card {
+    background: var(--term-panel);
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.glitch-text {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+}
+
+.glitch-text::before, .glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch-text::before {
+    left: 2px;
+    text-shadow: -1px 0 red;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+    left: -2px;
+    text-shadow: -1px 0 blue;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% { clip: rect(12px, 9999px, 5px, 0); }
+    100% { clip: rect(85px, 9999px, 100px, 0); }
+}
+
+@keyframes glitch-anim2 {
+    0% { clip: rect(65px, 9999px, 98px, 0); }
+    100% { clip: rect(15px, 9999px, 32px, 0); }
+}
+
+.grid-2-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.data-box {
+    background: rgba(255,255,255,0.05);
+    padding: 15px;
+    border-left: 3px solid;
+    border-radius: 4px;
+}
+
+.spin-slow {
+    animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.blink {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Simulator Styles */
+.sim-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.sim-btn {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #8b949e;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: monospace;
+    transition: all 0.2s;
+}
+
+.sim-btn:hover {
+    border-color: #8b949e;
+    color: #fff;
+}
+
+.sim-btn.active {
+    background: rgba(0, 255, 136, 0.1);
+    border-color: var(--term-green);
+    color: var(--term-green);
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+}
+
+.sim-panel-group {
+    border: 1px solid #30363d;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.sim-group-title {
+    font-size: 0.8rem;
+    color: #8b949e;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}

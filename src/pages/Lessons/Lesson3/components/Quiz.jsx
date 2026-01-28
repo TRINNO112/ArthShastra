@@ -1,14 +1,14 @@
 import { lesson3Data } from '../../data/lesson3Data';
 import SharedQuiz from '../../components/SharedQuiz';
 
-const Quiz = () => {
+const Quiz = ({ mcqQuestions, tfQuestions, quizId, title, subtitle }) => {
   return (
     <SharedQuiz
-      mcqQuestions={lesson3Data?.mcqQuestions || []}
-      tfQuestions={lesson3Data?.tfQuestions || []}
-      quizId="lesson3-quiz"
-      title="Consumer Equilibrium Quiz"
-      subtitle="Test your knowledge on Utility Analysis"
+      mcqQuestions={mcqQuestions || lesson3Data?.mcqQuestions || []}
+      tfQuestions={tfQuestions || lesson3Data?.tfQuestions || []}
+      quizId={quizId || "lesson3-quiz"}
+      title={title || "Consumer Equilibrium Quiz"}
+      subtitle={subtitle || "Test your knowledge on Utility Analysis"}
     />
   );
 };
