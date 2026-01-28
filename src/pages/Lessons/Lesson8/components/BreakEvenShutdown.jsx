@@ -201,56 +201,160 @@ const BreakEvenShutdown = () => {
 
             <div className="content-card">
                 <div className="chart-controls" style={{ display: 'flex', gap: '10px', marginBottom: '15px', justifyContent: 'center' }}>
-                    <button className={`control-btn ${activeScenario === 'all' ? 'active' : ''}`} onClick={() => setActiveScenario('all')}>Show All</button>
-                    <button className={`control-btn ${activeScenario === 'breakeven' ? 'active' : ''}`} onClick={() => setActiveScenario('breakeven')}>Break-Even Only</button>
-                    <button className={`control-btn ${activeScenario === 'shutdown' ? 'active' : ''}`} onClick={() => setActiveScenario('shutdown')}>Shutdown Only</button>
+                    <button
+                        className={`comic-button ${activeScenario === 'all' ? 'active' : ''}`}
+                        onClick={() => setActiveScenario('all')}
+                        style={{
+                            background: activeScenario === 'all' ? '#ffd700' : '#333',
+                            color: activeScenario === 'all' ? '#000' : '#fff',
+                            border: '3px solid #000',
+                            padding: '10px 20px',
+                            fontWeight: 'bold',
+                            boxShadow: '4px 4px 0px #000',
+                            cursor: 'pointer',
+                            textTransform: 'uppercase',
+                            fontFamily: '"Comic Neue", "cursive", sans-serif'
+                        }}
+                    >
+                        Show All
+                    </button>
+                    <button
+                        className={`comic-button ${activeScenario === 'breakeven' ? 'active' : ''}`}
+                        onClick={() => setActiveScenario('breakeven')}
+                        style={{
+                            background: activeScenario === 'breakeven' ? '#ffd700' : '#333',
+                            color: activeScenario === 'breakeven' ? '#000' : '#fff',
+                            border: '3px solid #000',
+                            padding: '10px 20px',
+                            fontWeight: 'bold',
+                            boxShadow: '4px 4px 0px #000',
+                            cursor: 'pointer',
+                            textTransform: 'uppercase',
+                            fontFamily: '"Comic Neue", "cursive", sans-serif'
+                        }}
+                    >
+                        Break Even
+                    </button>
+                    <button
+                        className={`comic-button ${activeScenario === 'shutdown' ? 'active' : ''}`}
+                        onClick={() => setActiveScenario('shutdown')}
+                        style={{
+                            background: activeScenario === 'shutdown' ? '#00bfff' : '#333',
+                            color: activeScenario === 'shutdown' ? '#000' : '#fff',
+                            border: '3px solid #000',
+                            padding: '10px 20px',
+                            fontWeight: 'bold',
+                            boxShadow: '4px 4px 0px #000',
+                            cursor: 'pointer',
+                            textTransform: 'uppercase',
+                            fontFamily: '"Comic Neue", "cursive", sans-serif'
+                        }}
+                    >
+                        Shutdown Only
+                    </button>
                 </div>
 
                 <div ref={containerRef} className="chart-wrapper-flex" style={{ height: '450px' }}>
                     <svg ref={svgRef} className="chart-container-d3" style={{ height: '100%' }}></svg>
                 </div>
 
-                <div className="explanation-content" style={{ marginTop: '30px', color: '#e0e0e0', background: 'rgba(255,255,255,0.03)', padding: '25px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                    <h3 className="text-xl font-bold mb-4 text-gold" style={{ color: '#ffd700', fontSize: '1.4rem', borderBottom: '1px solid rgba(255,215,0,0.3)', paddingBottom: '10px', marginBottom: '20px' }}>Detailed Analysis</h3>
+                <div className="explanation-content" style={{ marginTop: '30px', padding: '20px' }}>
 
-                    <div className="concept-block mb-6" style={{ marginBottom: '25px' }}>
-                        <h4 style={{ color: '#ffd700', fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <span style={{ background: 'rgba(255,215,0,0.2)', padding: '2px 8px', borderRadius: '4px', fontSize: '0.9rem' }}>1</span>
-                            Break-Even Point (Point E)
-                        </h4>
-                        <p style={{ lineHeight: '1.7', color: '#ccc', marginBottom: '10px' }}>
-                            Occurs where <strong>Price (AR) = Minimum AC</strong> (and MC intersects AC).
-                        </p>
-                        <ul style={{ listStyle: 'none', paddingLeft: '0' }}>
-                            <li style={{ marginBottom: '8px', paddingLeft: '15px', borderLeft: '2px solid #ffd700' }}>At this price (P₁), Total Revenue (TR) exactly equals Total Cost (TC).</li>
-                            <li style={{ marginBottom: '8px', paddingLeft: '15px', borderLeft: '2px solid #ffd700' }}>The firm earns <strong style={{ color: '#fff' }}>Normal Profit</strong> (Zero Economic Profit).</li>
-                            <li style={{ marginBottom: '8px', paddingLeft: '15px', borderLeft: '2px solid #4ade80' }}>If Price &gt; Min AC, the firm earns <span style={{ color: '#4ade80' }}>Super-normal Profit</span>.</li>
-                            <li style={{ paddingLeft: '15px', borderLeft: '2px solid #f87171' }}>If Price &lt; Min AC, the firm incurs a <span style={{ color: '#f87171' }}>Loss</span>.</li>
-                        </ul>
+                    <div className="comic-panel-caption" style={{
+                        background: '#000',
+                        border: '2px solid #fff',
+                        padding: '15px',
+                        boxShadow: '5px 5px 0px #333',
+                        marginBottom: '20px'
+                    }}>
+                        <h3 style={{
+                            color: '#ffd700',
+                            fontFamily: '"Comic Neue", "cursive", sans-serif',
+                            fontSize: '1.5rem',
+                            textTransform: 'uppercase',
+                            borderBottom: '2px dashed #ffd700',
+                            paddingBottom: '10px',
+                            margin: 0
+                        }}>
+                            <span style={{ fontSize: '2rem', marginRight: '10px' }}>⚡</span>
+                            Analysis Log
+                        </h3>
                     </div>
 
-                    <div className="concept-block">
-                        <h4 style={{ color: '#00bfff', fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <span style={{ background: 'rgba(0,191,255,0.2)', padding: '2px 8px', borderRadius: '4px', fontSize: '0.9rem' }}>2</span>
-                            Shutdown Point (Point S)
-                        </h4>
-                        <p style={{ lineHeight: '1.7', color: '#ccc', marginBottom: '10px' }}>
-                            Occurs where <strong>Price (AR) = Minimum AVC</strong> (and MC intersects AVC).
-                        </p>
-                        <div style={{ background: 'rgba(0,191,255,0.05)', padding: '15px', borderRadius: '8px' }}>
-                            <p style={{ marginBottom: '10px', color: '#ccc' }}>At this price (P₂), the firm covers <em>only</em> its Variable Costs. It loses its entire Fixed Cost.</p>
-                            <strong style={{ color: '#fff', display: 'block', marginBottom: '5px' }}>Decision Rule:</strong>
-                            <ul style={{ listStyle: 'none', paddingLeft: '0' }}>
-                                <li style={{ marginBottom: '8px', display: 'flex', gap: '10px' }}>
-                                    <span style={{ color: '#4ade80' }}>✔</span>
-                                    <span>If <strong>P &ge; Min AVC</strong>: The firm continues to produce in the short run to minimize losses (Loss &le; TFC).</span>
-                                </li>
-                                <li style={{ display: 'flex', gap: '10px' }}>
-                                    <span style={{ color: '#f87171' }}>✖</span>
-                                    <span>If <strong>P &lt; Min AVC</strong>: The firm shuts down immediately because producing would increase losses beyond TFC.</span>
-                                </li>
+                    <div className="concept-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '25px' }}>
+
+                        {/* BREAK EVEN */}
+                        <div className="comic-card" style={{
+                            background: '#1a1a2e',
+                            border: '2px solid #ffd700',
+                            borderRadius: '10px',
+                            padding: '20px',
+                            position: 'relative',
+                            boxShadow: '0 4px 15px rgba(255, 215, 0, 0.1)'
+                        }}>
+                            <div style={{
+                                position: 'absolute', top: '-12px', left: '20px',
+                                background: '#ffd700', color: '#000',
+                                padding: '2px 10px', fontWeight: 'bold',
+                                fontFamily: 'monospace', borderRadius: '4px'
+                            }}>
+                                CASE 01
+                            </div>
+                            <h4 style={{
+                                color: '#fff', fontSize: '1.2rem', fontWeight: 'bold',
+                                marginTop: '10px', marginBottom: '15px',
+                                display: 'flex', alignItems: 'center', gap: '8px'
+                            }}>
+                                <span style={{ color: '#ffd700' }}>●</span> Break-Even Point (E)
+                            </h4>
+                            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '10px', borderRadius: '6px', fontFamily: 'monospace', fontSize: '0.9rem', color: '#ccc' }}>
+                                <strong>CONDITION:</strong> Price = Min AC
+                                <br />
+                                <strong>RESULT:</strong> TR = TC
+                            </div>
+                            <ul style={{ listStyle: 'none', padding: 0, marginTop: '15px', color: '#aaa', fontSize: '0.9rem', lineHeight: '1.6' }}>
+                                <li style={{ marginBottom: '8px' }}>✅ Earning <strong>Normal Profit</strong> only.</li>
+                                <li style={{ marginBottom: '8px' }}>🚀 If Price &gt; Min AC → <span style={{ color: '#4ade80' }}>Super-Normal Profit</span>.</li>
+                                <li>⚠️ If Price &lt; Min AC → <span style={{ color: '#f87171' }}>Loss Zone</span>.</li>
                             </ul>
                         </div>
+
+                        {/* SHUTDOWN */}
+                        <div className="comic-card" style={{
+                            background: '#1a1a2e',
+                            border: '2px solid #00bfff',
+                            borderRadius: '10px',
+                            padding: '20px',
+                            position: 'relative',
+                            boxShadow: '0 4px 15px rgba(0, 191, 255, 0.1)'
+                        }}>
+                            <div style={{
+                                position: 'absolute', top: '-12px', left: '20px',
+                                background: '#00bfff', color: '#000',
+                                padding: '2px 10px', fontWeight: 'bold',
+                                fontFamily: 'monospace', borderRadius: '4px'
+                            }}>
+                                CASE 02
+                            </div>
+                            <h4 style={{
+                                color: '#fff', fontSize: '1.2rem', fontWeight: 'bold',
+                                marginTop: '10px', marginBottom: '15px',
+                                display: 'flex', alignItems: 'center', gap: '8px'
+                            }}>
+                                <span style={{ color: '#00bfff' }}>●</span> Shutdown Point (S)
+                            </h4>
+                            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '10px', borderRadius: '6px', fontFamily: 'monospace', fontSize: '0.9rem', color: '#ccc' }}>
+                                <strong>CONDITION:</strong> Price = Min AVC
+                                <br />
+                                <strong>RESULT:</strong> Loss = TFC
+                            </div>
+                            <ul style={{ listStyle: 'none', padding: 0, marginTop: '15px', color: '#aaa', fontSize: '0.9rem', lineHeight: '1.6' }}>
+                                <li style={{ marginBottom: '8px' }}>🛑 Covers <strong>Variable Cost</strong> only.</li>
+                                <li style={{ marginBottom: '8px' }}>👉 If P ≥ Min AVC: <strong>Continue</strong> (Minimizing Loss).</li>
+                                <li>💀 If P &lt; Min AVC: <strong>SHUT DOWN</strong> immediately.</li>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
             </div>

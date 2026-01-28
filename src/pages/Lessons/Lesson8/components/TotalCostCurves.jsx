@@ -232,62 +232,73 @@ const TotalCostCurves = () => {
 
     return (
         <section className="lesson-section">
-            <div className="content-card">
-                <div ref={containerRef} className="chart-wrapper-flex" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                    <svg ref={svgRef} className="chart-container-d3" style={{ height: '450px' }}></svg>
+            <div className="factory-header">
+                <h2 className="factory-title">OUTPUT AGGREGATES</h2>
+                <p className="factory-subtitle">UNIT 3: TOTAL COST CALCULATIONS</p>
+            </div>
 
-                    <div className="chart-legend-bottom" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', padding: '15px', background: 'rgba(0,0,0,0.3)', borderRadius: '12px' }}>
-                        <h4 className="legend-title" style={{ width: '100%', textAlign: 'center', marginBottom: '5px' }}>Key</h4>
-                        <div className="legend-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <span className="legend-line" style={{ background: '#00ff88', width: '30px', height: '3px' }}></span>
-                            <div style={{ fontSize: '0.9rem', color: '#ccc' }}><strong>TC</strong> (Total Cost)</div>
-                        </div>
-                        <div className="legend-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <span className="legend-line" style={{ background: '#ff6b6b', width: '30px', height: '2px' }}></span>
-                            <div style={{ fontSize: '0.9rem', color: '#ccc' }}><strong>TVC</strong> (Total Variable Cost)</div>
-                        </div>
-                        <div className="legend-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <span className="legend-line" style={{ borderTop: '2px dashed #00bfff', width: '30px' }}></span>
-                            <div style={{ fontSize: '0.9rem', color: '#ccc' }}><strong>TFC</strong> (Total Fixed Cost)</div>
-                        </div>
+            <div className="control-panel" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px' }}>
+                    <h4 style={{ color: 'var(--factory-yellow)', fontFamily: 'Black Ops One, cursive', margin: 0 }}>AGGREGATE COST MONITOR</h4>
+                    <div style={{ fontFamily: 'monospace', color: '#888' }}>STATUS: ONLINE</div>
+                </div>
+
+                <div className="panel-screen" style={{ border: '2px dashed #444' }}>
+                    <div ref={containerRef} className="chart-wrapper-flex" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                        <svg ref={svgRef} className="chart-container-d3" style={{ height: '450px', width: '100%' }}></svg>
                     </div>
                 </div>
 
-                <div className="explanation-content" style={{ marginTop: '30px', color: '#e0e0e0' }}>
-                    <h3 className="text-xl font-bold mb-4 text-gold" style={{ color: '#ffd700', borderBottom: '1px solid #333', paddingBottom: '10px' }}>Analysis of Total Costs</h3>
+                <div className="panel-screen" style={{ marginTop: '15px', padding: '10px' }}>
+                    <div className="chart-legend-bottom" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px' }}>
+                        <div className="legend-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span className="legend-line" style={{ background: '#00ff88', width: '30px', height: '3px' }}></span>
+                            <div style={{ fontSize: '0.9rem', color: '#00ff88', fontFamily: 'monospace' }}>TC (Total Cost)</div>
+                        </div>
+                        <div className="legend-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span className="legend-line" style={{ background: '#ff6b6b', width: '30px', height: '2px' }}></span>
+                            <div style={{ fontSize: '0.9rem', color: '#ff6b6b', fontFamily: 'monospace' }}>TVC (Total Variable)</div>
+                        </div>
+                        <div className="legend-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span className="legend-line" style={{ borderTop: '2px dashed #00bfff', width: '30px' }}></span>
+                            <div style={{ fontSize: '0.9rem', color: '#00bfff', fontFamily: 'monospace' }}>TFC (Total Fixed)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                    <div className="concept-block mb-6" style={{ marginBottom: '20px' }}>
-                        <h4 className="text-lg font-semibold text-[#00bfff] mb-2" style={{ color: '#00bfff', fontSize: '1.1rem' }}>1. TFC (Total Fixed Cost)</h4>
-                        <p className="mb-2" style={{ lineHeight: '1.6', color: '#ccc' }}>
-                            Represented by a straight horizontal line parallel to the X-axis.
+            <div className="blueprint-card" style={{ marginTop: '40px' }}>
+                <h3 className="blueprint-title">COMPONENT ANALYSIS</h3>
+
+                <div className="" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginTop: '20px' }}>
+
+                    <div style={{ border: '1px solid #333', padding: '15px' }}>
+                        <h4 style={{ color: '#00bfff', fontFamily: 'monospace', borderBottom: '1px dashed #00bfff', paddingBottom: '5px' }}>1. TFC (FIXED)</h4>
+                        <p style={{ color: '#ccc', fontSize: '0.9rem', marginTop: '10px' }}>
+                            &gt;&gt; <strong>HORIZONTAL LINE:</strong> Constant at all output levels.
+                            <br />
+                            &gt;&gt; Even at Q=0, TFC exists (Sunk Cost).
                         </p>
-                        <ul style={{ listStyleType: 'disc', paddingLeft: '20px', color: '#aaa', marginTop: '5px' }}>
-                            <li>It remains <strong>constant</strong> at all levels of output (even at Q=0).</li>
-                            <li>Includes costs like Rent, Interest, Salaries of permanent staff.</li>
-                        </ul>
                     </div>
 
-                    <div className="concept-block mb-6" style={{ marginBottom: '20px' }}>
-                        <h4 className="text-lg font-semibold text-[#ff6b6b] mb-2" style={{ color: '#ff6b6b', fontSize: '1.1rem' }}>2. TVC (Total Variable Cost)</h4>
-                        <p className="mb-2" style={{ lineHeight: '1.6', color: '#ccc' }}>
-                            Starts from the origin (0,0) and increases as output increases.
+                    <div style={{ border: '1px solid #333', padding: '15px' }}>
+                        <h4 style={{ color: '#ff6b6b', fontFamily: 'monospace', borderBottom: '1px dashed #ff6b6b', paddingBottom: '5px' }}>2. TVC (VARIABLE)</h4>
+                        <p style={{ color: '#ccc', fontSize: '0.9rem', marginTop: '10px' }}>
+                            &gt;&gt; <strong>INVERSE S-SHAPE:</strong> Starts from Origin (0,0).
+                            <br />
+                            &gt;&gt; Rises slowly (efficieny) then rapidly (diminishing returns).
                         </p>
-                        <ul style={{ listStyleType: 'disc', paddingLeft: '20px', color: '#aaa', marginTop: '5px' }}>
-                            <li><strong>Inverse S-Shape:</strong> Initially increases at a diminishing rate (due to increasing returns), and later increases at an increasing rate (due to diminishing returns).</li>
-                            <li>Examples: Raw material cost, wages of casual labor.</li>
-                        </ul>
                     </div>
 
-                    <div className="concept-block">
-                        <h4 className="text-lg font-semibold text-[#00ff88] mb-2" style={{ color: '#00ff88', fontSize: '1.1rem' }}>3. TC (Total Cost)</h4>
-                        <p className="mb-2" style={{ lineHeight: '1.6', color: '#ccc' }}>
-                            TC = TFC + TVC.
+                    <div style={{ border: '1px solid #333', padding: '15px' }}>
+                        <h4 style={{ color: '#00ff88', fontFamily: 'monospace', borderBottom: '1px dashed #00ff88', paddingBottom: '5px' }}>3. TC (TOTAL)</h4>
+                        <p style={{ color: '#ccc', fontSize: '0.9rem', marginTop: '10px' }}>
+                            &gt;&gt; <strong>PARALLEL TO TVC:</strong> TC = TVC + TFC.
+                            <br />
+                            &gt;&gt; Starts from TFC intercept, never from zero.
                         </p>
-                        <ul style={{ listStyleType: 'disc', paddingLeft: '20px', color: '#aaa', marginTop: '5px' }}>
-                            <li>TC curve starts from the TFC intercept on the Y-axis (not zero), because fixed costs exist even at zero output.</li>
-                            <li>It runs <strong>parallel</strong> to the TVC curve. The vertical distance between TC and TVC is constant (= TFC).</li>
-                        </ul>
                     </div>
+
                 </div>
             </div>
         </section>

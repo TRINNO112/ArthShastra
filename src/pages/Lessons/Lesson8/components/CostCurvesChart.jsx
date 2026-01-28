@@ -241,82 +241,78 @@ const CostCurvesChart = ({ data }) => {
 
   return (
     <section className="lesson-section">
-      <div className="section-header-lesson">
-        <span className="section-badge-lesson">Chapter 8</span>
-        <h2 className="section-title-lesson">Cost Curves</h2>
-        <p className="section-subtitle-lesson">TC rising, MC/AC/AVC U-shapes. MC cuts AC at minimum.</p>
+      <div className="factory-header">
+        <h2 className="factory-title">CONTROL PANEL</h2>
+        <p className="factory-subtitle">UNIT 3: COST CURVE MONITORING SYSTEM</p>
       </div>
 
-      <div className="content-card">
-        <div ref={containerRef} className="chart-wrapper-flex" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <svg ref={svgRef} className="chart-container-d3" style={{ height: '450px' }}></svg>
+      <div className="control-panel" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px', alignItems: 'center' }}>
+          <h4 style={{ color: 'var(--factory-yellow)', fontFamily: 'Black Ops One, cursive', margin: 0 }}>MAIN MONITOR [D3-VIS]</h4>
+          <div style={{ display: 'flex', gap: '5px' }}>
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'red', boxShadow: '0 0 5px red' }}></div>
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'yellow' }}></div>
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'green' }}></div>
+          </div>
+        </div>
 
-          <div className="chart-legend-bottom" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', padding: '15px', background: 'rgba(0,0,0,0.3)', borderRadius: '12px' }}>
-            <h4 className="legend-title" style={{ width: '100%', textAlign: 'center', marginBottom: '5px' }}>Key</h4>
+        <div className="panel-screen">
+          <div ref={containerRef} className="chart-wrapper-flex" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <svg ref={svgRef} className="chart-container-d3" style={{ height: '450px', width: '100%' }}></svg>
+          </div>
+        </div>
 
+        <div className="panel-screen" style={{ marginTop: '20px', border: '1px solid #333' }}>
+          <div className="chart-legend-bottom" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', padding: '10px' }}>
             <div className="legend-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span className="legend-line" style={{ background: '#00ff88', width: '30px', height: '3px' }}></span>
-              <div style={{ fontSize: '0.9rem', color: '#ccc' }}>
-                <strong>TC</strong> (Total Cost)
-              </div>
+              <div style={{ fontSize: '0.9rem', color: '#00ff88', fontFamily: 'monospace' }}>TC (Total)</div>
             </div>
 
             <div className="legend-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span className="legend-line" style={{ background: '#ff6b6b', width: '30px', height: '2px' }}></span>
-              <div style={{ fontSize: '0.9rem', color: '#ccc' }}>
-                <strong>MC</strong> (Marginal Cost)
-              </div>
+              <div style={{ fontSize: '0.9rem', color: '#ff6b6b', fontFamily: 'monospace' }}>MC (Marginal)</div>
             </div>
 
             <div className="legend-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span className="legend-line" style={{ borderTop: '2px dashed #ffd700', width: '30px' }}></span>
-              <div style={{ fontSize: '0.9rem', color: '#ccc' }}>
-                <strong>AC</strong> (Average Cost)
-              </div>
+              <div style={{ fontSize: '0.9rem', color: '#ffd700', fontFamily: 'monospace' }}>AC (Average)</div>
             </div>
 
             <div className="legend-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span className="legend-line" style={{ borderTop: '2px dashed #00bfff', width: '30px' }}></span>
-              <div style={{ fontSize: '0.9rem', color: '#ccc' }}>
-                <strong>AVC</strong> (Avg Variable Cost)
-              </div>
+              <div style={{ fontSize: '0.9rem', color: '#00bfff', fontFamily: 'monospace' }}>AVC (Avg Var)</div>
             </div>
-
           </div>
         </div>
+      </div>
 
-        <div className="explanation-content" style={{ marginTop: '30px', color: '#e0e0e0' }}>
-          <h3 className="text-xl font-bold mb-4 text-gold" style={{ color: '#ffd700', borderBottom: '1px solid #333', paddingBottom: '10px' }}>Explained: Nature of Cost Curves</h3>
+      <div style={{ maxWidth: '1000px', margin: '40px auto' }}>
+        <div className="blueprint-card">
+          <h3 className="blueprint-title">SYSTEM DIAGNOSTICS: CURVE BEHAVIOR</h3>
 
-          <div className="concept-block mb-6" style={{ marginBottom: '20px' }}>
-            <h4 className="text-lg font-semibold text-[#00ff88] mb-2" style={{ color: '#00ff88', fontSize: '1.1rem' }}>1. Why are AC, AVC, and MC U-shaped?</h4>
-            <p className="mb-2" style={{ lineHeight: '1.6', color: '#ccc' }}>
-              This is due to the <strong>Law of Variable Proportions</strong>:
-            </p>
-            <ul style={{ listStyleType: 'disc', paddingLeft: '20px', color: '#aaa', marginTop: '5px' }}>
-              <li style={{ marginBottom: '5px' }}><strong>Phase 1 (Falling Cost):</strong> Initially, as output increases, efficiency rises due to better utilization of fixed factors (Increasing Returns to Factor), so costs fall.</li>
-              <li><strong>Phase 2 (Rising Cost):</strong> Eventually, diminishing returns set in. Overcrowding of variable factors on fixed factors causes efficiency to drop, so costs rise.</li>
-            </ul>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginTop: '20px' }}>
+            <div>
+              <h4 style={{ color: 'var(--factory-yellow)', fontFamily: 'monospace' }}>1. LAW OF VARIABLE PROPORTIONS</h4>
+              <p style={{ color: '#ccc', fontSize: '0.9rem', lineHeight: '1.6' }}>
+                &gt;&gt; <strong style={{ color: '#fff' }}>U-SHAPED CURVES:</strong> AC, AVC, MC initially fall due to efficiency (Increasing Returns), then rise due to overcrowding (Diminishing Returns).
+              </p>
+            </div>
+            <div>
+              <h4 style={{ color: 'var(--factory-rust)', fontFamily: 'monospace' }}>2. MC vs AC RELATIONSHIP</h4>
+              <ul style={{ color: '#ccc', fontSize: '0.9rem', lineHeight: '1.6', listStyle: 'none', padding: 0 }}>
+                <li>[MC &lt; AC] -&gt; AC Falls</li>
+                <li>[MC = AC] -&gt; AC Minimum</li>
+                <li>[MC &gt; AC] -&gt; AC Rises</li>
+              </ul>
+            </div>
           </div>
 
-          <div className="concept-block mb-6" style={{ marginBottom: '20px' }}>
-            <h4 className="text-lg font-semibold text-[#ff6b6b] mb-2" style={{ color: '#ff6b6b', fontSize: '1.1rem' }}>2. Relationship between MC and AC</h4>
-            <ul style={{ listStyleType: 'disc', paddingLeft: '20px', color: '#ccc', lineHeight: '1.6' }}>
-              <li style={{ marginBottom: '8px' }}><strong>When MC &lt; AC:</strong> MC pulls AC down. (AC falls).</li>
-              <li style={{ marginBottom: '8px' }}><strong>When MC = AC:</strong> AC is at its minimum point. MC always cuts AC from below at its lowest point.</li>
-              <li><strong>When MC &gt; AC:</strong> MC pulls AC up. (AC rises).</li>
-            </ul>
-          </div>
-
-          <div className="concept-block">
-            <h4 className="text-lg font-semibold text-[#00bfff] mb-2" style={{ color: '#00bfff', fontSize: '1.1rem' }}>3. AC vs AVC</h4>
-            <p className="mb-2" style={{ lineHeight: '1.6', color: '#ccc' }}>
-              AC always lies above AVC because AC = AVC + AFC.
+          <div style={{ marginTop: '20px', borderTop: '1px dashed #fff', paddingTop: '10px' }}>
+            <h4 style={{ color: 'var(--factory-blue)', fontFamily: 'monospace' }}>3. AC vs AVC GAP</h4>
+            <p style={{ color: '#ccc', fontSize: '0.9rem' }}>
+              The vertical distance is AFC. Since AFC falls continuously, AC and AVC get closer but <strong style={{ color: 'red' }}>NEVER TOUCH</strong>.
             </p>
-            <ul style={{ listStyleType: 'disc', paddingLeft: '20px', color: '#aaa', marginTop: '5px' }}>
-              <li>The vertical gap between AC and AVC is equal to AFC (Average Fixed Cost).</li>
-              <li>As output rises, AFC falls continuously. Thus, the gap between AC and AVC keeps narrowing but <strong>they never intersect</strong> because AFC can never be zero.</li>
-            </ul>
           </div>
         </div>
       </div>

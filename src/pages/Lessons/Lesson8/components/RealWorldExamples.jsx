@@ -1,81 +1,91 @@
 import React from 'react';
-import { FaIndustry, FaUtensils, FaPlane, FaTruck, FaUserTie } from 'react-icons/fa';
+import { FaIndustry, FaUtensils, FaPlane, FaUserTie } from 'react-icons/fa';
 import '../../css/lessons.css';
 import '../../css/quiz.css';
 
 const RealWorldExamples = () => {
   return (
     <section className="lesson-section">
-      <div className="section-header-lesson">
-        <span className="section-badge-lesson">Chapter 8</span>
-        <h2 className="section-title-lesson">Real-World Examples</h2>
-        <p className="section-subtitle-lesson">Cost structures in factories, restaurants, airlines & more.</p>
+      <div className="factory-header">
+        <h2 className="factory-title">FACTORY FLOOR STORIES</h2>
+        <p className="factory-subtitle">REAL WORLD COST STRUCTURES</p>
       </div>
 
-      <div className="content-card featured-card">
-        <div className="card-glow"></div>
-        <div className="card-content">
-          <h3 className="card-title">
-            <FaIndustry className="title-icon gold" /> Costs in Practice
-          </h3>
-          <p className="intro-text">Every business faces fixed and variable costs. See how they apply across different industries.</p>
-        </div>
-      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px', marginTop: '30px' }}>
 
-      {/* Examples Grid */}
-      <div className="examples-grid">
-        <div className="example-card factory-card">
-          <FaIndustry />
-          <h5>Factory Production</h5>
-          <p><strong>FC:</strong> Factory rent, machinery depreciation, manager salary.<br />
-            <strong>VC:</strong> Raw materials, worker wages, electricity for machines.<br />
-            <strong>Behavior:</strong> TC rises with output, MC U-shape from labor efficiency → crowding.</p>
-        </div>
-
-        <div className="example-card restaurant-card">
-          <FaUtensils />
-          <h5>Restaurant</h5>
-          <p><strong>FC:</strong> Rent, kitchen equipment, chef salary.<br />
-            <strong>VC:</strong> Food ingredients, waiter wages, gas for cooking.<br />
-            <strong>Behavior:</strong> AVC falls initially (kitchen efficiency), rises with rush hours.</p>
-        </div>
-
-        <div className="example-card airline-card">
-          <FaPlane />
-          <h5>Airline</h5>
-          <p><strong>FC:</strong> Aircraft purchase/lease, pilot salary, airport fees.<br />
-            <strong>VC:</strong> Fuel (per flight), meals, maintenance per passenger.<br />
-            <strong>Behavior:</strong> High FC, low VC per passenger – fill seats to lower AC.</p>
-        </div>
-
-        <div className="example-card logistics-card">
-          <FaTruck />
-          <h5>Trucking Company</h5>
-          <p><strong>FC:</strong> Truck purchase, driver salary, insurance.<br />
-            <strong>VC:</strong> Fuel, tolls, loading/unloading per trip.<br />
-            <strong>Behavior:</strong> MC rises with distance/traffic; optimal load size.</p>
-        </div>
-      </div>
-
-      <div className="practice-card" style={{ borderColor: 'rgba(255, 215, 0, 0.4)', padding: '30px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
-          <div style={{ background: 'rgba(255,215,0,0.2)', padding: '12px', borderRadius: '12px', color: '#ffd700' }}>
-            <FaIndustry size={24} />
-          </div>
-          <div>
-            <h4 style={{ margin: 0, fontSize: '1.2rem', color: '#fff' }}>Apply to Your Business</h4>
-            <p style={{ margin: 0, fontSize: '0.9rem', color: '#aaa' }}>Startup Application</p>
+        {/* FACTORY */}
+        <div className="industry-card" style={{ background: '#222', borderLeft: '5px solid #ccc', padding: '20px', borderRadius: '0 10px 10px 0', border: '1px solid #444', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', right: '-10px', top: '-10px', opacity: '0.1' }}><FaIndustry size={100} /></div>
+          <h4 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '15px', borderBottom: '1px dashed #555', paddingBottom: '10px' }}>
+            <FaIndustry style={{ marginRight: '10px', color: '#ccc' }} /> HEAVY INDUSTRY
+          </h4>
+          <div style={{ fontSize: '0.9rem', color: '#aaa', fontFamily: 'monospace' }}>
+            <div style={{ marginBottom: '8px' }}><strong style={{ color: '#fff' }}>FIXED:</strong> Machinery, Lease, Grid Connection.</div>
+            <div><strong style={{ color: '#fff' }}>VARIABLE:</strong> Steel, Raw Materials, Labor.</div>
           </div>
         </div>
 
-        <p>List 3 Fixed Costs and 3 Variable Costs for a startup (e.g., coffee shop, app, e-commerce).</p>
+        {/* AIRLINE */}
+        <div className="industry-card" style={{ background: '#222', borderLeft: '5px solid #00bfff', padding: '20px', borderRadius: '0 10px 10px 0', border: '1px solid #444', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', right: '-10px', top: '-10px', opacity: '0.1' }}><FaPlane size={100} /></div>
+          <h4 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '15px', borderBottom: '1px dashed #555', paddingBottom: '10px' }}>
+            <FaPlane style={{ marginRight: '10px', color: '#00bfff' }} /> AIRLINES
+          </h4>
+          <div style={{ fontSize: '0.9rem', color: '#aaa', fontFamily: 'monospace' }}>
+            <div style={{ marginBottom: '8px' }}><strong style={{ color: '#fff' }}>FIXED:</strong> Aircraft Lease, Airport Gates, Pilots.</div>
+            <div><strong style={{ color: '#fff' }}>VARIABLE:</strong> Jet Fuel, In-flight Meals.</div>
+          </div>
+        </div>
 
-        <div className="solution-box" style={{ background: 'linear-gradient(90deg, rgba(255,215,0,0.1), rgba(0,0,0,0))', borderLeftColor: '#ffd700' }}>
-          <strong style={{ color: '#ffd700', display: 'block', marginBottom: '5px' }}>Example: Coffee Shop</strong>
-          <ul className="bullet-list">
-            <li><strong>FC:</strong> Rent, Espresso Machine, Decor</li>
-            <li><strong>VC:</strong> Coffee Beans, Milk, Paper Cups</li>
-          </ul>
+        {/* TECH STARTUP */}
+        <div className="industry-card" style={{ background: '#222', borderLeft: '5px solid #00ff88', padding: '20px', borderRadius: '0 10px 10px 0', border: '1px solid #444', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', right: '-10px', top: '-10px', opacity: '0.1' }}><FaUserTie size={100} /></div>
+          <h4 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '15px', borderBottom: '1px dashed #555', paddingBottom: '10px' }}>
+            <FaUserTie style={{ marginRight: '10px', color: '#00ff88' }} /> TECH STARTUP
+          </h4>
+          <div style={{ fontSize: '0.9rem', color: '#aaa', fontFamily: 'monospace' }}>
+            <div style={{ marginBottom: '8px' }}><strong style={{ color: '#fff' }}>FIXED:</strong> Servers, Office, Dev Team Salary.</div>
+            <div><strong style={{ color: '#fff' }}>VARIABLE:</strong> Cloud Scale-up, Customer Support.</div>
+          </div>
+        </div>
+
+        {/* RESTAURANT */}
+        <div className="industry-card" style={{ background: '#222', borderLeft: '5px solid #ff6b6b', padding: '20px', borderRadius: '0 10px 10px 0', border: '1px solid #444', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', right: '-10px', top: '-10px', opacity: '0.1' }}><FaUtensils size={100} /></div>
+          <h4 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '15px', borderBottom: '1px dashed #555', paddingBottom: '10px' }}>
+            <FaUtensils style={{ marginRight: '10px', color: '#ff6b6b' }} /> RESTAURANT
+          </h4>
+          <div style={{ fontSize: '0.9rem', color: '#aaa', fontFamily: 'monospace' }}>
+            <div style={{ marginBottom: '8px' }}><strong style={{ color: '#fff' }}>FIXED:</strong> Kitchen Equip, Rent, Head Chef.</div>
+            <div><strong style={{ color: '#fff' }}>VARIABLE:</strong> Groceries, Gas/Electric.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div className="blueprint-card" style={{ marginTop: '40px' }}>
+        <h3 className="blueprint-title">EXERCISE: COST IDENTIFICATION</h3>
+        <p style={{ fontFamily: 'monospace', color: '#aaa', marginBottom: '20px' }}>
+          &gt;&gt; SCENARIO: COFFEE SHOP STARTUP
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+          <div style={{ border: '1px dashed #fff', padding: '15px' }}>
+            <strong style={{ color: 'var(--factory-yellow)' }}>FIXED COSTS (TFC)</strong>
+            <ul style={{ listStyle: 'none', padding: 0, marginTop: '10px', color: '#ccc', fontFamily: 'monospace' }}>
+              <li>- Espresso Machine Lease</li>
+              <li>- Shop Rent</li>
+              <li>- WiFi Plan</li>
+            </ul>
+          </div>
+          <div style={{ border: '1px dashed #fff', padding: '15px' }}>
+            <strong style={{ color: 'var(--factory-blue)' }}>VARIABLE COSTS (TVC)</strong>
+            <ul style={{ listStyle: 'none', padding: 0, marginTop: '10px', color: '#ccc', fontFamily: 'monospace' }}>
+              <li>- Coffee Beans</li>
+              <li>- Milk / Sugar</li>
+              <li>- Paper Cups</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>

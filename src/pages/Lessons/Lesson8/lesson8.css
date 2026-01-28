@@ -1,0 +1,182 @@
+/* ==========================================================================
+   Lesson 8: The Industrial Factory 🏭
+   Hazard Stripes, Blueprints, Heavy Machinery Aesthetics
+   ========================================================================== */
+
+/* Factory Palette */
+:root {
+  --factory-bg: #1a1a1a;        /* Asphalt/Dark Grey */
+  --factory-yellow: #ffcc00;    /* Hazard Yellow */
+  --factory-black: #000000;     /* Oil Black */
+  --factory-steel: #777777;     /* Brushed Steel */
+  --factory-rust: #cd5c5c;      /* Rust Accent */
+  --factory-blue: #0073e6;      /* Blueprint Blue */
+  --factory-light: #e0e0e0;     /* Workshop Light */
+}
+
+/* HAZARD STRIPES PATTERN */
+.hazard-stripes {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--factory-yellow),
+    var(--factory-yellow) 10px,
+    var(--factory-black) 10px,
+    var(--factory-black) 20px
+  );
+  height: 20px;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* MAIN LAYOUT */
+.lesson-container.factory-theme {
+  background-color: var(--factory-bg);
+  background-image: 
+    linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+    url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23333' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/svg%3E");
+  color: var(--factory-light);
+  font-family: 'Roboto Condensed', 'Oswald', sans-serif;
+  min-height: 100vh;
+  border: 4px solid #333;
+}
+
+/* FACTORY HEADER */
+.factory-header {
+  border-bottom: 4px solid var(--factory-steel);
+  padding: 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: #222;
+}
+
+.factory-title {
+  font-size: 4rem;
+  font-weight: 900;
+  color: var(--factory-yellow);
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  text-shadow: 2px 2px 0px #000, 4px 4px 0px #555;
+  margin: 0;
+  font-family: 'Black Ops One', cursive; /* Need to import or system fallback */
+}
+
+.factory-subtitle {
+  color: var(--factory-steel);
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  margin-top: 10px;
+  border: 1px dashed var(--factory-yellow);
+  display: inline-block;
+  padding: 5px 15px;
+}
+
+/* BLUEPRINT CARD */
+.blueprint-card {
+  background: #0a2e52; /* Blueprint Blue dark */
+  border: 2px solid #fff;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 5px 5px 0px rgba(0,0,0,0.5);
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.blueprint-title {
+  color: #fff;
+  border-bottom: 2px solid #fff;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+/* MACHINERY CARD (Steel) */
+.machinery-card {
+  background: linear-gradient(135deg, #444, #222);
+  border: 1px solid #666;
+  border-bottom: 5px solid var(--factory-rust);
+  padding: 25px;
+  margin: 30px auto;
+  border-radius: 4px;
+  max-width: 900px;
+  box-shadow: inset 0 0 20px #000;
+}
+
+.machinery-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #555;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.gear-icon {
+  color: var(--factory-steel);
+  font-size: 2rem;
+  animation: spin 10s linear infinite;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* CONTROL PANEL GAUGE */
+.control-panel {
+  background: #000;
+  border: 4px solid var(--factory-steel);
+  border-radius: 10px;
+  padding: 20px;
+  position: relative;
+}
+
+.panel-screen {
+  background: #0f1a20;
+  border: 2px inset #555;
+  padding: 15px;
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--factory-green, #0f0);
+}
+
+/* SAFETY BUTTON */
+.safety-btn {
+  background: var(--factory-yellow);
+  color: #000;
+  font-weight: 900;
+  text-transform: uppercase;
+  border: 2px solid #000;
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px #000;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.safety-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #000;
+}
+
+.safety-btn:hover {
+  background: #ffdd44;
+}
+
+/* ANIMATIONS */
+@keyframes steamRise {
+  0% { opacity: 0; transform: translateY(0) scale(1); }
+  50% { opacity: 0.5; transform: translateY(-20px) scale(1.5); }
+  100% { opacity: 0; transform: translateY(-40px) scale(2); }
+}
+
+.steam-effect {
+  position: absolute;
+  top: -20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, rgba(200,200,200,0.5) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: steamRise 3s infinite ease-out;
+  pointer-events: none;
+}

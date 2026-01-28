@@ -1,3 +1,4 @@
+export { default as Introduction } from './Introduction';
 export { default as CostSchedule } from './CostSchedule';
 export { default as CostCurvesChart } from './CostCurvesChart';
 export { default as FixedVariableCosts } from './FixedVariableCosts';

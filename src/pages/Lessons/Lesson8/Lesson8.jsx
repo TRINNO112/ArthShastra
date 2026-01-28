@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaDollarSign, FaTable, FaChartLine, FaBalanceScale, FaClock, FaIndustry, FaCalculator, FaQuestionCircle, FaProjectDiagram, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { lesson8Data } from '../data/lesson8Data';
 import { logLessonProgress } from '../../../services/firebase';
-import '../css/lessons.css';
+import './lesson8.css'; // THEME IMPORT
 // Components (add as created)
-import { CostSchedule, CostCurvesChart, FixedVariableCosts, ShortLongRun, RealWorldExamples, PracticeProblems, Quiz, CostRelationships, TotalCostCurves, BreakEvenShutdown } from './components';
+import { Introduction, CostSchedule, CostCurvesChart, FixedVariableCosts, ShortLongRun, RealWorldExamples, PracticeProblems, Quiz, CostRelationships, TotalCostCurves, BreakEvenShutdown } from './components';
 
 const sections = lesson8Data.sections;
 
@@ -48,7 +48,7 @@ function Lesson8() {
   const currentIndex = sections.findIndex(s => s.id === activeSection);
 
   const IconMap = {
-    intro: FaDollarSign,
+    intro: FaIndustry, // Changed icon
     schedule: FaTable,
     curves: FaChartLine,
     'fixed-variable': FaBalanceScale,
@@ -63,54 +63,7 @@ function Lesson8() {
   const renderActiveSection = () => {
     switch (activeSection) {
       case 'intro':
-        return (
-          <section className="lesson-section">
-            <div className="section-header-lesson">
-              <span className="section-badge-lesson">Chapter 8</span>
-              <h2 className="section-title-lesson">Introduction to Costs</h2>
-              <p className="section-subtitle-lesson">Understand fixed, variable, total costs & their curves in short-run production.</p>
-            </div>
-
-            <div className="content-card featured-card">
-              <div className="card-glow"></div>
-              <div className="card-content">
-                <h3 className="card-title">
-                  <FaDollarSign className="title-icon gold" /> What is Cost?
-                </h3>
-                <p className="intro-text">
-                  In economics, <strong>Cost</strong> is the expenditure incurred by a producer on factor inputs (land, labor, capital) and non-factor inputs (raw materials) to produce a given amount of output.
-                </p>
-                <p className="intro-text">
-                  Cost Function: <span className="highlight-cyan">C = f(Q)</span>, where Cost depends on Output (Q).
-                </p>
-              </div>
-            </div>
-
-            <div className="intro-grid">
-              <div className="intro-card">
-                <h4><FaBalanceScale style={{ color: '#ffd700', marginRight: '8px' }} /> Explicit Cost</h4>
-                <p>Actual money expenditure on inputs. Also called <strong>Money Cost</strong> or Out-of-pocket cost.</p>
-                <div style={{ marginTop: '10px', fontSize: '0.9rem', color: '#aaa' }}>e.g., Wages, Rent, Materials.</div>
-              </div>
-
-              <div className="intro-card">
-                <h4><FaIndustry style={{ color: '#00ff88', marginRight: '8px' }} /> Implicit Cost</h4>
-                <p>Estimated value of inputs owned by the firm itself. Also called <strong>Imputed Cost</strong>.</p>
-                <div style={{ marginTop: '10px', fontSize: '0.9rem', color: '#aaa' }}>e.g., Rent of own land, Owner's salary.</div>
-              </div>
-            </div>
-
-            <div className="content-card" style={{ marginTop: '30px' }}>
-              <h4 style={{ color: '#fff', marginBottom: '15px' }}>Total Cost (TC)</h4>
-              <p style={{ color: '#ccc', marginBottom: '20px' }}>
-                Total Cost = Explicit Cost + Implicit Cost + Normal Profit.
-              </p>
-              <div style={{ background: 'rgba(255,255,255,0.05)', padding: '15px', borderRadius: '12px', borderLeft: '4px solid #00bfff' }}>
-                <strong>Opportunity Cost:</strong> Cost is the value of the next best alternative foregone.
-              </div>
-            </div>
-          </section>
-        );
+        return <Introduction />;
       case 'schedule':
         return <CostSchedule data={costData} />;
       case 'curves':
@@ -142,7 +95,7 @@ function Lesson8() {
   };
 
   return (
-    <div className="lesson-page">
+    <div className="lesson-container factory-theme">
       <div className="floating-elements">
         <div className="float-circle circle-1"></div>
         <div className="float-circle circle-2"></div>
