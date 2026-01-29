@@ -18,7 +18,7 @@ const OrderBook = () => {
             <h2 className="terminal-title">LEVEL 2 MARKET DATA (ORDER BOOK)</h2>
             <p style={{ color: '#888', marginBottom: '20px' }}>See the invisible hand at work. Buyers (Bids) meet Sellers (Asks).</p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2px', background: '#000', padding: '2px' }}>
+            <div className="orderbook-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2px', background: '#000', padding: '2px' }}>
 
                 {/* BIDS (BUYERS) */}
                 <div className="terminal-card" style={{ padding: 0, margin: 0, borderRight: '1px solid #333' }}>

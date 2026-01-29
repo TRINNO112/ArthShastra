@@ -75,7 +75,7 @@ const NewsWire = () => {
         <section className="terminal-section">
             <h2 className="terminal-title">REAL-TIME NEWS WIRE</h2>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <div className="newswire-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
 
                 {/* LEFT: LIVE FEED */}
                 <div className="terminal-card" style={{ height: '400px', overflowY: 'auto' }}>

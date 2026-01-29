@@ -29,7 +29,7 @@ const DeterminantsOfSupply = () => {
             {/* COMIC GRID - Styled like ConceptOfMarket.jsx */}
             <div className="comic-grid" style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
                 gap: '30px',
                 padding: '20px'
             }}>

@@ -245,3 +245,28 @@
   font-weight: bold;
   text-align: center;
 }
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 768px) {
+    .startup-title { 
+        font-size: 1.5rem !important; 
+        letter-spacing: 1px; 
+        word-wrap: break-word;
+        white-space: normal;
+    }
+    .startup-header { margin-bottom: 20px; }
+    
+    .lesson-section { padding: 10px; }
+    
+    .dashboard-grid { grid-template-columns: 1fr; }
+    
+    .pitch-card, .terminal-card { 
+        padding: 15px; 
+        margin-bottom: 20px; 
+    }
+    
+    .code-block { 
+        font-size: 0.75rem; 
+        overflow-x: scroll; 
+    }
+}

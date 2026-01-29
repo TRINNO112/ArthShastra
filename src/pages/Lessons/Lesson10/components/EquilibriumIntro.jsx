@@ -10,9 +10,7 @@ const EquilibriumIntro = () => {
             <div className="startup-header animate-fadeInUp">
                 <span className="startup-subtitle">EPISODE 10.0</span>
                 <h2 className="startup-title">PRODUCER_EQUILIBRIUM</h2>
-                <div style={{ color: 'var(--neon-green)', marginTop: '10px', fontSize: '1.2rem' }}>
-                    &gt; MAXIMIZING_PROFITS_ALGORITHM.exe <span className="animate-blink">_</span>
-                </div>
+
             </div>
 
             {/* PITCH DECK CARD */}

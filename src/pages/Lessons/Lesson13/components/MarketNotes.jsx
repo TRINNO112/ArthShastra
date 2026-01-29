@@ -32,7 +32,7 @@ const MarketNotes = () => {
                 </div>
 
                 {/* COMIC GRID */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div className="market-notes-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
 
                     {/* PANEL 1: VIABLE vs NON-VIABLE */}
                     <div style={{ border: '3px solid #000', padding: '15px', position: 'relative', boxShadow: '5px 5px 0 #aaa' }}>

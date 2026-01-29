@@ -23,7 +23,7 @@ const AnalystReports = () => {
                 </div>
 
                 {/* REPORT BODY */}
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px', padding: '30px', color: '#ccc' }}>
+                <div className="analyst-report-grid" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px', padding: '30px', color: '#ccc' }}>
 
                     <div>
                         <h3 style={{ color: '#00ff88', borderBottom: '1px solid #333', paddingBottom: '10px' }}>Investment Thesis: The Equilibrium</h3>

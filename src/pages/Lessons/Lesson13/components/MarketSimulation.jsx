@@ -12,7 +12,7 @@ const MarketSimulation = () => {
         <div className="terminal-section animate-fadeInUp">
             <h2 className="terminal-title">MARKET SIMULATION DECK</h2>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '20px' }}>
+            <div className="market-sim-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '20px' }}>
 
                 {/* GRAPH PANEL */}
                 <div className="terminal-card">

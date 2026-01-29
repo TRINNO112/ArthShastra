@@ -130,7 +130,7 @@ const LawOfSupply = () => {
                     </h3>
                 </div>
 
-                <div className="comic-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '25px' }}>
+                <div className="comic-grid reasons-grid-responsive" style={{ gap: '25px' }}>
 
                     {/* REASON 1: PROFIT */}
                     <div className="comic-panel" style={{ background: '#fff', color: '#000', padding: '20px', borderRadius: '12px', border: '3px solid #000', boxShadow: '8px 8px 0px #000' }}>

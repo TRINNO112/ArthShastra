@@ -24,36 +24,87 @@ const PerfectCompetition = () => {
                 <p className="section-subtitle-lesson">The World of Price Takers</p>
             </div>
 
-            <div className="content-card animate-fadeInUp">
-                <div className="card-content">
-                    <h3 className="highlight-gold"><FaBalanceScale /> Definition & Features</h3>
-                    <p style={{ marginBottom: '1.5rem', fontSize: '1.1rem' }}>
-                        A market structure where there are a <strong>Large Number of Buyers and Sellers</strong> interacting to sell a <strong>Homogeneous (Identical) Product</strong> at a <strong>Uniform Price</strong>.
-                    </p>
+            {/* COMIC BOOK STYLE DEFINITION & FEATURES */}
+            <div className="comic-section" style={{
+                background: '#fff',
+                color: '#000',
+                padding: '30px',
+                borderRadius: '5px',
+                border: '4px solid #000',
+                boxShadow: '10px 10px 0 #333',
+                fontFamily: '"Comic Neue", cursive',
+                maxWidth: '100%',
+                margin: '20px 0'
+            }}>
 
-                    <div className="reasons-grid-enhanced" style={{ gridTemplateColumns: '1fr 1fr' }}>
-                        <div className="reason-card-interactive cyan">
-                            <div className="card-icon"><FaInfinity /></div>
-                            <h4>Large No. of Sellers</h4>
-                            <p>No single seller can influence the price. Like a drop in the ocean.</p>
-                        </div>
-                        <div className="reason-card-interactive gold">
-                            <div className="card-icon"><FaCheckCircle /></div>
-                            <h4>Homogeneous Product</h4>
-                            <p>Products are identical (size, shape, quality). e.g., Grade A Wheat.</p>
-                        </div>
-                        <div className="reason-card-interactive purple">
-                            <div className="card-icon"><FaArrowRight /></div>
-                            <h4>Free Entry & Exit</h4>
-                            <p>No barriers. Firms can enter for profit and leave if making loss.</p>
-                        </div>
-                        <div className="reason-card-interactive red">
-                            <div className="card-icon"><FaBalanceScale /></div>
-                            <h4>Price Taker</h4>
-                            <p>Review: The INDUSTRY sets the price (Demand = Supply). The FIRM just takes it.</p>
-                        </div>
+                {/* COMIC HEADER */}
+                <div style={{ borderBottom: '3px dashed #000', paddingBottom: '20px', marginBottom: '30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+                    <div>
+                        <h1 style={{ margin: 0, fontSize: '2rem', textTransform: 'uppercase', color: '#000' }}>THE PERFECT COMPETITION</h1>
+                        <span style={{ background: '#000', color: '#fff', padding: '2px 8px', fontWeight: 'bold' }}>MARKET STRUCTURE #1</span>
+                    </div>
+                    <div style={{ border: '3px solid #000', padding: '10px', transform: 'rotate(-2deg)', fontWeight: 'bold', background: '#ffd700' }}>
+                        IDEAL MARKET <br /> (THEORETICAL)
                     </div>
                 </div>
+
+                {/* PANEL 1: DEFINITION */}
+                <div style={{ border: '3px solid #000', padding: '20px', marginBottom: '30px', position: 'relative', boxShadow: '5px 5px 0 #aaa' }}>
+                    <div style={{ position: 'absolute', top: '-15px', left: '10px', background: '#000', color: '#fff', border: '2px solid #000', padding: '5px 10px', fontWeight: 'bold', fontSize: '0.9rem' }}>
+                        PANEL 1: WHAT IS IT?
+                    </div>
+                    <h3 style={{ marginTop: '10px', fontSize: '1.5rem' }}>Definition</h3>
+                    <p style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>
+                        A market structure where there are a <strong>Large Number of Buyers and Sellers</strong> interacting to sell a <strong>Homogeneous (Identical) Product</strong> at a <strong>Uniform Price</strong>.
+                    </p>
+                </div>
+
+                {/* PANEL 2: FEATURES GRID */}
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '15px' }}>Key Features</h3>
+                <div className="perfect-competition-grid">
+
+                    {/* Feature 1 */}
+                    <div style={{ border: '3px solid #000', padding: '15px', position: 'relative', boxShadow: '5px 5px 0 #aaa', background: '#e6fffa' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                            <FaInfinity size={24} />
+                            <h4 style={{ margin: 0 }}>Large No. of Sellers</h4>
+                        </div>
+                        <p>No single seller can influence the price. They are just a drop in the ocean! Share is insignificant.</p>
+                    </div>
+
+                    {/* Feature 2 */}
+                    <div style={{ border: '3px solid #000', padding: '15px', position: 'relative', boxShadow: '5px 5px 0 #aaa', background: '#fffbe6' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                            <FaCheckCircle size={24} />
+                            <h4 style={{ margin: 0 }}>Homogeneous Product</h4>
+                        </div>
+                        <p>Products are 100% identical. <strong>Perfect Substitutes</strong>. Buyers don't care who they buy from.</p>
+                    </div>
+
+                    {/* Feature 3 */}
+                    <div style={{ border: '3px solid #000', padding: '15px', position: 'relative', boxShadow: '5px 5px 0 #aaa', background: '#f0f5ff' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                            <FaArrowRight size={24} />
+                            <h4 style={{ margin: 0 }}>Free Entry & Exit</h4>
+                        </div>
+                        <p>No barriers! Abnormal profit attracts new firms. Losses force firms to leave. Long run = Normal Profit.</p>
+                    </div>
+
+                    {/* Feature 4 */}
+                    <div style={{ border: '3px solid #000', padding: '15px', position: 'relative', boxShadow: '5px 5px 0 #aaa', background: '#fff0f6' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                            <FaBalanceScale size={24} />
+                            <h4 style={{ margin: 0 }}>Price Taker</h4>
+                        </div>
+                        <p>The <strong>INDUSTRY</strong> sets the price (Demand = Supply). The <strong>FIRM</strong> just accepts it.</p>
+                    </div>
+
+                </div>
+
+                <div style={{ textAlign: 'center', marginTop: '30px', fontFamily: 'monospace', fontSize: '0.8rem', color: '#888' }}>
+                    LESSON 12 // PERFECT COMPETITION
+                </div>
+
             </div>
 
             {/* INTERACTIVE GRAPH */}
