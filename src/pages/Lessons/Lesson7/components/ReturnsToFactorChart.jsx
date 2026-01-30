@@ -280,11 +280,29 @@ const ReturnsToFactorChart = () => {
           </div>
         </div>
 
-        <div className="legend-stages" style={{ marginTop: '15px', textAlign: 'center', borderTop: '1px dashed #333', paddingTop: '10px' }}>
-          <span style={{ fontFamily: 'Bangers', color: '#fff', marginRight: '10px' }}>ZONES:</span>
-          <span className="stage-mini" style={{ color: '#00ff88', marginRight: '15px' }}><span className="stage-dot s1"></span> I: RISE</span>
-          <span className="stage-mini" style={{ color: '#ffd700', marginRight: '15px' }}><span className="stage-dot s2"></span> II: PEAK</span>
-          <span className="stage-mini" style={{ color: '#ff6b6b' }}><span className="stage-dot s3"></span> III: FALL</span>
+        <div className="legend-stages" style={{ marginTop: '25px', textAlign: 'center', borderTop: '2px dashed #333', paddingTop: '20px', display: 'flex', justifyContent: 'center', gap: '15px', flexWrap: 'wrap' }}>
+
+          {/* RISE CARD */}
+          <div className="comic-panel" style={{ flex: '1 1 120px', background: '#e8f5e9', border: '2px solid #00ff88', boxShadow: '4px 4px 0px #00ff88', padding: '10px', transform: 'rotate(-2deg)' }}>
+            <h5 className="text-banger" style={{ color: '#1b5e20', fontSize: '1.2rem', margin: 0 }}>ZONE 1: RISE</h5>
+            <span className="stage-dot s1" style={{ background: '#00ff88', width: '10px', height: '10px', display: 'inline-block', borderRadius: '50%' }}></span>
+            <p style={{ fontSize: '0.8rem', color: '#333', marginTop: '5px', fontWeight: 'bold' }}>Optimistic Start</p>
+          </div>
+
+          {/* PEAK CARD */}
+          <div className="comic-panel yellow" style={{ flex: '1 1 120px', border: '2px solid #ffd700', boxShadow: '4px 4px 0px #ffd700', padding: '10px', transform: 'rotate(2deg)', zIndex: 5 }}>
+            <div style={{ background: '#fbc02d', color: '#000', fontSize: '0.7rem', fontWeight: 'bold', display: 'inline-block', padding: '2px 5px', border: '1px solid #000' }}>BEST!</div>
+            <h5 className="text-banger" style={{ color: '#f57f17', fontSize: '1.2rem', margin: '5px 0 0 0' }}>ZONE 2: PEAK</h5>
+            <p style={{ fontSize: '0.8rem', color: '#333', marginTop: '5px', fontWeight: 'bold' }}> Rational Choice </p>
+          </div>
+
+          {/* FALL CARD */}
+          <div className="comic-panel" style={{ flex: '1 1 120px', background: '#ffebee', border: '2px solid #ff5252', boxShadow: '4px 4px 0px #ff5252', padding: '10px', transform: 'rotate(-1deg)' }}>
+            <h5 className="text-banger" style={{ color: '#b71c1c', fontSize: '1.2rem', margin: 0 }}>ZONE 3: FALL</h5>
+            <span className="stage-dot s3" style={{ background: '#ff5252', width: '10px', height: '10px', display: 'inline-block', borderRadius: '50%' }}></span>
+            <p style={{ fontSize: '0.8rem', color: '#333', marginTop: '5px', fontWeight: 'bold' }}>Total Disaster</p>
+          </div>
+
         </div>
       </div>
 

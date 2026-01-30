@@ -1,227 +1,210 @@
 import React, { useState } from 'react';
-import { FaCalculator, FaLightbulb, FaCheck, FaExclamationCircle, FaQuestionCircle } from 'react-icons/fa';
+import { FaHeart, FaComment, FaShare, FaCheckCircle, FaTimesCircle, FaUserCircle, FaCalculator, FaIndustry, FaChartLine, FaExclamationTriangle, FaLightbulb } from 'react-icons/fa';
 import '../../css/lessons.css';
 import '../../css/quiz.css';
 
-const problems = [
-    {
-        id: 1,
-        title: "Calculate Missing Marginal Product",
-        question: "Find the value of Marginal Product (MP) for the 3rd unit of labor in the table below.",
-        tableData: [
-            { l: 1, tp: 10, mp: 10 },
-            { l: 2, tp: 24, mp: 14 },
-            { l: 3, tp: 35, mp: '?' }, // Target
-            { l: 4, tp: 44, mp: 9 },
-        ],
-        targetRow: 2, // Index of the row with the mystery value
-        hint: "Marginal Product is the difference between current TP and previous TP.",
-        step1: "Identify TP at L=3 (35) and TP at L=2 (24).",
-        step2: "MP₃ = TP₃ - TP₂ = 35 - 24",
-        answer: "11"
-    },
-    {
-        id: 2,
-        title: "Calculate Missing Total Product",
-        question: "Find the value of Total Product (TP) for the 4th unit of labor using the MP schedule.",
-        tableData: [
-            { l: 3, tp: 30, mp: 12 },
-            { l: 4, tp: '?', mp: 8 }, // Target
-            { l: 5, tp: 42, mp: 4 },
-        ],
-        targetRow: 1,
-        hint: "Total Product is the sum of all Marginal Products up to that point. TPₙ = TPₙ₋₁ + MPₙ",
-        step1: "Previous TP (at L=3) is 30. Current MP (at L=4) is 8.",
-        step2: "TP₄ = 30 + 8",
-        answer: "38"
-    },
-    {
-        id: 3,
-        title: "Identify the Stage of Production",
-        question: "Based on the table, in which stage is the producer operating at L=6?",
-        tableData: [
-            { l: 4, tp: 50, mp: 8 },
-            { l: 5, tp: 55, mp: 5 },
-            { l: 6, tp: 52, mp: -3 }, // Target
-        ],
-        targetRow: 2,
-        hint: "Look at the sign of the Marginal Product.",
-        step1: "At L=6, TP falls from 55 to 52.",
-        step2: "MP is negative (-3). Negative MP means Stage III.",
-        answer: "Stage III (Negative Returns)"
-    },
-    {
-        id: 4,
-        title: "Point of Maximum Efficiency",
-        question: "At which unit of labor does the Average Product (AP) reach its maximum?",
-        tableData: [
-            { l: 1, tp: 10, ap: 10, mp: 10 },
-            { l: 2, tp: 24, ap: 12, mp: 14 },
-            { l: 3, tp: 39, ap: 13, mp: 15 }, // Max AP
-            { l: 4, tp: 48, ap: 12, mp: 9 },
-        ],
-        targetRow: 2,
-        hint: "Max AP occurs when AP = MP. Check the table values.",
-        step1: "Calculate or observe AP. L=2 (AP=12), L=3 (AP=13), L=4 (AP=12).",
-        step2: "Highest AP is 13 at L=3.",
-        answer: "3rd Unit of Labor"
-    },
-    {
-        id: 5,
-        title: "Calculate Average Product",
-        question: "Calculate the Average Product (AP) for 5 units of labor given TP is 60.",
-        tableData: [
-            { l: 3, tp: 42, ap: 14 },
-            { l: 4, tp: 52, ap: 13 },
-            { l: 5, tp: 60, ap: '?' }, // Target
-        ],
-        targetRow: 2,
-        hint: "Average Product = Total Product / Units of Labor",
-        step1: "TP = 60, L = 5",
-        step2: "AP = 60 / 5",
-        answer: "12"
-    }
-];
-
-const PracticeLink = ({ active, onClick, id }) => (
-    <div
-        onClick={onClick}
-        className={`problem-sidebar-item ${active ? 'active' : ''}`}
-    >
-        <span className="problem-number">Q{id}</span>
-    </div>
-);
-
-const MiniTable = ({ data, targetRow, showSolution }) => {
-    // Determine headers dynamically
-    const headers = Object.keys(data[0]);
-
-    return (
-        <table className="mini-table">
-            <thead>
-                <tr>
-                    {headers.map(h => <th key={h}>{h.toUpperCase()}</th>)}
-                </tr>
-            </thead>
-            <tbody>
-                {data.map((row, idx) => (
-                    <tr key={idx} className={idx === targetRow && showSolution ? "cell-highlight" : ""}>
-                        {headers.map(h => (
-                            <td key={h} className={row[h] === '?' ? "cell-missing" : ""}>
-                                {row[h]}
-                            </td>
-                        ))}
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    );
-};
-
 const PracticeProblems = () => {
-    const [activeProblem, setActiveProblem] = useState(0);
-    const [showSolution, setShowSolution] = useState(false);
+    // Social Feed Data
+    const posts = [
+        {
+            id: 'q1',
+            user: 'Econ_Student_01',
+            role: 'Aspiring Economist',
+            avatarBg: '#e1bee7', // Purple
+            icon: <FaCalculator />,
+            content: "Guys, I'm stuck on this calculation! 😩 If Total Product (TP) jumped from 24 to 35 when I hired the 3rd worker, what is the Marginal Product (MP)? #HomeworkHelp #Micro",
+            question: "Help Econ_Student_01 find MP:",
+            options: [
+                { label: '10', correct: false },
+                { label: '11', correct: true }, // 35 - 24 = 11
+                { label: '12', correct: false }
+            ],
+            explanation: "Correct! MP = TP(3) - TP(2) = 35 - 24 = 11. Simple subtraction!",
+            likes: 42
+        },
+        {
+            id: 'q2',
+            user: 'Factory_Boss_X',
+            role: 'Production Manager',
+            avatarBg: '#ffcc80', // Orange
+            icon: <FaIndustry />,
+            content: "My new worker is actually bringing DOWN my total output! Total Product went from 55 to 52. 📉 Should I fire him? What stage is this? #BusinessTrouble",
+            question: "Which stage is the boss in?",
+            options: [
+                { label: 'Stage I (Increasing)', correct: false },
+                { label: 'Stage II (Diminishing)', correct: false },
+                { label: 'Stage III (Negative)', correct: true }
+            ],
+            explanation: "Exactly. When TP falls (and MP is negative), you are in Stage III. Fire that worker!",
+            likes: 156
+        },
+        {
+            id: 'q3',
+            user: 'Optimization_Guru',
+            role: 'Efficiency Expert',
+            avatarBg: '#81d4fa', // Blue
+            icon: <FaChartLine />,
+            content: "Pro Tip: Being 'rational' isn't about producing the MOST. It's about stopping when efficiency is highest. At what point does a rational producer STOP adding workers? 🛑",
+            question: "Rational Producer operates in...",
+            options: [
+                { label: 'Stage I (MP rises)', correct: false },
+                { label: 'Stage II (MP falls but +ve)', correct: true },
+                { label: 'Stage III (MP is -ve)', correct: false }
+            ],
+            explanation: "Spot on! Stage II is where you get diminishing but positive returns. It's the sweet spot.",
+            likes: 890
+        },
+        {
+            id: 'q4',
+            user: 'Math_Wiz_KV',
+            role: 'Tutor',
+            avatarBg: '#a5d6a7', // Green
+            icon: <FaLightbulb />,
+            content: "Quiz Time! 🧠 Maximizing Average Product (AP) is cool, but do you know the condition? When is AP at its absolute MAX?",
+            question: "AP is Max when...",
+            options: [
+                { label: 'AP = MP', correct: true },
+                { label: 'MP = 0', correct: false },
+                { label: 'TP is Max', correct: false }
+            ],
+            explanation: "Correct! The MP curve cuts the AP curve from above at its maximum point. So AP = MP.",
+            likes: 230
+        },
+        {
+            id: 'q5',
+            user: 'Confused_Intern',
+            role: 'New Hire',
+            avatarBg: '#ef9a9a', // Red
+            icon: <FaExclamationTriangle />,
+            content: "Wait, so if MP is zero, does that mean we produced NOTHING? 0_o asking for a friend...",
+            question: "If MP = 0, then TP is...?",
+            options: [
+                { label: 'Zero', correct: false },
+                { label: 'Maximum', correct: true },
+                { label: 'Falling', correct: false }
+            ],
+            explanation: "No! MP=0 means the *last* worker added nothing extra, so Total Product (TP) has reached its PEAK.",
+            likes: 67
+        }
+    ];
 
-    const current = problems[activeProblem];
+    // State
+    const [userVotes, setUserVotes] = useState({});
+    const [likes, setLikes] = useState({});
 
-    const handleNext = () => {
-        if (activeProblem < problems.length - 1) {
-            setActiveProblem(prev => prev + 1);
-            setShowSolution(false);
+    const handleVote = (qId, isCorrect) => {
+        if (userVotes[qId]) return;
+        setUserVotes(prev => ({ ...prev, [qId]: isCorrect ? 'correct' : 'wrong' }));
+        if (isCorrect) {
+            setLikes(prev => ({ ...prev, [qId]: (posts.find(p => p.id === qId).likes || 0) + 1 }));
         }
     };
 
     return (
-        <section className="practice-section-modern expanded-layout">
-            <div className="practice-sidebar">
-                <h4 className="sidebar-header"><FaCalculator /> Problems</h4>
-                <div className="sidebar-list">
-                    {problems.map((p, idx) => (
-                        <PracticeLink
-                            key={p.id}
-                            id={p.id}
-                            active={idx === activeProblem}
-                            onClick={() => { setActiveProblem(idx); setShowSolution(false); }}
-                        />
-                    ))}
+        <section className="lesson-section" style={{ fontFamily: '"Comic Neue", "Inter", sans-serif' }}>
+            <div className="section-header-lesson text-center mb-8">
+                <div style={{ display: 'inline-block', background: '#2979ff', color: '#fff', padding: '5px 15px', transform: 'rotate(-2deg)', boxShadow: '3px 3px 0px #000', border: '2px solid #000', marginBottom: '10px' }}>
+                    <h3 className="section-title-modern text-banger" style={{ fontSize: '2.5rem', margin: 0 }}>
+                        <FaComment /> ECON-GRAM
+                    </h3>
                 </div>
-
-                {/* Cheat Sheet */}
-                <div className="mt-8 p-4 bg-white/5 rounded-xl border border-white/10 text-xs text-gray-400">
-                    <h5 className="text-gold font-bold mb-2 uppercase">Formula Sheet</h5>
-                    <p className="mb-1">MP = TPₙ - TPₙ₋₁</p>
-                    <p className="mb-1">AP = TP / L</p>
-                    <p>TP = ΣMP</p>
-                </div>
+                <p className="section-subtitle-lesson mt-2">See what the Economics Community is posting!</p>
             </div>
 
-            <div className="practice-content-area">
-                <div className="problem-card-large animate-fade-in" key={current.id}>
-                    <div className="problem-header-large">
-                        <span className="badge-problem large">Question {current.id}</span>
-                        <h3>{current.title}</h3>
-                    </div>
-
-                    <p className="problem-text-large">{current.question}</p>
-
-                    {/* Dynamic Table */}
-                    <MiniTable
-                        data={current.tableData}
-                        targetRow={current.targetRow}
-                        showSolution={showSolution}
-                    />
-
-                    <div className="problem-actions">
-                        <button
-                            className="btn-reveal-enhanced"
-                            onClick={() => setShowSolution(!showSolution)}
-                        >
-                            {showSolution ? 'Hide Solution' : 'Check Solution'}
-                        </button>
-
-                        <div className="hint-text">
-                            <FaLightbulb className="text-gold" /> Hint: {current.hint}
-                        </div>
-                    </div>
-
-                    {showSolution && (
-                        <div className="solution-panel-large animate-slide-up">
-                            <h4 className="solution-title"><FaCheck /> Solution Breakdown</h4>
-                            <div className="solution-steps-grid">
-                                <div className="step-box">
-                                    <span className="step-label">Step 1</span>
-                                    <p>{current.step1}</p>
-                                </div>
-                                <div className="step-box">
-                                    <span className="step-label">Step 2</span>
-                                    <p>{current.step2}</p>
-                                </div>
+            <div className="social-feed-container" style={{ maxWidth: '800px', margin: '0 auto' }}>
+                {posts.map((post) => (
+                    <div key={post.id} className="comic-panel animate-fadeInUp" style={{
+                        background: '#fff',
+                        borderRadius: '12px',
+                        marginBottom: '30px',
+                        border: '3px solid #000',
+                        boxShadow: '8px 8px 0px rgba(0,0,0,0.8)',
+                        padding: '0',
+                        overflow: 'hidden'
+                    }}>
+                        {/* Header */}
+                        <div style={{ padding: '15px', display: 'flex', alignItems: 'center', borderBottom: '2px solid #eee', background: '#f9f9f9' }}>
+                            <div style={{
+                                background: post.avatarBg,
+                                color: '#000',
+                                width: '45px', height: '45px',
+                                borderRadius: '50%',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem',
+                                marginRight: '15px',
+                                border: '2px solid #000'
+                            }}>
+                                {post.icon}
                             </div>
-                            <div className="final-answer-box">
-                                <span className="answer-label">Final Answer:</span>
-                                <span className="answer-value">{current.answer}</span>
+                            <div>
+                                <strong style={{ display: 'block', color: '#000', fontSize: '1.1rem', fontFamily: 'Bangers', letterSpacing: '0.5px' }}>{post.user} <FaCheckCircle style={{ color: '#2979ff', fontSize: '0.9rem' }} /></strong>
+                                <span style={{ fontSize: '0.9rem', color: '#666', fontWeight: 'bold' }}>{post.role}</span>
                             </div>
                         </div>
-                    )}
-                </div>
 
-                <div className="navigation-actions">
-                    <button
-                        className="btn-nav-problem"
-                        disabled={activeProblem === 0}
-                        onClick={() => setActiveProblem(p => p - 1)}
-                    >
-                        Previous
-                    </button>
-                    <span className="problem-counter">{activeProblem + 1} / {problems.length}</span>
-                    <button
-                        className="btn-nav-problem"
-                        disabled={activeProblem === problems.length - 1}
-                        onClick={handleNext}
-                    >
-                        Next
-                    </button>
-                </div>
+                        {/* Content */}
+                        <div style={{ padding: '20px', color: '#333', fontSize: '1.2rem', lineHeight: '1.5', fontFamily: 'Comic Neue', fontWeight: 'bold' }}>
+                            <p>{post.content}</p>
+                        </div>
+
+                        {/* Poll / Quiz */}
+                        <div style={{ padding: '15px 20px', background: '#e3f2fd', borderTop: '2px dashed #bbb', borderBottom: '2px dashed #bbb' }}>
+                            <p style={{ fontSize: '0.9rem', color: '#1565c0', marginBottom: '10px', fontWeight: 'bold', textTransform: 'uppercase' }}>
+                                🗳️ POLL: {post.question}
+                            </p>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                                {post.options.map((opt, idx) => (
+                                    <button
+                                        key={idx}
+                                        onClick={() => handleVote(post.id, opt.correct)}
+                                        disabled={!!userVotes[post.id]}
+                                        style={{
+                                            flex: '1 1 auto',
+                                            padding: '8px 15px',
+                                            borderRadius: '20px',
+                                            border: '2px solid ' + (userVotes[post.id] && opt.correct ? '#00e676' : '#000'),
+                                            background: userVotes[post.id] && opt.correct ? '#b9f6ca' : '#fff',
+                                            color: '#000',
+                                            cursor: userVotes[post.id] ? 'default' : 'pointer',
+                                            fontWeight: 'bold',
+                                            boxShadow: '2px 2px 0px #000',
+                                            transform: userVotes[post.id] ? 'none' : 'translateY(0)',
+                                            transition: 'transform 0.1s'
+                                        }}
+                                    >
+                                        {opt.label}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Feedback Footer */}
+                        <div style={{ padding: '15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#fff' }}>
+                            <div style={{ display: 'flex', gap: '20px', color: userVotes[post.id] === 'correct' ? '#f44336' : '#888', fontSize: '1.1rem', fontWeight: 'bold' }}>
+                                <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                    <FaHeart className={userVotes[post.id] === 'correct' ? 'animate-bounce' : ''} />
+                                    {likes[post.id] || post.likes}
+                                </span>
+                                <span style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#555' }}><FaComment /> Reply</span>
+                            </div>
+
+                            {userVotes[post.id] && (
+                                <div className="animate-fadeInRight" style={{
+                                    padding: '5px 10px',
+                                    borderRadius: '5px',
+                                    background: userVotes[post.id] === 'correct' ? '#e8f5e9' : '#ffebee',
+                                    color: userVotes[post.id] === 'correct' ? '#2e7d32' : '#c62828',
+                                    fontSize: '0.9rem',
+                                    fontWeight: 'bold',
+                                    border: '1px solid ' + (userVotes[post.id] === 'correct' ? '#2e7d32' : '#c62828'),
+                                    display: 'flex', alignItems: 'center', gap: '5px'
+                                }}>
+                                    {userVotes[post.id] === 'correct' ? <FaCheckCircle /> : <FaTimesCircle />}
+                                    {userVotes[post.id] === 'correct' ? post.explanation : "Wrong! Try again."}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                ))}
             </div>
         </section>
     );
