@@ -6798,8 +6798,6 @@
   margin-top: 15px;
 }
 
-/ *   P e r f e c t   C o m p e t i t i o n   M o b i l e   R e f a c t o r   * /   @ m e d i a   ( m a x - w i d t h :   7 6 8 p x )   {   . p e r f e c t - c o m p e t i t i o n - g r i d   {   d i s p l a y :   f l e x   ! i m p o r t a n t ;   f l e x - d i r e c t i o n :   c o l u m n ;   g a p :   2 0 p x ;   }   } 
- 
 /* Perfect Competition Mobile Refactor */
 @media (max-width: 768px) {
   .perfect-competition-grid {
@@ -6808,5 +6806,3 @@
     gap: 20px;
   }
 }
-. p e r f e c t - c o m p e t i t i o n - g r i d   {   d i s p l a y :   g r i d ;   g r i d - t e m p l a t e - c o l u m n s :   1 f r   1 f r ;   g a p :   2 0 p x ;   }   @ m e d i a   ( m a x - w i d t h :   7 6 8 p x )   {   . p e r f e c t - c o m p e t i t i o n - g r i d   {   d i s p l a y :   f l e x   ! i m p o r t a n t ;   f l e x - d i r e c t i o n :   c o l u m n ;   }   }  
- 

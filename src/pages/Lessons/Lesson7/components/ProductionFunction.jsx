@@ -1,128 +1,120 @@
 /**
  * ProductionFunction.jsx - Introduction Component for Lesson 7
- * Describes the core concepts of Production Function, Fixed vs Variable Factors, and Time Periods.
+ * Theme: Industrial Comic (Factory + Comic Book)
  */
 
 import React from 'react';
-import { FaIndustry, FaClock, FaCubes } from 'react-icons/fa';
-import '../../css/lessons.css';
-import '../../css/quiz.css';
+import { FaIndustry, FaClock, FaCubes, FaHammer, FaBolt } from 'react-icons/fa';
+import '../lesson7.css'; // New Theme
 
 function ProductionFunction() {
   return (
-    <section className="lesson-container-modern animate-fade-in">
-      {/* Section Header */}
-      <div className="section-header-lesson">
-        <span className="section-badge-lesson">Chapter 7</span>
-        <h2 className="section-title-lesson">Production Function & Returns to a Factor</h2>
-        <p className="section-subtitle-lesson">Understanding the input-output relationship in economics</p>
-      </div>
+    <section className="lesson-container-factory">
 
-      {/* 1. Deep Dive: What is Production Function? */}
-      <div className="lesson-section-wrapper">
-        <h3 className="section-title-modern"><FaIndustry /> Concept of Production Function</h3>
-        <div className="definition-quote-box">
-          <p className="definition-text">
-            <strong>Production Function</strong> is the functional relationship between physical inputs (factors of production like labor, capital) and physical output of a good.
-          </p>
-          <p className="definition-subtext mt-3">
-            It is a purely <em>technical</em> relation, not an economic one (it doesn't deal with prices or profits yet). It tells us the <strong>maximum output</strong> that can be produced with a given set of inputs and technology.
-          </p>
-        </div>
-
-        <div className="formula-box mt-4">
-          <h4 className="text-gold mb-2">Mathematical Expression:</h4>
-          <code className="text-2xl">Qₓ = f(L, K)</code>
-          <ul className="mt-3 text-sm text-gray-400 space-y-1">
-            <li><strong>Qₓ</strong> = Physical quantity of output of commodity X</li>
-            <li><strong>f</strong> = Functional relationship</li>
-            <li><strong>L</strong> = Units of Labor (Variable Factor)</li>
-            <li><strong>K</strong> = Units of Capital (Fixed Factor)</li>
-          </ul>
+      {/* 1. HERO HEADER */}
+      <div className="section-header-lesson" style={{ padding: '40px 20px' }}>
+        <div className="factory-header animate-fadeInUp">
+          <div className="highlight-box" style={{ marginBottom: '10px' }}>CHAPTER 7</div>
+          <h1 className="factory-title">PRODUCTION<br />FUNCTION</h1>
+          <p className="factory-subtitle">INPUTS ➔ THE BLACK BOX ➔ OUTPUTS</p>
         </div>
       </div>
 
-      {/* 2. Fixed vs Variable Factors */}
-      <div className="lesson-section-wrapper">
-        <h3 className="section-title-modern"><FaCubes /> Factors of Production</h3>
-        <p className="mb-6 text-lg text-gray-300">
-          To produce goods, a firm needs inputs. In the short run, we classify these inputs into two categories based on their adjustability.
-        </p>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
 
-        <div className="assumptions-grid-modern">
-          <div className="stage-card-modern no-margin-top auto-height">
-            <h4 className="text-xl font-bold text-green-400 mb-3">Variable Factors</h4>
-            <p className="text-sm mb-4">Inputs that <strong>can be changed</strong> in the short run to change the level of output.</p>
-            <ul className="modern-list check-list text-left">
-              <li>Raw materials</li>
-              <li>Casual labor</li>
-              <li>Power and fuel</li>
+        {/* 2. DEFINITION PANEL */}
+        <div className="comic-panel blue animate-fadeInUp">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+            <FaIndustry size={40} color="#0d47a1" />
+            <h2 className="text-banger" style={{ fontSize: '2rem', margin: 0, color: '#0d47a1' }}>WHAT IS IT?</h2>
+          </div>
+          <p style={{ fontSize: '1.2rem' }}>
+            <strong>Production Function</strong> is the relationship between <span style={{ color: '#d32f2f', fontWeight: 'bold' }}>INPUTS</span> (Labor, Capital) and <span style={{ color: '#2e7d32', fontWeight: 'bold' }}>OUTPUTS</span>.
+          </p>
+          <div style={{ background: '#fff', border: '2px dashed #0d47a1', padding: '15px', marginTop: '15px', borderRadius: '8px' }}>
+            <h3 className="text-banger" style={{ textAlign: 'center', color: '#0d47a1' }}>THE FORMULA</h3>
+            <code style={{ display: 'block', textAlign: 'center', fontSize: '2rem', fontWeight: 'bold' }}>Qx = f(L, K)</code>
+            <div style={{ textAlign: 'center', fontSize: '0.9rem', color: '#666', marginTop: '5px' }}>
+              Q = Output | f = Func | L = Labor | K = Capital
+            </div>
+          </div>
+        </div>
+
+        {/* 3. FIXED VS VARIABLE FACTORS */}
+        <div className="factory-grid-2">
+
+          {/* VARIABLE FACTORS */}
+          <div className="comic-panel animate-fadeInLeft">
+            <div style={{ background: '#4caf50', color: '#fff', padding: '5px 10px', display: 'inline-block', fontFamily: 'Bangers', fontSize: '1.2rem', transform: 'rotate(-2deg)', border: '2px solid #000' }}>
+              VARIABLE INPUTS
+            </div>
+            <h3 className="text-banger" style={{ fontSize: '2rem', margin: '10px 0' }}>CHANGE IT!</h3>
+            <p>Inputs that can be changed quickly.</p>
+            <ul className="modern-list check-list">
+              <li>Raw Materials</li>
+              <li>Casual Labor</li>
+              <li>Power / Fuel</li>
             </ul>
-            <p className="text-xs text-gray-500 mt-2">Output is zero if variable factors are zero.</p>
+            <div style={{ marginTop: '10px', fontSize: '0.9rem', fontStyle: 'italic' }}>
+              <FaBolt color="#f1c40f" /> Output 0 = Standard Cost 0
+            </div>
           </div>
 
-          <div className="stage-card-modern no-margin-top auto-height">
-            <h4 className="text-xl font-bold text-gold mb-3">Fixed Factors</h4>
-            <p className="text-sm mb-4">Inputs that <strong>cannot be changed</strong> in the short run. They remain constant regardless of output.</p>
-            <ul className="modern-list dot-list text-left">
+          {/* FIXED FACTORS */}
+          <div className="comic-panel animate-fadeInRight">
+            <div style={{ background: '#d32f2f', color: '#fff', padding: '5px 10px', display: 'inline-block', fontFamily: 'Bangers', fontSize: '1.2rem', transform: 'rotate(2deg)', border: '2px solid #000' }}>
+              FIXED INPUTS
+            </div>
+            <h3 className="text-banger" style={{ fontSize: '2rem', margin: '10px 0' }}>STUCK WITH IT!</h3>
+            <p>Inputs that CANNOT be changed short-term.</p>
+            <ul className="modern-list dot-list">
               <li>Land & Building</li>
-              <li>Machinery & Plant</li>
-              <li>Permanent staff</li>
+              <li>Heavy Machinery</li>
+              <li>Permanent Staff</li>
             </ul>
-            <p className="text-xs text-gray-500 mt-2">Costs are incurred even if output is zero.</p>
+            <div style={{ marginTop: '10px', fontSize: '0.9rem', fontStyle: 'italic' }}>
+              <FaHammer color="#555" /> Cost exists even if Output is 0!
+            </div>
           </div>
+
         </div>
-      </div>
 
-      {/* 3. Short Run vs Long Run */}
-      <div className="lesson-section-wrapper">
-        <h3 className="section-title-modern"><FaClock /> Time Periods in Production</h3>
-        <p className="mb-4 text-gray-300">
-          In economics, the distinction between short run and long run isn't about days or years, but about the flexibility of factors.
-        </p>
+        {/* 4. TIME PERIODS */}
+        <div className="comic-panel yellow animate-fadeInUp">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+            <FaClock size={40} />
+            <h2 className="text-banger" style={{ fontSize: '2rem', margin: 0 }}>THE CLOCK IS TICKING</h2>
+          </div>
 
-        <div className="comparison-table-wrapper rounded-xl overflow-hidden border border-white/10">
-          <table className="production-table-modern">
+          <table style={{ width: '100%', borderCollapse: 'collapse', border: '2px solid #000', background: '#fff' }}>
             <thead>
-              <tr>
-                <th className="w-1/3">Basis</th>
-                <th className="w-1/3 text-green-400">Short Run</th>
-                <th className="w-1/3 text-gold">Long Run</th>
+              <tr style={{ background: '#000', color: '#fff', fontFamily: 'Bangers', fontSize: '1.2rem' }}>
+                <th style={{ padding: '10px' }}>BASIS</th>
+                <th style={{ padding: '10px', background: '#2e7d32' }}>SHORT RUN</th>
+                <th style={{ padding: '10px', background: '#d32f2f' }}>LONG RUN</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td className="font-bold">Definition</td>
-                <td>Period where at least one factor is fixed.</td>
-                <td>Period where all factors are variable.</td>
+            <tbody style={{ fontFamily: 'Comic Neue', fontWeight: 'bold' }}>
+              <tr style={{ borderBottom: '1px solid #ccc' }}>
+                <td style={{ padding: '10px' }}>Definition</td>
+                <td style={{ padding: '10px' }}>At least 1 Factor Fixed.</td>
+                <td style={{ padding: '10px' }}>ALL Factors Variable.</td>
+              </tr>
+              <tr style={{ borderBottom: '1px solid #ccc' }}>
+                <td style={{ padding: '10px' }}>Change Output</td>
+                <td style={{ padding: '10px' }}>Change Variables Only.</td>
+                <td style={{ padding: '10px' }}>Change Scale (Everything).</td>
               </tr>
               <tr>
-                <td className="font-bold">Factor Classification</td>
-                <td>Factors are Fixed vs Variable.</td>
-                <td>All factors are Variable.</td>
-              </tr>
-              <tr>
-                <td className="font-bold">Output Change</td>
-                <td>Output changed by varying variable inputs only.</td>
-                <td>Output changed by varying scale (all inputs).</td>
-              </tr>
-              <tr>
-                <td className="font-bold">Relevant Law</td>
-                <td><strong>Returns to a Factor</strong> (Law of Variable Proportions).</td>
-                <td><strong>Returns to Scale</strong>.</td>
+                <td style={{ padding: '10px' }}>Law</td>
+                <td style={{ padding: '10px' }}>Returns to a FACTOR.</td>
+                <td style={{ padding: '10px' }}>Returns to SCALE.</td>
               </tr>
             </tbody>
           </table>
         </div>
-      </div>
 
-      {/* Navigation Hint */}
-      <div className="section-navigation">
-        <div className="nav-hint">
-          Next Section: Production Schedule &rsaquo;
-        </div>
       </div>
-
     </section>
   );
 }

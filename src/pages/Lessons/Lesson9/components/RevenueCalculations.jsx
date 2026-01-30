@@ -45,7 +45,7 @@ const RevenueCalculations = () => {
 
                     <div style={{ background: '#000', padding: '20px', borderRadius: '4px', border: '1px solid #333', fontFamily: 'monospace' }}>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: '0.5fr 1fr 1.5fr 1.5fr', borderBottom: '1px solid #333', paddingBottom: '10px', color: '#666', fontSize: '0.9rem' }}>
+                        <div className="algo-grid-header" style={{ borderBottom: '1px solid #333', paddingBottom: '10px', color: '#666', fontSize: '0.9rem' }}>
                             <div>QTY (Q)</div>
                             <div>PRICE (P)</div>
                             <div style={{ textAlign: 'right' }}>TOTAL REV (TR)</div>
@@ -53,7 +53,7 @@ const RevenueCalculations = () => {
                         </div>
 
                         {rows.map((row, i) => (
-                            <div key={i} style={{ display: 'grid', gridTemplateColumns: '0.5fr 1fr 1.5fr 1.5fr', padding: '15px 0', borderBottom: '1px dashed #222', alignItems: 'center' }}>
+                            <div key={i} className="algo-grid-row" style={{ padding: '15px 0', borderBottom: '1px dashed #222', alignItems: 'center' }}>
 
                                 {/* Q */}
                                 <div style={{ color: '#fff' }}>{row.q}</div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaArrowUp, FaArrowDown, FaChartLine, FaExclamationTriangle, FaSearchPlus, FaLightbulb, FaCheckCircle, FaMoneyBillWave, FaClock, FaGavel, FaUserTie } from 'react-icons/fa';
+import { FaArrowUp, FaArrowDown, FaChartLine, FaExclamationTriangle, FaSearchPlus, FaLightbulb, FaCheckCircle, FaMoneyBillWave, FaClock, FaGavel, FaUserTie, FaBolt, FaExchangeAlt } from 'react-icons/fa';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Label, ReferenceLine } from 'recharts';
 import '../../Lesson5/components/lesson5.css';
 
@@ -178,96 +178,108 @@ const LawOfSupply = () => {
             </div>
 
             {/* ASSUMPTIONS & EXCEPTIONS DETAILED */}
-            <div className="content-card animate-fadeInUp hover-lift" style={{ animationDelay: '0.8s', marginTop: '30px' }}>
-                <div className="card-content">
-                    <h3 className="highlight-red animate-fadeInLeft"><FaExclamationTriangle /> Critical Analysis</h3>
+            {/* COMIC BOOK: ASSUMPTIONS & EXCEPTIONS */}
+            <div className="content-card animate-fadeInUp" style={{ animationDelay: '0.8s', marginTop: '40px', background: 'transparent', border: 'none', boxShadow: 'none' }}>
 
-                    {/* ASSUMPTIONS BLOCK */}
-                    <div style={{ marginTop: '2rem', marginBottom: '3rem' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '1.5rem' }}>
-                            <div style={{ background: 'rgba(255, 165, 0, 0.2)', padding: '10px', borderRadius: '10px', color: 'orange' }}><FaCheckCircle size={24} /></div>
-                            <h4 style={{ fontSize: '1.4rem', color: 'orange', margin: 0 }}>Assumptions = Determinants Held Constant</h4>
-                        </div>
-                        <p style={{ color: '#ccc', marginBottom: '1.5rem', marginLeft: '5px' }}>The Law of Supply is valid only if all determining factors <strong>(other than Own Price)</strong> remain unchanged. This is <em>Ceteris Paribus</em>.</p>
-
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                            <div className="assumption-card" style={{ background: 'rgba(255,255,255,0.05)', padding: '1rem', borderRadius: '8px', borderLeft: '3px solid orange' }}>
-                                <strong>1. Constant Input Prices (Pi)</strong>
-                                <p style={{ fontSize: '0.85rem', color: '#aaa', marginTop: '5px' }}>Cost of raw materials/wages must not change.</p>
-                            </div>
-                            <div className="assumption-card" style={{ background: 'rgba(255,255,255,0.05)', padding: '1rem', borderRadius: '8px', borderLeft: '3px solid orange' }}>
-                                <strong>2. Constant Technology (T)</strong>
-                                <p style={{ fontSize: '0.85rem', color: '#aaa', marginTop: '5px' }}>No new invention or breakdown of machinery.</p>
-                            </div>
-                            <div className="assumption-card" style={{ background: 'rgba(255,255,255,0.05)', padding: '1rem', borderRadius: '8px', borderLeft: '3px solid orange' }}>
-                                <strong>3. Stable Govt Policy (G)</strong>
-                                <p style={{ fontSize: '0.85rem', color: '#aaa', marginTop: '5px' }}>Taxation and Subsidy rates remain fixed.</p>
-                            </div>
-                            <div className="assumption-card" style={{ background: 'rgba(255,255,255,0.05)', padding: '1rem', borderRadius: '8px', borderLeft: '3px solid orange' }}>
-                                <strong>4. Stable Future Expectations (Pf)</strong>
-                                <p style={{ fontSize: '0.85rem', color: '#aaa', marginTop: '5px' }}>No speculation about future price changes.</p>
-                            </div>
-                            <div className="assumption-card" style={{ background: 'rgba(255,255,255,0.05)', padding: '1rem', borderRadius: '8px', borderLeft: '3px solid orange' }}>
-                                <strong>5. Related Goods Prices (Pr)</strong>
-                                <p style={{ fontSize: '0.85rem', color: '#aaa', marginTop: '5px' }}>Prices of substitutes (e.g., Tea/Coffee) must not change.</p>
-                            </div>
-                            <div className="assumption-card" style={{ background: 'rgba(255,255,255,0.05)', padding: '1rem', borderRadius: '8px', borderLeft: '3px solid orange' }}>
-                                <strong>6. Goal of Firm (Gp)</strong>
-                                <p style={{ fontSize: '0.85rem', color: '#aaa', marginTop: '5px' }}>Objective (Profit vs Sales Max) must remain same.</p>
-                            </div>
-                        </div>
+                {/* ASSUMPTIONS: THE SHIELD */}
+                <div style={{ marginBottom: '50px' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+                        <span style={{ background: '#ff9800', color: '#000', padding: '5px 15px', fontWeight: 'bold', fontFamily: '"Bangers", cursive', letterSpacing: '2px', fontSize: '1.2rem', transform: 'rotate(-2deg)', display: 'inline-block', border: '2px solid #000' }}>
+                            CETERIS PARIBUS
+                        </span>
+                        <h3 className="highlight-gold animate-fadeInLeft" style={{ fontFamily: '"Bangers", cursive', fontSize: '2.5rem', textShadow: '3px 3px 0px #000', color: '#fff', marginTop: '10px' }}>
+                            <FaCheckCircle /> THE 6 ASSUMPTIONS (SHIELDS)
+                        </h3>
+                        <p style={{ color: '#ccc' }}>The Law ONLY works if these stay CONSTANT!</p>
                     </div>
 
-                    {/* EXCEPTIONS BLOCK */}
-                    <div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '1.5rem' }}>
-                            <div style={{ background: 'rgba(255, 68, 68, 0.2)', padding: '10px', borderRadius: '10px', color: '#ff4444' }}><FaExclamationTriangle size={24} /></div>
-                            <h4 style={{ fontSize: '1.4rem', color: '#ff4444', margin: 0 }}>Exceptions (When Law Fails)</h4>
+                    <div className="comic-card-container">
+                        <div className="comic-card assumption-shield">
+                            <div className="comic-title" style={{ color: '#e65100' }}>1. INPUT PRICES (Pi)</div>
+                            <div className="comic-desc">Cost of Raw Materials & Wages must NOT change.</div>
+                            <FaMoneyBillWave style={{ position: 'absolute', bottom: '10px', right: '10px', opacity: 0.2, fontSize: '3rem', color: '#e65100' }} />
                         </div>
-                        <p style={{ color: '#ccc', marginBottom: '1.5rem', marginLeft: '5px' }}>In these special cases, the Supply Curve may be Vertical, Horizontal, or even Backward Bending!</p>
-
-                        <div className="reasons-grid-enhanced" style={{ gridTemplateColumns: '1fr 1fr 1fr' }}>
-
-                            {/* Exception 1: Perishable */}
-                            <div className="reason-card-interactive red">
-                                <div className="card-icon"><FaClock /></div>
-                                <h5>1. Perishable Goods</h5>
-                                <p className="desc-sm">Vegetables, Fish, Milk</p>
-                                <div style={{ marginTop: '10px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>
-                                    Sellers cannot wait for high prices. They <strong>MUST sell</strong> even at low prices before the product rots.
-                                    <br />
-                                    <em style={{ color: '#ffaaaa' }}>Curve becomes Vertical (Fixed Supply).</em>
-                                </div>
-                            </div>
-
-                            {/* Exception 2: Rear Items */}
-                            <div className="reason-card-interactive purple">
-                                <div className="card-icon"><FaGavel /></div>
-                                <h5>2. Auctions / Rare Items</h5>
-                                <p className="desc-sm">Mona Lisa Painting</p>
-                                <div style={{ marginTop: '10px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>
-                                    Supply is limited to <strong>ONE unit</strong>. No matter how high the price goes (Millions), supply cannot increase.
-                                </div>
-                            </div>
-
-                            {/* Exception 3: Labor Supply */}
-                            <div className="reason-card-interactive cyan">
-                                <div className="card-icon"><FaUserTie /></div>
-                                <h5>3. Backward Bending Supply</h5>
-                                <p className="desc-sm">Labor Market</p>
-                                <div style={{ marginTop: '10px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>
-                                    At very high wage rates, workers prefer <strong>Leisure over Work</strong>.
-                                    <br />
-                                    Wage ↑ leads to Supply of Labor ↓.
-                                    <br />
-                                    <em style={{ color: '#aaffaa' }}>Curve bends backwards.</em>
-                                </div>
-                            </div>
-
+                        <div className="comic-card assumption-shield">
+                            <div className="comic-title" style={{ color: '#e65100' }}>2. TECHNOLOGY (T)</div>
+                            <div className="comic-desc">No new inventions! Tech must remain stagnant.</div>
+                            <FaBolt style={{ position: 'absolute', bottom: '10px', right: '10px', opacity: 0.2, fontSize: '3rem', color: '#e65100' }} />
+                        </div>
+                        <div className="comic-card assumption-shield">
+                            <div className="comic-title" style={{ color: '#e65100' }}>3. GOVT POLICY (G)</div>
+                            <div className="comic-desc">Taxation and Subsidy rates are FROZEN.</div>
+                            <FaGavel style={{ position: 'absolute', bottom: '10px', right: '10px', opacity: 0.2, fontSize: '3rem', color: '#e65100' }} />
+                        </div>
+                        <div className="comic-card assumption-shield">
+                            <div className="comic-title" style={{ color: '#e65100' }}>4. EXPECTATIONS (Pf)</div>
+                            <div className="comic-desc">No speculation about future price wars!</div>
+                            <FaLightbulb style={{ position: 'absolute', bottom: '10px', right: '10px', opacity: 0.2, fontSize: '3rem', color: '#e65100' }} />
+                        </div>
+                        <div className="comic-card assumption-shield">
+                            <div className="comic-title" style={{ color: '#e65100' }}>5. RELATED GOODS (Pr)</div>
+                            <div className="comic-desc">Prices of Tea/Coffee substitutes don't move.</div>
+                            <FaExchangeAlt style={{ position: 'absolute', bottom: '10px', right: '10px', opacity: 0.2, fontSize: '3rem', color: '#e65100' }} />
+                        </div>
+                        <div className="comic-card assumption-shield">
+                            <div className="comic-title" style={{ color: '#e65100' }}>6. FIRM GOAL (Gp)</div>
+                            <div className="comic-desc">Objective (Profit vs Sales) is fixed.</div>
+                            <FaUserTie style={{ position: 'absolute', bottom: '10px', right: '10px', opacity: 0.2, fontSize: '3rem', color: '#e65100' }} />
                         </div>
                     </div>
-
                 </div>
+
+                {/* EXCEPTIONS: THE VILLAINS */}
+                <div>
+                    <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+                        <span style={{ background: '#d32f2f', color: '#fff', padding: '5px 15px', fontWeight: 'bold', fontFamily: '"Bangers", cursive', letterSpacing: '2px', fontSize: '1.2rem', transform: 'rotate(2deg)', display: 'inline-block', border: '2px solid #fff' }}>
+                            LAW BREAKERS
+                        </span>
+                        <h3 className="highlight-red animate-fadeInLeft" style={{ fontFamily: '"Bangers", cursive', fontSize: '2.5rem', textShadow: '3px 3px 0px #000', color: '#ff4444', marginTop: '10px' }}>
+                            <FaExclamationTriangle /> WHEN THE LAW FAILS!
+                        </h3>
+                        <p style={{ color: '#ccc' }}>Special cases where Price ↑ does NOT mean Supply ↑</p>
+                    </div>
+
+                    <div className="comic-card-container">
+
+                        {/* VILLAIN 1 */}
+                        <div className="comic-card exception-villain">
+                            <div className="comic-badge">ERROR 404</div>
+                            <div className="comic-title" style={{ color: '#b71c1c' }}>1. PERISHABLE GOODS</div>
+                            <div className="comic-desc">
+                                Vegetables, Milk, Fish.<br /><br />
+                                <strong>Why?</strong> Sellers MUST sell before it rots, even if Price is Low!<br />
+                                <em style={{ fontSize: '0.9rem' }}>Curve becomes Vertical.</em>
+                            </div>
+                            <FaClock style={{ position: 'absolute', bottom: '10px', right: '10px', opacity: 0.2, fontSize: '3rem', color: '#b71c1c' }} />
+                        </div>
+
+                        {/* VILLAIN 2 */}
+                        <div className="comic-card exception-villain">
+                            <div className="comic-badge">RARE</div>
+                            <div className="comic-title" style={{ color: '#b71c1c' }}>2. RARE AUCTIONS</div>
+                            <div className="comic-desc">
+                                Mona Lisa, Antique Coins.<br /><br />
+                                <strong>Why?</strong> Supply is FIXED at 1 unit. Even if Price is $1 Billion, Supply is 1.<br />
+                                <em style={{ fontSize: '0.9rem' }}>Vertical Supply Curve.</em>
+                            </div>
+                            <FaGavel style={{ position: 'absolute', bottom: '10px', right: '10px', opacity: 0.2, fontSize: '3rem', color: '#b71c1c' }} />
+                        </div>
+
+                        {/* VILLAIN 3 */}
+                        <div className="comic-card exception-villain">
+                            <div className="comic-badge">LAZY</div>
+                            <div className="comic-title" style={{ color: '#b71c1c' }}>3. BACKWARD BENDING</div>
+                            <div className="comic-desc">
+                                Labor Market.<br /><br />
+                                <strong>Why?</strong> At super high wages, workers prefer Leisure over Work.<br />
+                                <em style={{ fontSize: '0.9rem' }}>Wage ↑ Supply ↓ (Opposite!)</em>
+                            </div>
+                            <FaUserTie style={{ position: 'absolute', bottom: '10px', right: '10px', opacity: 0.2, fontSize: '3rem', color: '#b71c1c' }} />
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
 
         </div>

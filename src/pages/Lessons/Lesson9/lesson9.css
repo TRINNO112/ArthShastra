@@ -20,7 +20,7 @@
   color: #e0e6ed;
   font-family: 'Inter', system-ui, sans-serif;
   min-height: 100vh;
-  padding-bottom: 50px;
+  padding-bottom: 100px;
 }
 
 /* TYPOGRAPHY */
@@ -230,6 +230,55 @@
     }
 }
 
+
+/* ... existing styles ... */
+
 .feedback-reveal {
     animation: feedbackReveal 0.4s ease-out forwards;
+}
+
+/* --- RESPONSIVE GRIDS (New) --- */
+
+/* Algo-Bot Table Grid */
+.algo-grid-header,
+.algo-grid-row {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1.5fr 1.5fr;
+    gap: 10px;
+}
+
+/* TRMR Split Layout */
+.trmr-split-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    /* Stack TR-MR Layout */
+    .trmr-split-layout {
+        grid-template-columns: 1fr;
+    }
+
+    /* Adjust Algo-Bot for Mobile */
+    .algo-grid-header {
+        display: none; /* Hide header on mobile, use labels per row if needed? or just scroll? */
+        /* Better approach: Keep columns but shrink text or scroll */
+    }
+    
+    .algo-grid-row {
+        /* On strict mobile, let's keep 4 cols but tighten spacing, or stack? */
+        /* User said "Table is breaking". Stacking row items might be better. */
+        grid-template-columns: 1fr 1fr; /* 2x2 grid for mobile row? */
+        gap: 5px;
+        padding: 10px;
+        background: rgba(255,255,255,0.05);
+        margin-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    /* Optional: If we want a scrollable table instead */
+    /* .trading-card { overflow-x: auto; } */
+    /* But grid approach is requested */
 }

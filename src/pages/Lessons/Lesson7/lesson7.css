@@ -1,0 +1,118 @@
+/* ==========================================================================
+   Lesson 7: The Production Factory 🏭
+   Theme: Industrial Comic (Blueprint + Comic Book)
+   ========================================================================== */
+
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&family=Teko:wght@400;600&display=swap');
+
+:root {
+  --factory-bg: #2d3436;
+  --factory-yellow: #f1c40f; /* Safety Yellow */
+  --factory-black: #000000;
+  --factory-blue: #0984e3;  /* Blueprint Blue */
+  --comic-white: #ffffff;
+  --comic-border: 3px solid #000;
+  --comic-shadow: 6px 6px 0px #000;
+}
+
+.lesson-container-factory {
+    background-color: var(--factory-bg);
+    color: #fff;
+    font-family: 'Comic Neue', sans-serif;
+    min-height: 100vh;
+    padding-bottom: 50px;
+    background-image: radial-gradient(#444 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* --- HEADERS --- */
+.factory-header {
+    background: var(--factory-yellow);
+    border: var(--comic-border);
+    padding: 20px;
+    transform: rotate(-1deg);
+    margin-bottom: 40px;
+    box-shadow: var(--comic-shadow);
+    text-align: center;
+}
+
+.factory-title {
+    font-family: 'Bangers', cursive;
+    color: #000;
+    font-size: 5rem; /* Humongous Title */
+    margin: 0;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 0px #fff;
+    line-height: 0.9;
+}
+
+.factory-subtitle {
+    font-family: 'Teko', sans-serif;
+    color: #000;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* --- COMIC PANELS --- */
+.comic-panel {
+    background: var(--comic-white);
+    border: var(--comic-border);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: var(--comic-shadow);
+    color: #000;
+    margin-bottom: 30px;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.comic-panel:hover {
+    transform: translateY(-5px);
+}
+
+.comic-panel.blue {
+    background: #e3f2fd;
+    border-color: #0d47a1;
+    box-shadow: 6px 6px 0px #0d47a1;
+}
+
+.comic-panel.yellow {
+    background: #fff9c4;
+    border-color: #f57f17;
+    box-shadow: 6px 6px 0px #f57f17;
+}
+
+/* --- TYPOGRAPHY --- */
+.text-banger {
+    font-family: 'Bangers', cursive;
+    letter-spacing: 1px;
+}
+
+.highlight-box {
+    background: #000;
+    color: var(--factory-yellow);
+    padding: 5px 10px;
+    display: inline-block;
+    font-family: 'Teko', sans-serif;
+    font-size: 1.2rem;
+    transform: rotate(-2deg);
+}
+
+/* --- GRID LAYOUTS --- */
+.factory-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+@media (max-width: 768px) {
+    .factory-grid-2 {
+        grid-template-columns: 1fr;
+    }
+    .factory-title {
+        font-size: 3rem;
+    }
+}

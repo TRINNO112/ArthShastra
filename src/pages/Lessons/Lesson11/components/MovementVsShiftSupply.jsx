@@ -21,7 +21,7 @@ const MovementVsShiftSupply = () => {
                 </p>
             </div>
 
-            <div className="comic-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(500px, 1fr))', gap: '40px' }}>
+            <div className="comic-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px' }}>
 
                 {/* LEFT PANEL: MOVEMENT */}
                 <div className="comic-panel animate-fadeInLeft" style={{

@@ -19,38 +19,50 @@ const productionData = [
 
 const ProductionSchedule = () => {
   return (
-    <div className="table-container-enhanced">
-      <h3 className="component-title">
-        <FaTable className="icon-gold" /> Production Schedule
-      </h3>
-      <p className="component-subtitle">Observing the Law of Variable Proportions numerically</p>
+    <div className="table-container-enhanced" style={{ background: 'transparent', padding: 0 }}>
 
-      <div className="table-scroll-wrapper">
-        <table className="production-table-modern">
+      {/* HEADER */}
+      <div className="comic-panel blue" style={{ textAlign: 'center', marginBottom: '30px' }}>
+        <div style={{ display: 'inline-block', background: '#000', color: '#fff', padding: '5px 15px', transform: 'rotate(-2deg)', marginBottom: '10px', fontFamily: 'Bangers' }}>
+          SECRET DOCUMENTS
+        </div>
+        <h3 className="text-banger" style={{ fontSize: '2.5rem', margin: 0, color: '#0d47a1' }}>
+          <FaClipboardList /> THE BLUEPRINT LOG
+        </h3>
+        <p style={{ fontFamily: 'Comic Neue', fontWeight: 'bold' }}>Tracking the efficiency of every worker.</p>
+      </div>
+
+      <div className="table-scroll-wrapper" style={{ background: '#0d47a1', padding: '10px', borderRadius: '8px', border: '3px solid #000', boxShadow: '8px 8px 0px #000' }}>
+        <div style={{ color: '#fff', fontFamily: 'Teko', fontSize: '1.2rem', marginBottom: '5px', borderBottom: '1px dashed #fff' }}>Project: ALPHA-7 // Status: CLASSIFIED</div>
+        <table className="production-table-modern" style={{ fontFamily: 'Share Tech Mono', background: '#1565c0', color: '#fff' }}>
           <thead>
-            <tr>
-              <th>Labor (L)</th>
-              <th>Total Product (TP)</th>
-              <th>Average Product (AP)</th>
-              <th>Marginal Product (MP)</th>
-              <th>Stage</th>
+            <tr style={{ background: '#000', color: '#f1c40f', borderBottom: '2px solid #fff' }}>
+              <th style={{ padding: '15px' }}>L (Workers)</th>
+              <th>TP (Total)</th>
+              <th>AP (Average)</th>
+              <th>MP (Marginal)</th>
+              <th>ZONE STATUS</th>
             </tr>
           </thead>
           <tbody>
             {productionData.map((row, idx) => (
-              <tr key={idx} className={`row-stage-${row.stage}`}>
-                <td className="font-mono">{row.labor}</td>
-                <td className="text-tp font-bold">{row.tp}</td>
-                <td className="text-ap">{row.ap}</td>
-                <td className={`text-mp ${row.mp < 0 ? 'mp-neg' : ''}`}>
+              <tr key={idx} style={{ borderBottom: '1px solid rgba(255,255,255,0.2)' }} className={`row-stage-${row.stage}`}>
+                <td style={{ fontWeight: 'bold', color: '#f1c40f' }}>{row.labor}</td>
+                <td style={{ fontWeight: 'bold' }}>{row.tp}</td>
+                <td>{row.ap}</td>
+                <td style={{ color: row.mp < 0 ? '#ff5252' : '#69f0ae', fontWeight: 'bold' }}>
                   {row.mp}
-                  {row.mp > 10 && <FaArrowUp className="trend-icon up" />}
-                  {row.mp < 0 && <FaArrowDown className="trend-icon down" />}
+                  {row.mp > 10 && <FaArrowUp style={{ marginLeft: '5px' }} />}
+                  {row.mp < 0 && <FaArrowDown style={{ marginLeft: '5px' }} />}
                 </td>
-                <td className="stage-cell">
-                  <span className={`stage-badge stage-${row.stage}`}>
-                    {row.stage === 1 ? 'I: Increasing' :
-                      row.stage === 2 ? 'II: Diminishing' : 'III: Negative'}
+                <td>
+                  <span style={{
+                    background: row.stage === 1 ? '#2e7d32' : row.stage === 2 ? '#f1c40f' : '#d32f2f',
+                    color: row.stage === 2 ? '#000' : '#fff',
+                    padding: '2px 8px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 'bold',
+                    border: '1px solid #fff'
+                  }}>
+                    {row.stage === 1 ? 'STARTUP' : row.stage === 2 ? 'EFFICIENT' : 'CRITICAL'}
                   </span>
                 </td>
               </tr>
@@ -59,46 +71,37 @@ const ProductionSchedule = () => {
         </table>
       </div>
 
-      <div className="table-insights">
-        <div className="insight-pill">
-          <strong>Stage I Ends:</strong> AP = MP (Max AP)
+      <div className="factory-grid-2" style={{ marginTop: '40px' }}>
+
+        {/* INSIGHT 1 */}
+        <div className="comic-panel yellow">
+          <div className="highlight-box" style={{ background: '#f1c40f', color: '#000' }}>STAGE 1 ENDS</div>
+          <p className="text-banger" style={{ fontSize: '1.5rem', margin: '10px 0' }}>AP MAXIMIZED!</p>
+          <p>Worker efficiency hits peak potential. <br /><strong>AP = MP</strong></p>
         </div>
-        <div className="insight-pill">
-          <strong>Stage II Ends:</strong> MP = 0 (Max TP)
+
+        {/* INSIGHT 2 */}
+        <div className="comic-panel yellow">
+          <div className="highlight-box" style={{ background: '#f1c40f', color: '#000' }}>STAGE 2 ENDS</div>
+          <p className="text-banger" style={{ fontSize: '1.5rem', margin: '10px 0' }}>TP MAXIMIZED!</p>
+          <p>Total output stops growing. <br /><strong>MP = 0</strong></p>
+        </div>
+
+      </div>
+
+      <div className="comic-panel animate-fadeInUp" style={{ border: '3px solid #d32f2f', boxShadow: '6px 6px 0px #d32f2f' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <FaBan size={40} color="#d32f2f" />
+          <div>
+            <h4 className="text-banger" style={{ fontSize: '1.8rem', margin: 0, color: '#d32f2f' }}>STAGE 3 WARNING</h4>
+            <p style={{ fontFamily: 'Comic Neue', fontWeight: 'bold' }}>
+              NEGATIVE RETURNS! Workers are bumping into each other. MP is Negative. <br />
+              <span style={{ background: '#d32f2f', color: '#fff', padding: '2px 5px' }}>FIRING SQUAD REQUIRED</span>
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="lesson-section-wrapper mt-8">
-        <div className="analysis-card animate-fade-in">
-          <div className="analysis-header">
-            <FaClipboardList /> Analysis of the Schedule
-          </div>
-
-          <div className="analysis-point">
-            <FaRocket className="analysis-icon text-green" />
-            <div>
-              <strong className="text-white">1. Increasing Returns (0 to 2 units of L):</strong>
-              <p>Initially, as we employ more units of labor to a fixed amount of capital, Total Product (TP) increases at an <em>increasing rate</em>. Notice how Marginal Product (MP) rises from 10 to 15. This happens because the fixed factor (land/machine) was initially underutilized.</p>
-            </div>
-          </div>
-
-          <div className="analysis-point">
-            <FaStop className="analysis-icon text-gold" />
-            <div>
-              <strong className="text-white">2. Diminishing Returns (3 to 6 units of L):</strong>
-              <p>As we add even more labor, the fixed factor becomes crowded. TP still increases, but at a <em>diminishing rate</em>. MP starts to fall (11 → 8 → 4). At the 6th unit, MP becomes zero, meaning the worker adds nothing to the total output. <strong>TP is Max (48).</strong></p>
-            </div>
-          </div>
-
-          <div className="analysis-point">
-            <FaBan className="analysis-icon text-red" />
-            <div>
-              <strong className="text-white">3. Negative Returns (7th unit onwards):</strong>
-              <p>Adding more workers now causes chaos. They basically get in each other's way. <strong>MP becomes negative (-3, -5)</strong>, causing the Total Product to actually <em>fall</em>. No rational producer works in this stage.</p>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

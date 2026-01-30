@@ -255,8 +255,125 @@
     to { background-position: 50px 0; }
 }
 
-.conveyor-belt::before {
-    /* animate belt texture if desired */
-    /* background: repeating-linear-gradient(90deg, #333, #333 10px, #444 10px, #444 20px); */
-    /* animation: slideTrack 2s linear infinite; */
+
+/* ... existing animations ... */
+
+/* --- COMIC BOOK STYLES (New) --- */
+.comic-card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
 }
+
+.comic-card {
+    background: #fff;
+    color: #000;
+    border: 3px solid #000;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 8px 8px 0px rgba(0,0,0,0.8);
+    transition: transform 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.comic-card:hover {
+    transform: translateY(-5px) rotate(-1deg);
+    box-shadow: 12px 12px 0px rgba(0,0,0,0.9);
+}
+
+.comic-badge {
+    position: absolute;
+    top: -5px;
+    right: -25px;
+    background: #ff0000;
+    color: #fff;
+    padding: 5px 30px;
+    transform: rotate(45deg);
+    font-family: 'Bangers', cursive;
+    font-size: 0.9rem;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    z-index: 10;
+}
+
+.comic-title {
+    font-family: 'Bangers', cursive;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+.comic-desc {
+    font-family: 'Comic Neue', cursive;
+    font-size: 1rem;
+    line-height: 1.4;
+    font-weight: bold;
+}
+
+.assumption-shield {
+    background: #fff8e1; /* Light Yellow */
+    border-color: #ff9800;
+    box-shadow: 8px 8px 0px #e65100;
+}
+
+.exception-villain {
+    background: #ffebee; /* Light Red */
+    border-color: #d32f2f;
+    box-shadow: 8px 8px 0px #b71c1c;
+}
+
+/* --- COMIC GRID (Desktop Fix) --- */
+.reasons-grid-responsive {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 768px) {
+    .section-title-lesson {
+        font-size: 2.5rem !important; /* Scale down big titles */
+    }
+    
+    .comic-grid {
+        grid-template-columns: 1fr !important; /* Stack panels */
+    }
+    
+    .reasons-grid-enhanced,
+    .control-panel-grid,
+    .conveyor-belt {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .factory-station {
+        width: 100%; /* Full width stations */
+    }
+
+    .conveyor-belt::before {
+        width: 10px;
+        height: 100%; /* Vertical Line */
+        left: 50%;
+        top: 0;
+    }
+
+    /* Movement Vs Shift Specifics */
+    .comic-panel {
+        padding: 15px !important;
+    }
+    
+    h2.section-title-lesson {
+        font-size: 2.5rem !important;
+    }
+
+    /* Comic Cards Stack */
+    .comic-card-container {
+        grid-template-columns: 1fr;
+    }
+}
+

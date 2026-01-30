@@ -16,30 +16,30 @@ const TRMRRelationship = () => {
             <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '20px' }}>
 
                 {/* STRATEGY TOGGLE BAR */}
-                <div className="trading-card" style={{ padding: '10px', display: 'flex', gap: '10px', background: '#000', borderBottom: 'none', borderRadius: '4px 4px 0 0', marginBottom: '0' }}>
+                <div className="trading-card" style={{ padding: '10px', display: 'flex', flexWrap: 'wrap', gap: '10px', background: '#000', borderBottom: 'none', borderRadius: '4px 4px 0 0', marginBottom: '0' }}>
                     <button
                         className={`trade-btn ${strategy === 1 ? 'active profit' : ''}`}
                         onClick={() => setStrategy(1)}
-                        style={{ flex: 1, textAlign: 'center', height: '60px' }}
+                        style={{ flex: 1, textAlign: 'center', padding: '5px' }}
                     >
                         <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>PHASE 1</div>
-                        <div style={{ fontSize: '1.1rem' }}>BULL RUN (MR {'>'} 0)</div>
+                        <div style={{ fontSize: '1rem' }}>BULL RUN (MR {'>'} 0)</div>
                     </button>
                     <button
                         className={`trade-btn ${strategy === 2 ? 'active' : ''}`}
                         onClick={() => setStrategy(2)}
-                        style={{ flex: 1, textAlign: 'center', height: '60px', borderColor: strategy === 2 ? 'var(--trade-gold)' : '' }}
+                        style={{ flex: 1, textAlign: 'center', padding: '5px', borderColor: strategy === 2 ? 'var(--trade-gold)' : '' }}
                     >
                         <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>PHASE 2</div>
-                        <div style={{ fontSize: '1.1rem' }}>PEAK (MR = 0)</div>
+                        <div style={{ fontSize: '1rem' }}>PEAK (MR = 0)</div>
                     </button>
                     <button
                         className={`trade-btn ${strategy === 3 ? 'active' : ''}`}
                         onClick={() => setStrategy(3)}
-                        style={{ flex: 1, textAlign: 'center', height: '60px', borderColor: strategy === 3 ? 'var(--trade-red)' : '' }}
+                        style={{ flex: 1, textAlign: 'center', padding: '5px', borderColor: strategy === 3 ? 'var(--trade-red)' : '' }}
                     >
                         <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>PHASE 3</div>
-                        <div style={{ fontSize: '1.1rem' }}>BEAR RUN (MR {'<'} 0)</div>
+                        <div style={{ fontSize: '1rem' }}>BEAR RUN (MR {'<'} 0)</div>
                     </button>
                 </div>
 
@@ -53,7 +53,7 @@ const TRMRRelationship = () => {
                         <FaLaptopCode style={{ fontSize: '1.5rem', opacity: 0.5 }} />
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginTop: '20px' }}>
+                    <div className="trmr-split-layout">
 
                         {/* LEFT: DATA VISUAL */}
                         <div className="terminal-chart" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '250px' }}>

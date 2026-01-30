@@ -6,80 +6,64 @@ import '../../css/quiz.css';
 const AssumptionsLimitations = () => {
     return (
         <section className="lesson-section-wrapper">
-            <div className="section-header-lesson mb-8">
-                <h3 className="section-title-modern"><FaBalanceScale /> Assumptions & Limitations</h3>
-                <p className="section-subtitle-lesson">The boundaries within which the Law of Variable Proportions operates.</p>
+            <div className="section-header-lesson mb-8 text-center">
+                <div style={{ background: '#f1c40f', color: '#000', display: 'inline-block', padding: '10px 20px', border: '3px solid #000', transform: 'rotate(-1deg)', boxShadow: '5px 5px 0px #000' }}>
+                    <h3 className="section-title-modern text-banger" style={{ fontSize: '3rem', margin: 0 }}>
+                        <FaBalanceScale /> FACTORY REGULATIONS
+                    </h3>
+                </div>
+                <p className="section-subtitle-lesson mt-4">The strict rules for the "Law of Variable Proportions".</p>
             </div>
 
-            <div className="assumptions-grid-modern">
+            <div className="assumptions-grid-modern" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+
                 {/* Assumption 1 */}
-                <div className="analysis-card animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                    <div className="analysis-header text-gold">
-                        <FaMicrochip /> Constant Technology
+                <div className="comic-panel blue" style={{ transform: 'rotate(-1deg)' }}>
+                    <div className="analysis-header" style={{ color: '#0d47a1', borderBottom: '2px solid #0d47a1', paddingBottom: '10px', marginBottom: '10px' }}>
+                        <h4 className="text-banger" style={{ fontSize: '1.5rem', margin: 0 }}><FaMicrochip /> RULE #1: NO UPGRADES!</h4>
                     </div>
-                    <div className="p-2">
-                        <p className="text-gray-300 mb-4">
-                            We assume the <strong>state of technology remains unchanged</strong>. If technology improves, the same inputs could produce more output, invalidating the law.
-                        </p>
-                        <div className="example-box-small">
-                            <strong>Example:</strong> Replacing manual looms with power looms would instantly increase output, disrupting the schedule.
-                        </div>
-                    </div>
+                    <p style={{ fontWeight: 'bold' }}>Technology must remain CONSTANT.</p>
+                    <p className="text-sm">If you buy a robot, the whole law breaks.</p>
                 </div>
 
                 {/* Assumption 2 */}
-                <div className="analysis-card animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                    <div className="analysis-header text-gold">
-                        <FaCheckDouble /> Homogeneous Factors
+                <div className="comic-panel blue" style={{ transform: 'rotate(1deg)' }}>
+                    <div className="analysis-header" style={{ color: '#0d47a1', borderBottom: '2px solid #0d47a1', paddingBottom: '10px', marginBottom: '10px' }}>
+                        <h4 className="text-banger" style={{ fontSize: '1.5rem', margin: 0 }}><FaCheckDouble /> RULE #2: CLONES ONLY!</h4>
                     </div>
-                    <div className="p-2">
-                        <p className="text-gray-300 mb-4">
-                            All units of the variable factor (e.g., Labor) are assumed to be <strong>identical in efficiency and skill</strong>.
-                        </p>
-                        <div className="example-box-small">
-                            <strong>Example:</strong> If the 4th worker is an expert and the 1st was a novice, productivity might rise instead of falling.
-                        </div>
-                    </div>
+                    <p style={{ fontWeight: 'bold' }}>All variable factors (Workers) are IDENTICAL.</p>
+                    <p className="text-sm">Worker #1 is exactly as skilled as Worker #10.</p>
                 </div>
 
                 {/* Assumption 3 */}
-                <div className="analysis-card animate-fade-in" style={{ animationDelay: '0.3s' }}>
-                    <div className="analysis-header text-gold">
-                        <FaClock /> Short Run Only
+                <div className="comic-panel blue" style={{ transform: 'rotate(-1deg)' }}>
+                    <div className="analysis-header" style={{ color: '#0d47a1', borderBottom: '2px solid #0d47a1', paddingBottom: '10px', marginBottom: '10px' }}>
+                        <h4 className="text-banger" style={{ fontSize: '1.5rem', margin: 0 }}><FaClock /> RULE #3: SHORT TERM!</h4>
                     </div>
-                    <div className="p-2">
-                        <p className="text-gray-300 mb-4">
-                            The law operates only in the <strong>Short Run</strong> where some factors (like Land/Capital) are fixed and only one is variable.
-                        </p>
-                        <div className="example-box-small">
-                            <strong>Example:</strong> We cannot suddenly buy a new factory building (Fixed Factor) to increase production overnight.
-                        </div>
-                    </div>
+                    <p style={{ fontWeight: 'bold' }}>We assume SHORT RUN only.</p>
+                    <p className="text-sm">You can't build a new factory tomorrow.</p>
                 </div>
 
                 {/* Assumption 4 */}
-                <div className="analysis-card animate-fade-in" style={{ animationDelay: '0.4s' }}>
-                    <div className="analysis-header text-gold">
-                        <FaExclamationTriangle /> Variable Proportions
+                <div className="comic-panel blue" style={{ transform: 'rotate(1deg)' }}>
+                    <div className="analysis-header" style={{ color: '#0d47a1', borderBottom: '2px solid #0d47a1', paddingBottom: '10px', marginBottom: '10px' }}>
+                        <h4 className="text-banger" style={{ fontSize: '1.5rem', margin: 0 }}><FaExclamationTriangle /> RULE #4: FLEX RATIO!</h4>
                     </div>
-                    <div className="p-2">
-                        <p className="text-gray-300 mb-4">
-                            The ratio between fixed and variable factors <strong>must be alterable</strong>. If factors must be used in a fixed ratio (e.g., 1 Driver per 1 Truck), this law doesn't apply.
-                        </p>
-                        <div className="example-box-small">
-                            <strong>Example:</strong> 2 Drivers for 1 Truck doesn't necessarily double output; the ratio must limit the variable factor.
-                        </div>
-                    </div>
+                    <p style={{ fontWeight: 'bold' }}>Factor Ratio must be changeable.</p>
+                    <p className="text-sm">If you need exactly 1 Driver per Truck, this law fails.</p>
                 </div>
             </div>
 
-            <div className="critical-limitation-card">
-                <FaBan className="critical-icon" />
-                <div>
-                    <h4 className="critical-title">Critical Limitation</h4>
-                    <p className="critical-text">
-                        This law fails if the <strong>Fixed Factor is indivisible</strong> or if the factors are <strong>perfect substitutes</strong> for each other. It strictly relies on the imperfect substitutability between Labor and Capital.
-                    </p>
+            <div className="comic-panel" style={{ marginTop: '40px', background: '#000', color: '#fff', border: '3px solid #ff3b30' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                    <FaBan size={50} color="#ff3b30" />
+                    <div>
+                        <h4 className="text-banger" style={{ fontSize: '2rem', color: '#ff3b30', margin: 0 }}>CRITICAL FAILURE WARNING</h4>
+                        <p style={{ fontSize: '1.1rem' }}>
+                            This law <strong>EXPLODES</strong> if factors are Perfect Substitutes! <br />
+                            It relies on the fact that Labor ≠ Capital.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>

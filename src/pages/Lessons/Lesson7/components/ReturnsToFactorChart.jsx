@@ -227,20 +227,36 @@ const ReturnsToFactorChart = () => {
 
   return (
     <div className='chart-section-wrapper'>
-      <div className="chart-wrapper-flex">
-        <div className="chart-container-d3" ref={containerRef}>
+
+      {/* COMIC HEADER */}
+      <div className="comic-panel blue" style={{ textAlign: 'center', padding: '15px', marginBottom: '20px' }}>
+        <h3 className="text-banger" style={{ fontSize: '2rem', margin: 0, color: '#0d47a1' }}>
+          <FaProjectDiagram /> PERFORMANCE MONITOR
+        </h3>
+        <p style={{ fontFamily: 'Comic Neue', fontWeight: 'bold' }}>Real-time visualization of Input vs Output.</p>
+      </div>
+
+      <div className="chart-wrapper-flex" style={{ background: '#000', border: '4px solid #333', borderRadius: '10px', boxShadow: '0 0 20px rgba(0,0,0,0.8)', padding: '20px', position: 'relative', flexDirection: 'column' }}>
+
+        {/* MONITOR FRAME EFFECT */}
+        <div style={{ position: 'absolute', top: '10px', right: '10px', color: '#00ff00', fontFamily: 'Share Tech Mono' }}>● LIVE FEED</div>
+        <div style={{ position: 'absolute', bottom: '10px', left: '10px', color: '#666', fontFamily: 'Share Tech Mono' }}>SYS.OP.77</div>
+
+        <div className="chart-container-d3" ref={containerRef} style={{ marginBottom: '20px' }}>
           <svg ref={svgRef}></svg>
         </div>
+      </div>
 
-        <div className="chart-legend-side">
-          <h4 className="legend-title">Key</h4>
+      {/* LEGEND MOVED TO BOTTOM */}
+      <div className="chart-legend-bottom" style={{ background: '#111', borderTop: '1px solid #333', padding: '15px', borderRadius: '0 0 8px 8px' }}>
+        <h4 className="legend-title" style={{ fontFamily: 'Bangers', letterSpacing: '1px', color: '#fff', textAlign: 'center', marginBottom: '15px' }}>CONTROL PANEL</h4>
 
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px' }}>
           <div className="legend-item-group">
             <div className="legend-row">
-              <span className="legend-line" style={{ background: '#00ff88', height: '3px' }}></span>
+              <span className="legend-line" style={{ background: '#00ff88', height: '4px', boxShadow: '0 0 5px #00ff88' }}></span>
               <div className="legend-text">
-                <span className="legend-label">Total Product (TP)</span>
-                <span className="legend-desc">Total output produced</span>
+                <span className="legend-label" style={{ color: '#00ff88' }}>TP (Total)</span>
               </div>
             </div>
           </div>
@@ -249,72 +265,59 @@ const ReturnsToFactorChart = () => {
             <div className="legend-row">
               <span className="legend-line" style={{ borderTop: '2px dashed #ffd700' }}></span>
               <div className="legend-text">
-                <span className="legend-label">Average Product (AP)</span>
-                <span className="legend-desc">Output per worker</span>
+                <span className="legend-label" style={{ color: '#ffd700' }}>AP (Average)</span>
               </div>
             </div>
           </div>
 
           <div className="legend-item-group">
             <div className="legend-row">
-              <span className="legend-line" style={{ background: '#ff6b6b', height: '2px' }}></span>
+              <span className="legend-line" style={{ background: '#ff6b6b', height: '3px' }}></span>
               <div className="legend-text">
-                <span className="legend-label">Marginal Product (MP)</span>
-                <span className="legend-desc">Change in output from last worker</span>
+                <span className="legend-label" style={{ color: '#ff6b6b' }}>MP (Marginal)</span>
               </div>
             </div>
           </div>
+        </div>
 
-          <div className="legend-stages">
-            <h5>Stages</h5>
-            <div className="stage-mini"><span className="stage-dot s1"></span> Stage I: Increasing</div>
-            <div className="stage-mini"><span className="stage-dot s2"></span> Stage II: Diminishing</div>
-            <div className="stage-mini"><span className="stage-dot s3"></span> Stage III: Negative</div>
-          </div>
+        <div className="legend-stages" style={{ marginTop: '15px', textAlign: 'center', borderTop: '1px dashed #333', paddingTop: '10px' }}>
+          <span style={{ fontFamily: 'Bangers', color: '#fff', marginRight: '10px' }}>ZONES:</span>
+          <span className="stage-mini" style={{ color: '#00ff88', marginRight: '15px' }}><span className="stage-dot s1"></span> I: RISE</span>
+          <span className="stage-mini" style={{ color: '#ffd700', marginRight: '15px' }}><span className="stage-dot s2"></span> II: PEAK</span>
+          <span className="stage-mini" style={{ color: '#ff6b6b' }}><span className="stage-dot s3"></span> III: FALL</span>
         </div>
       </div>
 
       <div className="lesson-section-wrapper mt-8">
-        <div className="analysis-card animate-fade-in">
-          <div className="analysis-header">
-            <FaSearch /> Analysis of the Curves
+        <div className="comic-panel animate-fade-in">
+          <div className="analysis-header" style={{ borderBottom: '2px solid #000', paddingBottom: '10px', marginBottom: '15px' }}>
+            <h4 className="text-banger" style={{ fontSize: '1.8rem', margin: 0 }}> <FaSearch /> DECODING THE CURVES</h4>
           </div>
 
           <div className="analysis-point">
             <FaChartLine className="analysis-icon text-green" />
             <div>
-              <strong className="text-green">Total Product (TP) Curve:</strong>
-              <p>Starts from origin, increases at an increasing rate (convex shape), then increases at a diminishing rate (concave shape), reaches a maximum, and finally falls.</p>
+              <strong className="text-green text-banger" style={{ fontSize: '1.2rem' }}>TP CURVE</strong>
+              <p>Climbs like a mountain. Steep at first (Convex), then slows down (Concave), peaks, and drops off the cliff.</p>
             </div>
           </div>
 
           <div className="analysis-point">
             <FaChartLine className="analysis-icon text-red" />
             <div>
-              <strong className="text-red">Marginal Product (MP) Curve:</strong>
-              <p>Inverted 'U' shape. It rises, reaches a maximum (before AP), and then falls. <strong>It cuts the X-axis (becomes zero) when TP is maximum.</strong></p>
+              <strong className="text-red text-banger" style={{ fontSize: '1.2rem' }}>MP CURVE (THE LEADER)</strong>
+              <p>The first to rise and the first to fall! It cuts through the X-axis exactly when TP hits the summit.</p>
             </div>
           </div>
 
           <div className="analysis-point">
             <FaChartLine className="analysis-icon text-gold" />
             <div>
-              <strong className="text-gold">Average Product (AP) Curve:</strong>
-              <p>Also inverted 'U' shape. It rises, reaches a maximum, and then falls. Importantly, <strong>MP intersects AP at its maximum point</strong>. Even when MP becomes negative, AP remains positive.</p>
+              <strong className="text-gold text-banger" style={{ fontSize: '1.2rem' }}>AP CURVE</strong>
+              <p>The slow and steady one. It follows MP. NOTE: <strong>AP is at MAX when MP cuts it.</strong></p>
             </div>
           </div>
 
-          <div className="p-4 bg-white/5 rounded-lg border border-gold/20 mt-4 flex gap-4 items-start">
-            <FaProjectDiagram className="text-3xl text-gold mt-1 flex-shrink-0" />
-            <div>
-              <h5 className="text-gold font-bold mb-1">Key Relationship: MP vs AP</h5>
-              <p className="text-sm text-gray-300">
-                When MP &gt; AP, AP rises.<br />
-                When MP = AP, AP is at its maximum.<br />
-                When MP &lt; AP, AP falls.
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
