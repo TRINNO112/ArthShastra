@@ -1,0 +1,442 @@
+/* ==========================================================================
+   Lesson 1: The Royal Economic Archives 📜
+   Theme: Vintage Library (Dark Wood, Parchment, Serif Fonts)
+   ========================================================================== */
+
+/* Import Classic Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap');
+
+:root {
+    --library-bg: #2d1b15; /* Dark Wood */
+    --parchment: #fdf5e6;  /* Old Paper */
+    --parchment-dark: #ccbfa3;
+    --ink-blue: #0d47a1;
+    --ink-black: #2c2c2c;
+    --royal-gold: #c6a700;
+    --wax-red: #b71c1c;
+    --wood-border: #4e342e;
+    --shadow-soft: 0 10px 30px rgba(0,0,0,0.5);
+    /* High Contrast Ink Colors */
+    --ink-primary: #1a0f0a;
+    --ink-secondary: #3e2723;
+    --ink-accent: #b71c1c;
+    --parchment-bg: #fdf5e6;
+    --paper-texture: url("https://www.transparenttextures.com/patterns/aged-paper.png");
+}
+
+/* Base Container - Bulletproof Background */
+.lesson-container-library {
+    font-family: 'Crimson Text', serif;
+    background-color: #fdf5e6 !important; /* Force Light Background */
+    background-image: var(--paper-texture);
+    color: #1a0f0a !important; /* Force Dark Text */
+    padding: 20px;
+    line-height: 1.6;
+    border-radius: 8px; /* Slight rounding if sitting on dark bg */
+    box-shadow: 0 0 20px rgba(0,0,0,0.5); /* Separation from dark bg */
+}
+
+/* Economist Grid - 2x2 Layout */
+.economist-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+@media (max-width: 768px) {
+    .economist-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Universal Text Reset for Vintage Theme */
+.lesson-container-library h1,
+.lesson-container-library h2,
+.lesson-container-library h3,
+.lesson-container-library h4,
+.lesson-container-library h5,
+.lesson-container-library h6,
+.lesson-container-library p,
+.lesson-container-library span,
+.lesson-container-library div,
+.lesson-container-library li,
+.lesson-container-library td,
+.lesson-container-library th,
+.lesson-container-library strong,
+.lesson-container-library em {
+    color: #1a0f0a; /* Dark Ink */
+}
+
+/* Specialized Overrides */
+.lesson-container-library .ink-text { color: #1a0f0a; font-weight: bold; }
+.lesson-container-library .library-subtitle { color: #3e2723 !important; }
+
+/* Table Visibility Fix */
+.lesson-container-library table {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #1a0f0a !important;
+}
+.lesson-container-library th {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #1a0f0a !important;
+    font-weight: bold;
+}
+.lesson-container-library td {
+    color: #1a0f0a !important;
+}
+
+
+/* ==========================================================================
+   THE TWO LEDGERS (Micro vs Macro) 📖
+   ========================================================================== */
+.ledger-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    padding: 20px;
+    background: url("https://www.transparenttextures.com/patterns/wood-pattern.png"), #3e2723;
+    border-radius: 15px;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+    position: relative;
+    border: 10px solid #2d1b15;
+}
+
+.ledger-page {
+    flex: 1 1 400px;
+    background: #fdf5e6; /* Parchment */
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-left: 2px solid #d7ccc8; /* Spine hint */
+    position: relative;
+    min-height: 500px;
+}
+
+.ledger-page::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+        transparent,
+        transparent 29px,
+        #e0e0e0 30px
+    );
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.ledger-header {
+    text-align: center;
+    border-bottom: 3px double #5d4037;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+/* ==========================================================================
+   THE JUDGE'S CHAMBERS (Positive vs Normative) ⚖️
+   ========================================================================== */
+.judge-bench-container {
+    background: linear-gradient(180deg, #2c1e1a 0%, #1a1210 100%);
+    padding: 40px;
+    border-top: 10px solid #4e342e;
+    border-bottom: 10px solid #4e342e;
+    position: relative;
+}
+
+.evidence-file {
+    background: #fff8e1; /* Manila folder color */
+    border: 1px solid #d7ccc8;
+    padding: 20px;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+    position: relative;
+    transform: rotate(-1deg);
+    transition: transform 0.3s ease;
+    border-top: 5px solid #d4af37; /* Tab color */
+}
+
+.evidence-file:hover {
+    transform: rotate(0deg) scale(1.02);
+    z-index: 10;
+}
+
+.verdict-stamp {
+    font-family: 'Special Elite', cursive;
+    color: #b71c1c;
+    border: 3px solid #b71c1c;
+    padding: 5px 15px;
+    border-radius: 5px;
+    transform: rotate(-15deg);
+    display: inline-block;
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+/* ==========================================================================
+   THE THREE KINGDOMS (Types of Economies) 🏰
+   ========================================================================== */
+.kingdom-card {
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    border: 2px solid #4e342e;
+    transition: transform 0.3s ease;
+}
+
+.kingdom-card:hover {
+    transform: translateY(-5px);
+}
+
+.kingdom-header {
+    padding: 20px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    font-family: 'Cinzel', serif;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.kingdom-content {
+    background: rgba(253, 245, 230, 0.95); /* Parchment with opacity */
+    padding: 25px;
+    color: #2c2c2c;
+}
+
+/* Specific Kingdom Themes */
+.kingdom-market .kingdom-header { background: linear-gradient(45deg, #FFD700, #B8860B); } /* Gold */
+.kingdom-planned .kingdom-header { background: linear-gradient(45deg, #B22222, #800000); } /* Red Iron */
+.kingdom-mixed .kingdom-header { background: linear-gradient(45deg, #4682B4, #191970); } /* Blue Treaty */
+
+/* ==========================================================================
+   THE EVOLUTION MAPS (Simple vs Complex) 🗺️
+   ========================================================================== */
+.vintage-map-container {
+    background: #e0d5b7;
+    border: 8px solid #5d4037;
+    padding: 20px;
+    box-shadow: inset 0 0 30px rgba(93, 64, 55, 0.4);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.map-grid-overlay {
+    background-image:
+        linear-gradient(#8d6e63 1px, transparent 1px),
+        linear-gradient(90deg, #8d6e63 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center;
+    opacity: 0.1;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   QUIZ PARCHMENT 📜
+   ========================================================================== */
+.quiz-parchment .quiz-container {
+    background: transparent;
+    box-shadow: none;
+    max-width: 900px;
+}
+
+.quiz-parchment .question-card {
+    background: #fff8e1;
+    border: 1px solid #d7ccc8;
+    box-shadow: 5px 5px 0px rgba(78, 52, 46, 0.2);
+    font-family: 'Crimson Text', serif;
+}
+
+.quiz-parchment .option-btn {
+    border-radius: 0;
+    border: 1px solid #8d6e63;
+    font-family: 'Crimson Text', serif;
+    background: white;
+}
+
+.quiz-parchment .option-btn:hover {
+    background: #fdf5e6;
+    border-color: #5d4037;
+}
+
+.quiz-parchment .option-btn.selected {
+    background: #efebe9;
+    border-color: #3e2723;
+    border-left: 5px solid #3e2723;
+}
+
+.quiz-parchment .submit-btn {
+    background: #3e2723;
+    border: 2px solid #fff;
+    font-family: 'Cinzel', serif;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.quiz-parchment .submit-btn:hover {
+    background: #4e342e;
+}
+
+/* --- TYPOGRAPHY --- */
+.library-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    color: var(--royal-gold);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    text-align: center;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.library-subtitle {
+    font-family: 'Crimson Text', serif;
+    color: #d7ccc8;
+    text-align: center;
+    font-style: italic;
+    font-size: 1.2rem;
+}
+
+/* --- COMPONENTS --- */
+
+/* 1. The Open Book (Container) */
+.open-book-card {
+    background: var(--parchment);
+    padding: 40px;
+    border-radius: 5px 15px 15px 5px;
+    box-shadow: 
+        inset 20px 0 50px rgba(0,0,0,0.1), /* Spine shadow */
+        10px 10px 20px rgba(0,0,0,0.5);
+    margin-bottom: 40px;
+    position: relative;
+    border-left: 10px solid var(--wood-border);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.drop-cap {
+    float: left;
+    font-family: 'Cinzel', serif;
+    font-size: 4rem;
+    line-height: 0.8;
+    padding-right: 15px;
+    padding-top: 5px;
+    color: var(--ink-blue);
+    font-weight: bold;
+}
+
+/* 2. Framed Portrait (Definitions) */
+.portrait-frame {
+    background: var(--parchment);
+    border: 8px solid var(--wood-border);
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    position: relative;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease;
+}
+
+.portrait-frame:hover {
+    transform: translateY(-5px);
+}
+
+.frame-gold { border-color: #ffd700; border-style: ridge; border-width: 10px; }
+.frame-wood { border-color: #5d4037; border-style: solid; }
+.frame-iron { border-color: #546e7a; border-style: groove; }
+
+.economist-cameo {
+    width: 80px;
+    height: 80px;
+    background: #e0e0e0;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    border: 3px solid rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #555;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+}
+
+/* 3. Ancient Scroll (Problems) */
+.ancient-scroll {
+    background: #fdf5e6;
+    padding: 30px 40px;
+    position: relative;
+    margin: 40px auto;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-top: 10px solid #d7ccc8;
+    border-bottom: 10px solid #d7ccc8;
+    border-radius: 5px;
+    max-width: 800px;
+}
+
+.ancient-scroll::before, .ancient-scroll::after {
+    content: '';
+    position: absolute;
+    width: 110%;
+    height: 30px;
+    background: #8d6e63; /* Scroll rollers */
+    left: -5%;
+    border-radius: 20px;
+    box-shadow: inset 0 5px 10px rgba(0,0,0,0.5);
+}
+.ancient-scroll::before { top: -20px; }
+.ancient-scroll::after { bottom: -20px; }
+
+/* 4. Wax Seal Badge */
+.wax-seal {
+    width: 60px;
+    height: 60px;
+    background: var(--wax-red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.8);
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+    box-shadow: 
+        inset 0 0 10px rgba(0,0,0,0.5),
+        2px 2px 5px rgba(0,0,0,0.4);
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    transform: rotate(15deg);
+    border: 2px dashed rgba(255,255,255,0.3);
+}
+
+/* Text Highlights */
+.ink-text { color: var(--ink-blue); font-weight: bold; }
+.highlight-yellow {
+    background: rgba(255, 215, 0, 0.2);
+    padding: 0 5px;
+    border-radius: 3px;
+}
+
+/* Typewriter Font for Examples */
+.typewriter-box {
+    font-family: 'Special Elite', monospace;
+    background: #f5f5f5;
+    padding: 15px;
+    border-left: 4px solid #333;
+    margin-top: 15px;
+    font-size: 0.95rem;
+    color: #333;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Animation */
+.animate-quill {
+    animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0px); }
+}

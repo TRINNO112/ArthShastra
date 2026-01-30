@@ -1,307 +1,207 @@
 // Introduction Module - Economics and Economies (VK Ohri Grade 11)
-import { FaLightbulb, FaHistory, FaGlobe, FaBookOpen, FaChartLine, FaUsers } from 'react-icons/fa';
+import { FaBookOpen, FaFeatherAlt, FaHistory, FaGlobe, FaBalanceScale, FaChartLine, FaUniversity, FaScroll, FaUsers, FaIndustry, FaShoppingCart, FaShareAlt, FaLightbulb } from 'react-icons/fa';
+import '../lesson1.css';
 
 function Introduction() {
   return (
-    <section className="lesson-section">
-      {/* Section Header */}
-      <div className="section-header-lesson">
-        <span className="section-badge-lesson">Chapter 1</span>
-        <h2 className="section-title-lesson">Introduction to Economics</h2>
-        <p className="section-subtitle-lesson">
-          Understanding the foundation of economic thinking and its relevance in everyday life
+    <section className="lesson-container-library">
+
+      {/* HEADER: Entrance to the Library */}
+      <div className="section-header-lesson" style={{ background: 'transparent', border: 'none', boxShadow: 'none', paddingBottom: '10px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
+          <FaBookOpen size={50} color="#c6a700" />
+        </div>
+        <h2 className="library-title" style={{ fontSize: '2.7rem', color: '#1a0f0a' }}>Chapter I: Introduction</h2>
+        <p className="library-subtitle" style={{ color: '#3e2723' }}> "The Foundation of All Wealth & Welfare" </p>
+      </div>
+
+      {/* 1. ETYMOLOGY SCROLL */}
+      <div className="ancient-scroll" style={{ maxWidth: '800px', margin: '0 auto 40px auto' }}>
+        <div style={{ textAlign: 'center', borderBottom: '1px solid #5d4037', paddingBottom: '10px', marginBottom: '20px' }}>
+          <h3 style={{ fontFamily: 'Cinzel', fontSize: '1.8rem', color: '#3e2723', margin: 0 }}>The Origin</h3>
+          <span style={{ fontFamily: 'Crimson Text', fontStyle: 'italic' }}>From the Greek 'Oikonomia'</span>
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '40px', flexWrap: 'wrap' }}>
+          <div style={{ textAlign: 'center' }}>
+            <h4 style={{ fontFamily: 'Cinzel', fontSize: '2rem', color: '#0d47a1', margin: 0 }}>Oikos</h4>
+            <p style={{ margin: 0, fontStyle: 'italic' }}>Household</p>
+          </div>
+          <div style={{ fontSize: '2rem', color: '#8d6e63' }}>+</div>
+          <div style={{ textAlign: 'center' }}>
+            <h4 style={{ fontFamily: 'Cinzel', fontSize: '2rem', color: '#0d47a1', margin: 0 }}>Nomos</h4>
+            <p style={{ margin: 0, fontStyle: 'italic' }}>Management</p>
+          </div>
+        </div>
+
+        <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '1.1rem', color: '#1a0f0a' }}>
+          <p>Just as a household has limited funds and unlimited needs, so does a nation. <br /><strong>Economics</strong> is the art of managing these finite resources.</p>
+        </div>
+      </div>
+
+      {/* 2. THE FOUR AGES OF DEFINITIONS */}
+      <div className="content-card" style={{ background: 'transparent', border: 'none', boxShadow: 'none' }}>
+        <h3 className="library-title" style={{ fontSize: '2.2rem', marginBottom: '30px', borderBottom: '2px solid #c6a700', display: 'inline-block' }}>The Four Ages of Economics</h3>
+
+        <div className="economist-grid">
+
+          {/* Adam Smith - Wealth */}
+          <div className="portrait-frame frame-gold">
+            <div className="economist-cameo" style={{ background: '#fff8e1', border: '3px solid #fbc02d' }}>
+              <FaHistory size={40} color="#fbc02d" />
+            </div>
+            <h4 style={{ textAlign: 'center', fontFamily: 'Cinzel', fontSize: '1.4rem', color: '#1a0f0a' }}>1. Wealth Definition</h4>
+            <p style={{ textAlign: 'center', fontStyle: 'italic', color: '#555', marginBottom: '10px' }}>Adam Smith (1776)</p>
+            <p className="intro-text" style={{ fontSize: '1rem' }}>
+              "Economics is an enquiry into the nature and causes of the <strong>Wealth of Nations</strong>."
+            </p>
+            <div style={{ marginTop: '10px', fontSize: '0.9rem', color: '#b71c1c' }}>
+              <strong>Focus:</strong> Production & Growth of Wealth. <br />
+              <strong>Criticism:</strong> Ignored human welfare.
+            </div>
+          </div>
+
+          {/* Alfred Marshall - Welfare */}
+          <div className="portrait-frame frame-wood">
+            <div className="economist-cameo" style={{ background: '#efebe9', border: '3px solid #5d4037' }}>
+              <FaUsers size={40} color="#5d4037" />
+            </div>
+            <h4 style={{ textAlign: 'center', fontFamily: 'Cinzel', fontSize: '1.4rem', color: '#1a0f0a' }}>2. Welfare Definition</h4>
+            <p style={{ textAlign: 'center', fontStyle: 'italic', color: '#555', marginBottom: '10px' }}>Alfred Marshall (1890)</p>
+            <p className="intro-text" style={{ fontSize: '1rem' }}>
+              "Economics is a study of mankind in the ordinary business of life; it examines that part... connected with the attainment of <strong>material requisites of wellbeing</strong>."
+            </p>
+            <div style={{ marginTop: '10px', fontSize: '0.9rem', color: '#2e7d32' }}>
+              <strong>Focus:</strong> Human Welfare &gt; Wealth.
+            </div>
+          </div>
+
+          {/* Lionel Robbins - Scarcity */}
+          <div className="portrait-frame frame-iron">
+            <div className="economist-cameo" style={{ background: '#eceff1', border: '3px solid #455a64' }}>
+              <FaBalanceScale size={40} color="#455a64" />
+            </div>
+            <h4 style={{ textAlign: 'center', fontFamily: 'Cinzel', fontSize: '1.4rem', color: '#1a0f0a' }}>3. Scarcity Definition</h4>
+            <p style={{ textAlign: 'center', fontStyle: 'italic', color: '#555', marginBottom: '10px' }}>Lionel Robbins (1932)</p>
+            <p className="intro-text" style={{ fontSize: '1rem' }}>
+              "Economics is the science which studies human behavior as a relationship between <strong>ends</strong> (wants) and <strong>scarce means</strong> (resources) which have alternative uses."
+            </p>
+            <div style={{ marginTop: '10px', fontSize: '0.9rem', color: '#0d47a1' }}>
+              <strong>Focus:</strong> Choice making under scarcity.
+            </div>
+          </div>
+
+          {/* Paul Samuelson - Growth */}
+          <div className="portrait-frame" style={{ borderColor: '#1a237e' }}>
+            <div className="economist-cameo" style={{ background: '#e8eaf6', border: '3px solid #1a237e' }}>
+              <FaChartLine size={40} color="#1a237e" />
+            </div>
+            <h4 style={{ textAlign: 'center', fontFamily: 'Cinzel', fontSize: '1.4rem', color: '#1a0f0a' }}>4. Growth Definition</h4>
+            <p style={{ textAlign: 'center', fontStyle: 'italic', color: '#555', marginBottom: '10px' }}>Paul Samuelson (1948)</p>
+            <p className="intro-text" style={{ fontSize: '1rem' }}>
+              "Economics is the study of how men and society choose... to produce various commodities over time and distribute them for consumption, now and in the future."
+            </p>
+            <div style={{ marginTop: '10px', fontSize: '0.9rem', color: '#4a148c' }}>
+              <strong>Focus:</strong> Dynamic Growth & Development.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* 3. NATURE OF ECONOMICS */}
+      <div className="open-book-card" style={{ marginTop: '40px' }}>
+        <h3 style={{ fontFamily: 'Cinzel', textAlign: 'center', color: '#1a0f0a' }}>Is Economics a Science or an Art?</h3>
+        <div style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap', marginTop: '20px' }}>
+
+          <div style={{ flex: '1 1 300px', textAlign: 'center', padding: '20px' }}>
+            <FaUniversity size={30} color="#b71c1c" />
+            <h4 style={{ fontFamily: 'Cinzel', color: '#b71c1c' }}>Positive Science</h4>
+            <p>Studies <em>"what is"</em>. Based on facts, cause & effect. <br /> (e.g., "Inflation is 5%")</p>
+          </div>
+
+          <div style={{ width: '2px', background: '#ccc', alignSelf: 'stretch' }}></div>
+
+          <div style={{ flex: '1 1 300px', textAlign: 'center', padding: '20px' }}>
+            <FaFeatherAlt size={30} color="#1b5e20" />
+            <h4 style={{ fontFamily: 'Cinzel', color: '#1b5e20' }}>Normative Science</h4>
+            <p>Studies <em>"what ought to be"</em>. Based on value judgments. <br /> (e.g., "Inflation should be lower")</p>
+          </div>
+
+        </div>
+        <p style={{ textAlign: 'center', marginTop: '15px', fontWeight: 'bold' }}>
+          Verdict: It is Both.
         </p>
       </div>
 
-      {/* Main Content Card */}
-      <div className="content-card">
-        <div className="card-glow"></div>
-        <div className="card-content">
-          <p className="intro-text">
-            <span className="highlight-gold">Economics</span> is one of the most important social sciences that studies
-            how individuals, businesses, governments, and societies make choices to allocate
-            <span className="highlight-green"> scarce resources</span> to satisfy their
-            <span className="highlight-cyan"> unlimited wants</span> and needs. It is the study of how people
-            and societies choose to use their limited resources to satisfy their unlimited desires.
-          </p>
-        </div>
-      </div>
+      {/* 4. ECONOMIC ACTIVITIES - The Gears of the Economy */}
+      <div className="content-card" style={{ marginTop: '40px', background: 'transparent', border: 'none', boxShadow: 'none' }}>
+        <h3 className="library-title" style={{ fontSize: '2.2rem', marginBottom: '30px', borderBottom: '2px solid #c6a700', display: 'inline-block' }}>The Gears of the Economy</h3>
 
-      {/* Etymology Box */}
-      <div className="highlight-card gold">
-        <div className="highlight-icon">
-          <FaBookOpen />
-        </div>
-        <div className="highlight-content">
-          <h3>Origin of the Word "Economics"</h3>
-          <p>
-            The word <strong>"Economics"</strong> is derived from the Greek word <strong>"Oikonomia"</strong> which means
-            <strong> "household management"</strong>. It is formed by combining two Greek words:
-          </p>
-          <ul className="bullet-list">
-            <li><span className="term">Oikos</span> - meaning "house" or "household"</li>
-            <li><span className="term">Nomos</span> - meaning "management" or "law"</li>
-          </ul>
-          <p className="note-text">
-            Just as a household must manage its limited income to meet various needs, an economy must
-            manage its limited resources to satisfy the wants of its people.
-          </p>
-        </div>
-      </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
+          {/* Production */}
+          <div className="evidence-file" style={{ background: '#e8f5e9', border: '1px solid #2e7d32', padding: '20px', textAlign: 'center' }}>
+            <FaIndustry size={30} color="#2e7d32" style={{ marginBottom: '10px' }} />
+            <h4 style={{ fontFamily: 'Cinzel', color: '#2e7d32' }}>Production</h4>
+            <p style={{ fontStyle: 'italic', fontSize: '0.9rem' }}>Creating Utility</p>
+            <p style={{ marginTop: '10px', fontSize: '1rem' }}>Converting inputs into goods/services.</p>
+          </div>
 
-      {/* Father of Economics */}
-      <div className="highlight-card green">
-        <div className="highlight-icon">
-          <FaHistory />
-        </div>
-        <div className="highlight-content">
-          <h3>Father of Economics</h3>
-          <p>
-            <strong>Adam Smith</strong> (1723-1790), a Scottish economist and philosopher, is widely regarded as the
-            <strong> "Father of Economics"</strong>. His groundbreaking work <em>"An Enquiry into the Nature and Causes
-            of the Wealth of Nations"</em> (1776) laid the foundation for modern economic thought.
-          </p>
-          <div className="quote-box">
-            <p>"The real tragedy of the poor is the poverty of their aspirations."</p>
-            <span className="quote-author">- Adam Smith</span>
+          {/* Consumption */}
+          <div className="evidence-file" style={{ background: '#fff3e0', border: '1px solid #ff9800', padding: '20px', textAlign: 'center' }}>
+            <FaShoppingCart size={30} color="#ff9800" style={{ marginBottom: '10px' }} />
+            <h4 style={{ fontFamily: 'Cinzel', color: '#ef6c00' }}>Consumption</h4>
+            <p style={{ fontStyle: 'italic', fontSize: '0.9rem' }}>Using Utility</p>
+            <p style={{ marginTop: '10px', fontSize: '1rem' }}>Using goods/services to satisfy wants.</p>
+          </div>
+
+          {/* Distribution */}
+          <div className="evidence-file" style={{ background: '#ede7f6', border: '1px solid #673ab7', padding: '20px', textAlign: 'center' }}>
+            <FaShareAlt size={30} color="#673ab7" style={{ marginBottom: '10px' }} />
+            <h4 style={{ fontFamily: 'Cinzel', color: '#673ab7' }}>Distribution</h4>
+            <p style={{ fontStyle: 'italic', fontSize: '0.9rem' }}>Sharing Income</p>
+            <p style={{ marginTop: '10px', fontSize: '1rem' }}>Sharing income among factors of production.</p>
           </div>
         </div>
       </div>
 
-      {/* Indian Contribution */}
-      <div className="highlight-card cyan">
-        <div className="highlight-icon">
-          <FaGlobe />
-        </div>
-        <div className="highlight-content">
-          <h3>Economics in Ancient India</h3>
-          <p>
-            Long before Adam Smith, <strong>Kautilya (Chanakya)</strong> wrote <strong>"Arthashastra"</strong> around
-            <strong> 300 BCE</strong>, which is considered one of the earliest treatises on economic and political theory.
-            The Arthashastra discussed:
-          </p>
-          <ul className="bullet-list">
-            <li>State administration and governance</li>
-            <li>Taxation policies and revenue collection</li>
-            <li>Trade and commerce regulations</li>
-            <li>Agricultural economics and land management</li>
-            <li>Price controls and market regulations</li>
-          </ul>
-          <p className="note-text">
-            This makes Indian economic thought over 2,000 years older than Western economic theory!
-          </p>
-        </div>
-      </div>
-
-      {/* Why Study Economics */}
-      <div className="content-card">
-        <h3 className="card-title">
-          <FaLightbulb className="title-icon gold" />
-          Why Study Economics?
+      {/* 5. WHY STUDY ECONOMICS? */}
+      <div className="open-book-card" style={{ marginTop: '40px' }}>
+        <h3 style={{ fontFamily: 'Cinzel', color: '#1a0f0a', marginBottom: '20px', borderBottom: '1px solid #ccc', paddingBottom: '10px' }}>
+          <FaLightbulb style={{ marginRight: '10px', color: '#fbc02d' }} /> Why Enter This Archives?
         </h3>
-        <p>
-          Economics affects every aspect of our daily lives - from the price of essential commodities to
-          government policies that shape our nation's future. Understanding economics helps us:
+
+        <div className="feature-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
+          <div className="typewriter-box">
+            <strong style={{ color: '#1a0f0a' }}>Decision Making:</strong><br />
+            Choosing between a job and college (Opportunity Cost).
+          </div>
+          <div className="typewriter-box">
+            <strong style={{ color: '#1a0f0a' }}>Understanding Society:</strong><br />
+            Why prices rise (Inflation) and why jobs disappear (Unemployment).
+          </div>
+          <div className="typewriter-box">
+            <strong style={{ color: '#1a0f0a' }}>Global Events:</strong><br />
+            War in one country raising gas prices in another.
+          </div>
+        </div>
+      </div>
+
+      {/* 6. CHANAKYA TRIBUTE */}
+      <div className="ancient-scroll" style={{ marginTop: '40px', background: '#d7ccc8', color: '#1a0f0a' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <FaGlobe size={40} color="#3e2723" />
+          <div>
+            <h4 style={{ fontFamily: 'Cinzel', margin: 0, fontSize: '1.4rem', color: '#3e2723' }}>The Indian Legacy: Chanakya</h4>
+            <p style={{ fontStyle: 'italic', margin: 0, color: '#3e2723' }}>The Pioneer of Political Economy</p>
+          </div>
+        </div>
+        <p style={{ marginTop: '15px', textAlign: 'justify', fontSize: '1.1rem', color: '#1a0f0a' }}>
+          Long before Adam Smith, the Indian sage <strong>Kautilya (Chanakya)</strong> wrote the <em>Arthashastra</em> (c. 300 BCE). It was a comprehensive treatise on statecraft, economic policy, and military strategy, emphasizing that the <strong>welfare of the king lies in the welfare of his people</strong>.
         </p>
-
-        <div className="feature-grid">
-          <div className="feature-item">
-            <div className="feature-icon gold">
-              <FaChartLine />
-            </div>
-            <h4>Make Better Decisions</h4>
-            <p>Understand trade-offs and opportunity costs in personal and professional choices</p>
-          </div>
-
-          <div className="feature-item">
-            <div className="feature-icon green">
-              <FaUsers />
-            </div>
-            <h4>Understand Society</h4>
-            <p>Comprehend how markets work, why prices change, and how policies affect citizens</p>
-          </div>
-
-          <div className="feature-item">
-            <div className="feature-icon cyan">
-              <FaGlobe />
-            </div>
-            <h4>Analyze Global Events</h4>
-            <p>Interpret international trade, currency fluctuations, and economic crises</p>
-          </div>
-
-          <div className="feature-item">
-            <div className="feature-icon purple">
-              <FaBookOpen />
-            </div>
-            <h4>Career Advancement</h4>
-            <p>Apply economic principles in business, finance, policy-making, and research</p>
-          </div>
-        </div>
       </div>
 
-      {/* Economics in Daily Life */}
-      <div className="content-card">
-        <h3 className="card-title">
-          <FaGlobe className="title-icon green" />
-          Economics in Daily Life
-        </h3>
-        <p>
-          Every day, we make numerous economic decisions without even realizing it. Here are some examples:
-        </p>
-
-        <div className="example-grid">
-          <div className="example-card">
-            <h4>Personal Finance</h4>
-            <ul>
-              <li>Budgeting monthly income</li>
-              <li>Saving for future goals</li>
-              <li>Investment decisions</li>
-              <li>Loan and credit choices</li>
-            </ul>
-          </div>
-
-          <div className="example-card">
-            <h4>Consumer Choices</h4>
-            <ul>
-              <li>Comparing prices before buying</li>
-              <li>Choosing between brands</li>
-              <li>Deciding quantity to purchase</li>
-              <li>Timing of purchases (sales, offers)</li>
-            </ul>
-          </div>
-
-          <div className="example-card">
-            <h4>Career Decisions</h4>
-            <ul>
-              <li>Choosing a profession</li>
-              <li>Salary negotiations</li>
-              <li>Job market analysis</li>
-              <li>Skill development investments</li>
-            </ul>
-          </div>
-
-          <div className="example-card">
-            <h4>Civic Understanding</h4>
-            <ul>
-              <li>Understanding government budgets</li>
-              <li>Impact of taxes on income</li>
-              <li>Inflation effects on savings</li>
-              <li>Policy implications on society</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Real-World Economic Scenarios */}
-      <div className="content-card">
-        <h3 className="card-title">
-          <FaChartLine className="title-icon cyan" />
-          Real-World Economic Scenarios
-        </h3>
-        <p>
-          Let's see how economics plays out in real situations that affect millions of Indians:
-        </p>
-
-        <div className="scenario-cards">
-          <div className="scenario-card">
-            <div className="scenario-header gold">
-              <span className="scenario-number">1</span>
-              <h4>Petrol Price Hike</h4>
-            </div>
-            <p className="scenario-situation">
-              <strong>Situation:</strong> When global crude oil prices rise, petrol prices in India increase.
-            </p>
-            <p className="scenario-effect">
-              <strong>Economic Effect:</strong> Higher petrol prices increase transportation costs, which raises prices
-              of vegetables, groceries, and manufactured goods. Your family's monthly budget gets stretched. This is an
-              example of how <em>one economic change creates a chain reaction</em>.
-            </p>
-          </div>
-
-          <div className="scenario-card">
-            <div className="scenario-header green">
-              <span className="scenario-number">2</span>
-              <h4>Festival Season Spending</h4>
-            </div>
-            <p className="scenario-situation">
-              <strong>Situation:</strong> During Diwali, people buy more clothes, electronics, gold, and sweets.
-            </p>
-            <p className="scenario-effect">
-              <strong>Economic Effect:</strong> Increased demand leads to higher sales for businesses, more jobs (temporary
-              hiring), and sometimes higher prices. Banks report record credit card spending. The GDP gets a boost from
-              this <em>consumer-driven demand</em>.
-            </p>
-          </div>
-
-          <div className="scenario-card">
-            <div className="scenario-header cyan">
-              <span className="scenario-number">3</span>
-              <h4>Monsoon Failure</h4>
-            </div>
-            <p className="scenario-situation">
-              <strong>Situation:</strong> Delayed or deficient monsoon affects crop production in India.
-            </p>
-            <p className="scenario-effect">
-              <strong>Economic Effect:</strong> Lower crop yield leads to food scarcity, higher vegetable and grain prices,
-              and farmer distress. Government may need to import food grains, affecting foreign exchange reserves. This shows
-              how <em>natural factors impact economics</em>.
-            </p>
-          </div>
-
-          <div className="scenario-card">
-            <div className="scenario-header purple">
-              <span className="scenario-number">4</span>
-              <h4>Online Shopping Revolution</h4>
-            </div>
-            <p className="scenario-situation">
-              <strong>Situation:</strong> Growth of Amazon, Flipkart, and quick-commerce apps like Zepto and Blinkit.
-            </p>
-            <p className="scenario-effect">
-              <strong>Economic Effect:</strong> Traditional retail shops face competition, delivery jobs increase,
-              consumers get more choices and lower prices. This is an example of <em>creative destruction</em> - new
-              businesses replacing old ones.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Economics Around You */}
-      <div className="highlight-card purple">
-        <div className="highlight-icon">
-          <FaLightbulb />
-        </div>
-        <div className="highlight-content">
-          <h3>Economics Around You - Student Perspective</h3>
-          <p>
-            As a student, you encounter economics every day without realizing it:
-          </p>
-          <ul className="bullet-list">
-            <li><strong>School Fees:</strong> Your family makes a trade-off - spending on education instead of other things (opportunity cost)</li>
-            <li><strong>Choosing a Stream:</strong> Science vs Commerce vs Arts - you consider future job prospects and earning potential</li>
-            <li><strong>Tuition Classes:</strong> Demand for coaching classes shows how education has become a market</li>
-            <li><strong>Mobile Data Plans:</strong> You compare Jio, Airtel, Vi plans - this is consumer choice in action</li>
-            <li><strong>Part-time Work:</strong> If you work during vacations, you're experiencing the labor market</li>
-            <li><strong>Pocket Money:</strong> How you spend or save pocket money is basic budgeting - an economic decision!</li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Key Concepts Preview */}
-      <div className="key-concepts-card">
-        <h3>Key Concepts You'll Learn</h3>
-        <div className="concepts-grid">
-          <div className="concept-tag gold">Scarcity</div>
-          <div className="concept-tag green">Choice</div>
-          <div className="concept-tag cyan">Opportunity Cost</div>
-          <div className="concept-tag purple">Utility</div>
-          <div className="concept-tag gold">Wants vs Needs</div>
-          <div className="concept-tag green">Economic Systems</div>
-          <div className="concept-tag cyan">Micro vs Macro</div>
-          <div className="concept-tag purple">Resource Allocation</div>
-        </div>
-      </div>
     </section>
   );
 }
-
 export default Introduction;

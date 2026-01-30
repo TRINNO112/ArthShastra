@@ -1,319 +1,123 @@
-// Micro vs Macro Module - Economics and Economies (VK Ohri Grade 11)
-import { FaSearch, FaGlobe, FaBalanceScale, FaChartLine, FaBuilding, FaUsers, FaMoneyBillWave, FaIndustry } from 'react-icons/fa';
+// Micro vs Macro Economics Module - Economics and Economies (VK Ohri Grade 11)
+import { FaSearch, FaGlobe, FaBalanceScale, FaTree, FaCheckCircle, FaChartLine } from 'react-icons/fa';
+import '../lesson1.css';
 
 function MicroVsMacro() {
   return (
-    <section className="lesson-section">
-      {/* Section Header */}
-      <div className="section-header-lesson">
-        <span className="section-badge-lesson">Branches</span>
-        <h2 className="section-title-lesson">Microeconomics vs Macroeconomics</h2>
-        <p className="section-subtitle-lesson">
-          Understanding the two major branches of economic study and their distinct perspectives
+    <section className="lesson-container-library">
+
+      {/* HEADER */}
+      <div className="section-header-lesson" style={{ background: 'transparent', border: 'none', boxShadow: 'none', paddingBottom: '10px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
+          <FaBalanceScale size={40} color="#1a0f0a" />
+        </div>
+        <h2 className="library-title" style={{ fontSize: '3rem', color: '#1a0f0a' }}>Chapter II: Micro vs Macro</h2>
+        <p className="library-subtitle" style={{ color: '#3e2723' }}>"The Two Lenses of Analysis"</p>
+      </div>
+
+      {/* INTRO SCROLL */}
+      <div className="ancient-scroll" style={{ maxWidth: '800px', margin: '0 auto 30px auto' }}>
+        <p style={{ fontSize: '1.2rem', textAlign: 'justify', color: '#1a0f0a' }}>
+          Economics is studied on two levels. Just as you can study a <span className="ink-text">single tree</span> or the <span className="ink-text">entire forest</span>, you can study individual units or the economy as a whole.
         </p>
       </div>
 
-      {/* Introduction */}
-      <div className="content-card">
-        <p className="intro-text">
-          Economics is broadly divided into two branches: <span className="highlight-gold">Microeconomics</span> and
-          <span className="highlight-green"> Macroeconomics</span>. These terms were first coined by Norwegian economist
-          <strong> Ragnar Frisch</strong> in 1933. Understanding the distinction between these two is crucial for
-          analyzing different economic phenomena.
-        </p>
+      {/* EXHIBIT CONTAINER */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px', justifyContent: 'center' }}>
 
-        <div className="etymology-box">
-          <div className="etymology-item">
-            <h4>Micro</h4>
-            <p>From Greek "Mikros" meaning <strong>small</strong></p>
+        {/* EXHIBIT A: MICRO */}
+        <div className="evidence-file" style={{ flex: '1 1 400px', background: '#fffde7', border: '1px solid #fbc02d', padding: '20px', position: 'relative' }}>
+          <div style={{ position: 'absolute', top: '-15px', left: '20px', background: '#fbc02d', color: '#000', padding: '5px 15px', fontWeight: 'bold', fontFamily: 'Special Elite', transform: 'rotate(-2deg)', boxShadow: '2px 2px 5px rgba(0,0,0,0.2)' }}>
+            EXHIBIT A
           </div>
-          <div className="etymology-item">
-            <h4>Macro</h4>
-            <p>From Greek "Makros" meaning <strong>large</strong></p>
+
+          <div style={{ textAlign: 'center', marginTop: '15px', borderBottom: '1px dashed #fbc02d', paddingBottom: '15px' }}>
+            <FaSearch size={40} color="#f9a825" />
+            <h3 style={{ fontFamily: 'Cinzel', fontSize: '2rem', color: '#f9a825', margin: '5px 0' }}>Microeconomics</h3>
+            <div style={{ display: 'inline-block', border: '2px solid #f9a825', padding: '2px 8px', fontSize: '0.8rem', color: '#f9a825', fontWeight: 'bold', letterSpacing: '1px', borderRadius: '4px' }}>
+              INDIVIDUAL UNIT
+            </div>
+          </div>
+
+          <div style={{ marginTop: '20px', fontFamily: 'Crimson Text', fontSize: '1.1rem', color: '#1a0f0a' }}>
+            <p><strong>Origin:</strong> Greek word <em>'Mikros'</em> meaning Small.</p>
+            <p>It studies the behavior of <strong>individual economic units</strong> like a consumer, a firm, or a single market.</p>
+
+            <div style={{ background: '#fff9c4', padding: '10px', marginTop: '15px', borderLeft: '3px solid #fbc02d' }}>
+              <strong><FaCheckCircle size={12} /> Key Variables:</strong><br />
+              Individual Demand, Price of a Product, Consumer's Income.
+            </div>
+            <div style={{ background: '#fff9c4', padding: '10px', marginTop: '10px', borderLeft: '3px solid #fbc02d' }}>
+              <strong><FaTree size={12} /> Example:</strong><br />
+              Studying the price of <em>Wheat</em> specifically, or the income of <em>Mr. Sharma</em>.
+            </div>
           </div>
         </div>
+
+        {/* EXHIBIT B: MACRO */}
+        <div className="evidence-file" style={{ flex: '1 1 400px', background: '#e3f2fd', border: '1px solid #0288d1', padding: '20px', position: 'relative' }}>
+          <div style={{ position: 'absolute', top: '-15px', right: '20px', background: '#0288d1', color: '#fff', padding: '5px 15px', fontWeight: 'bold', fontFamily: 'Special Elite', transform: 'rotate(2deg)', boxShadow: '2px 2px 5px rgba(0,0,0,0.2)' }}>
+            EXHIBIT B
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: '15px', borderBottom: '1px dashed #0288d1', paddingBottom: '15px' }}>
+            <FaGlobe size={40} color="#0277bd" />
+            <h3 style={{ fontFamily: 'Cinzel', fontSize: '2rem', color: '#0277bd', margin: '5px 0' }}>Macroeconomics</h3>
+            <div style={{ display: 'inline-block', border: '2px solid #0277bd', padding: '2px 8px', fontSize: '0.8rem', color: '#0277bd', fontWeight: 'bold', letterSpacing: '1px', borderRadius: '4px' }}>
+              AGGREGATE ECONOMY
+            </div>
+          </div>
+
+          <div style={{ marginTop: '20px', fontFamily: 'Crimson Text', fontSize: '1.1rem', color: '#1a0f0a' }}>
+            <p><strong>Origin:</strong> Greek word <em>'Makros'</em> meaning Large.</p>
+            <p>It studies the working of the <strong>economy as a whole</strong>. It deals with aggregates and averages.</p>
+
+            <div style={{ background: '#bbdefb', padding: '10px', marginTop: '15px', borderLeft: '3px solid #0288d1' }}>
+              <strong><FaCheckCircle size={12} /> Key Variables:</strong><br />
+              Aggregate Demand, National Income, General Price Level (Inflation).
+            </div>
+            <div style={{ background: '#bbdefb', padding: '10px', marginTop: '10px', borderLeft: '3px solid #0288d1' }}>
+              <strong><FaTree size={12} /> <FaTree size={12} /> Example:</strong><br />
+              Studying the <em>General Inflation Rate</em> of India, or the <em>Total National Income</em>.
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      {/* Visual Comparison */}
-      <div className="branch-comparison">
-        {/* Microeconomics */}
-        <div className="branch-card micro">
-          <div className="branch-header">
-            <div className="branch-icon gold">
-              <FaSearch />
-            </div>
-            <h3>Microeconomics</h3>
-            <span className="branch-subtitle">Price Theory</span>
-          </div>
-
-          <div className="branch-definition">
-            <p>
-              <strong>Microeconomics</strong> is the study of economic behaviour of <span className="highlight-gold">individual units</span> of
-              the economy such as a consumer, a household, a firm, or an industry. It examines how these units
-              make decisions and interact with each other.
-            </p>
-          </div>
-
-          <div className="branch-features">
-            <h4>Key Features:</h4>
-            <ul>
-              <li>Studies individual economic units</li>
-              <li>Focuses on specific markets</li>
-              <li>Analyzes price determination</li>
-              <li>Based on assumption of full employment</li>
-              <li>Uses partial equilibrium analysis</li>
-            </ul>
-          </div>
-
-          <div className="branch-scope">
-            <h4>Scope of Study:</h4>
-            <div className="scope-items">
-              <div className="scope-item">
-                <FaUsers className="scope-icon" />
-                <span>Consumer Behaviour</span>
-              </div>
-              <div className="scope-item">
-                <FaBuilding className="scope-icon" />
-                <span>Producer Behaviour</span>
-              </div>
-              <div className="scope-item">
-                <FaMoneyBillWave className="scope-icon" />
-                <span>Price Determination</span>
-              </div>
-              <div className="scope-item">
-                <FaBalanceScale className="scope-icon" />
-                <span>Factor Pricing</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="branch-examples">
-            <h4>Examples:</h4>
-            <ul>
-              <li>Price of wheat in Delhi market</li>
-              <li>Demand for smartphones</li>
-              <li>Salary of an engineer</li>
-              <li>Output of a single firm</li>
-              <li>Rent in a particular area</li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Macroeconomics */}
-        <div className="branch-card macro">
-          <div className="branch-header">
-            <div className="branch-icon green">
-              <FaGlobe />
-            </div>
-            <h3>Macroeconomics</h3>
-            <span className="branch-subtitle">Income Theory</span>
-          </div>
-
-          <div className="branch-definition">
-            <p>
-              <strong>Macroeconomics</strong> is the study of economic behaviour of the <span className="highlight-green">economy as a whole</span>.
-              It deals with aggregate quantities like national income, total employment, general price level,
-              and total output of the entire economy.
-            </p>
-          </div>
-
-          <div className="branch-features">
-            <h4>Key Features:</h4>
-            <ul>
-              <li>Studies economy as a whole</li>
-              <li>Focuses on aggregate variables</li>
-              <li>Analyzes national income determination</li>
-              <li>Deals with unemployment and inflation</li>
-              <li>Uses general equilibrium analysis</li>
-            </ul>
-          </div>
-
-          <div className="branch-scope">
-            <h4>Scope of Study:</h4>
-            <div className="scope-items">
-              <div className="scope-item">
-                <FaChartLine className="scope-icon" />
-                <span>National Income</span>
-              </div>
-              <div className="scope-item">
-                <FaUsers className="scope-icon" />
-                <span>Employment Level</span>
-              </div>
-              <div className="scope-item">
-                <FaMoneyBillWave className="scope-icon" />
-                <span>General Price Level</span>
-              </div>
-              <div className="scope-item">
-                <FaIndustry className="scope-icon" />
-                <span>Economic Growth</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="branch-examples">
-            <h4>Examples:</h4>
-            <ul>
-              <li>India's GDP growth rate</li>
-              <li>National unemployment rate</li>
-              <li>Inflation rate in the country</li>
-              <li>Balance of trade deficit</li>
-              <li>Total savings of the economy</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Detailed Comparison Table */}
-      <div className="content-card">
-        <h3 className="card-title">
-          <FaBalanceScale className="title-icon cyan" />
-          Detailed Comparison
-        </h3>
-
-        <div className="table-container">
-          <table className="comparison-table-premium">
+      {/* COMPARISON */}
+      <div className="open-book-card" style={{ marginTop: '40px' }}>
+        <h3 style={{ fontFamily: 'Cinzel', textAlign: 'center', color: '#1a0f0a' }}>Comparative Evidence</h3>
+        <div className="table-responsive">
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'Crimson Text' }}>
             <thead>
-              <tr>
-                <th>Basis</th>
-                <th>Microeconomics</th>
-                <th>Macroeconomics</th>
+              <tr style={{ background: '#f5f5f5', borderBottom: '2px solid #5d4037' }}>
+                <th style={{ padding: '10px', color: '#1a0f0a' }}>Basis</th>
+                <th style={{ padding: '10px', color: '#f9a825' }}>Microeconomics</th>
+                <th style={{ padding: '10px', color: '#0277bd' }}>Macroeconomics</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><strong>Meaning</strong></td>
-                <td>Study of individual economic units</td>
-                <td>Study of economy as a whole</td>
+              <tr style={{ borderBottom: '1px solid #eee' }}>
+                <td style={{ padding: '10px', fontWeight: 'bold' }}>Scope</td>
+                <td style={{ padding: '10px' }}>Individual Units</td>
+                <td style={{ padding: '10px' }}>Economy as a Whole</td>
               </tr>
-              <tr>
-                <td><strong>Scope</strong></td>
-                <td>Specific markets and sectors</td>
-                <td>Entire economy and aggregates</td>
+              <tr style={{ borderBottom: '1px solid #eee' }}>
+                <td style={{ padding: '10px', fontWeight: 'bold' }}>Central Problem</td>
+                <td style={{ padding: '10px' }}>Allocation of Resources (Price Theory)</td>
+                <td style={{ padding: '10px' }}>Determination of Income & Employment</td>
               </tr>
-              <tr>
-                <td><strong>Also Called</strong></td>
-                <td>Price Theory</td>
-                <td>Income Theory</td>
-              </tr>
-              <tr>
-                <td><strong>Method</strong></td>
-                <td>Partial equilibrium (ceteris paribus)</td>
-                <td>General equilibrium (all variables)</td>
-              </tr>
-              <tr>
-                <td><strong>Variables</strong></td>
-                <td>Individual prices, wages, output</td>
-                <td>Aggregate income, employment, prices</td>
-              </tr>
-              <tr>
-                <td><strong>Objective</strong></td>
-                <td>Resource allocation efficiency</td>
-                <td>Full employment and growth</td>
-              </tr>
-              <tr>
-                <td><strong>Assumption</strong></td>
-                <td>Full employment exists</td>
-                <td>Unemployment may exist</td>
-              </tr>
-              <tr>
-                <td><strong>Analogy</strong></td>
-                <td>Studying individual trees</td>
-                <td>Studying the entire forest</td>
-              </tr>
-              <tr>
-                <td><strong>Example Questions</strong></td>
-                <td>What determines price of rice?</td>
-                <td>What determines national income?</td>
-              </tr>
-              <tr>
-                <td><strong>Founder</strong></td>
-                <td>Adam Smith, Alfred Marshall</td>
-                <td>John Maynard Keynes</td>
+              <tr style={{ borderBottom: '1px solid #eee' }}>
+                <td style={{ padding: '10px', fontWeight: 'bold' }}>Assumption</td>
+                <td style={{ padding: '10px' }}>Macro variables are constant</td>
+                <td style={{ padding: '10px' }}>Micro variables are constant</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* Interdependence */}
-      <div className="highlight-card gold">
-        <div className="highlight-icon">
-          <FaBalanceScale />
-        </div>
-        <div className="highlight-content">
-          <h3>Interdependence of Micro and Macro Economics</h3>
-          <p>
-            Although microeconomics and macroeconomics are studied separately, they are <strong>interdependent</strong>
-            and <strong>complementary</strong> to each other. According to <strong>Prof. Samuelson</strong>:
-          </p>
-          <div className="quote-box">
-            <p>"There is no opposition between micro and macro economics. Both are absolutely essential."</p>
-          </div>
-          <ul className="bullet-list">
-            <li><strong>Micro aggregated forms Macro:</strong> Individual decisions of millions of consumers and
-            firms collectively determine national income and employment.</li>
-            <li><strong>Macro influences Micro:</strong> Changes in aggregate demand affect individual businesses;
-            inflation affects individual prices; national policies impact individual sectors.</li>
-            <li><strong>Complementary tools:</strong> Both are needed for complete economic analysis and
-            effective policy-making.</li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Visual Example */}
-      <div className="content-card">
-        <h3 className="card-title">
-          <FaChartLine className="title-icon green" />
-          Understanding with Examples
-        </h3>
-
-        <div className="example-comparison">
-          <div className="example-set">
-            <h4 className="example-heading micro">Microeconomic Questions</h4>
-            <ul className="example-list">
-              <li>What is the price of wheat in Amritsar market?</li>
-              <li>How many workers does Tata Motors employ?</li>
-              <li>What is the production cost of Maruti cars?</li>
-              <li>Why did the price of onions rise in Delhi?</li>
-              <li>What determines the rent in South Mumbai?</li>
-            </ul>
-          </div>
-
-          <div className="example-set">
-            <h4 className="example-heading macro">Macroeconomic Questions</h4>
-            <ul className="example-list">
-              <li>What is India's total agricultural output?</li>
-              <li>What is the unemployment rate in India?</li>
-              <li>How much is India's total foreign exchange reserve?</li>
-              <li>Why is inflation rising across the country?</li>
-              <li>What is India's GDP and growth rate?</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Summary */}
-      <div className="summary-card">
-        <h3>Key Takeaways</h3>
-        <div className="takeaways-grid">
-          <div className="takeaway">
-            <span className="takeaway-icon gold">1</span>
-            <p>Microeconomics studies individual units; Macroeconomics studies the whole economy</p>
-          </div>
-          <div className="takeaway">
-            <span className="takeaway-icon green">2</span>
-            <p>Microeconomics is "Price Theory"; Macroeconomics is "Income Theory"</p>
-          </div>
-          <div className="takeaway">
-            <span className="takeaway-icon cyan">3</span>
-            <p>Positive economics deals with facts; Normative economics deals with opinions</p>
-          </div>
-          <div className="takeaway">
-            <span className="takeaway-icon purple">4</span>
-            <p>Both branches are interdependent and essential for complete economic analysis</p>
-          </div>
-        </div>
-      </div>
     </section>
   );
 }
