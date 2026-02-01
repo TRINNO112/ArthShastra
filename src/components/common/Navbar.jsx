@@ -135,9 +135,9 @@ function Navbar() {
     closeMobileMenu();
   };
 
-  const formatTime = (ms) => {
-    if (!ms) return '0 min';
-    const minutes = Math.floor(ms / 60000);
+  const formatTime = (minutes) => {
+    if (!minutes) return '0 min';
+    // Input is in minutes (stored in Firebase as minutes)
     const hours = Math.floor(minutes / 60);
     if (hours > 0) {
       return `${hours}h ${minutes % 60}m`;
@@ -689,6 +689,21 @@ function Navbar() {
                         <span className="stats-value">{user?.loginCount || 1}</span>
                       </div>
                     </div>
+                  </div>
+
+                  <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                    <button
+                      onClick={async () => {
+                        if (window.confirm('Are you sure you want to reset all your stats? This cannot be undone.')) {
+                          const { resetUserStats } = await import('../../services/firebase');
+                          await resetUserStats();
+                          window.location.reload();
+                        }
+                      }}
+                      style={{ background: 'transparent', border: '1px solid #ff4444', color: '#ff4444', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer', fontSize: '0.85rem' }}
+                    >
+                      Reset All Stats
+                    </button>
                   </div>
                 </div>
               )}

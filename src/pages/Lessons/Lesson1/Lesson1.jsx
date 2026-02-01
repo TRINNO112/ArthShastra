@@ -59,8 +59,8 @@ function Lesson1() {
     return () => {
       const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60); // minutes
       const completed = activeSection === 'quiz'; // Considered completed if user reached quiz
-      if (timeSpent > 0) {
-        logLessonProgress(lessonId, timeSpent, completed);
+      if (timeSpent > 0 || activeSection === 'quiz') {
+        logLessonProgress(lessonId, Math.max(timeSpent, 1), completed);
       }
     };
   }, [startTime, lessonId, activeSection]);

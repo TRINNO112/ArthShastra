@@ -137,19 +137,21 @@ function SharedQuiz({
                     totalTimeSpent: finalTimeSpent,
                     questionAnalytics: [
                         ...mcqQuestions.map(q => ({
-                            id: q.id,
+                            id: q.id || 'unknown',
                             type: 'mcq',
                             isCorrect: mcqAnswers[q.id] === q.correct,
-                            questionText: q.question,
-                            userAnswerText: q.options[mcqAnswers[q.id]],
-                            correctAnswerText: q.options[q.correct]
+                            questionText: q.question || '',
+                            // FIX: Handle undefined answer (skipped) to prevent Firestore error
+                            userAnswerText: mcqAnswers[q.id] !== undefined ? q.options[mcqAnswers[q.id]] : 'Skipped',
+                            correctAnswerText: q.options[q.correct] || ''
                         })),
                         ...tfQuestions.map(q => ({
-                            id: q.id,
+                            id: q.id || 'unknown',
                             type: 'tf',
                             isCorrect: tfAnswers[q.id] === q.correct,
-                            questionText: q.question,
-                            userAnswer: tfAnswers[q.id],
+                            questionText: q.question || '',
+                            // FIX: Handle undefined answer (skipped)
+                            userAnswer: tfAnswers[q.id] !== undefined ? tfAnswers[q.id] : null,
                             correctAnswer: q.correct
                         }))
                     ]

@@ -41,6 +41,7 @@ import {
 } from 'react-icons/ri';
 import { IoStatsChart, IoTrendingUp } from 'react-icons/io5';
 import { getUnifiedStats } from '../services/firebase';
+import { useAuth } from '../context/AuthContext';
 import './Lessons.css';
 
 // Lesson data - Class 11 & 12 Economics (TR Jain & VK Ohri CBSE 2024-25)
@@ -141,18 +142,10 @@ const lessonsData = {
 
 function Lessons() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [userStats, setUserStats] = useState(null);
+  const { user } = useAuth(); // Use global auth context for real-time stats
 
-  // Load stats from Firebase
-  useEffect(() => {
-    const fetchStats = async () => {
-      const result = await getUnifiedStats();
-      if (result.success) {
-        setUserStats(result.stats);
-      }
-    };
-    fetchStats();
-  }, []);
+  // Local userStats derived from context or null
+  const userStats = user?.stats || null;
 
   // Load from localStorage or URL params with memory persistence
   const getInitialGrade = () => {
@@ -388,30 +381,40 @@ function Lessons() {
                     className={`chapter-card ${currentSubject.color} ${isCompleted ? 'completed' : ''}`}
                   >
                     <div className="chapter-card-inner">
-                      {/* Chapter Number */}
-                      <div className="chapter-number-wrapper">
-                        <div className={`chapter-number ${isCompleted ? 'done' : ''}`}>
-                          {isCompleted ? <FaCheck /> : index + 1}
+                      {/* Chapter Header with Status Badge */}
+                      <div className="chapter-header">
+                        <div className="chapter-number">
+                          {index + 1 < 10 ? `0${index + 1}` : index + 1}
                         </div>
-                        {isCompleted && <span className="completed-badge">Done</span>}
+                        {isCompleted ? (
+                          <span className="status-badge completed">
+                            <FaCheck /> Done
+                          </span>
+                        ) : (
+                          <span className="status-badge pending">
+                            Start
+                          </span>
+                        )}
                       </div>
 
                       {/* Chapter Content */}
                       <div className="chapter-content">
                         <div className="chapter-title-row">
                           <h4>{chapter.title}</h4>
-                          <span className={`difficulty-badge ${getDifficultyColor(chapter.difficulty)}`}>
-                            {chapter.difficulty}
-                          </span>
                         </div>
                         <p className="chapter-description">{chapter.description}</p>
 
                         <div className="chapter-meta">
+                          <span className={`difficulty-badge ${getDifficultyColor(chapter.difficulty)}`}>
+                            {chapter.difficulty}
+                          </span>
+                          <span className="meta-dot">•</span>
                           <span className="meta-item">
                             <FaClock /> {chapter.duration}
                           </span>
+                          <span className="meta-dot">•</span>
                           <span className="meta-item">
-                            <FaQuestionCircle /> {chapter.questions} MCQs
+                            <FaQuestionCircle /> {chapter.questions} Qs
                           </span>
                         </div>
                       </div>

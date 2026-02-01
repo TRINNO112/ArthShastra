@@ -25,7 +25,7 @@ function Lesson10() {
 
     useEffect(() => localStorage.setItem('lesson10-activeSection', activeSection), [activeSection]);
     useEffect(() => {
-        return () => logLessonProgress(lessonId, Math.round((Date.now() - startTime) / 1000 / 60), activeSection === 'quiz');
+        return () => logLessonProgress(lessonId, Math.max(Math.round((Date.now() - startTime) / 1000 / 60), 1), activeSection === 'quiz');
     }, [startTime, lessonId, activeSection]);
 
     const currentIndex = sections.findIndex(s => s.id === activeSection);

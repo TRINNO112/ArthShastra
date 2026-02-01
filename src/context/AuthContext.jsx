@@ -58,8 +58,8 @@ export function AuthProvider({ children }) {
             gender: profile.gender || '',
 
             stats: {
-              // We prefer the 'completed' counter if it exists (from increment), otherwise fallback to array length
-              lessonsCompleted: stats.lessons?.completed || stats.lessons?.completedIds?.length || 0,
+              // We prefer the 'completedIds.length' as the source of truth if available
+              lessonsCompleted: stats.lessons?.completedIds?.length || stats.lessons?.completed || 0,
               lessonsStarted: stats.lessons?.started || 0,
 
               quizzesTaken: stats.quizzes?.taken || 0,
@@ -75,7 +75,11 @@ export function AuthProvider({ children }) {
               bestScore: stats.quizzes?.bestScore || 0,
 
               currentStreak: stats.streak?.current || 0,
-              longestStreak: stats.streak?.longest || 0
+              longestStreak: stats.streak?.longest || 0,
+
+              // Pass through raw arrays for UI checks (Critical for Lessons Checkmarks)
+              lessons: { completedIds: stats.lessons?.completedIds || [] },
+              quizzes: { completedIds: stats.quizzes?.completedIds || [] }
             },
 
             createdAt: userData.createdAt?.toDate?.() || null,
@@ -220,6 +224,10 @@ export function AuthProvider({ children }) {
     updateUserProfile,
     refreshUserData,
     updateUserStats: (statsUpdate) => updateUserStats(user?.uid, statsUpdate),
+    resetStats: async () => {
+      const { resetUserStats } = await import('../services/firebase');
+      return resetUserStats();
+    },
     logActivity: (type, details) => user?.uid ? logUserActivity(user.uid, type, details) : null,
     isAuthenticated: user && !user.isAnonymous
   };

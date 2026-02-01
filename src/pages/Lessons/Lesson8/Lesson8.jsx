@@ -41,7 +41,7 @@ function Lesson8() {
   useEffect(() => {
     return () => {
       const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
-      logLessonProgress(lessonId, timeSpent, activeSection === 'quiz');
+      logLessonProgress(lessonId, Math.max(timeSpent, 1), activeSection === 'quiz');
     };
   }, [startTime, lessonId, activeSection]);
 

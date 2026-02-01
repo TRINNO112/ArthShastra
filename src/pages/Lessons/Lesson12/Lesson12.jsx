@@ -31,7 +31,7 @@ function Lesson12() {
         return () => {
             const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
             const completed = activeSection === 'practice';
-            if (timeSpent > 0) logLessonProgress(lessonId, timeSpent, completed);
+            if (timeSpent > 0 || activeSection === 'quiz') logLessonProgress(lessonId, Math.max(timeSpent, 1), completed);
         };
     }, [startTime, lessonId, activeSection]);
 

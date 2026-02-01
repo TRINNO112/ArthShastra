@@ -680,37 +680,38 @@
   border-left: 4px solid var(--neon-green);
 }
 
+/* Chapter Card Inner */
 .chapter-card-inner {
   display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 22px 25px;
+  flex-direction: column;
+  gap: 15px;
+  padding: 25px;
   position: relative;
   z-index: 1;
+  height: 100%;
 }
 
-/* Chapter Number */
-.chapter-number-wrapper {
+/* Chapter Header with Number & Badge */
+.chapter-header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  gap: 6px;
+  margin-bottom: 5px;
 }
 
 .chapter-number {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(255, 215, 0, 0.1);
-  border: 2px solid var(--neon-gold);
-  border-radius: 14px;
-  font-size: var(--font-size-xl);
-  font-weight: 900;
+  border: 1px solid var(--neon-gold);
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: 800;
   color: var(--neon-gold);
-  flex-shrink: 0;
-  transition: all var(--transition-base);
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .chapter-card.cyan .chapter-number {
@@ -731,71 +732,107 @@
   color: var(--warning);
 }
 
-.chapter-number.done {
-  background: var(--neon-green);
-  border-color: var(--neon-green);
-  color: var(--bg-primary);
+/* Status Badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.completed-badge {
-  font-size: var(--font-size-xs);
-  font-weight: 600;
+.status-badge.completed {
+  background: rgba(0, 255, 136, 0.2);
   color: var(--neon-green);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.status-badge.pending {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Chapter Content */
 .chapter-content {
   flex: 1;
-  min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .chapter-title-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
   margin-bottom: 8px;
-  flex-wrap: wrap;
 }
 
 .chapter-content h4 {
-  font-size: var(--font-size-lg);
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--text-primary);
   margin: 0;
+  line-height: 1.4;
 }
 
 .difficulty-badge {
   padding: 4px 10px;
-  border-radius: var(--border-radius-full);
-  font-size: var(--font-size-xs);
-  font-weight: 600;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .difficulty-easy {
-  background: rgba(0, 255, 136, 0.15);
+  background: rgba(0, 255, 136, 0.1);
   color: var(--neon-green);
 }
 
 .difficulty-medium {
-  background: rgba(255, 215, 0, 0.15);
+  background: rgba(255, 215, 0, 0.1);
   color: var(--neon-gold);
 }
 
 .difficulty-hard {
-  background: rgba(255, 16, 240, 0.15);
+  background: rgba(255, 16, 240, 0.1);
   color: var(--neon-pink);
 }
 
 .chapter-description {
-  font-size: var(--font-size-sm);
+  font-size: 0.9rem;
   color: var(--text-secondary);
-  line-height: 1.5;
-  margin-bottom: 12px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  flex: 1;
 }
 
 .chapter-meta {
   display: flex;
-  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.meta-dot {
+  color: var(--text-muted);
+  opacity: 0.3;
+}
+
+/* Action Button */
+.chapter-action {
+  margin-top: 20px;
 }
 
 .meta-item {
