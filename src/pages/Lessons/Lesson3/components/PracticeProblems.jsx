@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaQuestionCircle, FaCheck, FaTimes, FaCalculator } from 'react-icons/fa';
-import '../css/Lesson3Clean.css';
+import '../css/lesson3-brutalist.css';
 
 const PracticeProblems = () => {
     const [answers, setAnswers] = useState({});
@@ -85,81 +85,89 @@ const PracticeProblems = () => {
     };
 
     return (
-        <div className="lesson3-container">
-            <header className="lesson-header mb-5">
-                <h2 className="l3-title">Practice Problems</h2>
-                <p className="l3-subtitle">Test your understanding of Utility Analysis</p>
-            </header>
+        <div className="brutalist-page">
+            <div className="brutalist-container">
+                {/* Header */}
+                <header className="brutalist-header">
+                    <div className="brutalist-label">CHAPTER 3 / SECTION 6</div>
+                    <h2 className="brutalist-title">PRACTICE<br />PROBLEMS</h2>
+                    <p className="brutalist-subtitle">Test your understanding of Utility Analysis</p>
+                </header>
 
-            <div className="l3-grid-2">
-                {problems.map((problem) => (
-                    <div key={problem.id} className="lesson3-card" style={{ padding: '25px' }}>
-                        <h4 style={{ color: '#fff', marginBottom: '15px', lineHeight: '1.5', fontSize: '1.1rem' }}>
-                            <FaQuestionCircle style={{ color: 'var(--l3-gold)', marginRight: '10px' }} />
-                            {problem.id}. {problem.scenario}
-                        </h4>
+                <div className="brutalist-grid-2">
+                    {problems.map((problem) => (
+                        <div key={problem.id} className="brutalist-card" style={{ padding: '30px' }}>
+                            <div className="brutalist-number" style={{ fontSize: '3rem', marginBottom: '10px' }}>0{problem.id}</div>
+                            <h4 style={{ marginBottom: '20px', lineHeight: '1.6', fontSize: '1rem' }}>
+                                {problem.scenario}
+                            </h4>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                            {problem.options.map(option => (
-                                <button
-                                    key={option.id}
-                                    onClick={() => handleSelect(problem.id, option.id)}
-                                    // Using inline styles for quick custom logic mimicking the premium card
-                                    style={{
-                                        textAlign: 'left',
-                                        width: '100%',
-                                        padding: '12px',
-                                        borderRadius: '8px',
-                                        border: '1px solid',
-                                        background: showResults[problem.id]
-                                            ? (option.correct ? 'rgba(0, 255, 136, 0.2)' : (answers[problem.id] === option.id ? 'rgba(255, 107, 107, 0.2)' : 'transparent'))
-                                            : (answers[problem.id] === option.id ? 'rgba(255, 215, 0, 0.1)' : 'transparent'),
-                                        borderColor: showResults[problem.id]
-                                            ? (option.correct ? 'var(--l3-green)' : (answers[problem.id] === option.id ? 'var(--l3-red)' : 'rgba(255,255,255,0.1)'))
-                                            : (answers[problem.id] === option.id ? 'var(--l3-gold)' : 'rgba(255,255,255,0.1)'),
-                                        color: '#eee',
-                                        cursor: showResults[problem.id] ? 'default' : 'pointer',
-                                        transition: 'all 0.2s',
-                                        position: 'relative'
-                                    }}
-                                    disabled={showResults[problem.id]}
-                                >
-                                    <span style={{ marginRight: '10px', fontWeight: 'bold', opacity: 0.7 }}>{option.id.toUpperCase()})</span>
-                                    {option.text}
-                                    {showResults[problem.id] && option.correct && <FaCheck style={{ position: 'absolute', right: '15px', top: '15px', color: 'var(--l3-green)' }} />}
-                                    {showResults[problem.id] && !option.correct && answers[problem.id] === option.id && <FaTimes style={{ position: 'absolute', right: '15px', top: '15px', color: 'var(--l3-red)' }} />}
-                                </button>
-                            ))}
-                        </div>
-
-                        {!showResults[problem.id] && (
-                            <button
-                                onClick={() => checkAnswer(problem.id)}
-                                style={{
-                                    marginTop: '20px',
-                                    width: '100%',
-                                    padding: '12px',
-                                    background: answers[problem.id] ? 'var(--l3-cyan)' : 'rgba(255,255,255,0.1)',
-                                    color: answers[problem.id] ? '#000' : '#888',
-                                    border: 'none',
-                                    borderRadius: '8px',
-                                    fontWeight: 'bold',
-                                    cursor: answers[problem.id] ? 'pointer' : 'not-allowed'
-                                }}
-                                disabled={!answers[problem.id]}
-                            >
-                                Check Answer
-                            </button>
-                        )}
-
-                        {showResults[problem.id] && (
-                            <div style={{ marginTop: '20px', padding: '15px', borderLeft: '3px solid var(--l3-green)', background: 'rgba(0,0,0,0.3)', borderRadius: '0 8px 8px 0' }}>
-                                <strong style={{ color: 'var(--l3-green)' }}>Explanation:</strong>
-                                <p style={{ fontSize: '0.95rem', marginTop: '5px', color: '#ccc' }}>{problem.explanation}</p>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                {problem.options.map(option => (
+                                    <button
+                                        key={option.id}
+                                        onClick={() => handleSelect(problem.id, option.id)}
+                                        style={{
+                                            textAlign: 'left',
+                                            width: '100%',
+                                            padding: '15px',
+                                            border: '3px solid',
+                                            background: showResults[problem.id]
+                                                ? (option.correct ? 'rgba(0, 200, 83, 0.2)' : (answers[problem.id] === option.id ? 'rgba(255, 23, 68, 0.2)' : 'var(--brutalist-white)'))
+                                                : (answers[problem.id] === option.id ? 'var(--brutalist-yellow)' : 'var(--brutalist-white)'),
+                                            borderColor: showResults[problem.id]
+                                                ? (option.correct ? 'var(--brutalist-green)' : (answers[problem.id] === option.id ? 'var(--brutalist-red)' : '#ccc'))
+                                                : (answers[problem.id] === option.id ? 'var(--brutalist-black)' : '#ccc'),
+                                            color: 'var(--brutalist-black)',
+                                            cursor: showResults[problem.id] ? 'default' : 'pointer',
+                                            transition: 'all 0.1s',
+                                            position: 'relative',
+                                            fontFamily: 'var(--font-brutalist-body)',
+                                            fontSize: '14px',
+                                            boxShadow: answers[problem.id] === option.id && !showResults[problem.id] ? '4px 4px 0 var(--brutalist-black)' : 'none',
+                                            transform: answers[problem.id] === option.id && !showResults[problem.id] ? 'translate(-2px, -2px)' : 'none'
+                                        }}
+                                        disabled={showResults[problem.id]}
+                                    >
+                                        <span style={{ marginRight: '10px', fontWeight: 'bold' }}>{option.id.toUpperCase()})</span>
+                                        {option.text}
+                                        {showResults[problem.id] && option.correct && <FaCheck style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', color: 'var(--brutalist-green)' }} />}
+                                        {showResults[problem.id] && !option.correct && answers[problem.id] === option.id && <FaTimes style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', color: 'var(--brutalist-red)' }} />}
+                                    </button>
+                                ))}
                             </div>
-                        )}
-                    </div>
-                ))}
+
+                            {!showResults[problem.id] && (
+                                <button
+                                    onClick={() => checkAnswer(problem.id)}
+                                    className="brutalist-btn"
+                                    style={{
+                                        marginTop: '20px',
+                                        width: '100%',
+                                        opacity: answers[problem.id] ? 1 : 0.5,
+                                        cursor: answers[problem.id] ? 'pointer' : 'not-allowed'
+                                    }}
+                                    disabled={!answers[problem.id]}
+                                >
+                                    CHECK ANSWER
+                                </button>
+                            )}
+
+                            {showResults[problem.id] && (
+                                <div style={{
+                                    marginTop: '20px',
+                                    padding: '20px',
+                                    background: 'var(--brutalist-gray)',
+                                    border: '3px solid var(--brutalist-green)',
+                                    borderLeft: '8px solid var(--brutalist-green)'
+                                }}>
+                                    <strong style={{ fontFamily: 'var(--font-brutalist-heading)', letterSpacing: '1px' }}>EXPLANATION:</strong>
+                                    <p style={{ fontSize: '0.95rem', marginTop: '10px', lineHeight: '1.6' }}>{problem.explanation}</p>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );

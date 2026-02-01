@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaBalanceScale, FaArrowDown } from 'react-icons/fa';
-import '../css/Lesson3Clean.css';
+import '../css/lesson3-brutalist.css';
 import SingleCommodityChart from './SingleCommodityChart';
 import TwoCommodityChart from './TwoCommodityChart';
 
@@ -30,218 +30,201 @@ const twoCommodityData = [
 
 const ConsumerEquilibrium = () => {
   return (
-    <div className="lesson3-container">
-      <header className="lesson-header mb-5">
-        <h2 className="l3-title">Consumer Equilibrium</h2>
-        <p className="l3-subtitle">Balancing satisfaction with price</p>
-      </header>
+    <div className="brutalist-page">
+      <div className="brutalist-container">
+        {/* Header */}
+        <header className="brutalist-header">
+          <div className="brutalist-label">CHAPTER 3 / SECTION 4</div>
+          <h2 className="brutalist-title">CONSUMER<br />EQUILIBRIUM</h2>
+          <p className="brutalist-subtitle">Balancing satisfaction with price</p>
+        </header>
 
-      {/* Definition */}
-      <section className="lesson3-card">
-        <h3 className="l3-heading-gold">What is Equilibrium?</h3>
-        <div className="l3-definition-box">
-          <p className="l3-definition-text">
-            "Consumer Equilibrium is a situation where a consumer spends their limited income in such a way that they get <strong>maximum satisfaction</strong> and have no tendency to change."
-          </p>
-        </div>
-      </section>
+        {/* Definition */}
+        <section className="brutalist-card">
+          <h3 className="brutalist-card-heading yellow">WHAT IS EQUILIBRIUM?</h3>
+          <div className="brutalist-definition">
+            <p className="brutalist-definition-text">
+              "Consumer Equilibrium is a situation where a consumer spends their limited income in such a way that they get <strong>maximum satisfaction</strong> and have no tendency to change."
+            </p>
+          </div>
+        </section>
 
-      {/* One Commodity Case */}
-      <section className="lesson3-card">
-        <h3 className="l3-heading-cyan">Case 1: Single Commodity</h3>
-        <p>When buying only one good (X), the consumer compares the <strong>Marginal Utility (benefit)</strong> with the <strong>Price (cost)</strong>.</p>
+        {/* One Commodity Case */}
+        <section className="brutalist-card">
+          <h3 className="brutalist-card-heading cyan">CASE 1: SINGLE COMMODITY</h3>
+          <p style={{ marginBottom: '20px', lineHeight: '1.8' }}>When buying only one good (X), the consumer compares the <strong>Marginal Utility (benefit)</strong> with the <strong>Price (cost)</strong>.</p>
 
-        <div style={{ background: 'rgba(0,0,0,0.3)', padding: '20px', margin: '20px 0', borderRadius: '12px', textAlign: 'center', border: '1px dashed var(--l3-cyan)' }}>
-          <h4 style={{ color: '#fff', marginBottom: '10px' }}>Equilibrium Condition</h4>
-          <code style={{ fontSize: '1.5rem', color: 'var(--l3-cyan)' }}>MUx (in ₹) = Price of X</code>
-        </div>
+          <div className="brutalist-formula">
+            MUx (in ₹) = PRICE OF X
+          </div>
 
-        {/* Schedule 1 */}
-        <h4 style={{ color: 'var(--l3-cyan)', marginTop: '30px' }}>Utility Schedule</h4>
-        <div className="l3-table-container">
-          <table className="l3-table" style={{ textAlign: 'center' }}>
-            <thead>
-              <tr>
-                <th>Units</th>
-                <th>MU (₹)</th>
-                <th>Price (₹)</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {singleCommodityData.map((row, i) => (
-                <tr key={i} style={row.mu === row.price ? { background: 'var(--l3-gold-dim)' } : {}}>
-                  <td>{row.units}</td>
-                  <td style={{ color: 'var(--l3-cyan)' }}>{row.mu}</td>
-                  <td style={{ color: '#ff6b6b' }}>{row.price}</td>
-                  <td>
-                    {row.mu > row.price && <span style={{ color: '#00ff88' }}>Buy More (MU &gt; P)</span>}
-                    {row.mu < row.price && <span style={{ color: '#ff6b6b' }}>Stop (MU &lt; P)</span>}
-                    {row.mu === row.price && <strong style={{ color: 'var(--l3-gold)' }}>Equilibrium 🌟</strong>}
-                  </td>
+          {/* Schedule 1 */}
+          <h4 style={{ fontFamily: 'var(--font-brutalist-heading)', fontSize: '1.3rem', letterSpacing: '1px', marginTop: '30px', marginBottom: '15px' }}>UTILITY SCHEDULE</h4>
+          <div className="brutalist-table-container">
+            <table className="brutalist-table" style={{ textAlign: 'center' }}>
+              <thead>
+                <tr>
+                  <th>UNITS</th>
+                  <th>MU (₹)</th>
+                  <th>PRICE (₹)</th>
+                  <th>STATUS</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {singleCommodityData.map((row, i) => (
+                  <tr key={i} style={row.mu === row.price ? { background: 'rgba(255, 235, 59, 0.4)' } : {}}>
+                    <td><strong>{row.units}</strong></td>
+                    <td style={{ color: 'var(--brutalist-cyan)', fontWeight: 'bold' }}>{row.mu}</td>
+                    <td style={{ color: 'var(--brutalist-red)', fontWeight: 'bold' }}>{row.price}</td>
+                    <td>
+                      {row.mu > row.price && <span style={{ color: 'var(--brutalist-green)' }}>Buy More (MU {'>'} P)</span>}
+                      {row.mu < row.price && <span style={{ color: 'var(--brutalist-red)' }}>Stop (MU {'<'} P)</span>}
+                      {row.mu === row.price && <strong style={{ color: '#c7a600' }}>EQUILIBRIUM ⭐</strong>}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-        {/* Graph 1 */}
-        <div style={{ background: 'rgba(0,0,0,0.2)', padding: '15px', borderRadius: '12px', marginBottom: '20px', marginTop: '20px' }}>
-          <h4 style={{ textAlign: 'center', color: '#ccc', marginBottom: '10px' }}>Visualization: MU vs Price</h4>
-          <SingleCommodityChart data={singleCommodityData} price={30} />
-          <p style={{ textAlign: 'center', fontSize: '0.9rem', color: '#aaa', marginTop: '10px' }}>
-            Equilibrium is at 3 Units where MU (30) equals Price (30).
-          </p>
-        </div>
-      </section>
+          {/* Graph 1 */}
+          <div className="brutalist-chart-container" style={{ marginTop: '25px', background: '#1a1a1a', border: '5px solid #000' }}>
+            <div className="brutalist-chart-title" style={{ color: '#fff' }}>VISUALIZATION: MU VS PRICE</div>
+            <SingleCommodityChart data={singleCommodityData} price={30} />
+            <p style={{ textAlign: 'center', fontSize: '0.9rem', marginTop: '15px', color: '#ccc' }}>
+              Equilibrium is at 3 Units where MU (30) equals Price (30).
+            </p>
+          </div>
+        </section>
 
-      {/* Two Commodity Case */}
-      <section className="lesson3-card">
-        <h3 className="l3-heading-gold">Case 2: Two Commodities</h3>
-        <p>In real life, we buy multiple goods. The consumer must distribute income so that the last rupee spent on each good gives equal satisfaction.</p>
+        {/* Two Commodity Case */}
+        <section className="brutalist-card">
+          <h3 className="brutalist-card-heading yellow">CASE 2: TWO COMMODITIES</h3>
+          <p style={{ marginBottom: '20px', lineHeight: '1.8' }}>In real life, we buy multiple goods. The consumer must distribute income so that the last rupee spent on each good gives equal satisfaction.</p>
 
-        <div style={{ background: 'rgba(0,0,0,0.3)', padding: '20px', margin: '20px 0', borderRadius: '12px', textAlign: 'center', border: '1px dashed var(--l3-gold)' }}>
-          <h4 style={{ color: '#fff', marginBottom: '10px' }}>Law of Equi-Marginal Utility</h4>
-          <code style={{ fontSize: '1.2rem', color: 'var(--l3-gold)' }}>
+          <div className="brutalist-formula">
             (MUx / Px) = (MUy / Py) = MUm
-          </code>
-        </div>
-
-        {/* Schedule 2 */}
-        <h4 style={{ color: 'var(--l3-gold)', marginTop: '30px' }}>Equi-Marginal Schedule (Income = 5, Px=1, Py=1)</h4>
-
-        <div className="l3-table-container">
-          <table className="l3-table" style={{ textAlign: 'center', marginTop: '10px' }}>
-            <thead>
-              <tr>
-                <th>Money Spent</th>
-                <th>Spend on X (MU)</th>
-                <th>Spend on Y (MU)</th>
-                <th>Status</th>
-                <th>Result</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1st Rupee</td>
-                <td className="text-cyan">20 (1st Unit)</td>
-                <td className="text-pink">24 (1st Unit)</td>
-                <td>20 &lt; 24</td>
-                <td>Buy Y</td>
-              </tr>
-              <tr>
-                <td>2nd Rupee</td>
-                <td className="text-cyan">20 (1st Unit)</td>
-                <td className="text-pink">20 (2nd Unit)</td>
-                <td>20 = 20</td>
-                <td>Indifferent (Buy X)</td>
-              </tr>
-              <tr>
-                <td>3rd Rupee</td>
-                <td className="text-cyan">16 (2nd Unit)</td>
-                <td className="text-pink">20 (2nd Unit)</td>
-                <td>16 &lt; 20</td>
-                <td>Buy Y</td>
-              </tr>
-              {/* 
-                  Let's re-verify the logic.
-                  Table shows MUs of Units: 1(20/24), 2(16/20), 3(12/16), 4(8/12), 5(4/8)
-                  
-                  Step 1: Compare 1st Unit MUx(20) vs 1st Unit MUy(24). -> Buy Y. (0X, 1Y).
-                  Step 2: Compare 1st Unit MUx(20) vs 2nd Unit MUy(20). -> Equal. Buy X. (1X, 1Y).
-                  Step 3: Compare 2nd Unit MUx(16) vs 2nd Unit MUy(20). -> Buy Y. (1X, 2Y).
-                  Step 4: Compare 2nd Unit MUx(16) vs 3rd Unit MUy(16). -> Equal. Buy X. (2X, 2Y).
-                  Step 5: Compare 3rd Unit MUx(12) vs 3rd Unit MUy(16). -> Buy Y. (2X, 3Y).
-                  
-                  Total Bought: 2X, 3Y.
-                  Last MUx (2nd Unit) = 16.
-                  Last MUy (3rd Unit) = 16.
-                  Equilibrium Achieved!
-               */}
-
-              <tr>
-                <td>4th Rupee</td>
-                <td className="text-cyan">16 (2nd Unit)</td>
-                <td className="text-pink">16 (3rd Unit)</td>
-                <td className="text-gold font-bold">16 = 16</td>
-                <td className="text-gold font-bold">Buy X (Equilibrium!)</td>
-              </tr>
-              <tr>
-                <td>5th Rupee</td>
-                <td className="text-cyan">12 (3rd Unit)</td>
-                <td className="text-pink">16 (3rd Unit)</td>
-                <td>12 &lt; 16</td>
-                <td>Buy Y</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div style={{ marginTop: '15px', padding: '10px', background: 'rgba(255,215,0,0.1)', borderRadius: '8px', textAlign: 'center' }}>
-            <strong>Final Bundle:</strong> 2 Units of X + 3 Units of Y. (Total cost ₹5).
-            <br />
-            MU of Last X (16) = MU of Last Y (16).
           </div>
-        </div>
+          <p style={{ textAlign: 'center', marginTop: '10px', fontSize: '0.9rem' }}>Law of Equi-Marginal Utility</p>
 
-        {/* Graph 2 */}
-        <div style={{ background: 'rgba(0,0,0,0.2)', padding: '15px', borderRadius: '12px', marginBottom: '20px', marginTop: '20px' }}>
-          <h4 style={{ textAlign: 'center', color: '#ccc', marginBottom: '10px' }}>Equi-Marginal Diagram (Box Diagram)</h4>
-          <TwoCommodityChart data={twoCommodityData} totalIncome={5} />
-          <p style={{ textAlign: 'center', fontSize: '0.9rem', color: '#aaa', marginTop: '10px' }}>
-            Lines intersect at <strong>Spending on X = 2</strong> (implies Spending on Y = 3).
-          </p>
-        </div>
-      </section>
+          {/* Schedule 2 */}
+          <h4 style={{ fontFamily: 'var(--font-brutalist-heading)', fontSize: '1.3rem', letterSpacing: '1px', marginTop: '30px', marginBottom: '15px' }}>EQUI-MARGINAL SCHEDULE (INCOME = 5, Px=1, Py=1)</h4>
 
-      {/* NEW CONTENT: Derivation of Demand Curve */}
-      <section className="lesson3-card">
-        <h3 className="l3-heading-cyan">Extra: Derivation of Demand Curve</h3>
-        <p>Why does the Demand Curve slope downward? It is because of the <strong>Law of Diminishing Marginal Utility!</strong></p>
+          <div className="brutalist-table-container">
+            <table className="brutalist-table" style={{ textAlign: 'center' }}>
+              <thead>
+                <tr>
+                  <th>MONEY SPENT</th>
+                  <th>SPEND ON X (MU)</th>
+                  <th>SPEND ON Y (MU)</th>
+                  <th>STATUS</th>
+                  <th>RESULT</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1st Rupee</td>
+                  <td style={{ color: 'var(--brutalist-cyan)' }}>20 (1st Unit)</td>
+                  <td style={{ color: '#e91e63' }}>24 (1st Unit)</td>
+                  <td>20 {'<'} 24</td>
+                  <td>Buy Y</td>
+                </tr>
+                <tr>
+                  <td>2nd Rupee</td>
+                  <td style={{ color: 'var(--brutalist-cyan)' }}>20 (1st Unit)</td>
+                  <td style={{ color: '#e91e63' }}>20 (2nd Unit)</td>
+                  <td>20 = 20</td>
+                  <td>Indifferent (Buy X)</td>
+                </tr>
+                <tr>
+                  <td>3rd Rupee</td>
+                  <td style={{ color: 'var(--brutalist-cyan)' }}>16 (2nd Unit)</td>
+                  <td style={{ color: '#e91e63' }}>20 (2nd Unit)</td>
+                  <td>16 {'<'} 20</td>
+                  <td>Buy Y</td>
+                </tr>
+                <tr style={{ background: 'rgba(255, 235, 59, 0.4)' }}>
+                  <td><strong>4th Rupee</strong></td>
+                  <td style={{ color: 'var(--brutalist-cyan)' }}><strong>16 (2nd Unit)</strong></td>
+                  <td style={{ color: '#e91e63' }}><strong>16 (3rd Unit)</strong></td>
+                  <td><strong style={{ color: '#c7a600' }}>16 = 16</strong></td>
+                  <td><strong style={{ color: '#c7a600' }}>EQUILIBRIUM ⭐</strong></td>
+                </tr>
+                <tr>
+                  <td>5th Rupee</td>
+                  <td style={{ color: 'var(--brutalist-cyan)' }}>12 (3rd Unit)</td>
+                  <td style={{ color: '#e91e63' }}>16 (3rd Unit)</td>
+                  <td>12 {'<'} 16</td>
+                  <td>Buy Y</td>
+                </tr>
+              </tbody>
+            </table>
 
-        <div className="l3-grid-2">
-          <div className="l3-grid-item">
-            <strong>The Logic</strong>
-            <p className="mt-2 text-sm">
-              A consumer buys a good only if <strong>MU ≥ Price</strong>.
-              <br /><br />
-              When he buys more units, MU falls (diminishes).
+            <div className="brutalist-highlight" style={{ marginTop: '20px' }}>
+              <strong>FINAL BUNDLE:</strong> 2 Units of X + 3 Units of Y. (Total cost ₹5).
               <br />
-              To convince him to buy more units (where MU is lower), the <strong>Price must also fall</strong>.
+              MU of Last X (16) = MU of Last Y (16).
+            </div>
+          </div>
+
+          {/* Graph 2 */}
+          <div className="brutalist-chart-container" style={{ marginTop: '25px', background: '#1a1a1a', border: '5px solid #000' }}>
+            <div className="brutalist-chart-title" style={{ color: '#fff' }}>EQUI-MARGINAL DIAGRAM</div>
+            <TwoCommodityChart data={twoCommodityData} totalIncome={5} />
+            <p style={{ textAlign: 'center', fontSize: '0.9rem', marginTop: '15px', color: '#ccc' }}>
+              Lines intersect at <strong>Spending on X = 2</strong> (implies Spending on Y = 3).
             </p>
           </div>
-          <div className="l3-grid-item cyan">
-            <strong>The Result</strong>
-            <p className="mt-2 text-sm">
-              <FaArrowDown /> More Consumption requires Lower Price.
-              <br /><br />
-              This inverse relationship between Price and Quantity Demanded gives us the downward sloping Demand Curve.
-            </p>
+        </section>
+
+        {/* Derivation of Demand Curve */}
+        <section className="brutalist-card">
+          <h3 className="brutalist-card-heading cyan">EXTRA: DERIVATION OF DEMAND CURVE</h3>
+          <p style={{ marginBottom: '20px', lineHeight: '1.8' }}>Why does the Demand Curve slope downward? It is because of the <strong>Law of Diminishing Marginal Utility!</strong></p>
+
+          <div className="brutalist-grid-2">
+            <div className="brutalist-grid-item">
+              <h4>THE LOGIC</h4>
+              <p style={{ marginTop: '10px', lineHeight: '1.8' }}>
+                A consumer buys a good only if <strong>MU ≥ Price</strong>.
+                <br /><br />
+                When he buys more units, MU falls (diminishes).
+                <br />
+                To convince him to buy more units (where MU is lower), the <strong>Price must also fall</strong>.
+              </p>
+            </div>
+            <div className="brutalist-grid-item cyan">
+              <h4>THE RESULT</h4>
+              <p style={{ marginTop: '10px', lineHeight: '1.8' }}>
+                <FaArrowDown /> More Consumption requires Lower Price.
+                <br /><br />
+                This inverse relationship between Price and Quantity Demanded gives us the downward sloping Demand Curve.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* NEW CONTENT: Consumer Surplus */}
-      <section className="lesson3-card">
-        <h3 className="l3-heading-gold">Bonus Concept: Consumer Surplus</h3>
-        <p className="mb-3">
-          "Consumer Surplus is the difference between what a consumer is <strong>willing to pay</strong> and what they <strong>actually pay</strong>."
-        </p>
-
-        <div className="l3-definition-box" style={{ borderLeftColor: 'var(--l3-green)' }}>
-          <p className="l3-definition-text" style={{ fontSize: '1.2rem' }}>
-            Consumer Surplus = Total Utility (Willingness) - (Price × Quantity)
+        {/* Consumer Surplus */}
+        <section className="brutalist-card">
+          <h3 className="brutalist-card-heading yellow">BONUS: CONSUMER SURPLUS</h3>
+          <p style={{ marginBottom: '20px', lineHeight: '1.8' }}>
+            "Consumer Surplus is the difference between what a consumer is <strong>willing to pay</strong> and what they <strong>actually pay</strong>."
           </p>
-        </div>
 
-        <div className="l3-grid-item green" style={{ marginTop: '20px' }}>
-          <strong>Example:</strong>
-          <ul className="l3-list">
-            <li>You are willing to pay ₹50 for a burger (because you are hungry!).</li>
-            <li>Market Price is ₹20.</li>
-            <li><strong>Surplus = ₹50 - ₹20 = ₹30</strong> (This is your "Profit" or extra satisfaction).</li>
-          </ul>
-        </div>
-      </section>
+          <div className="brutalist-formula">
+            CONSUMER SURPLUS = TOTAL UTILITY − (PRICE × QUANTITY)
+          </div>
+
+          <div className="brutalist-grid-item green" style={{ marginTop: '25px' }}>
+            <h4>EXAMPLE</h4>
+            <ul className="brutalist-list">
+              <li>You are willing to pay ₹50 for a burger (because you are hungry!).</li>
+              <li>Market Price is ₹20.</li>
+              <li><strong>Surplus = ₹50 - ₹20 = ₹30</strong> (This is your "Profit" or extra satisfaction).</li>
+            </ul>
+          </div>
+        </section>
+      </div>
     </div>
   );
 };

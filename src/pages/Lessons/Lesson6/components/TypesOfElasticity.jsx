@@ -1,113 +1,121 @@
 import React from 'react';
 import { FaInfinity, FaEquals, FaArrowDown, FaArrowUp, FaMinus } from 'react-icons/fa';
+import '../../Lesson3/css/lesson3-brutalist.css';
 
 function TypesOfElasticity() {
   return (
-    <section className="lesson-section">
-      <div className="section-header-lesson">
-        <span className="section-badge-lesson">Section 3</span>
-        <h2 className="section-title-lesson">Types of Price Elasticity</h2>
-        <p className="section-subtitle-lesson">Classifying demand based on elasticity values</p>
-      </div>
+    <div className="brutalist-page">
+      <div className="brutalist-container">
+        {/* Header */}
+        <header className="brutalist-header">
+          <div className="brutalist-label">CHAPTER 6 / SECTION 3</div>
+          <h2 className="brutalist-title">TYPES OF PRICE<br />ELASTICITY</h2>
+          <p className="brutalist-subtitle">Classifying demand based on elasticity values</p>
+        </header>
 
-      <div className="content-card">
-        <div className="card-glow"></div>
-        <div className="card-content">
-          <p>Based on the numerical value of price elasticity of demand, we can classify it into five types:</p>
+        {/* Introduction */}
+        <section className="brutalist-card">
+          <h3 className="brutalist-card-heading cyan">THE FIVE TYPES</h3>
+          <p style={{ marginBottom: '25px', lineHeight: '1.8' }}>
+            Based on the numerical value of price elasticity of demand, we can classify it into five types:
+          </p>
 
-          <div className="highlight-card gold mt-4">
-            <div className="highlight-icon"><FaInfinity /></div>
-            <div className="highlight-content">
-              <h3>1. Perfectly Elastic Demand (Ed = ∞)</h3>
-              <p>Any small increase in price causes quantity demanded to drop to zero. The demand curve is horizontal.</p>
-              <p className="example"><strong>Example:</strong> Products in a perfectly competitive market.</p>
+          <div className="brutalist-grid-item yellow" style={{ marginBottom: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+              <FaInfinity style={{ fontSize: '2rem' }} />
+              <h4 style={{ margin: 0 }}>1. PERFECTLY ELASTIC (Ed = ∞)</h4>
             </div>
+            <p>Any small increase in price causes quantity demanded to drop to <strong>zero</strong>. The demand curve is <strong>horizontal</strong>.</p>
+            <p style={{ marginTop: '10px', fontStyle: 'italic' }}>Example: Products in a perfectly competitive market.</p>
           </div>
 
-          <div className="highlight-card cyan mt-3">
-            <div className="highlight-icon"><FaArrowUp /></div>
-            <div className="highlight-content">
-              <h3>2. Perfectly Inelastic Demand (Ed = 0)</h3>
-              <p>Quantity demanded remains constant regardless of price changes. The demand curve is vertical.</p>
-              <p className="example"><strong>Example:</strong> Life-saving medicines, salt.</p>
+          <div className="brutalist-grid-item cyan" style={{ marginBottom: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+              <FaArrowUp style={{ fontSize: '2rem' }} />
+              <h4 style={{ margin: 0 }}>2. PERFECTLY INELASTIC (Ed = 0)</h4>
             </div>
+            <p>Quantity demanded remains <strong>constant</strong> regardless of price changes. The demand curve is <strong>vertical</strong>.</p>
+            <p style={{ marginTop: '10px', fontStyle: 'italic' }}>Example: Life-saving medicines, salt.</p>
           </div>
 
-          <div className="highlight-card gold mt-3">
-            <div className="highlight-icon"><FaEquals /></div>
-            <div className="highlight-content">
-              <h3>3. Unitary Elastic Demand (Ed = 1)</h3>
-              <p>Percentage change in quantity demanded equals percentage change in price.</p>
-              <p className="example"><strong>Example:</strong> Some luxury goods where proportionate changes occur.</p>
+          <div className="brutalist-grid-item yellow" style={{ marginBottom: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+              <FaEquals style={{ fontSize: '2rem' }} />
+              <h4 style={{ margin: 0 }}>3. UNITARY ELASTIC (Ed = 1)</h4>
             </div>
+            <p>Percentage change in quantity demanded <strong>equals</strong> percentage change in price.</p>
+            <p style={{ marginTop: '10px', fontStyle: 'italic' }}>Example: Some luxury goods where proportionate changes occur.</p>
           </div>
 
-          <div className="highlight-card cyan mt-3">
-            <div className="highlight-icon"><FaArrowDown /></div>
-            <div className="highlight-content">
-              <h3>4. Relatively Elastic Demand (Ed &gt; 1)</h3>
-              <p>Demand changes more than proportionately to price changes.</p>
-              <p className="example"><strong>Example:</strong> Luxury goods, goods with many substitutes.</p>
+          <div className="brutalist-grid-item cyan" style={{ marginBottom: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+              <FaArrowDown style={{ fontSize: '2rem' }} />
+              <h4 style={{ margin: 0 }}>4. RELATIVELY ELASTIC (Ed {'>'} 1)</h4>
             </div>
+            <p>Demand changes <strong>more than proportionately</strong> to price changes.</p>
+            <p style={{ marginTop: '10px', fontStyle: 'italic' }}>Example: Luxury goods, goods with many substitutes.</p>
           </div>
 
-          <div className="highlight-card gold mt-3">
-            <div className="highlight-icon"><FaMinus /></div>
-            <div className="highlight-content">
-              <h3>5. Relatively Inelastic Demand (Ed &lt; 1)</h3>
-              <p>Demand changes less than proportionately to price changes.</p>
-              <p className="example"><strong>Example:</strong> Necessities like food, electricity.</p>
+          <div className="brutalist-grid-item yellow">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+              <FaMinus style={{ fontSize: '2rem' }} />
+              <h4 style={{ margin: 0 }}>5. RELATIVELY INELASTIC (Ed {'<'} 1)</h4>
             </div>
+            <p>Demand changes <strong>less than proportionately</strong> to price changes.</p>
+            <p style={{ marginTop: '10px', fontStyle: 'italic' }}>Example: Necessities like food, electricity.</p>
           </div>
+        </section>
 
-          <div className="summary-table mt-5">
-            <h3>Summary of Elasticity Types</h3>
-            <table className="w-full border-collapse border border-gray-600 mt-3">
+        {/* Summary Table */}
+        <section className="brutalist-card">
+          <h3 className="brutalist-card-heading yellow">SUMMARY TABLE</h3>
+          <div className="brutalist-table-container">
+            <table className="brutalist-table" style={{ textAlign: 'center' }}>
               <thead>
-                <tr className="bg-gray-700">
-                  <th className="border border-gray-600 px-4 py-2">Type</th>
-                  <th className="border border-gray-600 px-4 py-2">Value</th>
-                  <th className="border border-gray-600 px-4 py-2">Description</th>
-                  <th className="border border-gray-600 px-4 py-2">Curve Shape</th>
+                <tr>
+                  <th>TYPE</th>
+                  <th>VALUE</th>
+                  <th>DESCRIPTION</th>
+                  <th>CURVE SHAPE</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="border border-gray-600 px-4 py-2">Perfectly Elastic</td>
-                  <td className="border border-gray-600 px-4 py-2">∞</td>
-                  <td className="border border-gray-600 px-4 py-2">Infinite response</td>
-                  <td className="border border-gray-600 px-4 py-2">Horizontal</td>
-                </tr>
-                <tr className="bg-gray-800">
-                  <td className="border border-gray-600 px-4 py-2">Relatively Elastic</td>
-                  <td className="border border-gray-600 px-4 py-2">&gt; 1</td>
-                  <td className="border border-gray-600 px-4 py-2">More than proportionate</td>
-                  <td className="border border-gray-600 px-4 py-2">Flatter</td>
+                  <td><strong>Perfectly Elastic</strong></td>
+                  <td style={{ fontFamily: 'var(--font-brutalist-heading)', fontSize: '1.2rem' }}>∞</td>
+                  <td>Infinite response</td>
+                  <td>Horizontal</td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-600 px-4 py-2">Unitary</td>
-                  <td className="border border-gray-600 px-4 py-2">= 1</td>
-                  <td className="border border-gray-600 px-4 py-2">Equal proportion</td>
-                  <td className="border border-gray-600 px-4 py-2">Rectangular Hyperbola</td>
-                </tr>
-                <tr className="bg-gray-800">
-                  <td className="border border-gray-600 px-4 py-2">Relatively Inelastic</td>
-                  <td className="border border-gray-600 px-4 py-2">&lt; 1</td>
-                  <td className="border border-gray-600 px-4 py-2">Less than proportionate</td>
-                  <td className="border border-gray-600 px-4 py-2">Steeper</td>
+                  <td><strong>Relatively Elastic</strong></td>
+                  <td style={{ fontFamily: 'var(--font-brutalist-heading)', fontSize: '1.2rem' }}>{'>'} 1</td>
+                  <td>More than proportionate</td>
+                  <td>Flatter</td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-600 px-4 py-2">Perfectly Inelastic</td>
-                  <td className="border border-gray-600 px-4 py-2">0</td>
-                  <td className="border border-gray-600 px-4 py-2">No response</td>
-                  <td className="border border-gray-600 px-4 py-2">Vertical</td>
+                  <td><strong>Unitary</strong></td>
+                  <td style={{ fontFamily: 'var(--font-brutalist-heading)', fontSize: '1.2rem' }}>= 1</td>
+                  <td>Equal proportion</td>
+                  <td>Rectangular Hyperbola</td>
+                </tr>
+                <tr>
+                  <td><strong>Relatively Inelastic</strong></td>
+                  <td style={{ fontFamily: 'var(--font-brutalist-heading)', fontSize: '1.2rem' }}>{'<'} 1</td>
+                  <td>Less than proportionate</td>
+                  <td>Steeper</td>
+                </tr>
+                <tr>
+                  <td><strong>Perfectly Inelastic</strong></td>
+                  <td style={{ fontFamily: 'var(--font-brutalist-heading)', fontSize: '1.2rem' }}>0</td>
+                  <td>No response</td>
+                  <td>Vertical</td>
                 </tr>
               </tbody>
             </table>
           </div>
-        </div>
+        </section>
       </div>
-    </section>
+    </div>
   );
 }
 
