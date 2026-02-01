@@ -92,7 +92,7 @@ function Applications() {
         </div>
 
         {/* Key Takeaway */}
-        <section className="brutalist-card">
+        <section className="brutalist-card" style={{ marginTop: '20px' }}>
           <div className="brutalist-highlight dark">
             <FaLightbulb style={{ marginRight: '10px', color: 'var(--brutalist-yellow)' }} />
             <strong>PRACTICAL IMPORTANCE:</strong> Price elasticity is crucial for effective decision-making in business, government policy, and economic planning. Ignoring elasticity can lead to costly mistakes in pricing and policy implementation.
