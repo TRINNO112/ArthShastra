@@ -23,7 +23,11 @@ import {
   FaFire,
   FaMedal,
   FaBirthdayCake,
-  FaVenusMars
+  FaVenusMars,
+  FaBuilding,
+  FaGlobeAmericas,
+  FaHourglassHalf,
+  FaBookOpen,
 } from 'react-icons/fa';
 import { HiSparkles, HiAcademicCap } from 'react-icons/hi';
 import './Navbar.css';
@@ -539,7 +543,10 @@ function Navbar() {
 
                       <div className="info-grid">
                         <div className="info-item">
-                          <FaUserGraduate className="info-icon" />
+                          <div className="interactive-icon">
+                            <FaUserGraduate className="icon-main" />
+                            <FaIdCard className="icon-hover" />
+                          </div>
                           <div>
                             <span className="info-label">Class</span>
                             <span className="info-value">
@@ -549,7 +556,10 @@ function Navbar() {
                         </div>
 
                         <div className="info-item">
-                          <FaBook className="info-icon" />
+                          <div className="interactive-icon">
+                            <FaBook className="icon-main" />
+                            <HiAcademicCap className="icon-hover" />
+                          </div>
                           <div>
                             <span className="info-label">Board</span>
                             <span className="info-value">{user?.board || 'Not set'}</span>
@@ -557,7 +567,10 @@ function Navbar() {
                         </div>
 
                         <div className="info-item">
-                          <FaSchool className="info-icon" />
+                          <div className="interactive-icon">
+                            <FaSchool className="icon-main" />
+                            <FaBuilding className="icon-hover" />
+                          </div>
                           <div>
                             <span className="info-label">School</span>
                             <span className="info-value">{user?.school || 'Not set'}</span>
@@ -565,7 +578,10 @@ function Navbar() {
                         </div>
 
                         <div className="info-item">
-                          <FaMapMarkerAlt className="info-icon" />
+                          <div className="interactive-icon">
+                            <FaMapMarkerAlt className="icon-main" />
+                            <FaGlobeAmericas className="icon-hover" />
+                          </div>
                           <div>
                             <span className="info-label">Location</span>
                             <span className="info-value">
@@ -577,7 +593,10 @@ function Navbar() {
                         </div>
 
                         <div className="info-item">
-                          <FaTrophy className="info-icon" />
+                          <div className="interactive-icon">
+                            <FaTrophy className="icon-main" />
+                            <FaMedal className="icon-hover" />
+                          </div>
                           <div>
                             <span className="info-label">Target Score</span>
                             <span className="info-value">
@@ -587,7 +606,10 @@ function Navbar() {
                         </div>
 
                         <div className="info-item">
-                          <FaCalendarAlt className="info-icon" />
+                          <div className="interactive-icon">
+                            <FaCalendarAlt className="icon-main" />
+                            <FaHourglassHalf className="icon-hover" />
+                          </div>
                           <div>
                             <span className="info-label">Exam Year</span>
                             <span className="info-value">{user?.examYear || 'Not set'}</span>
@@ -595,7 +617,10 @@ function Navbar() {
                         </div>
 
                         <div className="info-item">
-                          <FaClock className="info-icon" />
+                          <div className="interactive-icon">
+                            <FaClock className="icon-main" />
+                            <FaBookOpen className="icon-hover" />
+                          </div>
                           <div>
                             <span className="info-label">Daily Study</span>
                             <span className="info-value">
@@ -605,7 +630,10 @@ function Navbar() {
                         </div>
 
                         <div className="info-item">
-                          <FaCalendarAlt className="info-icon" />
+                          <div className="interactive-icon">
+                            <FaCalendarAlt className="icon-main" />
+                            <FaFire className="icon-hover" />
+                          </div>
                           <div>
                             <span className="info-label">Member Since</span>
                             <span className="info-value">{formatDate(user?.createdAt)}</span>
@@ -613,9 +641,11 @@ function Navbar() {
                         </div>
                       </div>
 
-                      <button className="edit-profile-btn" onClick={() => setIsEditing(true)}>
-                        <FaEdit /> Edit Profile
-                      </button>
+                      <div className="edit-profile-container">
+                        <button className="edit-profile-btn" onClick={() => setIsEditing(true)}>
+                          <FaEdit /> Edit Profile
+                        </button>
+                      </div>
                     </div>
                   )}
                 </>
@@ -623,50 +653,43 @@ function Navbar() {
 
               {activeTab === 'stats' && (
                 <div className="stats-tab">
-                  <div className="stats-overview">
-                    <div className="stat-card">
-                      <FaFire className="stat-icon fire" />
-                      <div className="stat-info">
-                        <span className="stat-number">{user?.stats?.currentStreak || 0}</span>
-                        <span className="stat-label">Day Streak</span>
-                      </div>
+                  <div className="profile-stats">
+                    <div className="stat-item">
+                      <span className="stat-number">{user?.stats?.currentStreak || 0}</span>
+                      <span className="stat-label">Day Streak</span>
                     </div>
 
-                    <div className="stat-card">
-                      <FaMedal className="stat-icon gold" />
-                      <div className="stat-info">
-                        <span className="stat-number">{user?.stats?.longestStreak || 0}</span>
-                        <span className="stat-label">Best Streak</span>
-                      </div>
+                    <div className="stat-item">
+                      <span className="stat-number">{user?.stats?.longestStreak || 0}</span>
+                      <span className="stat-label">Best Streak</span>
                     </div>
 
-                    <div className="stat-card">
-                      <FaTrophy className="stat-icon trophy" />
-                      <div className="stat-info">
-                        <span className="stat-number">{user?.stats?.bestScore || 0}%</span>
-                        <span className="stat-label">Best Score</span>
-                      </div>
+                    <div className="stat-item">
+                      <span className="stat-number">{formatTime(user?.stats?.totalTimeSpent || 0)}</span>
+                      <span className="stat-label">Total Time</span>
                     </div>
 
-                    <div className="stat-card">
-                      <FaChartLine className="stat-icon chart" />
-                      <div className="stat-info">
-                        <span className="stat-number">{user?.stats?.averageScore || 0}%</span>
-                        <span className="stat-label">Avg Score</span>
-                      </div>
+                    <div className="stat-item">
+                      <span className="stat-number">{user?.stats?.quizzes?.taken || 0}</span>
+                      <span className="stat-label">Quizzes</span>
+                    </div>
+
+                    <div className="stat-item">
+                      <span className="stat-number">{user?.stats?.quizzes?.correctAnswers || 0}</span>
+                      <span className="stat-label">Correct</span>
+                    </div>
+
+                    <div className="stat-item">
+                      <span className="stat-number">{user?.stats?.quizzes?.bestScore || 0}%</span>
+                      <span className="stat-label">Best Score</span>
                     </div>
                   </div>
-
                   <div className="detailed-stats">
                     <h4>Learning Progress</h4>
                     <div className="stats-list">
                       <div className="stats-row">
                         <span className="stats-label">Lessons Completed</span>
                         <span className="stats-value">{user?.stats?.lessonsCompleted || 0}</span>
-                      </div>
-                      <div className="stats-row">
-                        <span className="stats-label">Quizzes Taken</span>
-                        <span className="stats-value">{user?.stats?.quizzesTaken || 0}</span>
                       </div>
                       <div className="stats-row">
                         <span className="stats-label">Quizzes Passed</span>
@@ -691,8 +714,9 @@ function Navbar() {
                     </div>
                   </div>
 
-                  <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                  <div style={{ marginTop: '25px', textAlign: 'center' }}>
                     <button
+                      className="reset-stats-btn"
                       onClick={async () => {
                         if (window.confirm('Are you sure you want to reset all your stats? This cannot be undone.')) {
                           const { resetUserStats } = await import('../../services/firebase');
@@ -700,9 +724,10 @@ function Navbar() {
                           window.location.reload();
                         }
                       }}
-                      style={{ background: 'transparent', border: '1px solid #ff4444', color: '#ff4444', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer', fontSize: '0.85rem' }}
                     >
-                      Reset All Stats
+                      <span className="reset-icon">🗑️</span>
+                      <span className="reset-hover-icon">😭</span>
+                      <span className="reset-text">Reset All Stats</span>
                     </button>
                   </div>
                 </div>
