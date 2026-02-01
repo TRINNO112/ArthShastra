@@ -1,0 +1,298 @@
+/* ==========================================
+   PROJECT: DEMAND LEAGUE (COMIC BOOK THEME)
+   ========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  /* Comic Color Palette */
+  --comic-ink: #111111;       /* Deep Black for outlines */
+  --comic-paper: #f4f4f0;     /* Off-white paper */
+  
+  --hero-blue: #0074D9;       /* Classic Superman Blue */
+  --action-red: #FF4136;      /* Spiderman Red */
+  --flash-yellow: #FFDC00;    /* Wolverine Yellow */
+  --villain-purple: #B10DC9;  /* Joker Purple */
+  --hulk-green: #2ECC40;      /* Hulk Green */
+  
+  /* Fonts */
+  --font-comic-title: 'Bangers', cursive;
+  --font-comic-body: 'Comic Neue', cursive;
+}
+
+/* Base Page Style */
+.comic-page {
+  background-color: var(--comic-paper);
+  background-image: radial-gradient(var(--hero-blue) 15%, transparent 16%),
+                    radial-gradient(var(--hero-blue) 15%, transparent 16%);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px; /* Ben-Day Dots Pattern */
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: var(--font-comic-body);
+  color: var(--comic-ink);
+  overflow-x: hidden;
+}
+
+/* ==========================================
+   TYPOGRAPHY & HEADERS
+   ========================================== */
+
+.comic-header-lg {
+  font-family: var(--font-comic-title);
+  font-size: 4rem;
+  color: var(--flash-yellow);
+  text-shadow: 
+    3px 3px 0px var(--comic-ink),
+    -1px -1px 0 var(--comic-ink),  
+    1px -1px 0 var(--comic-ink),
+    -1px 1px 0 var(--comic-ink),
+    1px 1px 0 var(--comic-ink);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  transform: rotate(-2deg);
+  display: inline-block;
+  padding: 0 10px;
+}
+
+.comic-header-md {
+  font-family: var(--font-comic-title);
+  font-size: 2.5rem;
+  color: var(--action-red);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 1rem;
+}
+
+.comic-text {
+  font-family: var(--font-comic-body);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+/* ==========================================
+   COMIC PANELS (CARDS)
+   ========================================== */
+
+.comic-panel {
+  background: white;
+  border: 4px solid var(--comic-ink);
+  box-shadow: 10px 10px 0px var(--comic-ink);
+  padding: 2rem;
+  margin-bottom: 3rem;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.comic-panel:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 13px 13px 0px var(--comic-ink);
+}
+
+/* "Meanwhile..." Caption Box */
+.caption-box {
+  background: var(--flash-yellow);
+  border: 3px solid var(--comic-ink);
+  padding: 5px 15px;
+  position: absolute;
+  top: -20px;
+  left: 20px;
+  font-family: var(--font-comic-title);
+  font-size: 1.5rem;
+  color: var(--comic-ink);
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+
+/* ==========================================
+   SPEECH BUBBLES
+   ========================================== */
+
+.speech-bubble {
+  position: relative;
+  background: #fff;
+  border: 3px solid var(--comic-ink);
+  border-radius: 50%;
+  padding: 1.5rem;
+  text-align: center;
+  margin: 1rem;
+  display: inline-block;
+}
+
+.speech-bubble::before {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  background: #fff;
+  border-bottom: 3px solid var(--comic-ink);
+  border-right: 3px solid var(--comic-ink);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+/* Rectangular Thought Box */
+.thought-box {
+  background: #fff;
+  border: 3px solid var(--comic-ink);
+  border-radius: 10px;
+  padding: 1rem;
+  position: relative;
+  border-style: dashed;
+}
+
+/* ==========================================
+   BUTTONS & CONTROLS
+   ========================================== */
+
+.comic-btn {
+  background: var(--action-red);
+  color: white;
+  font-family: var(--font-comic-title);
+  font-size: 1.5rem;
+  border: 3px solid var(--comic-ink);
+  border-radius: 0;
+  padding: 10px 30px;
+  cursor: pointer;
+  box-shadow: 5px 5px 0px var(--comic-ink);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.1s;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.comic-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 2px 2px 0px var(--comic-ink);
+}
+
+.comic-btn.secondary {
+  background: var(--hero-blue);
+}
+
+.comic-btn.yellow {
+  background: var(--flash-yellow);
+  color: var(--comic-ink);
+}
+
+/* ==========================================
+   UTILITIES & DECORATIONS
+   ========================================== */
+
+/* Jagged Burst Shape */
+.burst-container {
+  position: relative;
+  display: inline-block;
+  padding: 20px;
+}
+
+.burst-shape {
+  background: var(--flash-yellow);
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(10deg);
+  z-index: -1;
+  clip-path: polygon(
+    20% 0%, 40% 10%, 60% 0%, 75% 15%, 
+    100% 10%, 90% 35%, 100% 50%, 90% 65%, 
+    100% 90%, 70% 85%, 50% 100%, 30% 85%, 
+    0% 90%, 10% 65%, 0% 50%, 10% 35%, 
+    0% 10%, 25% 15%
+  );
+  border: 2px solid var(--comic-ink); /* CSS clip-path doesn't support border directly, simulated via wrapper if needed */
+}
+
+/* Badge Style */
+.comic-badge {
+  background: var(--comic-ink);
+  color: white;
+  padding: 5px 10px;
+  font-family: var(--font-comic-title);
+  transform: skew(-10deg);
+  display: inline-block;
+  border: 2px solid white;
+  box-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+}
+
+/* ==========================================
+   ANIMATIONS
+   ========================================== */
+
+@keyframes popIn {
+  0% { transform: scale(0); }
+  80% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes powShake {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.animate-pop {
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.animate-shake:hover {
+  animation: powShake 0.3s ease-in-out;
+}
+
+/* Sub-Panel Styling */
+.comic-sub-panel {
+  padding: 1rem;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+/* Hover Lift Effect */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* Comic Caption */
+.comic-caption {
+  font-family: var(--font-comic-body);
+  font-style: italic;
+  font-weight: 700;
+}
+
+/* Interactive Toggle Container */
+.interactive-toggle-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* ==========================================
+   PERFORMANCE: REDUCED MOTION
+   ========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .comic-panel,
+  .hover-lift,
+  .animate-pop,
+  .animate-shake {
+    transition: none !important;
+    animation: none !important;
+  }
+}

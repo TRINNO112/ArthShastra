@@ -23,6 +23,7 @@ import {
 import { lesson5Data } from '../data/lesson5Data';
 import { logLessonProgress } from '../../../services/firebase';
 import '../css/lessons.css'; // Shared lesson styles
+import './lesson5-comic.css'; // Comic Book Theme Styles
 
 /**
  * Lesson 5: Theory of Demand and Elasticity
@@ -101,7 +102,7 @@ function Lesson5() {
   };
 
   return (
-    <div className="lesson-page">
+    <div className="comic-page">
       {/* Floating Background Elements */}
       <div className="floating-elements">
         <div className="float-circle circle-1"></div>
@@ -111,25 +112,31 @@ function Lesson5() {
       </div>
 
       {/* Header */}
-      <header className="lesson-header">
-        <div className="header-container">
-          <Link to="/lessons" className="back-link">
-            <FaArrowLeft />
-            <span>Back to Lessons</span>
+      <header className="lesson-header" style={{ background: 'transparent', border: 'none', boxShadow: 'none', padding: '0 0 2rem 0' }}>
+        <div className="header-container" style={{ display: 'block', textAlign: 'center' }}>
+          <Link to="/lessons" className="comic-btn secondary" style={{ position: 'absolute', top: '20px', left: '20px', fontSize: '1rem' }}>
+            <FaArrowLeft /> Back
           </Link>
 
-          <div className="lesson-info">
-            <div className="lesson-badge">
-              <span className="badge-icon">📉</span>
-              <span className="badge-tag">Microeconomics</span>
-            </div>
-            <h1 className="lesson-title">
-              <span className="title-line">Theory of Demand:</span>
-              <span className="title-gradient">Consumer Behaviour</span>
-            </h1>
-            <p className="lesson-meta">
-              Based on NCERT Grade 11 Microeconomics • {lesson5Data.mcqQuestions.length + lesson5Data.tfQuestions.length} Quiz Questions
-            </p>
+          <div className="comic-badge" style={{ fontSize: '1.2rem', marginBottom: '1rem', background: 'var(--action-red)' }}>
+            ISSUE #5: MICROECONOMICS
+          </div>
+
+          <h1 className="comic-header-lg">
+            THE AMAZING<br />
+            <span style={{ color: 'var(--hero-blue)' }}>THEORY OF DEMAND</span>
+          </h1>
+
+          <div style={{
+            background: 'white',
+            border: '3px solid var(--comic-ink)',
+            display: 'inline-block',
+            padding: '5px 15px',
+            transform: 'rotate(2deg)',
+            fontFamily: 'var(--font-comic-body)',
+            fontWeight: 'bold'
+          }}>
+            Based on NCERT Grade 11 • {lesson5Data.mcqQuestions.length + lesson5Data.tfQuestions.length} Villains to Defeat!
           </div>
         </div>
       </header>
@@ -137,7 +144,7 @@ function Lesson5() {
       {/* Navigation */}
       <nav className="lesson-nav">
         <div className="nav-container">
-          <div className="nav-scroll">
+          <div className="nav-scroll" style={{ gap: '15px' }}>
             {sections.map((section, index) => {
               const Icon = section.icon;
               const isActive = activeSection === section.id;
@@ -146,14 +153,20 @@ function Lesson5() {
               return (
                 <button
                   key={section.id}
-                  className={`nav-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
+                  className={`comic-btn ${isActive ? 'yellow' : 'secondary'}`}
+                  style={{
+                    fontSize: '1rem',
+                    padding: '10px 20px',
+                    opacity: isActive ? 1 : 0.8,
+                    transform: isActive ? 'scale(1.05)' : 'scale(1)'
+                  }}
                   onClick={() => handleSectionChange(section.id)}
                 >
                   <span className="nav-icon">
                     <Icon />
                   </span>
                   <span className="nav-text">{section.name}</span>
-                  {isCompleted && <span className="nav-check">✓</span>}
+                  {isCompleted && <span className="nav-check" style={{ marginLeft: '5px' }}>✓</span>}
                 </button>
               );
             })}
