@@ -26,7 +26,8 @@ import {
 } from './components';
 import { lesson1Data } from '../data/lesson1Data';
 import { logLessonProgress } from '../../../services/firebase';
-import '../css/lessons.css'; // Shared styles for lessons
+// Shared styles for lessons
+import './lesson1-davinci.css'; // Da Vinci Theme Override
 
 const sections = [
   { id: 'intro', name: 'Introduction', icon: FaBookOpen },
