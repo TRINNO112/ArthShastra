@@ -22,6 +22,21 @@ import Lesson10 from './pages/Lessons/Lesson10/Lesson10';
 import Lesson11 from './pages/Lessons/Lesson11/Lesson11';
 import Lesson12 from './pages/Lessons/Lesson12/Lesson12';
 import Lesson13 from './pages/Lessons/Lesson13/Lesson13';
+
+// Statistics Lessons
+import StatsLesson1 from './pages/StatsLessons/Lesson1/Lesson1';
+import StatsLesson2 from './pages/StatsLessons/Lesson2/Lesson2';
+import StatsLesson3 from './pages/StatsLessons/Lesson3/Lesson3';
+import StatsLesson4 from './pages/StatsLessons/Lesson4/Lesson4';
+import StatsLesson5 from './pages/StatsLessons/Lesson5/Lesson5';
+import StatsLesson6 from './pages/StatsLessons/Lesson6/Lesson6';
+import StatsLesson7 from './pages/StatsLessons/Lesson7/Lesson7';
+import StatsLesson8 from './pages/StatsLessons/Lesson8/Lesson8';
+import StatsLesson9 from './pages/StatsLessons/Lesson9/Lesson9';
+import StatsLesson10 from './pages/StatsLessons/Lesson10/Lesson10';
+import StatsLesson11 from './pages/StatsLessons/Lesson11/Lesson11';
+import StatsLesson12 from './pages/StatsLessons/Lesson12/Lesson12';
+import StatsLesson13 from './pages/StatsLessons/Lesson13/Lesson13';
 // Styles
 import './styles/variables.css';
 import './App.css';
@@ -55,10 +70,21 @@ function App() {
               <Route path="/lesson/micro11-11" element={<Lesson11 />} />
               <Route path="/lesson/micro11-12" element={<Lesson12 />} />
               <Route path="/lesson/micro11-13" element={<Lesson13 />} />
-              {/* TODO: Add more lesson routes */}
-              {/* <Route path="/quiz" element={<Quiz />} /> */}
-              {/* <Route path="/progress" element={<Progress />} /> */}
-              {/* <Route path="/profile" element={<Profile />} /> */}
+
+              {/* Statistics Class 11 Lessons */}
+              <Route path="/lesson/stats-1" element={<StatsLesson1 />} />
+              <Route path="/lesson/stats-2" element={<StatsLesson2 />} />
+              <Route path="/lesson/stats-3" element={<StatsLesson3 />} />
+              <Route path="/lesson/stats-4" element={<StatsLesson4 />} />
+              <Route path="/lesson/stats-5" element={<StatsLesson5 />} />
+              <Route path="/lesson/stats-6" element={<StatsLesson6 />} />
+              <Route path="/lesson/stats-7" element={<StatsLesson7 />} />
+              <Route path="/lesson/stats-8" element={<StatsLesson8 />} />
+              <Route path="/lesson/stats-9" element={<StatsLesson9 />} />
+              <Route path="/lesson/stats-10" element={<StatsLesson10 />} />
+              <Route path="/lesson/stats-11" element={<StatsLesson11 />} />
+              <Route path="/lesson/stats-12" element={<StatsLesson12 />} />
+              <Route path="/lesson/stats-13" element={<StatsLesson13 />} />
             </Routes>
           </main>
         </div>
