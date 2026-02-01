@@ -13,7 +13,7 @@ import {
   ReferenceDot,
   ReferenceLine,
 } from 'recharts';
-import './components.css';
+import '../lesson2-retro.css';
 
 // Helper function to get color variant class name
 const getColorVariant = (color) => {
@@ -42,7 +42,7 @@ const getDataColor = (color) => {
 function SlopeMOC() {
   const [selectedSegment, setSelectedSegment] = useState('AB');
 
-  // Production points for MOC calculation - calculated to match PPC curve formula: y = 100 * sqrt(1 - x/100)
+  // Production points for MOC calculation
   const productionPoints = [
     { label: 'A', wheat: 0, rice: 100 },
     { label: 'B', wheat: 20, rice: 89.4 },
@@ -134,10 +134,12 @@ function SlopeMOC() {
       return (
         <div className="slope-moc-tooltip">
           <p className="slope-moc-tooltip-text">
-            🌾 Wheat: <span className="slope-moc-tooltip-value-wheat">{data.wheat.toFixed(0)}</span>
+            {'🌾 Wheat: '}
+            <span className="slope-moc-tooltip-value-wheat">{data.wheat.toFixed(0)}</span>
           </p>
           <p className="slope-moc-tooltip-text">
-            🍚 Rice: <span className="slope-moc-tooltip-value-rice">{data.rice.toFixed(0)}</span>
+            {'🍚 Rice: '}
+            <span className="slope-moc-tooltip-value-rice">{data.rice.toFixed(0)}</span>
           </p>
         </div>
       );
@@ -147,52 +149,35 @@ function SlopeMOC() {
 
   return (
     <section className="lesson-section">
-      <div className="section-header-lesson">
-        <span className="section-badge-lesson">Advanced Concepts</span>
-        <h2 className="section-title-lesson">Slope and Marginal Opportunity Cost</h2>
-        <p className="section-subtitle-lesson">
-          Understanding the mathematical relationship between slope and opportunity cost on the PPC.
+      <div style={{ marginBottom: '30px', textAlign: 'center' }}>
+        <h2 className="retro-header-lg">SLOPE & MOC</h2>
+        <p className="sys-text" style={{ color: 'var(--retro-dim)' }}>
+          [MATH_ENGINE]: Calculating Marginal Opportunity Cost.
         </p>
       </div>
 
-      <div className="content-card">
-        <h3 className="card-title">
-          <FaArrowDown className="title-icon gold" />
-          What is the Slope of PPC?
+      <div className="terminal-card">
+        <h3 className="retro-header-md">
+          <FaArrowDown style={{ marginRight: '10px' }} />
+          WHAT IS THE SLOPE?
         </h3>
-
-        <div className="slope-moc-definition-box">
-          <p className="slope-moc-definition-text">
-            The <strong className="slope-moc-keyword-gold">slope of the PPC</strong> represents the rate at which one good must be sacrificed
-            to produce more of another good. It is always <strong>negative</strong> because of the inverse relationship between the two goods.
-          </p>
-          <div className="slope-moc-formula-box">
-            <p className="slope-moc-formula-text">
-              Slope = ΔRice / ΔWheat = -(Units of Rice Sacrificed) / (Units of Wheat Gained)
-            </p>
-          </div>
-        </div>
-
-        <h3 className="card-title slope-moc-card-title-spaced">
-          <FaCalculator className="title-icon cyan" />
-          Marginal Opportunity Cost (MOC)
-        </h3>
-
-        <p className="intro-text">
-          <strong>Marginal Opportunity Cost (MOC)</strong> is the amount of one good that must be given up to produce
-          one additional unit of another good. It is the <strong>absolute value of the slope</strong> of the PPC.
+        <p className="sys-text">
+          The <strong style={{ color: 'var(--retro-green)' }}>slope of the PPC</strong> represents the rate at which one good must be sacrificed
+          to produce more of another good. It is always <strong>negative</strong> because of the inverse relationship.
         </p>
 
-        <div className="slope-moc-moc-container">
-          <div className="slope-moc-moc-inner">
-            <p className="slope-moc-formula-text-cyan">
-              MOC = |Slope| = Units of Rice Lost / Units of Wheat Gained
-            </p>
-            <p className="slope-moc-formula-note">
-              MOC tells us how many units of Rice we sacrifice per unit of Wheat produced
-            </p>
-          </div>
+        <div className="sys-alert">
+          <strong>FORMULA:</strong> Slope = ΔRice / ΔWheat (Rise/Run)
         </div>
+
+        <h3 className="retro-header-md" style={{ marginTop: '30px' }}>
+          <FaCalculator style={{ marginRight: '10px' }} />
+          MARGINAL OPPORTUNITY COST
+        </h3>
+        <p className="sys-text">
+          MOC is the absolute value of the slope. |Slope| = Sacrificed / Gained.
+        </p>
+
 
         {/* Interactive Graph */}
         <div className="slope-moc-graph-container">
@@ -310,8 +295,8 @@ function SlopeMOC() {
                 onClick={() => setSelectedSegment(segment.id)}
                 data-color={getDataColor(segment.color)}
                 className={`slope-moc-segment-button ${selectedSegment === segment.id
-                    ? 'slope-moc-segment-button-active'
-                    : 'slope-moc-segment-button-inactive'
+                  ? 'slope-moc-segment-button-active'
+                  : 'slope-moc-segment-button-inactive'
                   }`}
                 style={{
                   borderColor: segment.color,
@@ -409,7 +394,7 @@ function SlopeMOC() {
                       {segment.moc.toFixed(2)}
                     </td>
                     <td className="slope-moc-td slope-moc-td-trend">
-                      {index > 0 && mocSegments[index - 1].moc < segment.moc ? '📈' : index === 0 ? '➡️' : '➡️'}
+                      {index === 0 ? '➡️' : (mocSegments[index - 1].moc < segment.moc ? '📈' : '➡️')}
                     </td>
                   </tr>
                 ))}

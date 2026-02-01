@@ -1,7 +1,7 @@
 // OpportunityCostCalculator.jsx - Interactive Opportunity Cost Calculator
 import { useState } from 'react';
 import { FaCalculator, FaCoins, FaClock, FaGraduationCap, FaBriefcase, FaRocket } from 'react-icons/fa';
-import './components.css';
+import '../lesson2-retro.css';
 
 function OpportunityCostCalculator() {
   const [activeCalculator, setActiveCalculator] = useState('money');
@@ -62,15 +62,14 @@ function OpportunityCostCalculator() {
 
   return (
     <section className="lesson-section">
-      <div className="section-header-lesson">
-        <span className="section-badge-lesson">Interactive Calculator</span>
-        <h2 className="section-title-lesson">Opportunity Cost Calculator</h2>
-        <p className="section-subtitle-lesson">
-          Calculate real opportunity costs for money, time, and education decisions!
+      <div style={{ marginBottom: '30px', textAlign: 'center' }}>
+        <h2 className="retro-header-lg">OC CALCULATOR</h2>
+        <p className="sys-text" style={{ color: 'var(--retro-dim)' }}>
+          [DECISION_MATRIX]: Quantify your trade-offs.
         </p>
       </div>
 
-      <div className="content-card">
+      <div className="terminal-card">
         {/* Calculator Type Selection */}
         <div className="occ-calculator-container">
           {calculators.map((calc) => {
@@ -92,12 +91,12 @@ function OpportunityCostCalculator() {
         {/* Money Calculator */}
         {activeCalculator === 'money' && (
           <div className="occ-money-calculator">
-            <div className="occ-calculator-header">
-              <FaCoins className="occ-calculator-icon-large" />
-              <h3 className="occ-calculator-title">
-                Investment Opportunity Cost
+            <div className="occ-calculator-header" style={{ borderBottom: '1px solid #333', paddingBottom: '15px', marginBottom: '20px' }}>
+              <FaCoins className="occ-calculator-icon-large" style={{ color: 'var(--retro-amber)' }} />
+              <h3 className="retro-header-md" style={{ marginTop: '10px' }}>
+                INVESTMENT OPPORTUNITY COST
               </h3>
-              <p className="occ-calculator-subtitle">
+              <p className="sys-text">
                 Compare two investment options and see what you're giving up!
               </p>
             </div>
@@ -189,12 +188,12 @@ function OpportunityCostCalculator() {
         {/* Time Calculator */}
         {activeCalculator === 'time' && (
           <div className="occ-time-calculator">
-            <div className="occ-calculator-header">
-              <FaClock className="occ-calculator-icon-large" />
-              <h3 className="occ-calculator-title">
-                Time Allocation Calculator
+            <div className="occ-calculator-header" style={{ borderBottom: '1px solid #333', paddingBottom: '15px', marginBottom: '20px' }}>
+              <FaClock className="occ-calculator-icon-large" style={{ color: 'var(--retro-cyan)' }} />
+              <h3 className="retro-header-md" style={{ marginTop: '10px' }}>
+                TIME ALLOCATION CALCULATOR
               </h3>
-              <p className="occ-calculator-subtitle">
+              <p className="sys-text">
                 Time is money! See what you're sacrificing when choosing one activity over another.
               </p>
             </div>
@@ -307,12 +306,12 @@ function OpportunityCostCalculator() {
         {/* Education Calculator */}
         {activeCalculator === 'education' && (
           <div className="occ-education-calculator">
-            <div className="occ-calculator-header">
-              <FaGraduationCap className="occ-calculator-icon-large" />
-              <h3 className="occ-calculator-title">
-                Education Investment Calculator
+            <div className="occ-calculator-header" style={{ borderBottom: '1px solid #333', paddingBottom: '15px', marginBottom: '20px' }}>
+              <FaGraduationCap className="occ-calculator-icon-large" style={{ color: 'var(--retro-green)' }} />
+              <h3 className="retro-header-md" style={{ marginTop: '10px' }}>
+                EDUCATION INVESTMENT
               </h3>
-              <p className="occ-calculator-subtitle">
+              <p className="sys-text">
                 Is college worth it? Calculate the true cost and break-even point!
               </p>
             </div>

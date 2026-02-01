@@ -28,7 +28,7 @@ import {
 } from './components';
 import { lesson2Data } from '../data/lesson2Data';
 import { logLessonProgress } from '../../../services/firebase';
-import '../css/lessons.css'; // Reusing Lesson 1 styles
+import './lesson2-retro.css'; // Project Genesis Theme 📟
 
 const sections = [
   { id: 'intro', name: 'Scarcity & Choice', icon: FaBookOpen },
@@ -116,7 +116,7 @@ function Lesson2() {
   };
 
   return (
-    <div className="lesson-page">
+    <div className="retro-container">
       <div className="floating-elements">
         <div className="float-circle circle-1"></div>
         <div className="float-circle circle-2"></div>

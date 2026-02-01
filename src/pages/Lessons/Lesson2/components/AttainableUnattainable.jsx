@@ -13,7 +13,7 @@ import {
   ReferenceDot,
   Scatter,
 } from 'recharts';
-import './components.css';
+import '../lesson2-retro.css';
 
 function AttainableUnattainable() {
   const [selectedPoint, setSelectedPoint] = useState('A');
@@ -159,18 +159,17 @@ function AttainableUnattainable() {
 
   return (
     <section className="lesson-section">
-      <div className="section-header-lesson">
-        <span className="section-badge-lesson">Production Analysis</span>
-        <h2 className="section-title-lesson">Attainable and Unattainable Combinations</h2>
-        <p className="section-subtitle-lesson">
-          Understanding which production combinations are possible, efficient, or beyond reach.
+      <div style={{ marginBottom: '30px', textAlign: 'center' }}>
+        <h2 className="retro-header-lg">POINT ANALYSIS</h2>
+        <p className="sys-text" style={{ color: 'var(--retro-dim)' }}>
+          [GRID_SCAN]: Classifying production coordinates.
         </p>
       </div>
 
-      <div className="content-card">
-        <h3 className="card-title">
-          <FaChartLine className="title-icon gold" />
-          Three Types of Production Points
+      <div className="terminal-card">
+        <h3 className="retro-header-md">
+          <FaChartLine style={{ marginRight: '10px' }} />
+          THREE TYPES OF PRODUCTION POINTS
         </h3>
 
         <div className="attainable-graph-container">

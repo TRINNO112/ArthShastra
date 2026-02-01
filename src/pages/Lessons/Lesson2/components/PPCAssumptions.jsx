@@ -1,6 +1,6 @@
 // PPCAssumptions.jsx - Assumptions of Production Possibility Curve
 import { FaListOl, FaCheckCircle, FaInfoCircle, FaLightbulb } from 'react-icons/fa';
-import './components.css';
+import '../lesson2-retro.css';
 
 function PPCAssumptions() {
   const assumptions = [
@@ -51,69 +51,38 @@ function PPCAssumptions() {
 
   return (
     <section className="lesson-section">
-      <div className="section-header-lesson">
-        <span className="section-badge-lesson">Foundation Concepts</span>
-        <h2 className="section-title-lesson">Assumptions of Production Possibility Curve</h2>
-        <p className="section-subtitle-lesson">
-          Understanding the fundamental assumptions that underlie the PPC model.
+      <div style={{ marginBottom: '30px', textAlign: 'center' }}>
+        <h2 className="retro-header-lg">PPC ASSUMPTIONS</h2>
+        <p className="sys-text" style={{ color: 'var(--retro-dim)' }}>
+          [MODEL_CONSTRAINTS]: Underlying logic for the frontier.
         </p>
       </div>
 
-      <div className="content-card">
-        <div className="assumptions-intro-box">
-          <div className="assumptions-intro-content">
-            <FaInfoCircle className="assumptions-intro-icon" />
-            <div>
-              <h3 className="assumptions-intro-heading">
-                Why Assumptions Matter
-              </h3>
-              <p className="assumptions-intro-text">
-                The Production Possibility Curve is a simplified economic model. Like all models, it makes certain assumptions
-                to help us understand complex real-world phenomena. These assumptions allow us to focus on the fundamental
-                trade-offs that economies face when allocating scarce resources.
-              </p>
+      <div className="terminal-card">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <FaInfoCircle size={30} style={{ color: 'var(--retro-cyan)' }} />
+          <h3 className="retro-header-md" style={{ margin: 0 }}>WHY ASSUMPTIONS MATTER?</h3>
+        </div>
+        <p className="sys-text" style={{ marginTop: '10px' }}>
+          The Production Possibility Curve is a simplified economic model. Like all models, it makes certain assumptions
+          to help us understand complex real-world phenomena.
+        </p>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+        {assumptions.map((assumption) => (
+          <div key={assumption.id} className="terminal-card" style={{ marginBottom: 0, borderColor: assumption.color }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+              <span style={{ fontFamily: 'var(--font-mono)', color: assumption.color }}>#0{assumption.id}</span>
+              <span style={{ fontSize: '1.5rem' }}>{assumption.icon}</span>
+            </div>
+            <h4 style={{ fontFamily: 'var(--font-header)', fontSize: '1.5rem', color: '#fff', marginBottom: '10px' }}>{assumption.title}</h4>
+            <p className="sys-text" style={{ fontSize: '0.9rem', marginBottom: '10px' }}>{assumption.description}</p>
+            <div style={{ borderTop: `1px solid ${assumption.color}`, paddingTop: '10px', fontSize: '0.8rem', color: '#888' }}>
+              {assumption.detail}
             </div>
           </div>
-        </div>
-
-        <div className="assumptions-grid">
-          {assumptions.map((assumption) => (
-            <div
-              key={assumption.id}
-              className="assumption-card"
-              style={getDynamicStyles(assumption.color)}
-            >
-              <div className="assumption-card-icon-bg">
-                {assumption.icon}
-              </div>
-
-              <div className="assumption-card-content">
-                <div className="assumption-card-icon">
-                  {assumption.icon}
-                </div>
-                <div className="assumption-card-text">
-                  <div className="assumption-card-badge-container">
-                    <span className="assumption-card-badge">
-                      Assumption {assumption.id}
-                    </span>
-                  </div>
-                  <h3 className="assumption-card-title">
-                    {assumption.title}
-                  </h3>
-                  <p className="assumption-card-description">
-                    {assumption.description}
-                  </p>
-                  <div className="assumption-card-detail-box">
-                    <p className="assumption-card-detail-text">
-                      <FaLightbulb className="assumption-card-detail-icon" />
-                      {assumption.detail}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        ))}
       </div>
 
       <div className="highlight-card cyan assumptions-takeaway-card">

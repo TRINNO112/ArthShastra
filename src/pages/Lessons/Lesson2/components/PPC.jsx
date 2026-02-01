@@ -1,87 +1,96 @@
-// PPC.jsx - The Kingdom's Frontier
-import { FaChartLine, FaCheckCircle, FaUndoAlt, FaArrowRight, FaMapMarkedAlt, FaScroll, FaCompass } from 'react-icons/fa';
+// PPC.jsx - The Production Frontier Grid 📟
+import { FaChartLine, FaVectorSquare, FaExpand, FaCompress, FaLock } from 'react-icons/fa';
 import PPCVisualizer from './PPCVisualizer';
-import './components.css';
-import '../../Lesson1/lesson1.css'; // Vintage Styles
+import '../lesson2-retro.css';
 
 function PPC() {
   return (
-    <section className="lesson-section">
-      <div className="section-header-lesson">
-        <span className="section-badge-lesson" style={{ background: '#2e7d32', color: '#fff', borderColor: '#1b5e20' }}> Territory Mapping </span>
-        <h2 className="section-title-lesson" style={{ fontFamily: 'Cinzel, serif', color: '#fff' }}>The Kingdom's Frontier</h2>
-        <p className="section-subtitle-lesson">
-          The Royal Cartographers have mapped the limits of our production capabilities. Beyond this line lies the impossible.
-        </p>
+    <section>
+
+      {/* HEADER */}
+      <div style={{ marginBottom: '30px', textAlign: 'center' }}>
+        <h2 className="retro-header-lg" style={{ color: 'var(--retro-cyan)', textShadow: 'var(--glow-cyan)' }}>PRODUCTION POSSIBILITY FRONTIER</h2>
+        <div className="sys-text" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.9rem', color: '#888' }}>
+          [SIMULATION_MODE]: GRAPHICAL_RENDER
+        </div>
       </div>
 
-      {/* THE MAP (Visualizer) */}
-      <div className="content-card" style={{ padding: '5px', background: '#3e2723', border: '4px solid #d4af37', borderRadius: '10px', boxShadow: '0 20px 50px rgba(0,0,0,0.6)' }}>
-        <div style={{ background: '#5d4037', padding: '10px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <h3 style={{ fontFamily: 'Cinzel', color: '#d4af37', margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <FaMapMarkedAlt /> The Surveyed Lands
-          </h3>
-          <span style={{ color: '#d7ccc8', fontSize: '0.8rem', fontFamily: 'monospace' }}>SCALE: 1:1000</span>
+      {/* THE VISUALIZER FRAME */}
+      <div className="terminal-card" style={{ padding: '0', overflow: 'hidden', border: '1px solid var(--retro-cyan)' }}>
+        {/* Toolbar */}
+        <div style={{ background: 'rgba(0, 229, 255, 0.1)', padding: '10px 15px', display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--retro-cyan)' }}>
+          <div style={{ display: 'flex', gap: '15px', color: 'var(--retro-cyan)', fontSize: '0.8rem' }}>
+            <span><FaVectorSquare /> COORDS: X,Y</span>
+            <span>FPS: 60</span>
+          </div>
+          <div style={{ color: 'var(--retro-text)', fontSize: '0.8rem', letterSpacing: '1px' }}>
+                  // MAX_CAPACITY_RENDER
+          </div>
         </div>
 
-        <div style={{ padding: '20px', background: '#212121' }}>
-          <p className="intro-text" style={{ textAlign: 'center', marginBottom: '20px', color: '#e0e0e0' }}>
-            "This Map (Curve) shows the maximum trade-off between <strong>Guns</strong> (Defense) and <strong>Butter</strong> (Civilian Goods)."
-          </p>
-          {/* Interactive Visualizer Component */}
+        {/* Graph Container - Assuming PPCVisualizer can adapt to dark container or needs BG */}
+        <div style={{ padding: '20px', background: '#000', position: 'relative' }}>
+          {/* Grid Overlay Effect */}
+          <div style={{
+            position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+            backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)',
+            backgroundSize: '20px 20px',
+            opacity: 0.3,
+            pointerEvents: 'none'
+          }}></div>
+
           <PPCVisualizer />
         </div>
       </div>
 
-      {/* Cartographer's Notes (Properties & Shifts) */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px', marginTop: '40px' }}>
+      {/* SIMULATION LOGS (Properties & Shifts) */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px', marginTop: '30px' }}>
 
-        {/* Properties */}
-        <div className="ancient-scroll" style={{ padding: '30px' }}>
-          <h4 style={{ fontFamily: 'Cinzel', color: '#3e2723', borderBottom: '2px solid #3e2723', paddingBottom: '10px' }}>
-            <FaCompass /> Cartographer's Observations
-          </h4>
-          <ul className="bullet-list ppc-properties-list" style={{ marginTop: '15px', color: '#1a0f0a' }}>
-            <li style={{ marginBottom: '10px' }}>
-              <strong>Slopes Downwards:</strong> The land is finite. To build a fort (Gun), we must clear a farm (Butter).
+        {/* PROPERTIES */}
+        <div className="terminal-card">
+          <h3 className="retro-header-md" style={{ fontSize: '1.4rem' }}>CURVE_PROPERTIES</h3>
+          <ul className="sys-text" style={{ listStyle: 'none', padding: 0 }}>
+            <li style={{ marginBottom: '15px' }}>
+              <strong style={{ color: 'var(--retro-green)' }}>{'>'}{'>'} Downward Slope</strong><br />
+              <span style={{ fontSize: '0.9rem', color: '#888' }}>Reason: Inverse relationship. +Guns = -Butter.</span>
             </li>
             <li>
-              <strong>Concave Shape:</strong> The terrain is uneven. Not all land is equally good for farming or building. (MOC Increases).
+              <strong style={{ color: 'var(--retro-green)' }}>{'>'}{'>'} Concave Shape</strong><br />
+              <span style={{ fontSize: '0.9rem', color: '#888' }}>Reason: MOC (Marginal Opportunity Cost) Increases. Resources represent specialization.</span>
             </li>
           </ul>
         </div>
 
-        {/* Shifts */}
-        <div className="ancient-scroll" style={{ padding: '30px' }}>
-          <h4 style={{ fontFamily: 'Cinzel', color: '#1a237e', borderBottom: '2px solid #1a237e', paddingBottom: '10px' }}>
-            <FaUndoAlt /> Changing Borders (Shifts)
-          </h4>
-          <ul className="bullet-list ppc-shifts-list" style={{ marginTop: '15px', color: '#1a0f0a' }}>
-            <li style={{ marginBottom: '10px' }}>
-              <strong style={{ color: '#1b5e20' }}>Expansion (Right Shift):</strong> New lands discovered or better tools invented. The Kingdom grows!
+        {/* SHIFTS */}
+        <div className="terminal-card">
+          <h3 className="retro-header-md" style={{ fontSize: '1.4rem' }}>SYSTEM_EVENTS (SHIFTS)</h3>
+          <ul className="sys-text" style={{ listStyle: 'none', padding: 0 }}>
+            <li style={{ marginBottom: '15px', borderLeft: '3px solid var(--retro-green)', paddingLeft: '10px' }}>
+              <strong>[UPGRADE]</strong> Right Shift<br />
+              <span style={{ fontSize: '0.9rem' }}>Discovery of new resources or Tech++.</span>
             </li>
-            <li>
-              <strong style={{ color: '#b71c1c' }}>Contraction (Left Shift):</strong> Natural disaster or war destroys our resources. The Kingdom shrinks.
+            <li style={{ borderLeft: '3px solid #ff3333', paddingLeft: '10px' }}>
+              <strong>[CRASH]</strong> Left Shift<br />
+              <span style={{ fontSize: '0.9rem' }}>Destruction of assets (War/Disaster).</span>
             </li>
           </ul>
         </div>
+
       </div>
 
-      {/* Assumptions (Laws) */}
-      <div className="highlight-card purple" style={{ marginTop: '40px', background: '#4a148c', border: '2px solid #ab47bc' }}>
-        <div className="highlight-content">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
-            <FaScroll size={24} color="#e1bee7" />
-            <h3 style={{ fontFamily: 'Cinzel', margin: 0, color: '#e1bee7' }}>The Laws of the Territory (Assumptions)</h3>
-          </div>
-          <p style={{ fontFamily: 'Crimson Text', fontSize: '1.1rem', lineHeight: '1.8', color: '#f3e5f5' }}>
-            1. The Kingdom's borders (Resources) are fixed.<br />
-            2. Every subject (Resource) is working hard (Full Utilization).<br />
-            3. Our crafting methods (Technology) do not change.<br />
-            4. We only produce two things: Defense & Welfare.
-          </p>
+      {/* CONSTRAINTS (Assumptions) */}
+      <div className="sys-alert" style={{ background: '#111', borderLeftColor: '#888' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+          <FaLock /> <strong>SIMULATION_CONSTRAINTS</strong>
+        </div>
+        <div style={{ color: '#888', fontSize: '0.9rem', fontFamily: 'var(--font-mono)' }}>
+          1. Resources = FIXED<br />
+          2. Technology = CONSTANT<br />
+          3. Efficiency = 100%<br />
+          4. Outputs = 2 (Two-Good Model)
         </div>
       </div>
+
     </section>
   );
 }

@@ -12,7 +12,7 @@ import {
   Label,
   ReferenceDot,
 } from 'recharts';
-import './components.css';
+import '../lesson2-retro.css';
 
 function TabularRepresentation() {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -112,18 +112,17 @@ function TabularRepresentation() {
 
   return (
     <section className="lesson-section">
-      <div className="section-header-lesson">
-        <span className="section-badge-lesson">Data Analysis</span>
-        <h2 className="section-title-lesson">Tabular Representation of PPC</h2>
-        <p className="section-subtitle-lesson">
-          Understanding production possibilities through numerical data and schedules.
+      <div style={{ marginBottom: '30px', textAlign: 'center' }}>
+        <h2 className="retro-header-lg">DATA LOG: PRODUCTION SCHEDULE</h2>
+        <p className="sys-text" style={{ color: 'var(--retro-dim)' }}>
+          [RAW_DATA]: Numerical breakdown of the frontier.
         </p>
       </div>
 
-      <div className="content-card">
-        <h3 className="card-title">
-          <FaTable className="title-icon gold" />
-          Production Possibilities Schedule
+      <div className="terminal-card">
+        <h3 className="retro-header-md">
+          <FaTable style={{ marginRight: '10px' }} />
+          PRODUCTION POSSIBILITIES SCHEDULE
         </h3>
         <p className="intro-text">
           The PPC can be represented in tabular form, showing various combinations of two goods that can be produced

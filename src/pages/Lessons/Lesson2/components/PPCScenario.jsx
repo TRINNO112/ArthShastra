@@ -13,7 +13,7 @@ import {
   ReferenceDot,
   Area,
 } from 'recharts';
-import './components.css';
+import '../lesson2-retro.css';
 
 export default function PPCScenario() {
   const [currentScenario, setCurrentScenario] = useState(0);
@@ -431,27 +431,26 @@ export default function PPCScenario() {
 
   return (
     <section className="lesson-section">
-      <div className="section-header-lesson">
-        <span className="section-badge-lesson">Interactive Learning</span>
-        <h2 className="section-title-lesson">PPC Real-World Scenarios</h2>
-        <p className="section-subtitle-lesson">
-          Apply your knowledge by solving real economic decisions!
+      <div style={{ marginBottom: '30px', textAlign: 'center' }}>
+        <h2 className="retro-header-lg">PPC SIMULATION</h2>
+        <p className="sys-text" style={{ color: 'var(--retro-dim)' }}>
+          [SCENARIO_ENGINE]: Apply logic to real-world variables.
         </p>
       </div>
 
-      <div className="content-card">
+      <div className="terminal-card">
         {/* Score Display */}
-        <div className="ppc-scenario-score-header">
+        <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '15px', marginBottom: '20px' }}>
           <div className="ppc-scenario-score-left">
-            <FaGamepad className="ppc-scenario-score-icon" />
-            <h3 className="ppc-scenario-score-title">
-              Scenario {currentScenario + 1} of {scenarios.length}
+            <FaGamepad className="ppc-scenario-score-icon" style={{ color: 'var(--retro-cyan)' }} />
+            <h3 className="retro-header-md" style={{ margin: 0 }}>
+              SCENARIO {currentScenario + 1} / {scenarios.length}
             </h3>
           </div>
-          <div className="ppc-scenario-score-right">
-            <FaTrophy className="ppc-scenario-trophy-icon" />
+          <div className="ppc-scenario-score-right" style={{ fontFamily: 'var(--font-mono)' }}>
+            <FaTrophy className="ppc-scenario-trophy-icon" style={{ color: 'var(--retro-amber)' }} />
             <span className="ppc-scenario-score-value">
-              Score: {score}/{scenarios.length}
+              SCORE: {score}
             </span>
           </div>
         </div>
@@ -672,86 +671,86 @@ export default function PPCScenario() {
           )}
 
           {/* Feedback */}
-      {showExplanation && userChoice && (
-        <div className={`ppc-scenario-feedback-box ${userChoice.isCorrect ? 'ppc-scenario-feedback-correct' : 'ppc-scenario-feedback-incorrect'}`}>
-          <div className="ppc-scenario-feedback-header">
-            {userChoice.isCorrect ? (
-              <FaCheckCircle className="ppc-scenario-feedback-icon ppc-scenario-feedback-icon-correct" />
-            ) : (
-              <FaTimesCircle className="ppc-scenario-feedback-icon ppc-scenario-feedback-icon-incorrect" />
-            )}
-            <h3 className={`ppc-scenario-feedback-title ${userChoice.isCorrect ? 'ppc-scenario-feedback-title-correct' : 'ppc-scenario-feedback-title-incorrect'}`}>
-              {userChoice.isCorrect ? 'Correct! 🎉' : 'Not Quite! 🤔'}
-            </h3>
-          </div>
+          {showExplanation && userChoice && (
+            <div className={`ppc-scenario-feedback-box ${userChoice.isCorrect ? 'ppc-scenario-feedback-correct' : 'ppc-scenario-feedback-incorrect'}`}>
+              <div className="ppc-scenario-feedback-header">
+                {userChoice.isCorrect ? (
+                  <FaCheckCircle className="ppc-scenario-feedback-icon ppc-scenario-feedback-icon-correct" />
+                ) : (
+                  <FaTimesCircle className="ppc-scenario-feedback-icon ppc-scenario-feedback-icon-incorrect" />
+                )}
+                <h3 className={`ppc-scenario-feedback-title ${userChoice.isCorrect ? 'ppc-scenario-feedback-title-correct' : 'ppc-scenario-feedback-title-incorrect'}`}>
+                  {userChoice.isCorrect ? 'Correct! 🎉' : 'Not Quite! 🤔'}
+                </h3>
+              </div>
 
-          <p className="ppc-scenario-feedback-text">
-            {userChoice.feedback}
-          </p>
+              <p className="ppc-scenario-feedback-text">
+                {userChoice.feedback}
+              </p>
 
-          <div className="ppc-scenario-explanation-box">
-            <div className="ppc-scenario-explanation-header">
-              <FaLightbulb className="ppc-scenario-explanation-icon" />
-              <h4 className="ppc-scenario-explanation-heading">
-                Economic Concept:
-              </h4>
+              <div className="ppc-scenario-explanation-box">
+                <div className="ppc-scenario-explanation-header">
+                  <FaLightbulb className="ppc-scenario-explanation-icon" />
+                  <h4 className="ppc-scenario-explanation-heading">
+                    Economic Concept:
+                  </h4>
+                </div>
+                <p className="ppc-scenario-explanation-text">
+                  {userChoice.explanation}
+                </p>
+              </div>
+
+              <div className="ppc-scenario-button-container">
+                {currentScenario < scenarios.length - 1 ? (
+                  <button
+                    onClick={nextScenario}
+                    className="ppc-scenario-next-button"
+                  >
+                    Next Scenario →
+                  </button>
+                ) : (
+                  <button
+                    onClick={resetGame}
+                    className="ppc-scenario-replay-button"
+                  >
+                    <FaRedo />
+                    Play Again
+                  </button>
+                )}
+              </div>
             </div>
-            <p className="ppc-scenario-explanation-text">
-              {userChoice.explanation}
+          )}
+        </div>
+
+        {/* Final Score */}
+        {currentScenario === scenarios.length - 1 && showExplanation && (
+          <div className="ppc-scenario-final-score-box">
+            <FaTrophy className="ppc-scenario-final-trophy" />
+            <h3 className="ppc-scenario-final-title">
+              Game Complete!
+            </h3>
+            <p className="ppc-scenario-final-score">
+              Final Score: <strong className="ppc-scenario-final-score-number">{score}/{scenarios.length}</strong>
+            </p>
+            <p className="ppc-scenario-final-message">
+              {score === scenarios.length ? '🎉 Perfect! You mastered PPC concepts!' :
+                score >= scenarios.length * 0.75 ? '👍 Great job! You understand most concepts!' :
+                  score >= scenarios.length * 0.5 ? '📚 Good effort! Review the concepts and try again!' :
+                    '💪 Keep learning! Practice makes perfect!'}
             </p>
           </div>
-
-          <div className="ppc-scenario-button-container">
-            {currentScenario < scenarios.length - 1 ? (
-              <button
-                onClick={nextScenario}
-                className="ppc-scenario-next-button"
-              >
-                Next Scenario →
-              </button>
-            ) : (
-              <button
-                onClick={resetGame}
-                className="ppc-scenario-replay-button"
-              >
-                <FaRedo />
-                Play Again
-              </button>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
-
-    {/* Final Score */}
-    {currentScenario === scenarios.length - 1 && showExplanation && (
-      <div className="ppc-scenario-final-score-box">
-        <FaTrophy className="ppc-scenario-final-trophy" />
-        <h3 className="ppc-scenario-final-title">
-          Game Complete!
-        </h3>
-        <p className="ppc-scenario-final-score">
-          Final Score: <strong className="ppc-scenario-final-score-number">{score}/{scenarios.length}</strong>
-        </p>
-        <p className="ppc-scenario-final-message">
-          {score === scenarios.length ? '🎉 Perfect! You mastered PPC concepts!' :
-            score >= scenarios.length * 0.75 ? '👍 Great job! You understand most concepts!' :
-              score >= scenarios.length * 0.5 ? '📚 Good effort! Review the concepts and try again!' :
-                '💪 Keep learning! Practice makes perfect!'}
-        </p>
+        )}
       </div>
-    )}
-  </div>
 
-  <div className="highlight-card purple ppc-scenario-highlight-card">
-    <div className="highlight-content">
-      <h3 className="ppc-scenario-highlight-heading">🎯 Learning Through Real Scenarios</h3>
-      <p className="ppc-scenario-highlight-text">
-        These scenarios help you understand how PPC concepts apply in real business and government decisions.
-        Every choice has an opportunity cost, and understanding trade-offs is essential for effective resource allocation!
-      </p>
-    </div>
-  </div>
-</section>
+      <div className="highlight-card purple ppc-scenario-highlight-card">
+        <div className="highlight-content">
+          <h3 className="ppc-scenario-highlight-heading">🎯 Learning Through Real Scenarios</h3>
+          <p className="ppc-scenario-highlight-text">
+            These scenarios help you understand how PPC concepts apply in real business and government decisions.
+            Every choice has an opportunity cost, and understanding trade-offs is essential for effective resource allocation!
+          </p>
+        </div>
+      </div>
+    </section>
   );
-  }
+}
