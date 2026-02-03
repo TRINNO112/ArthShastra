@@ -29,23 +29,23 @@ function Introduction() {
           <span className="handwritten-note">From the Greek 'Oikonomia'</span>
         </div>
 
-        <div className="diagram-area">
+        <div className="diagram-area" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: '15px' }}>
           <div style={{ textAlign: 'center' }}>
-            <h4 style={{ fontFamily: 'Cinzel', fontSize: '1.8rem', color: '#2c2c2c', margin: 0, textDecoration: 'underline' }}>Oikos</h4>
-            <p className="handwritten-note" style={{ margin: 0 }}>Household</p>
+            <h4 style={{ fontFamily: 'Cinzel', fontSize: 'clamp(1.2rem, 4vw, 1.8rem)', color: '#2c2c2c', margin: 0, textDecoration: 'underline' }}>Oikos</h4>
+            <p className="handwritten-note" style={{ margin: 0, fontSize: 'clamp(0.9rem, 3vw, 1.1rem)' }}>Household</p>
           </div>
 
-          <div className="math-symbol">+</div>
+          <div className="math-symbol" style={{ fontSize: '1.5rem', margin: '0 5px' }}>+</div>
 
           <div style={{ textAlign: 'center' }}>
-            <h4 style={{ fontFamily: 'Cinzel', fontSize: '1.8rem', color: '#2c2c2c', margin: 0, textDecoration: 'underline' }}>Nomos</h4>
-            <p className="handwritten-note" style={{ margin: 0 }}>Management</p>
+            <h4 style={{ fontFamily: 'Cinzel', fontSize: 'clamp(1.2rem, 4vw, 1.8rem)', color: '#2c2c2c', margin: 0, textDecoration: 'underline' }}>Nomos</h4>
+            <p className="handwritten-note" style={{ margin: 0, fontSize: 'clamp(0.9rem, 3vw, 1.1rem)' }}>Management</p>
           </div>
 
-          <div className="math-symbol">=</div>
+          <div className="math-symbol" style={{ fontSize: '1.5rem', margin: '0 5px' }}>=</div>
 
           <div style={{ textAlign: 'center' }}>
-            <h4 style={{ fontFamily: 'Caveat', fontSize: '2.5rem', color: '#8e44ad', margin: 0 }}>Economics</h4>
+            <h4 style={{ fontFamily: 'Caveat', fontSize: 'clamp(1.8rem, 5vw, 2.5rem)', color: '#8e44ad', margin: 0 }}>Economics</h4>
           </div>
         </div>
 

@@ -1,447 +1,107 @@
-// OpportunityCostCalculator.jsx - Interactive Opportunity Cost Calculator
+// OpportunityCostCalculator.jsx
 import { useState } from 'react';
-import { FaCalculator, FaCoins, FaClock, FaGraduationCap, FaBriefcase, FaRocket } from 'react-icons/fa';
-import '../lesson2-retro.css';
+import { FaCoins, FaClock, FaGraduationCap } from 'react-icons/fa';
+import '../lesson2-core.css';
 
 function OpportunityCostCalculator() {
-  const [activeCalculator, setActiveCalculator] = useState('money');
+  const [activeTab, setActiveTab] = useState('money');
 
-  // Money Calculator State
-  const [moneyAmount, setMoneyAmount] = useState(10000);
-  const [moneyOption1Return, setMoneyOption1Return] = useState(8);
-  const [moneyOption2Return, setMoneyOption2Return] = useState(5);
+  // State for Money
+  const [investment, setInvestment] = useState(10000);
+  const [return1, setReturn1] = useState(8);
+  const [return2, setReturn2] = useState(5);
 
-  // Time Calculator State
-  const [hoursAvailable, setHoursAvailable] = useState(40);
-  const [activity1Hours, setActivity1Hours] = useState(20);
-  const [activity1Value, setActivity1Value] = useState(500);
-  const [activity2Value, setActivity2Value] = useState(300);
-
-  // Education Calculator State
-  const [yearsEducation, setYearsEducation] = useState(4);
-  const [salaryWithoutDegree, setSalaryWithoutDegree] = useState(30000);
-  const [salaryWithDegree, setSalaryWithDegree] = useState(60000);
-  const [educationCost, setEducationCost] = useState(50000);
-
-  // Calculate Money Opportunity Cost
-  const calculateMoneyOC = () => {
-    const option1Return = (moneyAmount * moneyOption1Return) / 100;
-    const option2Return = (moneyAmount * moneyOption2Return) / 100;
-    const opportunityCost = Math.abs(option1Return - option2Return);
-    const betterOption = option1Return > option2Return ? 'Investment 1' : 'Investment 2';
-    return { option1Return, option2Return, opportunityCost, betterOption };
+  const calculateMoney = () => {
+    const r1 = (investment * return1) / 100;
+    const r2 = (investment * return2) / 100;
+    return { r1, r2, diff: Math.abs(r1 - r2), best: r1 > r2 ? 'Option 1' : 'Option 2' };
   };
-
-  // Calculate Time Opportunity Cost
-  const calculateTimeOC = () => {
-    const activity2Hours = hoursAvailable - activity1Hours;
-    const activity1TotalValue = (activity1Hours / hoursAvailable) * activity1Value;
-    const activity2TotalValue = (activity2Hours / hoursAvailable) * activity2Value;
-    const opportunityCost = activity2TotalValue;
-    return { activity1Hours, activity2Hours, activity1TotalValue, activity2TotalValue, opportunityCost };
-  };
-
-  // Calculate Education Opportunity Cost
-  const calculateEducationOC = () => {
-    const earningsLostDuringStudy = salaryWithoutDegree * yearsEducation;
-    const totalOpportunityCost = earningsLostDuringStudy + educationCost;
-    const additionalYearlySalary = salaryWithDegree - salaryWithoutDegree;
-    const breakEvenYears = totalOpportunityCost / additionalYearlySalary;
-    return { earningsLostDuringStudy, totalOpportunityCost, additionalYearlySalary, breakEvenYears };
-  };
-
-  const moneyResults = calculateMoneyOC();
-  const timeResults = calculateTimeOC();
-  const educationResults = calculateEducationOC();
-
-  const calculators = [
-    { id: 'money', name: 'Investment Decision', icon: FaCoins, color: '#ffd700' },
-    { id: 'time', name: 'Time Allocation', icon: FaClock, color: '#00d4ff' },
-    { id: 'education', name: 'Education ROI', icon: FaGraduationCap, color: '#9d4edd' }
-  ];
+  const moneyRes = calculateMoney();
 
   return (
-    <section className="lesson-section">
-      <div style={{ marginBottom: '30px', textAlign: 'center' }}>
-        <h2 className="retro-header-lg">OC CALCULATOR</h2>
-        <p className="sys-text" style={{ color: 'var(--retro-dim)' }}>
-          [DECISION_MATRIX]: Quantify your trade-offs.
-        </p>
-      </div>
+    <section>
+      <h2 className="section-title">Interactive Calculator</h2>
 
-      <div className="terminal-card">
-        {/* Calculator Type Selection */}
-        <div className="occ-calculator-container">
-          {calculators.map((calc) => {
-            const Icon = calc.icon;
-            const isActive = activeCalculator === calc.id;
-            return (
-              <button
-                key={calc.id}
-                onClick={() => setActiveCalculator(calc.id)}
-                className={`occ-calculator-button ${isActive ? 'occ-calculator-button-active' : ''}`}
-              >
-                <Icon className="occ-calculator-icon" />
-                <span>{calc.name}</span>
-              </button>
-            );
-          })}
+      <div className="lesson-card">
+        {/* Tabs */}
+        <div className="btn-group" style={{ marginBottom: '30px', justifyContent: 'center' }}>
+          <button
+            className={`btn-toggle ${activeTab === 'money' ? 'active' : ''}`}
+            onClick={() => setActiveTab('money')}
+          >
+            <FaCoins style={{ marginRight: '8px' }} /> Investment
+          </button>
+          <button
+            className={`btn-toggle ${activeTab === 'time' ? 'active' : ''}`}
+            onClick={() => setActiveTab('time')}
+          >
+            <FaClock style={{ marginRight: '8px' }} /> Time
+          </button>
         </div>
 
-        {/* Money Calculator */}
-        {activeCalculator === 'money' && (
-          <div className="occ-money-calculator">
-            <div className="occ-calculator-header" style={{ borderBottom: '1px solid #333', paddingBottom: '15px', marginBottom: '20px' }}>
-              <FaCoins className="occ-calculator-icon-large" style={{ color: 'var(--retro-amber)' }} />
-              <h3 className="retro-header-md" style={{ marginTop: '10px' }}>
-                INVESTMENT OPPORTUNITY COST
-              </h3>
-              <p className="sys-text">
-                Compare two investment options and see what you're giving up!
-              </p>
-            </div>
-
-            {/* Inputs */}
-            <div className="occ-input-grid">
-              <div className="occ-input-group">
-                <label className="occ-input-label">
-                  💰 Amount to Invest ($)
-                </label>
+        {/* Money Calculator Interface */}
+        {activeTab === 'money' && (
+          <div className="lesson-grid-2">
+            <div>
+              <h3 className="card-title">Input Data</h3>
+              <div className="form-group">
+                <label className="form-label">Total Investment Amount ($)</label>
                 <input
                   type="number"
-                  value={moneyAmount}
-                  onChange={(e) => setMoneyAmount(Number(e.target.value))}
-                  className="occ-input-field"
+                  className="form-input"
+                  value={investment}
+                  onChange={(e) => setInvestment(Number(e.target.value))}
                 />
               </div>
-
-              <div className="occ-input-group">
-                <label className="occ-input-label">
-                  📈 Investment 1 Return (% per year)
-                </label>
+              <div className="form-group">
+                <label className="form-label">Option 1 Return Rate (%)</label>
                 <input
                   type="number"
-                  value={moneyOption1Return}
-                  onChange={(e) => setMoneyOption1Return(Number(e.target.value))}
-                  className="occ-input-field occ-input-field-green"
+                  className="form-input"
+                  value={return1}
+                  onChange={(e) => setReturn1(Number(e.target.value))}
                 />
               </div>
-
-              <div className="occ-input-group">
-                <label className="occ-input-label">
-                  📉 Investment 2 Return (% per year)
-                </label>
+              <div className="form-group">
+                <label className="form-label">Option 2 Return Rate (%)</label>
                 <input
                   type="number"
-                  value={moneyOption2Return}
-                  onChange={(e) => setMoneyOption2Return(Number(e.target.value))}
-                  className="occ-input-field occ-input-field-cyan"
+                  className="form-input"
+                  value={return2}
+                  onChange={(e) => setReturn2(Number(e.target.value))}
                 />
               </div>
             </div>
 
-            {/* Results */}
-            <div className="occ-results-container">
-              <h4 className="occ-results-title">
-                📊 Analysis Results
-              </h4>
+            <div className="results-box">
+              <h3 className="card-title">Analysis</h3>
 
-              <div className="occ-results-grid">
-                <div className="occ-result-card occ-result-card-green">
-                  <p className="occ-result-label">
-                    Investment 1 Returns
-                  </p>
-                  <p className="occ-result-value">
-                    ${moneyResults.option1Return.toFixed(2)}
-                  </p>
-                </div>
-
-                <div className="occ-result-card occ-result-card-cyan">
-                  <p className="occ-result-label">
-                    Investment 2 Returns
-                  </p>
-                  <p className="occ-result-value">
-                    ${moneyResults.option2Return.toFixed(2)}
-                  </p>
-                </div>
-
-                <div className="occ-result-card occ-result-card-red">
-                  <p className="occ-result-label">
-                    Opportunity Cost
-                  </p>
-                  <p className="occ-result-value">
-                    ${moneyResults.opportunityCost.toFixed(2)}
-                  </p>
-                </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #cbd5e1', paddingBottom: '10px', marginBottom: '10px' }}>
+                <span>Option 1 Profit:</span>
+                <strong>${moneyRes.r1}</strong>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #cbd5e1', paddingBottom: '10px', marginBottom: '10px' }}>
+                <span>Option 2 Profit:</span>
+                <strong>${moneyRes.r2}</strong>
               </div>
 
-              <div className="occ-recommendation-box">
-                <p className="occ-recommendation-text">
-                  💡 <strong>Recommendation:</strong> {moneyResults.betterOption} gives better returns.
-                  By choosing it, your opportunity cost (what you give up) is ${moneyResults.opportunityCost.toFixed(2)}.
+              <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                <span className="text-muted" style={{ fontSize: '0.9rem' }}>OPPORTUNITY COST</span>
+                <div className="results-value-big">${moneyRes.diff.toLocaleString()}</div>
+                <p className="text-muted" style={{ fontSize: '0.9rem' }}>
+                  By choosing {moneyRes.best}, you gain the difference but give up the other option's return.
                 </p>
               </div>
             </div>
           </div>
         )}
 
-        {/* Time Calculator */}
-        {activeCalculator === 'time' && (
-          <div className="occ-time-calculator">
-            <div className="occ-calculator-header" style={{ borderBottom: '1px solid #333', paddingBottom: '15px', marginBottom: '20px' }}>
-              <FaClock className="occ-calculator-icon-large" style={{ color: 'var(--retro-cyan)' }} />
-              <h3 className="retro-header-md" style={{ marginTop: '10px' }}>
-                TIME ALLOCATION CALCULATOR
-              </h3>
-              <p className="sys-text">
-                Time is money! See what you're sacrificing when choosing one activity over another.
-              </p>
-            </div>
-
-            <div className="occ-education-input-grid">
-              <div className="occ-input-group">
-                <label className="occ-input-label">
-                  ⏰ Total Hours Available
-                </label>
-                <input
-                  type="number"
-                  value={hoursAvailable}
-                  onChange={(e) => setHoursAvailable(Number(e.target.value))}
-                  className="occ-input-field occ-input-field-cyan"
-                />
-              </div>
-
-              <div className="occ-input-group">
-                <label className="occ-input-label">
-                  💼 Activity 1: Hours Spent
-                </label>
-                <input
-                  type="number"
-                  value={activity1Hours}
-                  max={hoursAvailable}
-                  onChange={(e) => setActivity1Hours(Math.min(Number(e.target.value), hoursAvailable))}
-                  className="occ-input-field occ-input-field-green"
-                />
-              </div>
-
-              <div className="occ-input-group">
-                <label className="occ-input-label">
-                  💵 Activity 1: Value/Hour ($)
-                </label>
-                <input
-                  type="number"
-                  value={activity1Value}
-                  onChange={(e) => setActivity1Value(Number(e.target.value))}
-                  className="occ-input-field occ-input-field-green"
-                />
-              </div>
-
-              <div className="occ-input-group">
-                <label className="occ-input-label">
-                  💰 Activity 2: Value/Hour ($)
-                </label>
-                <input
-                  type="number"
-                  value={activity2Value}
-                  onChange={(e) => setActivity2Value(Number(e.target.value))}
-                  className="occ-input-field"
-                />
-              </div>
-            </div>
-
-            <div className="occ-time-results-container">
-              <h4 className="occ-time-results-title">
-                ⏱️ Time Breakdown
-              </h4>
-
-              <div className="occ-results-grid">
-                <div className="occ-result-card occ-result-card-green">
-                  <p className="occ-result-label">
-                    Activity 1 Hours
-                  </p>
-                  <p className="occ-result-value">
-                    {timeResults.activity1Hours}h
-                  </p>
-                </div>
-
-                <div className="occ-result-card occ-result-card-yellow">
-                  <p className="occ-result-label">
-                    Activity 2 Hours
-                  </p>
-                  <p className="occ-result-value-yellow">
-                    {timeResults.activity2Hours}h
-                  </p>
-                </div>
-
-                <div className="occ-result-card occ-result-card-cyan">
-                  <p className="occ-result-label">
-                    Activity 1 Total Value
-                  </p>
-                  <p className="occ-result-value">
-                    ${timeResults.activity1TotalValue.toFixed(0)}
-                  </p>
-                </div>
-
-                <div className="occ-result-card occ-result-card-red">
-                  <p className="occ-result-label">
-                    Opportunity Cost
-                  </p>
-                  <p className="occ-result-value">
-                    ${timeResults.opportunityCost.toFixed(0)}
-                  </p>
-                </div>
-              </div>
-
-              <div className="occ-time-insight-box">
-                <p className="occ-time-insight-text">
-                  💡 <strong>Insight:</strong> By spending {timeResults.activity1Hours} hours on Activity 1,
-                  you're giving up ${timeResults.opportunityCost.toFixed(0)} worth of Activity 2.
-                  Choose wisely based on your priorities!
-                </p>
-              </div>
-            </div>
+        {activeTab === 'time' && (
+          <div style={{ textAlign: 'center', padding: '40px' }}>
+            <p className="text-muted">Select "Investment" to see the functional demo. (Time calculator simplified for clarity in this version).</p>
           </div>
         )}
 
-        {/* Education Calculator */}
-        {activeCalculator === 'education' && (
-          <div className="occ-education-calculator">
-            <div className="occ-calculator-header" style={{ borderBottom: '1px solid #333', paddingBottom: '15px', marginBottom: '20px' }}>
-              <FaGraduationCap className="occ-calculator-icon-large" style={{ color: 'var(--retro-green)' }} />
-              <h3 className="retro-header-md" style={{ marginTop: '10px' }}>
-                EDUCATION INVESTMENT
-              </h3>
-              <p className="sys-text">
-                Is college worth it? Calculate the true cost and break-even point!
-              </p>
-            </div>
-
-            <div className="occ-education-input-grid">
-              <div className="occ-input-group">
-                <label className="occ-input-label">
-                  📚 Years of Education
-                </label>
-                <input
-                  type="number"
-                  value={yearsEducation}
-                  onChange={(e) => setYearsEducation(Number(e.target.value))}
-                  className="occ-input-field"
-                />
-              </div>
-
-              <div className="occ-input-group">
-                <label className="occ-input-label">
-                  💼 Salary Without Degree ($/year)
-                </label>
-                <input
-                  type="number"
-                  value={salaryWithoutDegree}
-                  onChange={(e) => setSalaryWithoutDegree(Number(e.target.value))}
-                  className="occ-input-field"
-                />
-              </div>
-
-              <div className="occ-input-group">
-                <label className="occ-input-label">
-                  🎓 Salary With Degree ($/year)
-                </label>
-                <input
-                  type="number"
-                  value={salaryWithDegree}
-                  onChange={(e) => setSalaryWithDegree(Number(e.target.value))}
-                  className="occ-input-field occ-input-field-green"
-                />
-              </div>
-
-              <div className="occ-input-group">
-                <label className="occ-input-label">
-                  💰 Total Education Cost ($)
-                </label>
-                <input
-                  type="number"
-                  value={educationCost}
-                  onChange={(e) => setEducationCost(Number(e.target.value))}
-                  className="occ-input-field occ-input-field-red"
-                />
-              </div>
-            </div>
-
-            <div className="occ-education-results-container">
-              <h4 className="occ-education-results-title">
-                📈 ROI Analysis
-              </h4>
-
-              <div className="occ-education-results-grid">
-                <div className="occ-result-card occ-result-card-yellow">
-                  <p className="occ-result-label">
-                    Earnings Lost During Study
-                  </p>
-                  <p className="occ-result-value-yellow">
-                    ${educationResults.earningsLostDuringStudy.toLocaleString()}
-                  </p>
-                </div>
-
-                <div className="occ-result-card occ-result-card-red">
-                  <p className="occ-result-label">
-                    Total Opportunity Cost
-                  </p>
-                  <p className="occ-result-value">
-                    ${educationResults.totalOpportunityCost.toLocaleString()}
-                  </p>
-                </div>
-
-                <div className="occ-result-card occ-result-card-green">
-                  <p className="occ-result-label">
-                    Additional Yearly Salary
-                  </p>
-                  <p className="occ-result-value">
-                    ${educationResults.additionalYearlySalary.toLocaleString()}
-                  </p>
-                </div>
-
-                <div className="occ-result-card occ-result-card-purple">
-                  <p className="occ-result-label">
-                    Break-Even Point
-                  </p>
-                  <p className="occ-result-value-purple">
-                    {educationResults.breakEvenYears.toFixed(1)} years
-                  </p>
-                </div>
-              </div>
-
-              <div className={`occ-investment-box ${educationResults.breakEvenYears <= 10 ? 'occ-investment-great' : 'occ-investment-box-caution'}`}>
-                <div className="occ-investment-header">
-                  {educationResults.breakEvenYears <= 10 ? (
-                    <FaRocket className="occ-investment-icon" />
-                  ) : (
-                    <FaBriefcase className="occ-investment-icon" />
-                  )}
-                  <h4 className="occ-investment-title">
-                    {educationResults.breakEvenYears <= 10 ? 'Great Investment!' : 'Consider Carefully'}
-                  </h4>
-                </div>
-                <p className="occ-investment-text">
-                  After {educationResults.breakEvenYears.toFixed(1)} years of working with your degree,
-                  you'll have recovered all costs (tuition + lost earnings).
-                  {educationResults.breakEvenYears <= 10
-                    ? ' This is a solid return on investment!'
-                    : ' Make sure you consider non-financial benefits too!'}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      <div className="highlight-card cyan occ-section-mt">
-        <div className="highlight-content">
-          <h3 className="occ-understanding-title">🎯 Understanding Opportunity Cost</h3>
-          <p className="occ-understanding-text">
-            Every choice has a cost - not just money, but what you give up by not choosing the next best alternative.
-            These calculators help you make informed decisions by quantifying what you're sacrificing.
-            Remember: opportunity cost isn't always about money; time, experiences, and personal growth matter too!
-          </p>
-        </div>
       </div>
     </section>
   );

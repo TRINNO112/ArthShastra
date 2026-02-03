@@ -549,3 +549,83 @@
   margin-bottom: 20px;
   margin-top: 10px;
 }
+
+/* Updated Confirmation Overlay - 50/50 Split */
+.pm-confirm-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.pm-confirm-hero {
+    width: 100%;
+    height: 50%; /* Top 50% */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-bottom: var(--pm-border-thick) solid var(--pm-border);
+    flex-shrink: 0;
+    background-color: #fff; /* Optional: background color for white space */
+}
+
+.pm-confirm-content {
+    height: 50%; /* Bottom 50% */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.pm-confirm-content h3 {
+    font-size: 1.8rem;
+    color: var(--pm-border) !important;
+    text-transform: uppercase;
+    font-weight: 900;
+    margin: 0 0 10px 0;
+}
+
+.pm-confirm-content p {
+    font-size: 1.1rem;
+    color: #666 !important;
+    margin: 0 0 20px 0;
+    max-width: 90%;
+    line-height: 1.4;
+}
+
+.pm-confirm-actions {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    justify-content: center;
+}
+
+.pm-confirm-actions button {
+    flex: 1;
+    max-width: 180px;
+}
+
+/* Mobile Fixes for Modal */
+@media (max-width: 768px) {
+    .pm-container {
+        width: 95%;
+        max-height: 95vh;
+        min-height: 500px;
+    }
+    
+    .pm-confirm-hero {
+        height: 40%; /* Slightly smaller image on mobile to save text space */
+    }
+    .pm-confirm-content {
+        height: 60%;
+    }
+}

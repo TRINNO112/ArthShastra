@@ -6,9 +6,11 @@ import {
     FaFire, FaIdCard, FaBirthdayCake, FaVenusMars, FaUserGraduate, FaBook,
     FaSchool, FaCalendarAlt, FaTrophy, FaClock, FaMapMarkerAlt, FaGlobeAmericas,
     FaMedal, FaHourglassHalf, FaBookOpen, FaBuilding, FaTrash, FaExclamationTriangle,
-    FaDoorOpen
+    FaDoorOpen, FaUserEdit, FaCheck
 } from 'react-icons/fa';
 import { HiAcademicCap } from 'react-icons/hi';
+import resetOwl from '../../assets/reset-owl.jpg';
+import signoutOwl from '../../assets/signout-owl.jpg';
 import './ProfileModal.css';
 
 // Indian states list moved here
@@ -39,6 +41,7 @@ const formatDate = (date) => {
 const ProfileModal = ({ isOpen, onClose, user, onUpdateProfile, onLogout }) => {
     const [activeTab, setActiveTab] = useState('profile');
     const [isEditing, setIsEditing] = useState(false);
+    const [confirmAction, setConfirmAction] = useState(null); // { type: 'reset' | 'logout' }
     const [profileData, setProfileData] = useState({
         displayName: '',
         className: '',
@@ -58,6 +61,7 @@ const ProfileModal = ({ isOpen, onClose, user, onUpdateProfile, onLogout }) => {
         if (isOpen) {
             setActiveTab('profile');
             setIsEditing(false);
+            setConfirmAction(null);
         }
     }, [isOpen]);
 
@@ -84,8 +88,34 @@ const ProfileModal = ({ isOpen, onClose, user, onUpdateProfile, onLogout }) => {
         setIsEditing(false);
     };
 
-    const handleResetStats = async () => {
-        if (window.confirm('Are you sure you want to reset all your stats? This cannot be undone.')) {
+    const triggerResetStats = () => {
+        setConfirmAction({
+            type: 'reset',
+            title: 'Reset All Stats?',
+            message: 'Are you sure? This will delete all your progress, badges, and history. This action cannot be undone!',
+            icon: <div className="pm-confirm-hero" style={{ backgroundImage: `url(${resetOwl})` }}></div>,
+            confirmText: 'Yes, Reset Everything',
+            cancelText: 'No, Keep My Stats',
+            color: 'var(--pm-red)'
+        });
+    };
+
+    const triggerLogout = () => {
+        setConfirmAction({
+            type: 'logout',
+            title: 'Sign Out?',
+            message: 'Are you sure you want to sign out? Come back soon to keep your streak alive!',
+            icon: <div className="pm-confirm-hero" style={{ backgroundImage: `url(${signoutOwl})` }}></div>,
+            confirmText: 'Yes, Sign Out',
+            cancelText: 'Stay Logged In',
+            color: 'var(--pm-purple)'
+        });
+    };
+
+    const confirmActionHandler = async () => {
+        if (!confirmAction) return;
+
+        if (confirmAction.type === 'reset') {
             try {
                 const { resetUserStats } = await import('../../services/firebase');
                 await resetUserStats();
@@ -93,7 +123,10 @@ const ProfileModal = ({ isOpen, onClose, user, onUpdateProfile, onLogout }) => {
             } catch (error) {
                 console.error("Failed to reset stats", error);
             }
+        } else if (confirmAction.type === 'logout') {
+            onLogout();
         }
+        setConfirmAction(null);
     };
 
     const modalVariants = {
@@ -129,6 +162,39 @@ const ProfileModal = ({ isOpen, onClose, user, onUpdateProfile, onLogout }) => {
                         onClick={(e) => e.stopPropagation()}
                         variants={modalVariants}
                     >
+                        {/* CONFIRMATION OVERLAY */}
+                        <AnimatePresence>
+                            {confirmAction && (
+                                <motion.div
+                                    className="pm-confirm-overlay"
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.9 }}
+                                >
+                                    {/* Hero Image (Top 50%) */}
+                                    {confirmAction.icon}
+
+                                    {/* Content (Bottom 50%) */}
+                                    <div className="pm-confirm-content">
+                                        <h3>{confirmAction.title}</h3>
+                                        <p>{confirmAction.message}</p>
+                                        <div className="pm-confirm-actions">
+                                            <button className="pm-btn-cancel" onClick={() => setConfirmAction(null)}>
+                                                {confirmAction.cancelText}
+                                            </button>
+                                            <button
+                                                className="pm-btn-danger"
+                                                style={{ backgroundColor: confirmAction.color, borderColor: 'var(--pm-border)' }}
+                                                onClick={confirmActionHandler}
+                                            >
+                                                {confirmAction.confirmText}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
                         <button className="pm-close-btn" onClick={onClose}>
                             <FaTimes />
                         </button>
@@ -266,8 +332,10 @@ const ProfileModal = ({ isOpen, onClose, user, onUpdateProfile, onLogout }) => {
                                             </div>
 
                                             <div className="pm-edit-container">
-                                                <button className="pm-btn-primary" onClick={() => setIsEditing(true)}>
-                                                    <FaEdit /> Edit Profile
+                                                <button className="pm-btn-primary pm-btn-icon-swap" onClick={() => setIsEditing(true)}>
+                                                    <span className="pm-icon-normal"><FaEdit /></span>
+                                                    <span className="pm-icon-hover"><FaUserEdit /></span>
+                                                    <span>Edit Profile</span>
                                                 </button>
                                             </div>
                                         </motion.div>
@@ -323,7 +391,7 @@ const ProfileModal = ({ isOpen, onClose, user, onUpdateProfile, onLogout }) => {
                                     </div>
 
                                     <div className="pm-edit-container">
-                                        <button className="pm-btn-danger pm-btn-icon-swap" onClick={handleResetStats}>
+                                        <button className="pm-btn-danger pm-btn-icon-swap" onClick={triggerResetStats}>
                                             <span className="pm-icon-normal"><FaTrash /></span>
                                             <span className="pm-icon-hover"><FaExclamationTriangle /></span>
                                             <span>Reset All Stats</span>
@@ -335,7 +403,7 @@ const ProfileModal = ({ isOpen, onClose, user, onUpdateProfile, onLogout }) => {
 
                         {/* FOOTER */}
                         <div className="pm-footer">
-                            <button className="pm-logout-btn pm-btn-icon-swap" onClick={onLogout}>
+                            <button className="pm-logout-btn pm-btn-icon-swap" onClick={triggerLogout}>
                                 <span className="pm-icon-normal"><FaSignOutAlt /></span>
                                 <span className="pm-icon-hover"><FaDoorOpen /></span>
                                 <span>Sign Out</span>

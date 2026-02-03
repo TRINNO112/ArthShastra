@@ -99,30 +99,32 @@ function TypesOfEconomies() {
       {/* SKETCHY TABLE COMPARISON */}
       <div className="sketch-box" style={{ marginTop: '50px' }}>
         <h3 style={{ fontFamily: 'Caveat', textAlign: 'center' }}>System Analysis Log</h3>
-        <table style={{ width: '100%', marginTop: '20px', borderCollapse: 'collapse', textAlign: 'center' }}>
-          <thead>
-            <tr style={{ borderBottom: '2px solid #2c2c2c' }}>
-              <th style={{ padding: '10px' }}>Trait</th>
-              <th style={{ padding: '10px', color: '#f39c12' }}>Market</th>
-              <th style={{ padding: '10px', color: '#c0392b' }}>Planned</th>
-              <th style={{ padding: '10px', color: '#3f51b5' }}>Mixed</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style={{ padding: '10px', fontWeight: 'bold' }}>Motive</td>
-              <td>Profit</td>
-              <td>Welfare</td>
-              <td>Both</td>
-            </tr>
-            <tr>
-              <td style={{ padding: '10px', fontWeight: 'bold' }}>Role of Govt</td>
-              <td>None</td>
-              <td>Full Control</td>
-              <td>Regulator</td>
-            </tr>
-          </tbody>
-        </table>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', minWidth: '600px', marginTop: '20px', borderCollapse: 'collapse', textAlign: 'center' }}>
+            <thead>
+              <tr style={{ borderBottom: '2px solid #2c2c2c' }}>
+                <th style={{ padding: '10px' }}>Trait</th>
+                <th style={{ padding: '10px', color: '#f39c12' }}>Market</th>
+                <th style={{ padding: '10px', color: '#c0392b' }}>Planned</th>
+                <th style={{ padding: '10px', color: '#3f51b5' }}>Mixed</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style={{ padding: '10px', fontWeight: 'bold' }}>Motive</td>
+                <td>Profit</td>
+                <td>Welfare</td>
+                <td>Both</td>
+              </tr>
+              <tr>
+                <td style={{ padding: '10px', fontWeight: 'bold' }}>Role of Govt</td>
+                <td>None</td>
+                <td>Full Control</td>
+                <td>Regulator</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
     </section>

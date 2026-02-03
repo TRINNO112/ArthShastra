@@ -82,42 +82,33 @@ function Navbar() {
   return (
     <>
       <header className="nav-header">
-        {/* ... (Header content remains unchanged) ... */}
+        {/* ... (Header content) ... */}
         <div className="nav-container">
-          {/* Logo */}
+          {/* ... (Logo, etc) ... */}
           <Link to="/" className="nav-logo" onClick={closeMobileMenu}>
             ArthShastra
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className={`nav-links ${mobileMenuOpen ? 'active' : ''}`}>
+          {/* Desktop Navigation - Hidden on Mobile */}
+          <nav className="nav-links">
             {['Home', 'Lessons', 'Quiz', 'Progress', 'About'].map((item) => (
               <NavLink
                 key={item}
                 to={`/${item === 'Home' ? '' : item.toLowerCase()}`}
                 className={({ isActive }) => isActive ? 'active' : ''}
-                onClick={closeMobileMenu}
               >
                 {item}
               </NavLink>
             ))}
 
-            {/* Mobile Auth Button */}
             <div className="mobile-auth">
-              {isAuthenticated ? (
-                <button className="auth-btn logout" onClick={handleLogout}>
-                  <FaSignOutAlt /> Logout
-                </button>
-              ) : (
-                <button className="auth-btn login" onClick={openAuthModal}>
-                  <FaUser /> Sign In
-                </button>
-              )}
+              {/* Mobile Auth button contents */}
             </div>
           </nav>
 
           {/* Desktop Auth */}
           <div className="nav-auth">
+            {/* ... */}
             {loading ? (
               <div className="auth-loading">Loading...</div>
             ) : isAuthenticated ? (
@@ -155,12 +146,57 @@ function Navbar() {
             )}
           </div>
 
-          {/* Hamburger Menu */}
+          {/* Hamburger */}
           <button className="hamburger" onClick={toggleMobileMenu}>
             {mobileMenuOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
       </header>
+
+      {/* MOBILE MENU OVERLAY */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="mobile-menu-container"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+          >
+            {['Home', 'Lessons', 'Quiz', 'Progress', 'About'].map((item) => (
+              <NavLink
+                key={item}
+                to={`/${item === 'Home' ? '' : item.toLowerCase()}`}
+                className="mobile-nav-link"
+                onClick={closeMobileMenu}
+              >
+                {item}
+              </NavLink>
+            ))}
+
+            <div className="mobile-auth-btn">
+              {isAuthenticated ? (
+                <>
+                  <button
+                    className="auth-btn"
+                    onClick={() => { openProfileModal(); closeMobileMenu(); }}
+                    style={{ width: '100%', justifyContent: 'center', marginBottom: '10px', background: 'var(--gradient-gold)', color: 'black' }}
+                  >
+                    <FaUser /> My Profile
+                  </button>
+                  <button className="auth-btn logout" onClick={handleLogout} style={{ width: '100%', justifyContent: 'center' }}>
+                    <FaSignOutAlt /> Logout
+                  </button>
+                </>
+              ) : (
+                <button className="auth-btn login" onClick={openAuthModal} style={{ width: '100%', justifyContent: 'center' }}>
+                  <FaUser /> Sign In
+                </button>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Auth Modal - Keeping reused logic for now or could be refactored too */}
       <AnimatePresence>

@@ -28,7 +28,7 @@ import {
 } from './components';
 import { lesson2Data } from '../data/lesson2Data';
 import { logLessonProgress } from '../../../services/firebase';
-import './lesson2-retro.css'; // Project Genesis Theme 📟
+import './lesson2-core.css'; // Clean Professional Theme
 
 const sections = [
   { id: 'intro', name: 'Scarcity & Choice', icon: FaBookOpen },
@@ -88,26 +88,16 @@ function Lesson2() {
 
   const renderActiveSection = () => {
     switch (activeSection) {
-      case 'intro':
-        return <Introduction />;
-      case 'central-problems':
-        return <CentralProblems />;
-      case 'opportunity-cost':
-        return <OpportunityCost />;
-      case 'oc-calculator':
-        return <OpportunityCostCalculator />;
-      case 'ppc':
-        return <PPC />;
-      case 'ppc-assumptions':
-        return <PPCAssumptions />;
-      case 'ppc-scenario':
-        return <PPCScenario />;
-      case 'attainable-unattainable':
-        return <AttainableUnattainable />;
-      case 'tabular-representation':
-        return <TabularRepresentation />;
-      case 'slope-moc':
-        return <SlopeMOC />;
+      case 'intro': return <Introduction />;
+      case 'central-problems': return <CentralProblems />;
+      case 'opportunity-cost': return <OpportunityCost />;
+      case 'oc-calculator': return <OpportunityCostCalculator />;
+      case 'ppc': return <PPC />;
+      case 'ppc-assumptions': return <PPCAssumptions />;
+      case 'ppc-scenario': return <PPCScenario />;
+      case 'attainable-unattainable': return <AttainableUnattainable />;
+      case 'tabular-representation': return <TabularRepresentation />;
+      case 'slope-moc': return <SlopeMOC />;
       case 'quiz':
         return <Quiz mcqQuestions={lesson2Data.mcqQuestions} tfQuestions={lesson2Data.tfQuestions} quizId="lesson2" />;
       default:
@@ -116,101 +106,99 @@ function Lesson2() {
   };
 
   return (
-    <div className="retro-container">
-      <div className="floating-elements">
-        <div className="float-circle circle-1"></div>
-        <div className="float-circle circle-2"></div>
-        <div className="float-circle circle-3"></div>
-        <div className="grid-pattern"></div>
-      </div>
+    <div className="lesson-container">
 
-      <header className="lesson-header">
-        <div className="header-container">
-          <Link to="/lessons" className="back-link">
-            <FaArrowLeft />
-            <span>Back to Lessons</span>
+      {/* Header */}
+      <header style={{ marginBottom: '40px', borderBottom: '1px solid #e2e8f0', paddingBottom: '20px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Link to="/lessons" style={{ textDecoration: 'none', color: '#64748b', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '500' }}>
+            <FaArrowLeft /> Back
           </Link>
-
-          <div className="lesson-info">
-            <div className="lesson-badge">
-              <span className="badge-icon">📉</span>
-              <span>Chapter 2</span>
-              <span className="badge-tag">Microeconomics</span>
-            </div>
-            <h1 className="lesson-title">
-              <span className="title-line">Central Problems of</span>
-              <span className="title-gradient">An Economy</span>
-            </h1>
-            <p className="lesson-meta">
-              Comprehensive Guide for Grade 11 • {lesson2Data.mcqQuestions.length + lesson2Data.tfQuestions.length} Quiz Questions
-            </p>
+          <div style={{ textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 'bold', color: '#94a3b8', letterSpacing: '1px' }}>
+            Microeconomics / Chapter 2
           </div>
         </div>
+        <h1 className="lesson-title" style={{ marginTop: '20px', marginBottom: '10px' }}>Central Problems of an Economy</h1>
       </header>
 
-      <nav className="lesson-nav">
-        <div className="nav-container">
-          <div className="nav-scroll">
-            {sections.map((section, index) => {
-              const Icon = section.icon;
-              const isActive = activeSection === section.id;
-              const isCompleted = index < currentIndex;
+      {/* Navigation Tabs */}
+      <div style={{ display: 'flex', overflowX: 'auto', gap: '5px', paddingBottom: '15px', marginBottom: '30px', borderBottom: '1px solid #e2e8f0' }}>
+        {sections.map((section, index) => {
+          const isActive = activeSection === section.id;
+          return (
+            <button
+              key={section.id}
+              onClick={() => handleSectionChange(section.id)}
+              style={{
+                padding: '10px 16px',
+                borderRadius: '6px',
+                border: 'none',
+                backgroundColor: isActive ? '#2563eb' : 'transparent',
+                color: isActive ? '#fff' : '#475569',
+                cursor: 'pointer',
+                fontWeight: '600',
+                fontSize: '0.9rem',
+                whiteSpace: 'nowrap',
+                transition: 'background-color 0.2s',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
+              <section.icon size={14} />
+              {section.name}
+            </button>
+          );
+        })}
+      </div>
 
-              return (
-                <button
-                  key={section.id}
-                  className={`nav-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
-                  onClick={() => handleSectionChange(section.id)}
-                >
-                  <span className="nav-icon">
-                    <Icon />
-                  </span>
-                  <span className="nav-text">{section.name}</span>
-                  {isCompleted && <span className="nav-check">✓</span>}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </nav>
-
-      <main className="lesson-content">
-        <div className="content-container">
-          {renderActiveSection()}
-        </div>
+      {/* Main Content Area */}
+      <main style={{ minHeight: '500px' }}>
+        {renderActiveSection()}
       </main>
 
-      <footer className="lesson-footer">
-        <div className="footer-container">
-          <button
-            className={`footer-btn prev ${currentIndex === 0 ? 'disabled' : ''}`}
-            onClick={goToPrevious}
-            disabled={currentIndex === 0}
-          >
-            <FaChevronLeft />
-            <span>Previous</span>
-          </button>
+      {/* Footer Navigation */}
+      <footer style={{ marginTop: '60px', paddingTop: '30px', borderTop: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between' }}>
+        <button
+          onClick={goToPrevious}
+          disabled={currentIndex === 0}
+          style={{
+            padding: '12px 24px',
+            backgroundColor: currentIndex === 0 ? '#f1f5f9' : '#fff',
+            color: currentIndex === 0 ? '#94a3b8' : '#334155',
+            border: '1px solid #e2e8f0',
+            borderRadius: '8px',
+            cursor: currentIndex === 0 ? 'not-allowed' : 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            fontWeight: '600'
+          }}
+        >
+          <FaChevronLeft /> Previous
+        </button>
 
-          <div className="progress-indicator">
-            {sections.map((section, index) => (
-              <span
-                key={section.id}
-                className={`progress-dot ${index === currentIndex ? 'active' : ''} ${index < currentIndex ? 'completed' : ''}`}
-                onClick={() => handleSectionChange(section.id)}
-              ></span>
-            ))}
-          </div>
-
-          <button
-            className={`footer-btn next ${currentIndex === sections.length - 1 ? 'disabled' : ''}`}
-            onClick={goToNext}
-            disabled={currentIndex === sections.length - 1}
-          >
-            <span>Next</span>
-            <FaChevronRight />
-          </button>
-        </div>
+        <button
+          onClick={goToNext}
+          disabled={currentIndex === sections.length - 1}
+          style={{
+            padding: '12px 24px',
+            backgroundColor: '#2563eb',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: currentIndex === sections.length - 1 ? 'not-allowed' : 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            fontWeight: '600',
+            opacity: currentIndex === sections.length - 1 ? 0.5 : 1
+          }}
+        >
+          Next <FaChevronRight />
+        </button>
       </footer>
+
     </div>
   );
 }

@@ -240,13 +240,13 @@ function PPCVisualizer() {
                 </filter>
               </defs>
 
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#fff" />
 
               <XAxis
                 type="number"
                 dataKey="x"
                 domain={[0, maxDomain]}
-                stroke="rgba(255,255,255,0.4)"
+                stroke="#fff"
                 tick={{ fill: 'rgba(255,255,255,0.7)', fontSize: 11 }}
                 tickCount={8}
                 axisLine={{ strokeWidth: 2 }}
@@ -262,7 +262,7 @@ function PPCVisualizer() {
               <YAxis
                 type="number"
                 domain={[0, maxDomain]}
-                stroke="rgba(255,255,255,0.4)"
+                stroke="#fff"
                 tick={{ fill: 'rgba(255,255,255,0.7)', fontSize: 11 }}
                 tickCount={8}
                 axisLine={{ strokeWidth: 2 }}

@@ -5,53 +5,50 @@ import '../lesson2-retro.css';
 function OpportunityCost() {
   return (
     <section className="lesson-section">
-      <div style={{ marginBottom: '30px', textAlign: 'center' }}>
-        <h2 className="retro-header-lg" style={{ color: 'var(--retro-amber)', textShadow: 'var(--glow-amber)' }}>OPPORTUNITY COST</h2>
-        <p className="sys-text" style={{ color: 'var(--retro-dim)' }}>
-          [DEFINITION]: Value of Next Best Alternative Foregone.
+      <div className="section-header">
+        OPPORTUNITY COST
+      </div>
+
+      <div className="feature-box">
+        <p>
+          <strong>[DEFINITION]</strong><br />
+          The Value of Next Best Alternative Foregone.
         </p>
       </div>
 
-      <div className="terminal-card">
-        <h3 className="retro-header-md">
-          <FaBalanceScale style={{ marginRight: '10px' }} />
-          THE "NEXT BEST" CHOICE
-        </h3>
-        <p className="sys-text">
-          Since resources are limited, choosing one alternative means giving up another.
-          The <strong style={{ color: 'var(--retro-green)' }}>Opportunity Cost</strong> is the value of the alternative that we had to sacrifice.
-        </p>
+      <div className="cards-grid">
+        <div className="card">
+          <div className="card-content">
+            <h3>THE "NEXT BEST" CHOICE</h3>
+            <p>
+              <section>
+                <h2 className="section-title">Opportunity Cost</h2>
 
-        <div className="sys-alert" style={{ marginTop: '20px' }}>
-          <FaLightbulb style={{ marginRight: '10px', color: 'var(--retro-amber)' }} />
-          <strong>REAL_WORLD_EXAMPLE:</strong>
-          <p style={{ marginTop: '5px' }}>If you have ₹50,000 and you can either buy a Laptop or a Mobile Phone. If you buy the laptop, the <strong>Opportunity Cost</strong> is the mobile phone you didn't buy.</p>
-        </div>
-      </div>
+                <div className="lesson-grid-2">
+                  <div className="lesson-card">
+                    <h3 className="card-title">Concept Definition</h3>
+                    <p>
+                      <strong>Opportunity Cost</strong> is the value of the <em>next best alternative</em> foregone when making a choice.
+                      It is not just money—it is what you give up to get something else.
+                    </p>
+                    <div style={{ background: '#f0f9ff', padding: '15px', borderLeft: '4px solid #0284c7', marginTop: '20px' }}>
+                      <strong>Example:</strong> If you spend an hour studying Economics instead of playing Football, the opportunity cost is the fun and exercise you missed from Football.
+                    </div>
+                  </div>
 
-      <div className="terminal-card">
-        <h3 className="retro-header-md">
-          <FaCalculator style={{ marginRight: '10px' }} />
-          MARGINAL OPPORTUNITY COST (MOC)
-        </h3>
-        <p className="sys-text">
-          MOC is the rate at which one good is sacrificed to produce an additional unit of another good.
-          It is also known as <strong style={{ color: 'var(--retro-cyan)' }}>Marginal Rate of Transformation (MRT)</strong>.
-        </p>
-
-        <div style={{ border: '1px dashed var(--retro-cyan)', padding: '20px', margin: '20px 0', textAlign: 'center' }}>
-          <h3 style={{ fontFamily: 'var(--font-mono)', color: 'var(--retro-cyan)' }}>MOC FORMULA</h3>
-          <div style={{ fontSize: '1.2rem', fontFamily: 'var(--font-display)' }}>
-            MOC = <span style={{ color: '#ff3333' }}>Δ Sacrificed (Y)</span> / <span style={{ color: '#33ff00' }}>Δ Gained (X)</span>
-          </div>
-        </div>
-
-        <p className="sys-text" style={{ fontSize: '0.9rem', color: '#888' }}>
-          [NOTE]: In most cases, MOC increases as we produce more of a good because resources are not equally efficient in all uses. This is why the PPC is concave.
-        </p>
-      </div>
-    </section>
-  );
+                  <div className="lesson-card">
+                    <h3 className="card-title">Marginal Opportunity Cost (MOC)</h3>
+                    <p>
+                      MOC is the rate at which you must sacrifice units of one good to produce one more unit of another good.
+                    </p>
+                    <div className="results-box" style={{ textAlign: 'center' }}>
+                      <div style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '5px' }}>FORMULA</div>
+                      <div className="results-value-big" style={{ fontSize: '1.8rem' }}>MOC = ΔLoss / ΔGain</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              );
 }
 
-export default OpportunityCost;
+              export default OpportunityCost;

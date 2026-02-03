@@ -25,18 +25,18 @@ function EconomicProblems() {
 
         <div className="diagram-area" style={{ border: 'none', flexDirection: 'column', gap: '5px' }}>
 
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: '40px' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '3rem', color: '#0d47a1', marginBottom: '10px' }}><FaInfinity /></div>
+              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#0d47a1', marginBottom: '10px' }}><FaInfinity /></div>
               <div className="handwritten-note">Unlimited Wants</div>
             </div>
 
-            <div style={{ fontSize: '4rem', color: '#5d4037', marginBottom: '20px' }}>
+            <div style={{ fontSize: 'clamp(3rem, 6vw, 4rem)', color: '#5d4037', marginBottom: '20px' }}>
               <FaBalanceScale />
             </div>
 
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '3rem', color: '#c0392b', marginBottom: '10px' }}><FaChartPie /></div>
+              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#c0392b', marginBottom: '10px' }}><FaChartPie /></div>
               <div className="handwritten-note">Limited Resources</div>
             </div>
           </div>
