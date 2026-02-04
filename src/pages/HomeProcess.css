@@ -2,6 +2,8 @@
    HOME PAGE - ECONOMIC CYCLE (ORBITAL DESIGN)
    ============================================= */
 
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&display=swap');
+
 .how-it-works { 
   padding: 100px 0 140px; 
   background: radial-gradient(circle at center, #0f172a 0%, #020617 100%); 
@@ -69,31 +71,31 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80px; /* Increased size */
+  width: 80px; /* User resized */
   height: 80px;
   background: #000;
   border-radius: 50%;
-  border: 4px solid var(--color-gold);
+  border: 3px solid var(--color-gold);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 10;
   box-shadow: 
-    0 0 0 10px rgba(250, 204, 21, 0.1),
-    0 0 60px rgba(250, 204, 21, 0.4);
+    0 0 0 5px rgba(250, 204, 21, 0.1),
+    0 0 40px rgba(250, 204, 21, 0.3);
 }
 
 .core-letter {
-  font-family: 'Playfair Display', 'Times New Roman', serif; /* Stylish Serif */
-  font-size: 4rem;
-  font-weight: 900;
-  background: linear-gradient(135deg, #fff 0%, var(--color-gold) 50%, #fff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 0px rgba(0,0,0,1)); /* 3D Text Effect */
+  font-family: 'Cinzel Decorative', cursive; /* Premium Regal Font */
+  font-size: 3rem; /* Adjusted for 80px box */
+  font-weight: 700;
+  color: var(--color-gold); 
+  /* Solid Gold Text for visibility at small size */
+  text-shadow: 2px 2px 0px #000;
   line-height: 1;
-  padding-top: 1px; /* Visual centering adjustment */
+  padding-top: 4px;
+  padding-right: 4px;
 }
 
 /* --- STEPS (ORBITALS) --- */
@@ -105,26 +107,39 @@
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* 3D Hover Effect for All Steps */
+/* Base Hover Translation */
 .cycle-step:hover .step-content-wrapper {
-  border-color: var(--color-gold) !important; /* Force Gold Border */
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.6),
-    0 0 30px rgba(250, 204, 21, 0.2); /* Golden Glow */
-  background: rgba(15, 23, 42, 0.95);
-  transform: translateY(-5px); /* Lift internal content slightly */
+  background: #000;
+  transform: translate(-3px, -3px); /* Pop Effect */
 }
+
+/* COLOR CODED SHADOWS */
+.step-1:hover .step-content-wrapper {
+  border-color: var(--color-blue) !important;
+  box-shadow: 8px 8px 0px var(--color-blue) !important;
+}
+
+.step-2:hover .step-content-wrapper {
+  border-color: var(--color-green) !important;
+  box-shadow: 8px 8px 0px var(--color-green) !important;
+}
+
+.step-3:hover .step-content-wrapper {
+  border-color: var(--color-gold) !important;
+  box-shadow: 8px 8px 0px var(--color-gold) !important;
+}
+
 
 .step-content-wrapper {
   background: rgba(15, 23, 42, 0.8);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 25px;
-  border-radius: 16px;
+  border-radius: 12px;
   position: relative;
   text-align: center;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 /* Positioning - Triangle Formation */
@@ -137,7 +152,7 @@
 }
 
 .step-1:hover {
-  transform: translateX(-50%) scale(1.05) !important; /* Fix: Preserve translateX on hover */
+  transform: translateX(-50%) !important; /* Just pop content, don't move wrapper */
   z-index: 20;
 }
 
@@ -150,7 +165,7 @@
 }
 
 .step-2:hover {
-  transform: scale(1.05) !important;
+  transform: none !important;
   z-index: 20;
 }
 
@@ -163,7 +178,7 @@
 }
 
 .step-3:hover {
-  transform: scale(1.05) !important;
+  transform: none !important;
   z-index: 20;
 }
 
@@ -219,26 +234,63 @@
   line-height: 1.5;
 }
 
-/* --- PARTICLES --- */
+/* --- PARTICLES (Data Crystals) --- */
 .orbit-particle {
   position: absolute;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 10px #fff;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px; /* Slight rounded square */
+  transform: rotate(45deg); /* Diamond Shape */
   top: 50%;
   left: 50%;
+  z-index: 1; /* Moved behind steps (z-index: 5) */
+}
+
+/* Pulse Effect for Particles */
+.orbit-particle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border: 1px solid currentColor;
+  opacity: 0;
+  animation: particlePulse 2s infinite;
+}
+
+@keyframes particlePulse {
+  0% { transform: translate(-50%, -50%) scale(1) rotate(45deg); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(3) rotate(45deg); opacity: 0; }
 }
 
 .p1 {
-  animation: orbit1 8s linear infinite;
+  /* Outer Ring (Radius ~275px) */
+  animation: orbitOuter 12s linear infinite;
+  background: var(--color-gold);
+  box-shadow: 0 0 15px var(--color-gold), 0 0 30px var(--color-gold);
+  color: var(--color-gold); /* For pulse border */
 }
 
-@keyframes orbit1 {
-  0% { transform: rotate(0deg) translateX(275px) rotate(0deg); } /* On outer ring radius */
+.p-inner {
+  /* Inner Ring (Radius ~150px) */
+  animation: orbitInner 8s linear infinite reverse; /* Counter-rotate */
+  background: var(--color-blue);
+  box-shadow: 0 0 15px var(--color-blue), 0 0 30px var(--color-blue);
+  color: var(--color-blue);
+}
+
+@keyframes orbitOuter {
+  0% { transform: rotate(0deg) translateX(275px) rotate(0deg); }
   100% { transform: rotate(360deg) translateX(275px) rotate(-360deg); }
 }
+
+@keyframes orbitInner {
+  0% { transform: rotate(0deg) translateX(150px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+}
+
 
 
 /* =============================================

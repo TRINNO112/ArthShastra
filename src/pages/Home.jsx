@@ -267,9 +267,8 @@ function Home() {
             </div>
 
             {/* Flow Particles */}
-            <div className="orbit-particle p1"></div>
-            <div className="orbit-particle p2"></div>
-            <div className="orbit-particle p3"></div>
+            <div className="orbit-particle p1"></div> {/* Outer */}
+            <div className="orbit-particle p-inner"></div> {/* Inner */}
           </div>
         </div>
       </section>
