@@ -210,44 +210,66 @@ function Home() {
         </div>
       </section>
 
-      {/* How It Works Section */}
+      {/* How It Works Section - Economic Cycle Design */}
       <section className="how-it-works">
         <div className="section-container">
           <div className="section-header">
-            <span className="section-badge">Simple Process</span>
-            <h2 className="section-title">How ArthShastra Works</h2>
-            <p className="section-subtitle">Three simple steps to master Economics</p>
+            <span className="section-badge">The Cycle of Success</span>
+            <h2 className="section-title">Your Path to Mastery</h2>
+            <p className="section-subtitle">A continuous loop of learning, practicing, and excelling</p>
           </div>
 
-          <div className="steps-container">
-            <div className="step-card">
-              <div className="step-number">01</div>
-              <div className="step-icon">
-                <FaCompass />
-              </div>
-              <h3>Choose Your Topic</h3>
-              <p>Select from Micro or Macro economics. Each chapter is organized as per CBSE Class 11 & 12 syllabus.</p>
-              <div className="step-line"></div>
+          <div className="cycle-container">
+            {/* The Orbit Rings */}
+            <div className="cycle-orbit-ring inner-ring"></div>
+            <div className="cycle-orbit-ring outer-ring"></div>
+
+            {/* Central Core */}
+            <div className="cycle-core">
+              <div className="core-glow"></div>
+              <span className="core-letter">A</span>
             </div>
 
-            <div className="step-card">
-              <div className="step-number">02</div>
-              <div className="step-icon">
-                <FaBrain />
+            {/* Step 1: Top (12 o'clockish - actually Top Left for flow) */}
+            <div className="cycle-step step-1">
+              <div className="step-content-wrapper">
+                <div className="step-badge">01</div>
+                <div className="step-icon">
+                  <FaCompass />
+                </div>
+                <h3>Choose Topic</h3>
+                <p>Select your module. Micro or Macro, targeted for CBSE syllabus.</p>
               </div>
-              <h3>Learn Concepts</h3>
-              <p>Read comprehensive explanations in clear English with diagrams and real-world examples.</p>
-              <div className="step-line"></div>
             </div>
 
-            <div className="step-card">
-              <div className="step-number">03</div>
-              <div className="step-icon">
-                <FaTrophy />
+            {/* Step 2: Right (4 o'clock) */}
+            <div className="cycle-step step-2">
+              <div className="step-content-wrapper">
+                <div className="step-badge">02</div>
+                <div className="step-icon">
+                  <FaBrain />
+                </div>
+                <h3>Deep Dive</h3>
+                <p>Master concepts with interactive graphs, visual notes, and real-life examples.</p>
               </div>
-              <h3>Practice & Score</h3>
-              <p>Take quizzes, track your progress, and become confident for your board exams.</p>
             </div>
+
+            {/* Step 3: Bottom Left (8 o'clock) */}
+            <div className="cycle-step step-3">
+              <div className="step-content-wrapper">
+                <div className="step-badge">03</div>
+                <div className="step-icon">
+                  <FaTrophy />
+                </div>
+                <h3>Score High</h3>
+                <p>Test your knowledge with quizzes and track your performance curve.</p>
+              </div>
+            </div>
+
+            {/* Flow Particles */}
+            <div className="orbit-particle p1"></div>
+            <div className="orbit-particle p2"></div>
+            <div className="orbit-particle p3"></div>
           </div>
         </div>
       </section>
