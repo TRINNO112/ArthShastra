@@ -1,0 +1,360 @@
+/* ==========================================================================
+   Quiz Section - 'Zen Premium' Theme (Apple/Minimalist Style)
+   v2.1 - Fixed Question Number Overflow (Pill Shape Force)
+   ========================================================================== */
+
+/* Import Premium Font */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap');
+
+:root {
+    --zen-font: 'Outfit', sans-serif;
+    --zen-bg: #f5f5f7;
+    --zen-glass: rgba(255, 255, 255, 0.05);
+    --zen-glass-hover: rgba(255, 255, 255, 0.1);
+    --zen-border: rgba(255, 255, 255, 0.15);
+    --zen-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    --zen-accent: #007aff;
+    --zen-success: #34c759;
+    --zen-error: #ff3b30;
+    --zen-gold: #ffcc00;
+    --zen-radius: 24px;
+    --zen-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.quiz-section {
+    min-height: 100vh;
+    padding: 60px 20px;
+    font-family: var(--zen-font);
+}
+
+.quiz-container {
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* --- HEADERS --- */
+.quiz-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--zen-border);
+}
+
+.quiz-block-header h3 {
+    font-weight: 600;
+    font-size: 1.8rem;
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: -0.5px;
+    margin: 0;
+}
+
+.question-count {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    background: var(--zen-glass);
+    padding: 8px 16px;
+    border-radius: 50px;
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--zen-border);
+}
+
+/* --- CARDS --- */
+.quiz-question-card, .question-card, .results-card, .quiz-progress-card {
+    background: rgba(30, 30, 35, 0.75);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid var(--zen-border);
+    border-radius: var(--zen-radius);
+    padding: 40px;
+    margin-bottom: 40px;
+    box-shadow: var(--zen-shadow);
+    transition: var(--zen-transition);
+}
+
+.question-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+}
+
+/* --- PROGRESS --- */
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.progress-bar-container {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    border-radius: 10px;
+    transition: width 0.6s ease-out;
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+}
+
+.quiz-timer {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    color: #4facfe;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* --- QUESTIONS --- */
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+/* FIX: Flexible Pill Shape */
+.question-number {
+    display: inline-block;
+    background: rgba(255, 215, 0, 0.15);
+    color: #ffcc00;
+    padding: 8px 24px; /* Larger padding for safety */
+    border-radius: 50px; /* Pill */
+    font-size: 0.95rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    white-space: nowrap;
+    width: auto; /* Allow auto growth */
+    flex-shrink: 0; /* Prevent squashing */
+}
+
+.question-text {
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 1);
+    margin-bottom: 35px;
+}
+
+/* --- OPTIONS --- */
+.options-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.option-btn, .tf-btn {
+    display: flex;
+    align-items: center;
+    padding: 20px 30px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--zen-border);
+    border-radius: 18px;
+    cursor: pointer;
+    transition: var(--zen-transition);
+    width: 100%;
+    text-align: left;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: var(--zen-font);
+    font-size: 1.1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.option-btn:hover:not(:disabled), .tf-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.02);
+}
+
+.option-btn.selected, .tf-btn.selected {
+    background: rgba(0, 122, 255, 0.2);
+    border-color: var(--zen-accent);
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 0 20px rgba(0, 122, 255, 0.3);
+}
+
+.option-btn.correct, .tf-btn.correct {
+    background: rgba(52, 199, 89, 0.2);
+    border-color: var(--zen-success);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(52, 199, 89, 0.3);
+}
+
+.option-btn.wrong, .tf-btn.wrong {
+    background: rgba(255, 59, 48, 0.2);
+    border-color: var(--zen-error);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(255, 59, 48, 0.3);
+}
+
+.option-letter {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-right: 20px;
+    transition: var(--zen-transition);
+    flex-shrink: 0;
+}
+
+.option-btn.selected .option-letter {
+    background: var(--zen-accent);
+    border-color: var(--zen-accent);
+    color: #fff;
+}
+
+.option-btn.correct .option-letter {
+    background: var(--zen-success);
+    border-color: var(--zen-success);
+    color: #fff;
+}
+
+.option-btn.wrong .option-letter {
+    background: var(--zen-error);
+    border-color: var(--zen-error);
+    color: #fff;
+}
+
+/* --- SUBMIT BUTTON --- */
+.submit-btn {
+    width: 100%;
+    padding: 22px;
+    background: #fff;
+    color: #000;
+    border: none;
+    border-radius: 18px;
+    font-family: var(--zen-font);
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--zen-transition);
+    margin-top: 40px;
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+    letter-spacing: 0.5px;
+}
+
+.submit-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3);
+    background: #fff;
+}
+
+.submit-btn:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.3);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* --- RESULTS CARD --- */
+.results-card {
+    text-align: center;
+    border-color: var(--zen-gold);
+    background: rgba(20, 20, 20, 0.9);
+}
+
+.score-circle {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 40px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.score-number {
+    font-size: 4rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #ffd700 0%, #ff8c00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 5px;
+}
+
+.score-label {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.feedback-message {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.results-breakdown {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.breakdown-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px 30px;
+    border-radius: 15px;
+    min-width: 140px;
+    border: 1px solid var(--zen-border);
+}
+
+.breakdown-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: block;
+    margin-top: 8px;
+}
+
+.breakdown-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.retry-btn {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 15px 40px;
+    border-radius: 40px;
+    margin-top: 50px;
+    cursor: pointer;
+    font-family: var(--zen-font);
+    font-size: 1rem;
+    font-weight: 600;
+    transition: var(--zen-transition);
+}
+
+.retry-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: #fff;
+    transform: translateY(-2px);
+}

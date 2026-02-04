@@ -36,7 +36,7 @@ function Lesson1() {
         <div className="stats-page">
             <div className="stats-container">
                 {/* Back Link */}
-                <Link to="/lessons?grade=11&subject=statistics" className="stats-btn stats-btn-outline" style={{ border: 'none', paddingLeft: 0, marginBottom: '20px' }}>
+                <Link to="/lessons?grade=11&subject=statistics" className="stats-btn stats-btn-outline" style={{ border: 'none', paddingLeft: '10px', marginBottom: '20px' }}>
                     <FaArrowLeft /> Back to Lessons
                 </Link>
 

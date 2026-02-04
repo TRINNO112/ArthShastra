@@ -14,32 +14,35 @@
 /* ═══════════════════════════════════════════════════════════════
    CSS VARIABLES
    ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   CSS VARIABLES (DARK THEME)
+   ═══════════════════════════════════════════════════════════════ */
 :root {
-  /* Primary Colors */
-  --stats-primary: #1a73e8;
-  --stats-primary-dark: #1557b0;
-  --stats-primary-light: #4285f4;
+  /* Primary Colors - Lighter Blue for Dark Mode */
+  --stats-primary: #3b82f6; 
+  --stats-primary-dark: #2563eb;
+  --stats-primary-light: #60a5fa;
   
   /* Secondary Colors */
   --stats-secondary: #00897b;
   --stats-secondary-dark: #00695c;
   --stats-secondary-light: #26a69a;
   
-  /* Background Colors */
-  --stats-bg: #f8fafc;
-  --stats-bg-alt: #f1f5f9;
-  --stats-white: #ffffff;
-  --stats-dark: #0f172a;
+  /* Background Colors - DARK MODE */
+  --stats-bg: #020617; /* Deep Slate/Black */
+  --stats-bg-alt: #0f172a; /* Slate 900 */
+  --stats-white: #1e293b; /* Slate 800 (Card BG) */
+  --stats-dark: #f8fafc; /* Slate 50 (Text Heading) */
   
   /* Grid & Lines */
-  --stats-grid: #e2e8f0;
-  --stats-grid-dark: #cbd5e1;
-  --stats-border: #e2e8f0;
+  --stats-grid: #334155; /* Slate 700 */
+  --stats-grid-dark: #475569;
+  --stats-border: #334155;
   
   /* Text Colors */
-  --stats-text: #1e293b;
-  --stats-text-muted: #64748b;
-  --stats-text-light: #94a3b8;
+  --stats-text: #cbd5e1; /* Slate 300 */
+  --stats-text-muted: #94a3b8; /* Slate 400 */
+  --stats-text-light: #64748b;
   
   /* Status Colors */
   --stats-success: #10b981;
@@ -61,10 +64,10 @@
   --stats-spacing-2xl: 48px;
   
   /* Shadows */
-  --stats-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --stats-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  --stats-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --stats-shadow-card: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --stats-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --stats-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --stats-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --stats-shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
   
   /* Border Radius */
   --stats-radius-sm: 6px;
@@ -83,10 +86,10 @@
   color: var(--stats-text);
   position: relative;
   
-  /* Graph Paper Background */
+  /* Graph Paper Background - Dark Mode Grid */
   background-image:
-    linear-gradient(var(--stats-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--stats-grid) 1px, transparent 1px);
+    linear-gradient(rgba(51, 65, 85, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(51, 65, 85, 0.1) 1px, transparent 1px);
   background-size: 20px 20px;
   background-position: -1px -1px;
 }
@@ -102,8 +105,8 @@
    HEADER
    ═══════════════════════════════════════════════════════════════ */
 .stats-header {
-  background: var(--stats-white);
-  border: 2px solid var(--stats-primary);
+  background: var(--stats-white); /* Slate 800 */
+  border: 1px solid var(--stats-border); /* Thinner border for cleaner look */
   border-radius: var(--stats-radius-lg);
   padding: var(--stats-spacing-xl);
   margin-bottom: var(--stats-spacing-xl);
@@ -118,15 +121,16 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
+  height: 2px; /* Sleeker line */
   background: linear-gradient(90deg, var(--stats-primary), var(--stats-secondary));
 }
 
 .stats-label {
   display: inline-block;
-  background: var(--stats-primary);
-  color: white;
-  padding: 6px 14px;
+  background: rgba(59, 130, 246, 0.15); /* Transparent bg */
+  color: #ffffff !important; /* White text forced */
+  border: 1px solid var(--stats-primary);
+  padding: 4px 12px;
   border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -139,9 +143,10 @@
   font-family: var(--font-heading);
   font-size: 2.5rem;
   font-weight: 800;
-  color: var(--stats-dark);
+  color: var(--stats-dark); /* Light text now */
   line-height: 1.2;
   margin: 0 0 var(--stats-spacing-sm) 0;
+  text-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
 }
 
 .stats-subtitle {
@@ -166,6 +171,7 @@
 
 .stats-card:hover {
   box-shadow: var(--stats-shadow-lg);
+  border-color: var(--stats-primary-light); /* Hover border highlight */
 }
 
 .stats-card-heading {
@@ -175,7 +181,7 @@
   color: var(--stats-dark);
   margin: 0 0 var(--stats-spacing-md) 0;
   padding-bottom: var(--stats-spacing-sm);
-  border-bottom: 2px solid var(--stats-grid);
+  border-bottom: 1px solid var(--stats-grid);
   display: flex;
   align-items: center;
   gap: var(--stats-spacing-sm);
@@ -183,19 +189,19 @@
 
 .stats-card-heading.primary {
   border-bottom-color: var(--stats-primary);
-  color: var(--stats-primary);
+  color: var(--stats-primary-light);
 }
 
 .stats-card-heading.secondary {
   border-bottom-color: var(--stats-secondary);
-  color: var(--stats-secondary);
+  color: var(--stats-secondary-light);
 }
 
 /* ═══════════════════════════════════════════════════════════════
    DEFINITION BOX
    ═══════════════════════════════════════════════════════════════ */
 .stats-definition {
-  background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+  background: rgba(59, 130, 246, 0.05); /* Slight blue tint */
   border-left: 4px solid var(--stats-primary);
   border-radius: 0 var(--stats-radius) var(--stats-radius) 0;
   padding: var(--stats-spacing-lg);
@@ -213,7 +219,7 @@
    FORMULA BOX
    ═══════════════════════════════════════════════════════════════ */
 .stats-formula {
-  background: var(--stats-dark);
+  background: #000; /* Pure black for formula contrast */
   color: white;
   font-family: var(--font-mono);
   font-size: 1.3rem;
@@ -223,7 +229,8 @@
   border-radius: var(--stats-radius);
   margin: var(--stats-spacing-md) 0;
   letter-spacing: 1px;
-  border: 2px solid var(--stats-primary);
+  border: 1px solid var(--stats-primary-dark);
+  box-shadow: inset 0 0 20px rgba(37, 99, 235, 0.1);
 }
 
 .stats-formula sub,
@@ -235,28 +242,31 @@
    NOTE / HIGHLIGHT BOX
    ═══════════════════════════════════════════════════════════════ */
 .stats-note {
-  background: #fefce8;
-  border: 1px solid #fde047;
+  background: rgba(245, 158, 11, 0.05); /* Warning tint */
+  border: 1px solid rgba(245, 158, 11, 0.2);
   border-left: 4px solid var(--stats-warning);
   border-radius: var(--stats-radius);
   padding: var(--stats-spacing-md);
   margin: var(--stats-spacing-md) 0;
+  color: #fbbf24;
 }
 
 .stats-note.info {
-  background: #eff6ff;
-  border-color: #93c5fd;
+  background: rgba(59, 130, 246, 0.05);
+  border-color: rgba(59, 130, 246, 0.2);
   border-left-color: var(--stats-info);
+  color: var(--stats-text);
 }
 
 .stats-note.success {
-  background: #f0fdf4;
-  border-color: #86efac;
+  background: rgba(16, 185, 129, 0.05);
+  border-color: rgba(16, 185, 129, 0.2);
   border-left-color: var(--stats-success);
+  color: var(--stats-text);
 }
 
 .stats-highlight {
-  background: var(--stats-primary);
+  background: var(--stats-primary-dark);
   color: white;
   padding: var(--stats-spacing-md) var(--stats-spacing-lg);
   border-radius: var(--stats-radius);
@@ -264,6 +274,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--stats-spacing-sm);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -293,7 +304,8 @@
 
 .stats-grid-item:hover {
   transform: translateY(-2px);
-  box-shadow: var(--stats-shadow);
+  box-shadow: var(--stats-shadow-lg);
+  background: #232d42; /* Slightly lighter on hover */
 }
 
 .stats-grid-item.primary {
@@ -337,32 +349,33 @@
 }
 
 .stats-table th {
-  background: var(--stats-primary);
-  color: white;
+  background: #0f172a; /* Darker header */
+  color: var(--stats-primary-light);
   font-weight: 600;
   padding: var(--stats-spacing-md);
   text-align: left;
   text-transform: uppercase;
   font-size: 0.8rem;
   letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--stats-border);
 }
 
 .stats-table td {
   padding: var(--stats-spacing-md);
-  border-bottom: 1px solid var(--stats-grid);
+  border-bottom: 1px solid var(--stats-border);
   color: var(--stats-text);
 }
 
 .stats-table tbody tr:nth-child(even) {
-  background: var(--stats-bg);
+  background: rgba(255, 255, 255, 0.02); /* Slight contrast */
 }
 
 .stats-table tbody tr:hover {
-  background: #e0f2fe;
+  background: rgba(59, 130, 246, 0.1);
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   BUTTONS
+   BUTTONS (Redesigned)
    ═══════════════════════════════════════════════════════════════ */
 .stats-btn {
   display: inline-flex;
@@ -381,11 +394,13 @@
 .stats-btn-primary {
   background: var(--stats-primary);
   color: white;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.5);
 }
 
 .stats-btn-primary:hover {
-  background: var(--stats-primary-dark);
-  transform: translateY(-1px);
+  background: var(--stats-primary-light);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.6);
 }
 
 .stats-btn-secondary {
@@ -393,15 +408,20 @@
   color: white;
 }
 
+/* REDESIGNED "Back to Lessons" BUTTON */
 .stats-btn-outline {
-  background: transparent;
-  border: 2px solid var(--stats-primary);
-  color: var(--stats-primary);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--stats-grid); /* Subtle Border */
+  color: var(--stats-text-muted);
+  backdrop-filter: blur(5px);
 }
 
 .stats-btn-outline:hover {
-  background: var(--stats-primary);
-  color: white;
+  background: rgba(30, 41, 59, 0.8);
+  border-color: var(--stats-primary); /* Blue Glow Border */
+  color: var(--stats-primary-light);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); /* Soft Glow */
+  transform: translateY(-2px);
 }
 
 /* ═══════════════════════════════════════════════════════════════

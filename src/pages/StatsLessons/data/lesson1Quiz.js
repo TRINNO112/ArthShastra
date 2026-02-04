@@ -1,256 +1,199 @@
 /**
  * lesson1Quiz.js
  * Quiz Data for Lesson 1: Introduction to Statistics
+ * Topics: Meaning, Scope, Functions, Importance, Limitations
  */
 
-export const lesson1Data = [
-    // MEANING & DEFINITION
+export const lesson1McqQuestions = [
+    // --- MEANING & DEFINITIONS ---
     {
-        id: 1,
+        id: "q1",
         question: "In plural sense, which of the following is NOT a characteristic of Statistics?",
-        options: [
-            "Aggregate of facts",
-            "Numerically expressed",
-            "Affected by multiplicity of causes",
-            "Based on a single isolated fact"
-        ],
-        correctAnswer: 3,
+        options: ["Aggregate of facts", "Numerically expressed", "Affected by multiplicity of causes", "Based on a single isolated fact"],
+        correct: 3,
         explanation: "Statistics deals with aggregates of facts. A single isolated figure (like Ram's height) is not statistics."
     },
     {
-        id: 2,
-        question: "Who described Statistics as 'straws out of which economists make bricks'?",
-        options: [
-            "Alfred Marshall",
-            "Adam Smith",
-            "Prof. Bowley",
-            "Seligman"
-        ],
-        correctAnswer: 0,
-        explanation: "Marshall emphasized the importance of data (straws) for building economic theories (bricks)."
+        id: "q2",
+        question: "Who is known as the 'Father of Statistics' (Global)?",
+        options: ["Adam Smith", "Gottfried Achenwall", "Alfred Marshall", "P.C. Mahalanobis"],
+        correct: 1,
+        explanation: "Gottfried Achenwall is often credited with coining the term 'Statistics'."
     },
     {
-        id: 3,
-        question: "Which of the following statements is correct regarding Statistics in singular sense?",
-        options: [
-            "It refers to aggregate of facts",
-            "It refers to statistical methods",
-            "It refers to numerical data",
-            "It refers to qualitative data"
-        ],
-        correctAnswer: 1,
-        explanation: "In singular sense, statistics refers to the methods used for collection, analysis, and interpretation of data."
+        id: "q3",
+        question: "Who is known as the 'Father of Indian Statistics'?",
+        options: ["Dadabhai Naoroji", "V.K.R.V. Rao", "P.C. Mahalanobis", "C.R. Rao"],
+        correct: 2,
+        explanation: "P.C. Mahalanobis is the father of Indian Statistics and founded the ISI."
     },
     {
-        id: 4,
-        question: "Statistics deals with qualitative data like honesty and beauty.",
-        options: [
-            "True",
-            "False"
-        ],
-        correctAnswer: 1,
-        explanation: "False. Statistics only deals with quantitative (numerical) data. Qualitative attributes can only be studied if converted to numbers (ranks)."
+        id: "q4",
+        question: "Statistics in singular sense refers to:",
+        options: ["Statistical Data", "Statistical Methods", "Descriptive Statistics", "Inductive Statistics"],
+        correct: 1,
+        explanation: "In singular sense, statistics refers to the methods (Collection, Organisation, Presentation, Analysis, Interpretation)."
+    },
+    {
+        id: "q5",
+        question: "'Statistics are straws out of which economists make bricks.' Who said this?",
+        options: ["Bowley", "Marshall", "Boddington", "Seligman"],
+        correct: 1,
+        explanation: "Alfred Marshall highlighted the importance of data for building economic theories."
     },
 
-    // STAGES & SCOPE
+    // --- STAGES & SCOPE ---
     {
-        id: 5,
-        question: "Which of the following is the correct order of stages in statistical study?",
+        id: "q6",
+        question: "What is the correct sequence of statistical stages?",
         options: [
-            "Analysis → Collection → Presentation → Interpretation",
-            "Collection → Organisation → Presentation → Analysis → Interpretation",
-            "Collection → Presentation → Organisation → Analysis",
-            "Organisation → Collection → Analysis → Interpretation"
+            "Analysis -> Collection -> Presentation -> Interpretation",
+            "Collection -> Organisation -> Presentation -> Analysis -> Interpretation",
+            "Collection -> Presentation -> Organisation -> Analysis",
+            "Organisation -> Collection -> Analysis -> Interpretation"
         ],
-        correctAnswer: 1,
+        correct: 1,
         explanation: "The correct sequence is COPDAI: Collection, Organisation, Presentation, Analysis, Interpretation."
     },
     {
-        id: 6,
-        question: "Drawing conclusions from the analyzed data is known as:",
-        options: [
-            "Collection of Data",
-            "Presentation of Data",
-            "Interpretation of Data",
-            "Organisation of Data"
-        ],
-        correctAnswer: 2,
+        id: "q7",
+        question: "Which stage involves drawing conclusions from data?",
+        options: ["Analysis", "Interpretation", "Presentation", "Collection"],
+        correct: 1,
         explanation: "Interpretation involves drawing conclusions and making decisions based on the analyzed data."
     },
     {
-        id: 7,
-        question: "Scope of statistics includes:",
-        options: [
-            "Nature of Statistics",
-            "Subject Matter of Statistics",
-            "Limitations of Statistics",
-            "All of the above"
-        ],
-        correctAnswer: 3,
-        explanation: "The scope of statistics is broad and covers its nature (science/art), subject matter (descriptive/inferential), and limitations."
-    },
-
-    // FUNCTIONS & IMPORTANCE
-    {
-        id: 8,
-        question: "Which of the following is a function of Statistics?",
-        options: [
-            "To simplify complex data",
-            "To help in policy making",
-            "To test hypotheses",
-            "All of the above"
-        ],
-        correctAnswer: 3,
-        explanation: "Statistics simplifies data, aids in policy formulation, and helps verify economic laws/hypotheses."
+        id: "q8",
+        question: "Subject matter of statistics includes:",
+        options: ["Descriptive Statistics", "Inferential Statistics", "Both A and B", "None of these"],
+        correct: 2,
+        explanation: "Statistics covers both Descriptive (describing data) and Inferential (drawing conclusions about population from sample)."
     },
     {
-        id: 9,
-        question: "Statistics facilitates comparison between:",
-        options: [
-            "Different time periods",
-            "Different regions",
-            "Different sectors",
-            "All of the above"
-        ],
-        correctAnswer: 3,
-        explanation: "Comparative analysis is a key function of statistics, allowing comparison across time, space, and categories."
+        id: "q9",
+        question: "Which of the following belongs to Descriptive Statistics?",
+        options: ["Estimation", "Hypothesis Testing", "Measures of Central Tendency", "Prediction"],
+        correct: 2,
+        explanation: "Mean, Median, Mode (Central Tendency) are used to describe the characteristics of data."
     },
     {
-        id: 10,
-        question: "In Economics, Statistics is used for:",
-        options: [
-            "Production decisions",
-            "Consumption analysis",
-            "Distribution of income",
-            "All of the above"
-        ],
-        correctAnswer: 3,
-        explanation: "Statistics is vital in all branches of economics: Consumption, Production, Distribution, and Exchange."
-    },
-
-    // NATURE (SCIENCE OR ART)
-    {
-        id: 11,
-        question: "Statistics is:",
-        options: [
-            "Only a Science",
-            "Only an Art",
-            "Both a Science and an Art",
-            "Neither Science nor Art"
-        ],
-        correctAnswer: 2,
-        explanation: "It is a Science because it has systematic methods and principles, and an Art because it involves the skillful application of these methods."
-    },
-    {
-        id: 12,
+        id: "q10",
         question: "As an 'Art', Statistics relates to:",
-        options: [
-            "Systematic study of data",
-            "Application of methods to solve problems",
-            "Universal laws",
-            "None of the above"
-        ],
-        correctAnswer: 1,
-        explanation: "As an Art, statistics is about applying methods to solve real-world problems and interpret data skillfully."
+        options: ["Systematic study", "Application of methods to solve problems", "Universal laws", "None of the above"],
+        correct: 1,
+        explanation: "As an Art, statistics is about skill in handling data and applying methods to real-world problems."
     },
 
-    // KEY TERMS
+    // --- FUNCTIONS & IMPORTANCE ---
     {
-        id: 13,
-        question: "A person who buys goods to satisfy his wants is called a:",
-        options: [
-            "Producer",
-            "Consumer",
-            "Service Holder",
-            "Service Provider"
-        ],
-        correctAnswer: 1,
-        explanation: "A Consumer is one who consumes goods and services for the satisfaction of wants."
+        id: "q11",
+        question: "Which is NOT a function of statistics?",
+        options: ["To simplify complex data", "To study individual units", "To help in policy making", "To test hypotheses"],
+        correct: 1,
+        explanation: "Statistics studies aggregates, not individual units. This is a limitation, not a function."
     },
     {
-        id: 14,
-        question: "A person who is in a job and gets paid for it is called a:",
-        options: [
-            "Producer",
-            "Consumer",
-            "Service Holder",
-            "Service Provider"
-        ],
-        correctAnswer: 2,
-        explanation: "A Service Holder works for others and receives remuneration (wages/salary)."
+        id: "q12",
+        question: "Statistics facilitates comparison between:",
+        options: ["Different time periods", "Different regions", "Different sectors", "All of the above"],
+        correct: 3,
+        explanation: "Comparative analysis is a key function, allowing comparison across time, space, and categories."
     },
     {
-        id: 15,
-        question: "Scarcity is the root cause of:",
-        options: [
-            "Social problems",
-            "Political problems",
-            "Economic problems",
-            "Religious problems"
-        ],
-        correctAnswer: 2,
-        explanation: "Scarcity of resources in relation to unlimited wants gives rise to all economic problems (choice/allocation)."
+        id: "q13",
+        question: "Statistics converts qualitative data into quantitative data. This statement is:",
+        options: ["Partially True", "False", "True", "None of these"],
+        correct: 1,
+        explanation: "Statistics cannot convert quality into quantity directly; it assigns ranks/scores to measure it."
+    },
+    {
+        id: "q14",
+        question: "In Economics, 'Construction of Index Numbers' is a function of:",
+        options: ["Production", "Exchange", "Distribution", "Consumption"],
+        correct: 1,
+        explanation: "Index numbers (like price index) help in understanding exchange value and inflation."
+    },
+    {
+        id: "q15",
+        question: "Economic planning without statistics is like:",
+        options: ["A ship without a rudder", "A bird without wings", "A car without wheels", "A house without a roof"],
+        correct: 0,
+        explanation: "Statistics provides the necessary data for navigation and direction in planning."
     },
 
-    // LIMITATIONS & DISTRUST
+    // --- LIMITATIONS ---
     {
-        id: 16,
-        question: "Statistics results are:",
-        options: [
-            "Always 100% accurate",
-            "True only on average",
-            "Always false",
-            "True for every individual"
-        ],
-        correctAnswer: 1,
-        explanation: "Statistical laws are not exact like physical laws; they are true only on average and in the long run."
+        id: "q16",
+        question: "Statistics laws are true:",
+        options: ["Always", "Never", "On an average", "Individually"],
+        correct: 2,
+        explanation: "Unlike physical laws, statistical laws are true only on average and in the long run."
     },
     {
-        id: 17,
-        question: "Statistics studies:",
-        options: [
-            "Individual units",
-            "Aggregates of facts",
-            "Qualitative attributes",
-            "Single figures"
-        ],
-        correctAnswer: 1,
-        explanation: "A major limitation is that statistics does not study individuals; it deals with aggregates/groups."
+        id: "q17",
+        question: "Statistics can be misused. This limitation is known as:",
+        options: ["Distrust of Statistics", "Error of Statistics", "Bias of Statistics", "None of these"],
+        correct: 0,
+        explanation: "The potential for data manipulation leads to 'Distrust of Statistics'."
     },
     {
-        id: 18,
-        question: "The statement 'Figures don't lie, but liars figure' refers to:",
-        options: [
-            "Accuracy of statistics",
-            "Distrust of statistics",
-            "Importance of statistics",
-            "Functions of statistics"
-        ],
-        correctAnswer: 1,
-        explanation: "This famous quote highlights the Distrust of Statistics—how data can be manipulated to mislead."
+        id: "q18",
+        question: "Statistics deals with:",
+        options: ["Qualitative data only", "Quantitative data only", "Both A and B", "None"],
+        correct: 1,
+        explanation: "Statistics strictly deals with numerical (quantitative) data."
     },
     {
-        id: 19,
-        question: "Distrust of statistics arises because:",
-        options: [
-            "Statistics is always wrong",
-            "Statistics is useless",
-            "Statistics can be easily misused/manipulated",
-            "Statistics is difficult"
-        ],
-        correctAnswer: 2,
-        explanation: "Distrust exists because statistical methods can be manipulated by biased users to prove false claims ('Clay in hands of potter')."
+        id: "q19",
+        question: "Statistical results are prone to:",
+        options: ["Personal Bias", "Mathematical Errors", "Sampling Errors", "All of the above"],
+        correct: 3,
+        explanation: "Bias in collection, calculation errors, or unrepresentative samples can all affect results."
     },
     {
-        id: 20,
-        question: "Which of the following is a remedy to remove distrust of statistics?",
-        options: [
-            "Stop using statistics",
-            "Blindly believe all data",
-            "Consider the source and method of collection",
-            "Use only one method always"
-        ],
-        correctAnswer: 2,
-        explanation: "Critical examination of the source, bias, and methods used helps in trusting the correct data."
+        id: "q20",
+        question: "'Figures don't lie, but liars figure.' This statement refers to:",
+        options: ["Accuracy of data", "Distrust of statistics", "Collection of data", "Presentation of data"],
+        correct: 1,
+        explanation: "It highlights how data can be manipulated to mislead people."
+    },
+
+    // --- KEY TERMS ---
+    {
+        id: "q21",
+        question: "The root cause of all economic problems is:",
+        options: ["Poverty", "Unemployment", "Scarcity", "Inflation"],
+        correct: 2,
+        explanation: "Scarcity of resources in relation to unlimited wants is the fundamental economic problem."
+    },
+    {
+        id: "q22",
+        question: "A person who consumes goods and services for satisfaction involves in:",
+        options: ["Production", "Consumption", "Distribution", "Exchange"],
+        correct: 1,
+        explanation: "Consumption is the act of using goods/services to satisfy wants."
+    },
+    {
+        id: "q23",
+        question: "Who is a 'Service Holder'?",
+        options: ["A doctor treating patients", "A teacher teaching in a school for salary", "A shopkeeper selling goods", "A farmer growing crops"],
+        correct: 1,
+        explanation: "A service holder works for others and receives remuneration (salary/wages)."
+    },
+    {
+        id: "q24",
+        question: "Which of these is NOT an economic activity?",
+        options: ["Production", "Consumption", "Social Service", "Distribution"],
+        correct: 2,
+        explanation: "Social service is non-economic as it is not done for monetary gain."
+    },
+    {
+        id: "q25",
+        question: "Data regarding 'Beauty of a flower' is:",
+        options: ["Quantitative Data", "Qualitative Data", "Statistical Data", "None"],
+        correct: 1,
+        explanation: "Beauty is an attribute (quality), not a numerical value, so it is qualitative."
     }
 ];
+
+export const lesson1TfQuestions = [];
