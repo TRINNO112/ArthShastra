@@ -22,6 +22,7 @@ import {
 } from './components'; // Components imported from index.js
 import { lesson5Data } from '../data/lesson5Data';
 import { logLessonProgress } from '../../../services/firebase';
+import MicroTopicsMenu from '../components/MicroTopicsMenu';
 import '../css/lessons.css'; // Shared lesson styles
 import './lesson5-comic.css'; // Comic Book Theme Styles
 
@@ -141,38 +142,12 @@ function Lesson5() {
         </div>
       </header>
 
-      {/* Navigation */}
-      <nav className="lesson-nav">
-        <div className="nav-container">
-          <div className="nav-scroll" style={{ gap: '15px' }}>
-            {sections.map((section, index) => {
-              const Icon = section.icon;
-              const isActive = activeSection === section.id;
-              const isCompleted = index < currentIndex;
-
-              return (
-                <button
-                  key={section.id}
-                  className={`comic-btn ${isActive ? 'yellow' : 'secondary'}`}
-                  style={{
-                    fontSize: '1rem',
-                    padding: '10px 20px',
-                    opacity: isActive ? 1 : 0.8,
-                    transform: isActive ? 'scale(1.05)' : 'scale(1)'
-                  }}
-                  onClick={() => handleSectionChange(section.id)}
-                >
-                  <span className="nav-icon">
-                    <Icon />
-                  </span>
-                  <span className="nav-text">{section.name}</span>
-                  {isCompleted && <span className="nav-check" style={{ marginLeft: '5px' }}>✓</span>}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </nav>
+      {/* Navigation - Responsive Hybrid */}
+      <MicroTopicsMenu
+        sections={sections}
+        activeSection={activeSection}
+        onSectionChange={handleSectionChange}
+      />
 
       {/* Main Content */}
       <main className="lesson-content">

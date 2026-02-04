@@ -5,6 +5,7 @@ import { FaArrowLeft, FaBalanceScale, FaChartLine, FaClipboardList, FaChevronLef
 import { Quiz, EquilibriumIntro, LogicExplainer, EquilibriumSchedule, EquilibriumGraph, PracticeProblems, DecisionGame, RealWorldExample } from './components';
 import { lesson10Data } from '../data/lesson10Data';
 import { logLessonProgress } from '../../../services/firebase';
+import MicroTopicsMenu from '../components/MicroTopicsMenu';
 import '../css/lessons.css';
 
 const sections = [
@@ -66,17 +67,12 @@ function Lesson10() {
                     </div>
                 </div>
             </header>
-            <nav className="lesson-nav">
-                <div className="nav-container">
-                    <div className="nav-scroll">
-                        {sections.map(s => (
-                            <button key={s.id} className={`nav-item ${activeSection === s.id ? 'active' : ''}`} onClick={() => setActiveSection(s.id)}>
-                                <s.icon className="nav-icon" /> <span className="nav-text">{s.name}</span>
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            </nav>
+            {/* Navigation - Responsive Hybrid */}
+            <MicroTopicsMenu
+                sections={sections}
+                activeSection={activeSection}
+                onSectionChange={setActiveSection}
+            />
             <main className="lesson-content"><div className="content-container">{renderActiveSection()}</div></main>
             <footer className="lesson-footer">
                 <div className="footer-container">

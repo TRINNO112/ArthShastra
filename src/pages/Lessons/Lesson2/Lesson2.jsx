@@ -28,6 +28,7 @@ import {
 } from './components';
 import { lesson2Data } from '../data/lesson2Data';
 import { logLessonProgress } from '../../../services/firebase';
+import MicroTopicsMenu from '../components/MicroTopicsMenu';
 import './lesson2-core.css'; // Clean Professional Theme
 
 const sections = [
@@ -121,36 +122,12 @@ function Lesson2() {
         <h1 className="lesson-title" style={{ marginTop: '20px', marginBottom: '10px' }}>Central Problems of an Economy</h1>
       </header>
 
-      {/* Navigation Tabs */}
-      <div style={{ display: 'flex', overflowX: 'auto', gap: '5px', paddingBottom: '15px', marginBottom: '30px', borderBottom: '1px solid #e2e8f0' }}>
-        {sections.map((section, index) => {
-          const isActive = activeSection === section.id;
-          return (
-            <button
-              key={section.id}
-              onClick={() => handleSectionChange(section.id)}
-              style={{
-                padding: '10px 16px',
-                borderRadius: '6px',
-                border: 'none',
-                backgroundColor: isActive ? '#2563eb' : 'transparent',
-                color: isActive ? '#fff' : '#475569',
-                cursor: 'pointer',
-                fontWeight: '600',
-                fontSize: '0.9rem',
-                whiteSpace: 'nowrap',
-                transition: 'background-color 0.2s',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}
-            >
-              <section.icon size={14} />
-              {section.name}
-            </button>
-          );
-        })}
-      </div>
+      {/* Navigation - Responsive Hybrid */}
+      <MicroTopicsMenu
+        sections={sections}
+        activeSection={activeSection}
+        onSectionChange={handleSectionChange}
+      />
 
       {/* Main Content Area */}
       <main style={{ minHeight: '500px' }}>

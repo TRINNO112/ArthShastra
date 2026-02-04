@@ -6,6 +6,7 @@ import { Introduction, MarketSimulation, Certification, MarketNotes, NewsWire, O
 import Quiz from '../Lesson3/components/Quiz'; // Standard Shared Quiz
 import { lesson13Data } from '../data/lesson13Data';
 import { logLessonProgress } from '../../../services/firebase';
+import MicroTopicsMenu from '../components/MicroTopicsMenu';
 import './lesson13.css';
 import '../css/lessons.css';
 
@@ -70,26 +71,12 @@ function Lesson13() {
                     </h1>
                 </div>
             </header>
-            <nav className="lesson-nav" style={{ background: '#0d1117', borderBottom: '1px solid #30363d' }}>
-                <div className="nav-container">
-                    <div className="nav-scroll">
-                        {sections.map(s => (
-                            <button
-                                key={s.id}
-                                className={`nav-item ${activeSection === s.id ? 'active' : ''}`}
-                                onClick={() => setActiveSection(s.id)}
-                                style={{
-                                    fontFamily: 'monospace',
-                                    color: activeSection === s.id ? '#00ff88' : '#8b949e',
-                                    borderBottom: activeSection === s.id ? '2px solid #00ff88' : 'none'
-                                }}
-                            >
-                                <s.icon className="nav-icon" /> <span className="nav-text">{s.name}</span>
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            </nav>
+            {/* Navigation - Responsive Hybrid */}
+            <MicroTopicsMenu
+                sections={sections}
+                activeSection={activeSection}
+                onSectionChange={setActiveSection}
+            />
             <main className="lesson-content"><div className="content-container">{renderActiveSection()}</div></main>
             <footer className="lesson-footer" style={{ background: '#161b22', borderTop: '1px solid #30363d' }}>
                 <div className="footer-container">

@@ -6,6 +6,7 @@ import { logLessonProgress } from '../../../services/firebase';
 import './lesson8.css'; // THEME IMPORT
 // Components (add as created)
 import { Introduction, CostSchedule, CostCurvesChart, FixedVariableCosts, ShortLongRun, RealWorldExamples, PracticeProblems, Quiz, CostRelationships, TotalCostCurves, BreakEvenShutdown } from './components';
+import MicroTopicsMenu from '../components/MicroTopicsMenu';
 
 const sections = lesson8Data.sections;
 
@@ -125,28 +126,12 @@ function Lesson8() {
         </div>
       </header>
 
-      <nav className="lesson-nav">
-        <div className="nav-container">
-          <div className="nav-scroll">
-            {sections.map((section, index) => {
-              const Icon = IconMap[section.id];
-              const isActive = activeSection === section.id;
-              const isCompleted = index <= currentIndex;
-              return (
-                <button
-                  key={section.id}
-                  className={`nav-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
-                  onClick={() => setActiveSection(section.id)}
-                >
-                  <Icon className="nav-icon" />
-                  <span className="nav-text">{section.name}</span>
-                  {isCompleted && <span className="nav-check">✓</span>}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </nav>
+      {/* Navigation - Responsive Hybrid */}
+      <MicroTopicsMenu
+        sections={sections}
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+      />
 
       <main className="lesson-content">
         <div className="content-container">

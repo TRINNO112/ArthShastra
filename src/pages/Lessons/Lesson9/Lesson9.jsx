@@ -25,6 +25,7 @@ import {
     Quiz
 } from './components';
 import { logLessonProgress } from '../../../services/firebase';
+import MicroTopicsMenu from '../components/MicroTopicsMenu';
 import '../css/lessons.css';
 
 const sections = [
@@ -101,25 +102,12 @@ function Lesson9() {
                 </div>
             </header>
 
-            <nav className="lesson-nav">
-                <div className="nav-container">
-                    <div className="nav-scroll">
-                        {sections.map((section) => {
-                            const Icon = section.icon;
-                            return (
-                                <button
-                                    key={section.id}
-                                    className={`nav-item ${activeSection === section.id ? 'active' : ''}`}
-                                    onClick={() => setActiveSection(section.id)}
-                                >
-                                    <span className="nav-icon"><Icon /></span>
-                                    <span className="nav-text">{section.name}</span>
-                                </button>
-                            );
-                        })}
-                    </div>
-                </div>
-            </nav>
+            {/* Navigation - Responsive Hybrid */}
+            <MicroTopicsMenu
+                sections={sections}
+                activeSection={activeSection}
+                onSectionChange={setActiveSection}
+            />
 
             <main className="lesson-content">
                 <div className="content-container">

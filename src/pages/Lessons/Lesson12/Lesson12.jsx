@@ -15,6 +15,7 @@ import {
 import Quiz from '../Lesson3/components/Quiz';
 import { lesson12Data } from '../data/lesson12Data';
 import { logLessonProgress } from '../../../services/firebase';
+import MicroTopicsMenu from '../components/MicroTopicsMenu';
 import '../css/lessons.css'; // Shared lesson styles
 
 const sections = lesson12Data.sections;
@@ -69,21 +70,12 @@ function Lesson12() {
                 </div>
             </header>
 
-            <nav className="lesson-nav">
-                <div className="nav-container">
-                    <div className="nav-scroll">
-                        {sections.map((s, index) => {
-                            const Icon = s.icon;
-                            return (
-                                <button key={s.id} className={`nav-item ${activeSection === s.id ? 'active' : ''} ${index < currentIndex ? 'completed' : ''}`} onClick={() => setActiveSection(s.id)}>
-                                    <span className="nav-icon"><Icon /></span> <span className="nav-text">{s.name}</span>
-                                    {index < currentIndex && <span className="nav-check">✓</span>}
-                                </button>
-                            );
-                        })}
-                    </div>
-                </div>
-            </nav>
+            {/* Navigation - Responsive Hybrid */}
+            <MicroTopicsMenu
+                sections={sections}
+                activeSection={activeSection}
+                onSectionChange={setActiveSection}
+            />
 
             <main className="lesson-content">
                 <div className="content-container">
