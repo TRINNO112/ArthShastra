@@ -1,6 +1,5 @@
-// TabularRepresentation.jsx - Tabular Representation of PPC
+// TabularRepresentation.jsx
 import { useState } from 'react';
-import { FaTable, FaCalculator, FaExchangeAlt, FaLightbulb, FaChartBar } from 'react-icons/fa';
 import {
   ComposedChart,
   Line,
@@ -9,219 +8,94 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Label,
   ReferenceDot,
 } from 'recharts';
-import '../lesson2-retro.css';
+import '../lesson2-core.css';
 
 function TabularRepresentation() {
   const [selectedRow, setSelectedRow] = useState(null);
 
-  // Production possibilities schedule
   const productionSchedule = [
-    {
-      combination: 'A',
-      wheat: 0,
-      rice: 100,
-      opportunityCost: '-',
-      description: 'All resources used for Rice production'
-    },
-    {
-      combination: 'B',
-      wheat: 20,
-      rice: 89.4,
-      opportunityCost: '10.6 units of Rice',
-      description: 'Shifting some resources to Wheat'
-    },
-    {
-      combination: 'C',
-      wheat: 40,
-      rice: 77.5,
-      opportunityCost: '11.9 units of Rice',
-      description: 'More resources allocated to Wheat'
-    },
-    {
-      combination: 'D',
-      wheat: 60,
-      rice: 63.2,
-      opportunityCost: '14.3 units of Rice',
-      description: 'Balanced production mix'
-    },
-    {
-      combination: 'E',
-      wheat: 80,
-      rice: 44.7,
-      opportunityCost: '18.5 units of Rice',
-      description: 'Emphasis on Wheat production'
-    },
-    {
-      combination: 'F',
-      wheat: 100,
-      rice: 0,
-      opportunityCost: '44.7 units of Rice',
-      description: 'All resources used for Wheat production'
-    }
+    { label: 'A', wheat: 0, rice: 100, cost: '-' },
+    { label: 'B', wheat: 20, rice: 89, cost: '10.6' },
+    { label: 'C', wheat: 40, rice: 77, cost: '11.9' },
+    { label: 'D', wheat: 60, rice: 63, cost: '14.3' },
+    { label: 'E', wheat: 80, rice: 44, cost: '18.5' },
+    { label: 'F', wheat: 100, rice: 0, cost: '44.7' }
   ];
 
-  // Generate smooth PPC curve for graph
-  const generatePPC = () => {
-    const points = [];
-    for (let i = 0; i <= 100; i += 2) {
-      const t = i / 100;
-      const wheat = 100 * t;
-      const rice = 100 * Math.sqrt(1 - t);
-      points.push({ wheat, rice });
+  const generateData = () => {
+    const d = [];
+    for (let i = 0; i <= 100; i += 5) {
+      d.push({ wheat: i, rice: 100 * Math.sqrt(1 - (i / 100)) });
     }
-    return points;
-  };
-
-  const ppcCurve = generatePPC();
-
-  // Helper function for row classes
-  const getRowClass = (combination, index) => {
-    const baseClass = 'tabular-table-row';
-    const evenClass = index % 2 === 0 ? 'tabular-table-row-even' : '';
-    const selectedClass = selectedRow === combination ? 'tabular-table-row-selected' : '';
-    return `${baseClass} ${evenClass} ${selectedClass}`.trim();
-  };
-
-  // Helper function for combination badge classes
-  const getBadgeClass = (combination) => {
-    const baseClass = 'tabular-table-combination-badge';
-    const selectedClass = selectedRow === combination ? 'tabular-table-combination-badge-selected' : 'tabular-table-combination-badge-normal';
-    return `${baseClass} ${selectedClass}`;
-  };
-
-  // Custom tooltip
-  const CustomTooltip = ({ active, payload }) => {
-    if (active && payload && payload.length > 0) {
-      const data = payload[0].payload;
-      return (
-        <div className="ppc-visualizer-tooltip">
-          <p className="ppc-visualizer-tooltip-title">
-            Combination
-          </p>
-          <p className="ppc-visualizer-tooltip-row">
-            <span>🌾 Wheat:</span>
-            <strong className="ppc-visualizer-tooltip-value-green">{data.wheat.toFixed(0)}</strong>
-          </p>
-          <p className="ppc-visualizer-tooltip-row">
-            <span>🍚 Rice:</span>
-            <strong className="ppc-visualizer-tooltip-value-cyan">{data.rice.toFixed(0)}</strong>
-          </p>
-        </div>
-      );
-    }
-    return null;
+    return d;
   };
 
   return (
-    <section className="lesson-section">
-      <div className="section-header">
-        DATA LOG: PRODUCTION SCHEDULE
-      </div>
+    <section>
+      <h2 className="section-title">Production Possibility Schedule</h2>
 
-      <div className="feature-box">
-        <p>
-          <strong>[RAW_DATA]</strong><br />
-          Numerical breakdown of the frontier. Each row is a valid production state.
-        </p>
-      </div>
-
-      <div className="cards-grid">
-        {/* Table Card */}
-        <div className="card no-hover" style={{ gridColumn: 'span 2' }}>
-          <div className="card-content">
-            <h3>PRODUCTION POSSIBILITIES SCHEDULE</h3>
-            <div className="tabular-table-container">
-              <table className="tabular-table" style={{ width: '100%', borderCollapse: 'collapse', border: '4px solid #000' }}>
-                <thead style={{ backgroundColor: '#000', color: '#fff' }}>
-                  <tr>
-                    <th style={{ padding: '15px', textAlign: 'left', border: '2px solid #000' }}>Combination</th>
-                    <th style={{ padding: '15px', textAlign: 'left', border: '2px solid #000' }}>Wheat (Units)</th>
-                    <th style={{ padding: '15px', textAlign: 'left', border: '2px solid #000' }}>Rice (Units)</th>
-                    <th style={{ padding: '15px', textAlign: 'left', border: '2px solid #000' }}>Opportunity Cost</th>
+      <div className="lesson-grid-2">
+        <div className="lesson-card">
+          <h3 className="card-title">Production Data</h3>
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.95rem' }}>
+              <thead>
+                <tr style={{ background: '#f8fafc', borderBottom: '2px solid #e2e8f0' }}>
+                  <th style={{ padding: '12px', textAlign: 'left' }}>Point</th>
+                  <th style={{ padding: '12px', textAlign: 'left' }}>Wheat</th>
+                  <th style={{ padding: '12px', textAlign: 'left' }}>Rice</th>
+                  <th style={{ padding: '12px', textAlign: 'left' }}>MOC</th>
+                </tr>
+              </thead>
+              <tbody>
+                {productionSchedule.map((row) => (
+                  <tr
+                    key={row.label}
+                    onClick={() => setSelectedRow(row.label)}
+                    style={{
+                      cursor: 'pointer',
+                      background: selectedRow === row.label ? '#eff6ff' : 'transparent',
+                      borderBottom: '1px solid #f1f5f9'
+                    }}
+                  >
+                    <td style={{ padding: '12px', fontWeight: 'bold' }}>{row.label}</td>
+                    <td style={{ padding: '12px' }}>{row.wheat}</td>
+                    <td style={{ padding: '12px' }}>{row.rice}</td>
+                    <td style={{ padding: '12px', color: '#64748b' }}>{row.cost}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {productionSchedule.map((row, index) => (
-                    <tr
-                      key={row.combination}
-                      onClick={() => setSelectedRow(selectedRow === row.combination ? null : row.combination)}
-                      style={{
-                        backgroundColor: selectedRow === row.combination ? '#000' : (index % 2 === 0 ? '#f0f0f0' : '#fff'),
-                        color: selectedRow === row.combination ? '#fff' : '#000',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s'
-                      }}
-                    >
-                      <td style={{ padding: '15px', border: '2px solid #000', fontWeight: 'bold' }}>{row.combination}</td>
-                      <td style={{ padding: '15px', border: '2px solid #000' }}>{row.wheat}</td>
-                      <td style={{ padding: '15px', border: '2px solid #000' }}>{row.rice}</td>
-                      <td style={{ padding: '15px', border: '2px solid #000', fontStyle: 'italic' }}>{row.opportunityCost}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-            {selectedRow && (
-              <div style={{ marginTop: '20px', padding: '15px', border: '4px solid #000', backgroundColor: '#000', color: '#fff' }}>
-                <strong>DETAILS: </strong>
-                {productionSchedule.find(row => row.combination === selectedRow)?.description}
-              </div>
-            )}
+        <div className="lesson-card">
+          <h3 className="card-title">Visual Plot</h3>
+          <div className="graph-container">
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                <XAxis type="number" dataKey="wheat" domain={[0, 110]} />
+                <YAxis type="number" domain={[0, 110]} />
+                <Tooltip />
+                <Line data={generateData()} type="monotone" dataKey="rice" stroke="#2563eb" strokeWidth={2} dot={false} />
+                {productionSchedule.map((p) => (
+                  <ReferenceDot
+                    key={p.label}
+                    x={p.wheat}
+                    y={p.rice}
+                    r={5}
+                    fill={selectedRow === p.label ? '#2563eb' : '#94a3b8'}
+                    stroke="none"
+                  />
+                ))}
+              </ComposedChart>
+            </ResponsiveContainer>
           </div>
         </div>
       </div>
-
-      {/* Graph Card */}
-      <div className="card no-hover">
-        <div className="card-content">
-          <h3>GRAPHICAL REPRESENTATION</h3>
-          <ResponsiveContainer width="100%" height={350}>
-            <ComposedChart margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
-              <XAxis
-                type="number"
-                dataKey="wheat"
-                domain={[0, 110]}
-                label={{ value: 'Wheat', position: 'bottom', offset: 0, fill: '#000' }}
-                stroke="#000"
-              />
-              <YAxis
-                type="number"
-                domain={[0, 110]}
-                label={{ value: 'Rice', angle: -90, position: 'insideLeft', fill: '#000' }}
-                stroke="#000"
-              />
-              <Tooltip content={CustomTooltip} />
-              <Line
-                data={ppcCurve}
-                type="monotone"
-                dataKey="rice"
-                stroke="#000"
-                strokeWidth={3}
-                dot={false}
-              />
-              {productionSchedule.map((point) => (
-                <ReferenceDot
-                  key={point.combination}
-                  x={point.wheat}
-                  y={point.rice}
-                  r={6}
-                  fill={selectedRow === point.combination ? "#fff" : "#000"}
-                  stroke="#000"
-                  strokeWidth={2}
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => setSelectedRow(point.combination)}
-                />
-              ))}
-            </ComposedChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
     </section>
   );
 }

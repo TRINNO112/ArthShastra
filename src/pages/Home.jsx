@@ -131,10 +131,6 @@ function Home() {
                 <span>Start Learning Free</span>
                 <div className="btn-shine"></div>
               </Link>
-              <Link to="/about" className="btn btn-glass">
-                <FaPlay className="btn-icon" />
-                <span>Watch Demo</span>
-              </Link>
             </div>
 
             {/* Trust Badges */}
@@ -160,11 +156,11 @@ function Home() {
               <div className="stat-card-3d stat-gold">
                 <div className="stat-glow"></div>
                 <div className="stat-icon-wrapper">
-                  <RiBookReadLine />
+                  <FaLightbulb />
                 </div>
                 <div className="stat-content">
-                  <span className="stat-number">20+</span>
-                  <span className="stat-label">Chapters</span>
+                  <span className="stat-label">Concept</span>
+                  <span className="stat-number">Clarity</span>
                 </div>
                 <div className="stat-decoration"></div>
               </div>
@@ -172,11 +168,11 @@ function Home() {
               <div className="stat-card-3d stat-green">
                 <div className="stat-glow"></div>
                 <div className="stat-icon-wrapper">
-                  <RiBarChartBoxLine />
+                  <FaChartLine />
                 </div>
                 <div className="stat-content">
-                  <span className="stat-number">200+</span>
-                  <span className="stat-label">Questions</span>
+                  <span className="stat-label">Visual</span>
+                  <span className="stat-number">Graphs</span>
                 </div>
                 <div className="stat-decoration"></div>
               </div>
@@ -184,11 +180,11 @@ function Home() {
               <div className="stat-card-3d stat-cyan">
                 <div className="stat-glow"></div>
                 <div className="stat-icon-wrapper">
-                  <HiUserGroup />
+                  <FaTrophy />
                 </div>
                 <div className="stat-content">
-                  <span className="stat-number">5K+</span>
-                  <span className="stat-label">Students</span>
+                  <span className="stat-label">Exam</span>
+                  <span className="stat-number">Success</span>
                 </div>
                 <div className="stat-decoration"></div>
               </div>
@@ -330,6 +326,24 @@ function Home() {
               <p>Instant feedback on every answer. Know exactly where you went wrong and learn from mistakes immediately.</p>
             </div>
 
+            {/* Small Card - MOVED UP */}
+            <div className="bento-card bento-small">
+              <div className="bento-icon-wrapper bento-icon-pink">
+                <BsClockHistory />
+              </div>
+              <h3>Track Progress</h3>
+              <p>See your improvement over time.</p>
+            </div>
+
+            {/* Small Card - MOVED UP */}
+            <div className="bento-card bento-small">
+              <div className="bento-icon-wrapper bento-icon-orange">
+                <IoFlash />
+              </div>
+              <h3>Quick Revision</h3>
+              <p>Summary notes for last-minute prep.</p>
+            </div>
+
             {/* Wide Card - Bottom */}
             <div className="bento-card bento-wide">
               <div className="bento-content-row">
@@ -345,24 +359,6 @@ function Home() {
                   <span>Forever Free</span>
                 </div>
               </div>
-            </div>
-
-            {/* Small Card */}
-            <div className="bento-card bento-small">
-              <div className="bento-icon-wrapper bento-icon-pink">
-                <BsClockHistory />
-              </div>
-              <h3>Track Progress</h3>
-              <p>See your improvement over time.</p>
-            </div>
-
-            {/* Small Card */}
-            <div className="bento-card bento-small">
-              <div className="bento-icon-wrapper bento-icon-orange">
-                <IoFlash />
-              </div>
-              <h3>Quick Revision</h3>
-              <p>Summary notes for last-minute prep.</p>
             </div>
           </div>
         </div>
@@ -489,9 +485,9 @@ function Home() {
                 "Best free resource for Economics! The progress tracking motivated me to study daily. Highly recommended!"
               </p>
               <div className="testimonial-author">
-                <div className="author-avatar">A</div>
+                <div className="author-avatar">V</div>
                 <div className="author-info">
-                  <span className="author-name">Amit Kumar</span>
+                  <span className="author-name">Vikram Singh</span>
                   <span className="author-school">JNV, Bihar • Class 12</span>
                 </div>
                 <div className="rating">
@@ -515,23 +511,31 @@ function Home() {
           <div className="faq-grid">
             <div className="faq-item">
               <div className="faq-icon"><BsShieldCheck /></div>
-              <h4>Is ArthShastra really free?</h4>
-              <p>Yes! ArthShastra is 100% free. All lessons, quizzes, and features are available without any payment or hidden charges.</p>
+              <div className="faq-content">
+                <h4>Is ArthShastra really free?</h4>
+                <p>Yes! ArthShastra is 100% free. All lessons, quizzes, and features are available without any payment or hidden charges.</p>
+              </div>
             </div>
             <div className="faq-item">
               <div className="faq-icon"><HiAcademicCap /></div>
-              <h4>Which syllabus does it cover?</h4>
-              <p>We cover the complete CBSE Class 11 & 12 Economics syllabus (2024-25) including both Microeconomics and Macroeconomics.</p>
+              <div className="faq-content">
+                <h4>Which syllabus does it cover?</h4>
+                <p>We cover the complete CBSE Class 11 & 12 Economics syllabus (2024-25) including both Microeconomics and Macroeconomics.</p>
+              </div>
             </div>
             <div className="faq-item">
               <div className="faq-icon"><IoDocumentTextOutline /></div>
-              <h4>Are explanations easy to understand?</h4>
-              <p>Yes! All concepts are explained in clear, simple English with diagrams and real-world examples for better understanding.</p>
+              <div className="faq-content">
+                <h4>Are explanations easy to understand?</h4>
+                <p>Yes! All concepts are explained in clear, simple English with diagrams and real-world examples for better understanding.</p>
+              </div>
             </div>
             <div className="faq-item">
               <div className="faq-icon"><IoStatsChart /></div>
-              <h4>Can I track my progress?</h4>
-              <p>Absolutely! Create a free account to track completed lessons, quiz scores, and see your improvement over time.</p>
+              <div className="faq-content">
+                <h4>Can I track my progress?</h4>
+                <p>Absolutely! Create a free account to track completed lessons, quiz scores, and see your improvement over time.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -569,6 +573,22 @@ function Home() {
           </div>
         </div>
       </section>
+      {/* Footer */}
+      <footer className="site-footer">
+        <div className="footer-content">
+          <div className="footer-brand">
+            <div className="footer-logo">ArthShastra</div>
+            <p className="footer-tagline">Making Economics Simple & Free.</p>
+          </div>
+          <div className="footer-links">
+            <Link to="/lessons">Lessons</Link>
+            <Link to="/about">About</Link>
+          </div>
+          <div className="footer-copy">
+            &copy; 2024-25 ArthShastra. All rights reserved.
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

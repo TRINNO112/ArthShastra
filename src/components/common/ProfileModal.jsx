@@ -9,8 +9,8 @@ import {
     FaDoorOpen, FaUserEdit, FaCheck
 } from 'react-icons/fa';
 import { HiAcademicCap } from 'react-icons/hi';
-import resetOwl from '../../assets/reset-owl.jpg';
-import signoutOwl from '../../assets/signout-owl.jpg';
+import resetOwl from '../../assets/reset-owl.png';
+import signoutOwl from '../../assets/signout-owl.png';
 import './ProfileModal.css';
 
 // Indian states list moved here
@@ -106,7 +106,7 @@ const ProfileModal = ({ isOpen, onClose, user, onUpdateProfile, onLogout }) => {
             title: 'Sign Out?',
             message: 'Are you sure you want to sign out? Come back soon to keep your streak alive!',
             icon: <div className="pm-confirm-hero" style={{ backgroundImage: `url(${signoutOwl})` }}></div>,
-            confirmText: 'Yes, Sign Out',
+            confirmText: 'Yes,  Sign Out',
             cancelText: 'Stay Logged In',
             color: 'var(--pm-purple)'
         });

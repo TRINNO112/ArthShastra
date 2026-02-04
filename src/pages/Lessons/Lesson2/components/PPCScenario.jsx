@@ -1,6 +1,6 @@
-// PPCScenario.jsx - Interactive Real-World PPC Scenarios
-import { useState } from 'react';
-import { FaGamepad, FaTrophy, FaRedo, FaCheckCircle, FaTimesCircle, FaLightbulb } from 'react-icons/fa';
+// PPCScenario.jsx
+import { useState, useMemo } from 'react';
+import { FaMoneyBillWave, FaTractor, FaCheckCircle, FaTimesCircle, FaExclamationCircle, FaGlobeAmericas, FaBiohazard, FaBalanceScale, FaShieldAlt } from 'react-icons/fa';
 import {
   ComposedChart,
   Line,
@@ -9,746 +9,207 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Label,
-  ReferenceDot,
-  Area,
+  Scatter,
+  ReferenceArea
 } from 'recharts';
-import '../lesson2-retro.css';
+import '../lesson2-core.css';
 
 export default function PPCScenario() {
-  const [currentScenario, setCurrentScenario] = useState(0);
-  const [userChoice, setUserChoice] = useState(null);
-  const [score, setScore] = useState(0);
-  const [showExplanation, setShowExplanation] = useState(false);
+  // Scenario State: 'normal', 'pandemic', 'war'
+  const [activeEvent, setActiveEvent] = useState('normal');
+  const [selectedDecision, setSelectedDecision] = useState(null);
 
-  // Real-world scenarios
-  const scenarios = [
-    {
-      id: 1,
-      title: "Your Country's Budget Crisis",
-      emoji: "🏛️",
-      situation: "Your country has a fixed budget of $100 billion. You must decide how to allocate resources between Healthcare and Education. Currently producing at point X (50 hospitals, 45 schools).",
-      problem: "A pandemic hits! What should you do?",
-      options: [
-        {
-          id: 'A',
-          text: "Build 20 more hospitals, reduce schools to 30",
-          xRatio: 0.7,
-          isCorrect: true,
-          feedback: "Excellent! You moved along the PPC, sacrificing education for immediate healthcare needs. This is a rational trade-off during a pandemic.",
-          explanation: "This represents efficient resource allocation - moving from one point on the PPC to another."
-        },
-        {
-          id: 'B',
-          text: "Build 10 more hospitals AND 10 more schools",
-          xRatio: 0.6,
-          yOffset: 15,
-          offCurve: true,
-          isCorrect: false,
-          feedback: "This is unattainable! You cannot have both with fixed resources. This point lies outside the PPC.",
-          explanation: "Without additional resources or technology, you cannot produce beyond the PPC."
-        },
-        {
-          id: 'C',
-          text: "Do nothing, maintain current position",
-          xRatio: 0.5,
-          isCorrect: false,
-          feedback: "While this maintains balance, it ignores the urgent pandemic need. Not the optimal choice for current conditions.",
-          explanation: "Sometimes staying at the same point isn't the best response to changing circumstances."
-        }
-      ],
-      ppcData: { maxX: 100, maxY: 70, currentX: 50, currentY: 45, goodX: "Hospitals", goodY: "Schools" }
+  // --- SCENARIO DATA & LOGIC ---
+  const worldEvents = {
+    normal: {
+      id: 'normal',
+      label: "Normal Times",
+      icon: FaGlobeAmericas,
+      color: '#22c55e',
+      desc: "Stability. Aim for balanced growth.",
+      xLabel: "Butter (Civilian)",
+      yLabel: "Guns (Defense)",
+      ppcData: [ // Simple Curve Data
+        { x: 0, y: 100 }, { x: 10, y: 99 }, { x: 20, y: 95 }, { x: 30, y: 90 },
+        { x: 40, y: 84 }, { x: 50, y: 77 }, { x: 60, y: 68 }, { x: 70, y: 58 },
+        { x: 80, y: 45 }, { x: 90, y: 30 }, { x: 100, y: 0 }
+      ]
     },
-    {
-      id: 2,
-      title: "Your Tech Startup Decision",
-      emoji: "💻",
-      situation: "You run a tech startup with 20 developers. You can build either Mobile Apps or Web Platforms. Currently: 10 apps, 14 platforms.",
-      problem: "A major client wants 5 more web platforms ASAP. What's your move?",
-      options: [
-        {
-          id: 'A',
-          text: "Shift 5 developers to web, reduce apps to 5",
-          xRatio: 0.25,
-          isCorrect: true,
-          feedback: "Smart move! You understood the opportunity cost - sacrificing 5 apps to gain 5 platforms.",
-          explanation: "This demonstrates understanding of opportunity cost and resource reallocation along the PPC."
-        },
-        {
-          id: 'B',
-          text: "Hire 5 more developers to expand capacity",
-          useNewPPC: true,
-          xRatio: 0.5,
-          isCorrect: true,
-          feedback: "Good long-term thinking! Hiring more resources shifts the PPC outward, allowing more of both!",
-          explanation: "Increasing resources causes an outward shift of the PPC - economic growth in action!"
-        },
-        {
-          id: 'C',
-          text: "Keep everything same, reject the client",
-          xRatio: 0.5,
-          isCorrect: false,
-          feedback: "Missed opportunity! You could have reallocated resources or expanded capacity.",
-          explanation: "Staying at the same point when better options exist isn't optimal resource utilization."
-        }
-      ],
-      ppcData: { maxX: 20, maxY: 20, currentX: 10, currentY: 14, goodX: "Mobile Apps", goodY: "Web Platforms", shifted: true, newMaxX: 25, newMaxY: 25 }
+    pandemic: {
+      id: 'pandemic',
+      label: "Pandemic",
+      icon: FaBiohazard,
+      color: '#ef4444',
+      desc: "Crisis! Focus on Healthcare.",
+      xLabel: "Education",
+      yLabel: "Healthcare",
+      ppcData: [
+        { x: 0, y: 100 }, { x: 10, y: 99 }, { x: 20, y: 95 }, { x: 30, y: 90 },
+        { x: 40, y: 84 }, { x: 50, y: 77 }, { x: 60, y: 68 }, { x: 70, y: 58 },
+        { x: 80, y: 45 }, { x: 90, y: 30 }, { x: 100, y: 0 }
+      ]
     },
-    {
-      id: 3,
-      title: "Farm Production Challenge",
-      emoji: "🌾",
-      situation: "Your farm has 100 acres. You can grow Rice or Wheat. Currently growing: 50 acres wheat, 43 acres rice.",
-      problem: "Wheat prices doubled! Market wants more wheat. But a drought reduced your total farmable land to 80 acres.",
-      options: [
-        {
-          id: 'A',
-          text: "Grow 50 acres wheat, 28 acres rice (on new curve)",
-          useNewPPC: true,
-          xRatio: 0.625,
-          isCorrect: true,
-          feedback: "Perfect! You recognized the inward shift (drought reduces capacity) and responded to market demand.",
-          explanation: "Resource loss causes PPC to shift inward. You adapted by allocating remaining resources optimally."
-        },
-        {
-          id: 'B',
-          text: "Try to grow 60 acres wheat, 40 acres rice",
-          xRatio: 0.6,
-          yOffset: 5,
-          offCurve: true,
-          isCorrect: false,
-          feedback: "Impossible! Drought reduced land to 80 acres. 60+40=100 acres. This is unattainable now.",
-          explanation: "After resource loss, the old PPC is no longer valid. Points on the old curve are now unattainable."
-        },
-        {
-          id: 'C',
-          text: "Keep old ratio: 40 acres wheat, 34 acres rice",
-          useNewPPC: true,
-          xRatio: 0.5,
-          isCorrect: false,
-          feedback: "You're on the new PPC, but missed the profit opportunity! Wheat prices doubled - grow more wheat!",
-          explanation: "Being efficient (on PPC) is good, but not responding to price changes misses potential gains."
-        }
-      ],
-      ppcData: { maxX: 100, maxY: 70, currentX: 50, currentY: 43, goodX: "Wheat (acres)", goodY: "Rice (acres)", shifted: true, newMaxX: 80, newMaxY: 56 }
-    },
-    {
-      id: 4,
-      title: "Game Studio Dilemma",
-      emoji: "🎮",
-      situation: "Your game studio has 50 developers. You can make PC Games or Mobile Games. Currently: 5 PC games, 14 mobile games per year.",
-      problem: "New AI tool discovered! It makes PC game development 50% faster. How do you respond?",
-      options: [
-        {
-          id: 'A',
-          text: "Make 8 PC games, keep 14 mobile games (use AI)",
-          useNewPPC: true,
-          xRatio: 0.533,
-          isCorrect: true,
-          feedback: "Brilliant! You understood that technological improvement in PC games shifts that axis outward!",
-          explanation: "Sector-specific technological improvement causes the PPC to pivot outward on that axis."
-        },
-        {
-          id: 'B',
-          text: "Make 6 PC games, 10 mobile games",
-          xRatio: 0.4,
-          isCorrect: false,
-          feedback: "You're not utilizing the new technology! You could make more PC games now with the AI tool.",
-          explanation: "When technology improves, the production possibility for that good increases. Use it!"
-        },
-        {
-          id: 'C',
-          text: "Keep same production: 5 PC, 14 mobile",
-          xRatio: 0.333,
-          isCorrect: false,
-          feedback: "Underutilization! The AI tool expanded your capacity - you're producing inside the new PPC.",
-          explanation: "Not adopting available technology means operating inside the PPC - inefficiency."
-        }
-      ],
-      ppcData: { maxX: 10, maxY: 18, currentX: 5, currentY: 14, goodX: "PC Games", goodY: "Mobile Games", rotated: true, newMaxX: 15, newMaxY: 18 }
-    },
-    {
-      id: 5,
-      title: "Restaurant Menu Optimization",
-      emoji: "🍽️",
-      situation: "Your restaurant kitchen can prepare Pasta Dishes or Steak Dishes. With current staff, you can make 40 pasta or 25 steak dishes per night. Currently: 20 pasta, 18 steak.",
-      problem: "Celebrity chef joins your team! Steak quality improves, but a new health trend makes pasta more popular. What do you do?",
-      options: [
-        {
-          id: 'A',
-          text: "Increase pasta to 25, reduce steak to 15",
-          xRatio: 0.625,
-          isCorrect: true,
-          feedback: "Smart market response! You moved along the PPC to meet changing consumer preferences.",
-          explanation: "Responding to demand changes by reallocating resources is efficient management."
-        },
-        {
-          id: 'B',
-          text: "Focus on premium steaks: 10 pasta, 22 steak",
-          useNewPPC: true,
-          xRatio: 0.25,
-          isCorrect: true,
-          feedback: "Bold strategy! The chef's expertise shifts your steak capability outward. High-margin focus!",
-          explanation: "Specialized expertise can shift production possibilities for specific products."
-        },
-        {
-          id: 'C',
-          text: "Maximize everything: 30 pasta, 25 steak",
-          xRatio: 0.75,
-          yOffset: 8,
-          offCurve: true,
-          isCorrect: false,
-          feedback: "That's beyond your kitchen capacity! This point is outside the PPC.",
-          explanation: "Can't exceed maximum capacity without adding resources or improving efficiency."
-        }
-      ],
-      ppcData: { maxX: 40, maxY: 25, currentX: 20, currentY: 18, goodX: "Pasta Dishes", goodY: "Steak Dishes", rotated: true, newMaxX: 40, newMaxY: 32 }
-    },
-    {
-      id: 6,
-      title: "Manufacturing Plant Crisis",
-      emoji: "🏭",
-      situation: "Your factory produces Cars and Trucks. You have 200 workers. Currently: 30 cars, 23 trucks per week.",
-      problem: "Supply chain disruption! Steel shortage reduces output by 30%. Simultaneously, automation for cars becomes available.",
-      options: [
-        {
-          id: 'A',
-          text: "Adopt automation: 28 cars, 16 trucks",
-          useNewPPC: true,
-          xRatio: 0.7,
-          isCorrect: true,
-          feedback: "Excellent crisis management! You offset the supply shortage with automation for cars.",
-          explanation: "Combining resource loss (inward shift) with tech improvement (partial outward pivot) requires strategic thinking."
-        },
-        {
-          id: 'B',
-          text: "Maintain old ratios: 21 cars, 16 trucks",
-          useNewPPC: true,
-          xRatio: 0.525,
-          isCorrect: false,
-          feedback: "You're adapting to the shortage but ignoring available automation! Opportunity missed.",
-          explanation: "When technology is available, not using it means underutilizing potential."
-        },
-        {
-          id: 'C',
-          text: "Ignore both changes: keep 30 cars, 23 trucks",
-          xRatio: 0.75,
-          yOffset: 7,
-          offCurve: true,
-          isCorrect: false,
-          feedback: "Impossible! Steel shortage makes this unattainable. You're trying to produce beyond the new PPC.",
-          explanation: "Resource constraints must be respected. Previous production levels may become unattainable."
-        }
-      ],
-      ppcData: { maxX: 40, maxY: 30, currentX: 30, currentY: 23, goodX: "Cars", goodY: "Trucks", complex: true, newMaxX: 40, newMaxY: 21 }
-    },
-    {
-      id: 7,
-      title: "Bakery Expansion Decision",
-      emoji: "🥖",
-      situation: "Your bakery makes Bread and Pastries. With 5 bakers, you produce 80 breads or 50 pastries daily. Currently: 40 bread, 35 pastries.",
-      problem: "Morning rush shows huge bread demand! But one baker quits. How do you adjust?",
-      options: [
-        {
-          id: 'A',
-          text: "Prioritize bread: 48 bread, 20 pastries",
-          useNewPPC: true,
-          xRatio: 0.75,
-          isCorrect: true,
-          feedback: "Perfect response! You adapted to both the demand shift and resource loss efficiently.",
-          explanation: "Good managers reallocate remaining resources based on market signals."
-        },
-        {
-          id: 'B',
-          text: "Maintain balance: 32 bread, 28 pastries",
-          useNewPPC: true,
-          xRatio: 0.5,
-          isCorrect: false,
-          feedback: "You're on the new PPC but missed the opportunity! Bread demand is high - capitalize on it!",
-          explanation: "Efficiency isn't enough - you must also respond to market conditions for maximum profit."
-        },
-        {
-          id: 'C',
-          text: "Hire immediately, keep 40 bread, 35 pastries",
-          xRatio: 0.5,
-          isCorrect: false,
-          feedback: "Hiring takes time! In the short run, you must work with reduced capacity.",
-          explanation: "Short-run decisions must account for current constraints, even if long-run solutions exist."
-        }
-      ],
-      ppcData: { maxX: 80, maxY: 50, currentX: 40, currentY: 35, goodX: "Bread (loaves)", goodY: "Pastries", shifted: true, newMaxX: 64, newMaxY: 40 }
-    },
-    {
-      id: 8,
-      title: "Hospital Resource Allocation",
-      emoji: "🏥",
-      situation: "Your hospital can handle ER Cases or Scheduled Surgeries. Capacity: 100 ER or 60 surgeries weekly. Currently: 50 ER, 42 surgeries.",
-      problem: "Flu outbreak! ER cases surge. BUT new surgical robot becomes available. How do you respond?",
-      options: [
-        {
-          id: 'A',
-          text: "Surge ER capacity: 70 ER, 25 surgeries",
-          xRatio: 0.7,
-          isCorrect: true,
-          feedback: "Responsible triage! You prioritized urgent care during the outbreak while maintaining some surgeries.",
-          explanation: "Healthcare often requires difficult trade-offs based on urgency and need."
-        },
-        {
-          id: 'B',
-          text: "Adopt robot for surgeries: 50 ER, 52 surgeries",
-          useNewPPC: true,
-          xRatio: 0.5,
-          isCorrect: true,
-          feedback: "Innovative! The surgical robot shifts surgery capacity outward. Maintains ER while improving surgery.",
-          explanation: "Technology can expand possibilities in specific areas, creating new production options."
-        },
-        {
-          id: 'C',
-          text: "Maximize both: 80 ER, 55 surgeries",
-          xRatio: 0.8,
-          yOffset: 15,
-          offCurve: true,
-          isCorrect: false,
-          feedback: "Beyond capacity! Even with the robot, you can't exceed physical and staff limits.",
-          explanation: "There are always constraints - technology helps but doesn't eliminate trade-offs."
-        }
-      ],
-      ppcData: { maxX: 100, maxY: 60, currentX: 50, currentY: 42, goodX: "ER Cases", goodY: "Scheduled Surgeries", rotated: true, newMaxX: 100, newMaxY: 75 }
-    }
-  ];
-
-  const currentScenarioData = scenarios[currentScenario];
-
-  // Generate PPC curves with more points for accuracy
-  const generatePPC = (maxX, maxY) => {
-    const points = [];
-    for (let i = 0; i <= 100; i++) {
-      const t = i / 100;
-      const x = maxX * t;
-      const y = maxY * Math.sqrt(1 - t * t); // Better curve formula
-      points.push({ x, y });
-    }
-    return points;
-  };
-
-  // Find closest point on PPC for a given x value
-  const findPointOnPPC = (targetX, ppcData) => {
-    const ppc = ppcData;
-    let closest = ppc[0];
-    let minDist = Math.abs(ppc[0].x - targetX);
-
-    for (let point of ppc) {
-      const dist = Math.abs(point.x - targetX);
-      if (dist < minDist) {
-        minDist = dist;
-        closest = point;
-      }
-    }
-    return closest;
-  };
-
-  const originalPPC = generatePPC(
-    currentScenarioData.ppcData.maxX,
-    currentScenarioData.ppcData.maxY
-  );
-
-  let newPPC = null;
-  if (currentScenarioData.ppcData.shifted) {
-    newPPC = generatePPC(
-      currentScenarioData.ppcData.newMaxX,
-      currentScenarioData.ppcData.newMaxY
-    );
-  }
-  if (currentScenarioData.ppcData.rotated) {
-    newPPC = generatePPC(
-      currentScenarioData.ppcData.newMaxX,
-      currentScenarioData.ppcData.newMaxY
-    );
-  }
-  if (currentScenarioData.ppcData.complex) {
-    newPPC = generatePPC(
-      currentScenarioData.ppcData.newMaxX,
-      currentScenarioData.ppcData.newMaxY
-    );
-  }
-
-  // Calculate actual positions on PPC for options
-  const getOptionPosition = (option) => {
-    if (option.offCurve) {
-      // Point outside PPC
-      const basePoint = findPointOnPPC(option.xRatio * currentScenarioData.ppcData.maxX, originalPPC);
-      return { x: basePoint.x, y: basePoint.y + option.yOffset };
-    }
-
-    const targetPPC = (option.useNewPPC && newPPC) ? newPPC : originalPPC;
-    const maxX = option.useNewPPC ?
-      (currentScenarioData.ppcData.newMaxX || currentScenarioData.ppcData.maxX) :
-      currentScenarioData.ppcData.maxX;
-
-    const targetX = option.xRatio * maxX;
-    return findPointOnPPC(targetX, targetPPC);
-  };
-
-  const handleChoice = (option) => {
-    setUserChoice(option);
-    setShowExplanation(true);
-    if (option.isCorrect) {
-      setScore(score + 1);
+    war: {
+      id: 'war',
+      label: "War",
+      icon: FaShieldAlt,
+      color: '#facc15',
+      desc: "Attack! Prioritize Defense.",
+      xLabel: "Civilian Goods",
+      yLabel: "Defense",
+      ppcData: [
+        { x: 0, y: 100 }, { x: 10, y: 99 }, { x: 20, y: 95 }, { x: 30, y: 90 },
+        { x: 40, y: 84 }, { x: 50, y: 77 }, { x: 60, y: 68 }, { x: 70, y: 58 },
+        { x: 80, y: 45 }, { x: 90, y: 30 }, { x: 100, y: 0 }
+      ]
     }
   };
 
-  const nextScenario = () => {
-    if (currentScenario < scenarios.length - 1) {
-      setCurrentScenario(currentScenario + 1);
-      setUserChoice(null);
-      setShowExplanation(false);
+  const getDecisions = (evt) => {
+    if (evt === 'war') {
+      return [
+        { id: 'A', title: "Total Defense", x: 10, y: 90, allocation: "90% Defense | 10% Civilian", status: 'perfect', feedback: "Correct! In war, survival depends on defense." },
+        { id: 'B', title: "Balanced Approach", x: 50, y: 50, allocation: "50% Defense | 50% Civilian", status: 'bad', feedback: "Risky! 50% defense might not be enough to repel the invader." },
+        { id: 'C', title: "Focus on Civilian", x: 90, y: 10, allocation: "10% Defense | 90% Civilian", status: 'terrible', feedback: "Suicide! You have butter, but the enemy has taken your land." },
+      ];
     }
+    if (evt === 'pandemic') {
+      return [
+        { id: 'A', title: "Total Lockdown (Healthcare)", x: 10, y: 95, allocation: "95% Health | 5% Edu", status: 'perfect', feedback: "Necessary! Education can wait; survival cannot." },
+        { id: 'B', title: "Business as Usual", x: 50, y: 50, allocation: "50% Health | 50% Edu", status: 'poor', feedback: "The virus spreads too fast. 50% effort is not enough." },
+        { id: 'C', title: "Ignore Virus", x: 90, y: 20, allocation: "20% Health | 80% Edu", status: 'terrible', feedback: "Catastrophe! The population is sick; schools are empty." },
+      ];
+    }
+    // Normal
+    return [
+      { id: 'A', title: "Maximize Guns", x: 10, y: 90, allocation: "90% Guns | 10% Butter", status: 'bad', feedback: "Too aggressive. Citizens are unhappy and hungry." },
+      { id: 'B', title: "Balanced Growth", x: 50, y: 77, allocation: "50% Guns | 50% Butter", status: 'perfect', feedback: "Optimal! A healthy balance of security and prosperity." },
+      { id: 'C', title: "Zero Defense", x: 90, y: 10, allocation: "10% Guns | 90% Butter", status: 'bad', feedback: "Vulnerable! You are rich but defenseless." },
+    ];
   };
 
-  const resetGame = () => {
-    setCurrentScenario(0);
-    setUserChoice(null);
-    setShowExplanation(false);
-    setScore(0);
-  };
+  const currentEvent = worldEvents[activeEvent];
+  const decisions = getDecisions(activeEvent);
 
-  const CustomTooltip = ({ active, payload }) => {
-    if (active && payload && payload.length > 0) {
-      const data = payload[0].payload;
-      return (
-        <div className="ppc-scenario-tooltip">
-          <p className="ppc-scenario-tooltip-label">
-            {currentScenarioData.ppcData.goodX}: <strong className="ppc-scenario-tooltip-value-green">{data.x?.toFixed(1)}</strong>
-          </p>
-          <p className="ppc-scenario-tooltip-label">
-            {currentScenarioData.ppcData.goodY}: <strong className="ppc-scenario-tooltip-value-cyan">{data.y?.toFixed(1)}</strong>
-          </p>
-        </div>
-      );
-    }
-    return null;
+  const getFeedbackColor = (status) => {
+    if (status === 'perfect') return '#22c55e';
+    if (status === 'ok') return '#facc15';
+    if (status === 'bad' || status === 'poor') return '#f97316';
+    if (status === 'terrible') return '#ef4444';
+    return '#000';
   };
 
   return (
-    <section className="lesson-section">
-      <div style={{ marginBottom: '30px', textAlign: 'center' }}>
-        <h2 className="retro-header-lg">PPC SIMULATION</h2>
-        <p className="sys-text" style={{ color: 'var(--retro-dim)' }}>
-          [SCENARIO_ENGINE]: Apply logic to real-world variables.
-        </p>
+    <section>
+      <h2 className="section-title">Strategic Simulator</h2>
+
+      {/* EVENT SELECTOR */}
+      <div className="lesson-card" style={{ border: '4px solid #000', marginBottom: '20px', textAlign: 'center', padding: '20px' }}>
+        <h3 className="card-title" style={{ justifyContent: 'center', fontSize: '1.5rem' }}>Select World Event</h3>
+        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '15px', flexWrap: 'wrap' }}>
+          {Object.values(worldEvents).map((evt) => (
+            <button
+              key={evt.id}
+              onClick={() => { setActiveEvent(evt.id); setSelectedDecision(null); }}
+              style={{
+                padding: '10px 20px',
+                border: activeEvent === evt.id ? '3px solid #000' : '2px solid #ccc',
+                background: activeEvent === evt.id ? evt.color : '#fff',
+                color: activeEvent === evt.id ? '#000' : '#555',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                boxShadow: activeEvent === evt.id ? '4px 4px 0px #000' : 'none',
+                transform: activeEvent === evt.id ? 'translate(-2px, -2px)' : 'none',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
+              <evt.icon /> {evt.label}
+            </button>
+          ))}
+        </div>
+
+        {/* EVENT DESCRIPTION */}
+        <div style={{ marginTop: '20px', background: currentEvent.color, color: '#000', padding: '15px', border: '3px solid #000', fontWeight: 'bold' }}>
+          <div style={{ textTransform: 'uppercase', fontSize: '0.9rem', marginBottom: '5px' }}>Current Situation</div>
+          <div style={{ fontSize: '1.2rem', marginBottom: '0' }}>{currentEvent.desc}</div>
+        </div>
       </div>
 
-      <div className="terminal-card">
-        {/* Score Display */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #333', paddingBottom: '15px', marginBottom: '20px' }}>
-          <div className="ppc-scenario-score-left">
-            <FaGamepad className="ppc-scenario-score-icon" style={{ color: 'var(--retro-cyan)' }} />
-            <h3 className="retro-header-md" style={{ margin: 0 }}>
-              SCENARIO {currentScenario + 1} / {scenarios.length}
-            </h3>
-          </div>
-          <div className="ppc-scenario-score-right" style={{ fontFamily: 'var(--font-mono)' }}>
-            <FaTrophy className="ppc-scenario-trophy-icon" style={{ color: 'var(--retro-amber)' }} />
-            <span className="ppc-scenario-score-value">
-              SCORE: {score}
-            </span>
+      <div className="lesson-grid-2">
+        {/* DECISION DECK */}
+        <div className="lesson-card" style={{ border: '4px solid #000' }}>
+          <h3 className="card-title">Policy Options</h3>
+          <p style={{ marginBottom: '15px', color: '#000' }}>Choose the <strong>Optimal</strong> allocation for {currentEvent.label}.</p>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            {decisions.map((d) => (
+              <button
+                key={d.id}
+                onClick={() => setSelectedDecision(d)}
+                style={{
+                  textAlign: 'left',
+                  padding: '15px',
+                  border: '3px solid #000',
+                  background: selectedDecision?.id === d.id ? '#000' : '#fff',
+                  color: selectedDecision?.id === d.id ? '#fff' : '#000',
+                  cursor: 'pointer',
+                  boxShadow: selectedDecision?.id === d.id ? 'none' : '4px 4px 0px #cbd5e1',
+                  transition: 'all 0.1s'
+                }}
+              >
+                <div style={{ fontWeight: '900', fontSize: '1.1rem' }}>{d.title}</div>
+                <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>{d.allocation}</div>
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Scenario Card */}
-        <div className="ppc-scenario-card">
-          <div className="ppc-scenario-header">
-            <div className="ppc-scenario-emoji">
-              {currentScenarioData.emoji}
-            </div>
-            <h3 className="ppc-scenario-title">
-              {currentScenarioData.title}
-            </h3>
+        {/* OUTCOME PANEL + GRAPH */}
+        <div className="lesson-card" style={{ border: '4px solid #000', boxShadow: '8px 8px 0px #000', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', minHeight: '400px', padding: '0' }}>
+
+          <div style={{ width: '100%', padding: '15px', background: '#f8fafc', borderBottom: '3px solid #000' }}>
+            <h3 style={{ fontSize: '1.2rem', margin: 0, color: '#000' }}>IMPACT VISUALIZER</h3>
           </div>
 
-          <div className="ppc-scenario-situation-box">
-            <h4 className="ppc-scenario-situation-heading">
-              📋 Situation:
-            </h4>
-            <p className="ppc-scenario-situation-text">
-              {currentScenarioData.situation}
-            </p>
-          </div>
+          <div style={{ width: '100%', height: '250px', background: '#fff' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart margin={{ top: 20, right: 30, left: 10, bottom: 20 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis type="number" dataKey="x" domain={[0, 100]} label={{ value: currentEvent.xLabel, position: 'bottom', offset: 0 }} />
+                <YAxis type="number" dataKey="y" domain={[0, 100]} label={{ value: currentEvent.yLabel, angle: -90, position: 'insideLeft' }} />
 
-          <div className="ppc-scenario-problem-box">
-            <h4 className="ppc-scenario-problem-heading">
-              ⚠️ Problem:
-            </h4>
-            <p className="ppc-scenario-problem-text">
-              {currentScenarioData.problem}
-            </p>
-          </div>
+                {/* The PPC Curve */}
+                <Line data={currentEvent.ppcData} type="monotone" dataKey="y" stroke="#000" strokeWidth={3} dot={false} />
 
-          {/* Graph Visualization */}
-          <div className="ppc-scenario-graph-box">
-            <h4 className="ppc-scenario-graph-title">
-              📊 Production Possibilities Curve
-            </h4>
-            <ResponsiveContainer width="100%" height={420}>
-              <ComposedChart margin={{ top: 25, right: 45, left: 25, bottom: 35 }}>
-                <defs>
-                  <linearGradient id="scenarioPPC" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#ffd700" stopOpacity={0.9} />
-                    <stop offset="100%" stopColor="#ffed4e" stopOpacity={0.9} />
-                  </linearGradient>
-                  <linearGradient id="newPPC" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#00ff88" stopOpacity={0.95} />
-                    <stop offset="100%" stopColor="#00ffaa" stopOpacity={0.95} />
-                  </linearGradient>
-                  <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="rgba(255,215,0,0.25)" />
-                    <stop offset="100%" stopColor="rgba(255,215,0,0.02)" />
-                  </linearGradient>
-                  <linearGradient id="newAreaGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="rgba(0,255,136,0.2)" />
-                    <stop offset="100%" stopColor="rgba(0,255,136,0.02)" />
-                  </linearGradient>
-                </defs>
-
-                <CartesianGrid strokeDasharray="4 4" stroke="rgba(255,255,255,0.18)" />
-
-                <XAxis
-                  type="number"
-                  dataKey="x"
-                  domain={[0, Math.max(currentScenarioData.ppcData.maxX, currentScenarioData.ppcData.newMaxX || 0) * 1.15]}
-                  stroke="rgba(255,255,255,0.65)"
-                  tick={{ fill: 'rgba(255,255,255,0.85)', fontSize: 12 }}
-                  tickLine={{ stroke: 'rgba(255,255,255,0.35)' }}
-                >
-                  <Label
-                    value={currentScenarioData.ppcData.goodX}
-                    offset={-18}
-                    position="insideBottom"
-                    className="ppc-scenario-axis-label-gold"
+                {/* The User's Point */}
+                {selectedDecision && (
+                  <Scatter
+                    data={[{ x: selectedDecision.x, y: selectedDecision.y }]}
+                    fill={getFeedbackColor(selectedDecision.status)}
+                    stroke="#000"
+                    strokeWidth={2}
+                    shape="circle"
                   />
-                </XAxis>
-
-                <YAxis
-                  type="number"
-                  domain={[0, Math.max(currentScenarioData.ppcData.maxY, currentScenarioData.ppcData.newMaxY || 0) * 1.15]}
-                  stroke="rgba(255,255,255,0.65)"
-                  tick={{ fill: 'rgba(255,255,255,0.85)', fontSize: 12 }}
-                  tickLine={{ stroke: 'rgba(255,255,255,0.35)' }}
-                >
-                  <Label
-                    value={currentScenarioData.ppcData.goodY}
-                    angle={-90}
-                    position="insideLeft"
-                    className="ppc-scenario-axis-label-cyan"
-                  />
-                </YAxis>
-
-                <Tooltip content={CustomTooltip} />
-
-                {/* Shaded area under original curve */}
-                {!newPPC && (
-                  <Area
-                    data={originalPPC}
-                    type="monotone"
-                    dataKey="y"
-                    stroke="none"
-                    fill="url(#areaGradient)"
-                  />
-                )}
-
-                {/* Original PPC */}
-                <Line
-                  data={originalPPC}
-                  type="monotone"
-                  dataKey="y"
-                  stroke={newPPC ? "rgba(255,255,255,0.35)" : "url(#scenarioPPC)"}
-                  strokeWidth={newPPC ? 2.5 : 4.5}
-                  strokeDasharray={newPPC ? "10 5" : "0"}
-                  dot={false}
-                  name="Original PPC"
-                  isAnimationActive={true}
-                  animationDuration={1000}
-                />
-
-                {/* New PPC if shifted/rotated */}
-                {newPPC && (
-                  <>
-                    <Area
-                      data={newPPC}
-                      type="monotone"
-                      dataKey="y"
-                      stroke="none"
-                      fill="url(#newAreaGradient)"
-                    />
-                    <Line
-                      data={newPPC}
-                      type="monotone"
-                      dataKey="y"
-                      stroke="url(#newPPC)"
-                      strokeWidth={4.5}
-                      dot={false}
-                      name="New PPC"
-                      isAnimationActive={true}
-                      animationDuration={1200}
-                    />
-                  </>
-                )}
-
-                {/* Current position */}
-                <ReferenceDot
-                  x={currentScenarioData.ppcData.currentX}
-                  y={currentScenarioData.ppcData.currentY}
-                  r={10}
-                  fill="#00d4ff"
-                  stroke="white"
-                  strokeWidth={3}
-                  label={{
-                    value: "START",
-                    position: "top",
-                    fill: "#00d4ff",
-                    fontSize: 13,
-                    fontWeight: "bold"
-                  }}
-                />
-
-                {/* User's chosen point and connection line */}
-                {userChoice && (
-                  <>
-                    {/* Connection line from current to choice */}
-                    <Line
-                      data={[
-                        { x: currentScenarioData.ppcData.currentX, y: currentScenarioData.ppcData.currentY },
-                        { x: getOptionPosition(userChoice).x, y: getOptionPosition(userChoice).y }
-                      ]}
-                      type="linear"
-                      dataKey="y"
-                      stroke={userChoice.isCorrect ? "#00ff88" : "#ff6b6b"}
-                      strokeWidth={3}
-                      strokeDasharray="6 6"
-                      dot={false}
-                      isAnimationActive={true}
-                      animationDuration={800}
-                    />
-                    <ReferenceDot
-                      x={getOptionPosition(userChoice).x}
-                      y={getOptionPosition(userChoice).y}
-                      r={12}
-                      fill={userChoice.isCorrect ? "#00ff88" : "#ff6b6b"}
-                      stroke="white"
-                      strokeWidth={3.5}
-                      label={{
-                        value: "YOUR CHOICE",
-                        position: "bottom",
-                        fill: userChoice.isCorrect ? "#00ff88" : "#ff6b6b",
-                        fontSize: 13,
-                        fontWeight: "bold"
-                      }}
-                    />
-                  </>
                 )}
               </ComposedChart>
             </ResponsiveContainer>
           </div>
 
-          {/* Options */}
-          {!showExplanation && (
-            <div>
-              <h4 className="ppc-scenario-options-heading">
-                💡 Choose Your Decision:
-              </h4>
-              <div className="ppc-scenario-options-container">
-                {currentScenarioData.options.map((option) => (
-                  <button
-                    key={option.id}
-                    onClick={() => handleChoice(option)}
-                    className="ppc-scenario-option-button"
-                  >
-                    <strong className="ppc-scenario-option-label">Option {option.id}:</strong> {option.text}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Feedback */}
-          {showExplanation && userChoice && (
-            <div className={`ppc-scenario-feedback-box ${userChoice.isCorrect ? 'ppc-scenario-feedback-correct' : 'ppc-scenario-feedback-incorrect'}`}>
-              <div className="ppc-scenario-feedback-header">
-                {userChoice.isCorrect ? (
-                  <FaCheckCircle className="ppc-scenario-feedback-icon ppc-scenario-feedback-icon-correct" />
-                ) : (
-                  <FaTimesCircle className="ppc-scenario-feedback-icon ppc-scenario-feedback-icon-incorrect" />
-                )}
-                <h3 className={`ppc-scenario-feedback-title ${userChoice.isCorrect ? 'ppc-scenario-feedback-title-correct' : 'ppc-scenario-feedback-title-incorrect'}`}>
-                  {userChoice.isCorrect ? 'Correct! 🎉' : 'Not Quite! 🤔'}
-                </h3>
-              </div>
-
-              <p className="ppc-scenario-feedback-text">
-                {userChoice.feedback}
-              </p>
-
-              <div className="ppc-scenario-explanation-box">
-                <div className="ppc-scenario-explanation-header">
-                  <FaLightbulb className="ppc-scenario-explanation-icon" />
-                  <h4 className="ppc-scenario-explanation-heading">
-                    Economic Concept:
-                  </h4>
+          <div style={{ flex: 1, width: '100%', padding: '20px', background: selectedDecision ? getFeedbackColor(selectedDecision.status) : '#eee', borderTop: '3px solid #000', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {!selectedDecision ? (
+              <div style={{ color: '#888', fontStyle: 'italic' }}>Select a policy to see the graph outcome.</div>
+            ) : (
+              <div style={{ color: '#fff', textShadow: '1px 1px 0px #000' }}>
+                <div style={{ fontSize: '1.4rem', fontWeight: '900', textTransform: 'uppercase' }}>
+                  {selectedDecision.status === 'perfect' ? '✅ OPTIMAL POLICY' : '⚠️ SUB-OPTIMAL'}
                 </div>
-                <p className="ppc-scenario-explanation-text">
-                  {userChoice.explanation}
-                </p>
+                <div style={{ fontWeight: 'bold' }}>{selectedDecision.feedback}</div>
               </div>
-
-              <div className="ppc-scenario-button-container">
-                {currentScenario < scenarios.length - 1 ? (
-                  <button
-                    onClick={nextScenario}
-                    className="ppc-scenario-next-button"
-                  >
-                    Next Scenario →
-                  </button>
-                ) : (
-                  <button
-                    onClick={resetGame}
-                    className="ppc-scenario-replay-button"
-                  >
-                    <FaRedo />
-                    Play Again
-                  </button>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Final Score */}
-        {currentScenario === scenarios.length - 1 && showExplanation && (
-          <div className="ppc-scenario-final-score-box">
-            <FaTrophy className="ppc-scenario-final-trophy" />
-            <h3 className="ppc-scenario-final-title">
-              Game Complete!
-            </h3>
-            <p className="ppc-scenario-final-score">
-              Final Score: <strong className="ppc-scenario-final-score-number">{score}/{scenarios.length}</strong>
-            </p>
-            <p className="ppc-scenario-final-message">
-              {score === scenarios.length ? '🎉 Perfect! You mastered PPC concepts!' :
-                score >= scenarios.length * 0.75 ? '👍 Great job! You understand most concepts!' :
-                  score >= scenarios.length * 0.5 ? '📚 Good effort! Review the concepts and try again!' :
-                    '💪 Keep learning! Practice makes perfect!'}
-            </p>
+            )}
           </div>
-        )}
-      </div>
 
-      <div className="highlight-card purple ppc-scenario-highlight-card">
-        <div className="highlight-content">
-          <h3 className="ppc-scenario-highlight-heading">🎯 Learning Through Real Scenarios</h3>
-          <p className="ppc-scenario-highlight-text">
-            These scenarios help you understand how PPC concepts apply in real business and government decisions.
-            Every choice has an opportunity cost, and understanding trade-offs is essential for effective resource allocation!
-          </p>
         </div>
       </div>
     </section>

@@ -1,176 +1,176 @@
-/* lesson2-core.css - Clean Professional Theme (No Retro, No Brutalism) */
+/* lesson2-core.css - Neo-Brutalist / Comic Minimalist Theme */
+
 :root {
-  --primary-color: #2563eb; /* Professional Blue */
-  --secondary-color: #64748b; /* Slate Grey */
-  --bg-color: #f8fafc; /* Very light cool grey */
-  --card-bg: #ffffff;
-  --text-dark: #1e293b;
-  --text-light: #64748b;
-  --border-color: #e2e8f0;
-  --success-color: #10b981;
-  --danger-color: #ef4444;
-  --warning-color: #f59e0b;
+  --primary-color: #2563eb;    /* Standard Blue */
+  --accent-yellow: #facc15;    /* Comic Yellow */
+  --accent-red: #ef4444;       /* Alert Red */
+  --accent-green: #22c55e;     /* Go Green */
+  --text-dark: #000000;        /* Pure Black */
+  --text-light: #ffffff;       /* Pure White */
+  --bg-white: #ffffff;
+  
+  /* Comic Style Variables */
+  --border-thick: 3px solid #000000;
+  --shadow-hard: 6px 6px 0px #000000;
+  --radius-sm: 0px; 
 }
 
 /* Global Reset for Lesson 2 */
 .lesson-container {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--text-light); /* DEFAULT TEXT IS WHITE (for dark background) */
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
-  background-color: var(--bg-color);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  color: var(--text-dark);
+  padding: 20px;
 }
 
 /* Typography */
-h1.lesson-title {
-  font-size: 3rem;
-  font-weight: 800;
-  color: var(--text-dark);
-  margin-bottom: 40px;
-  text-align: center;
-  letter-spacing: -0.02em;
-}
-
-h2.section-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--text-dark);
-  padding-bottom: 15px;
-  border-bottom: 2px solid var(--border-color);
+.section-title, 
+h2.section-title,
+.lesson-container .section-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
   margin-bottom: 30px;
-  margin-top: 60px;
+  color: #ffffff !important; /* Force WHITE text for dark background */
+  -webkit-text-fill-color: #ffffff !important; /* Ensure generic fill is white */
+  text-shadow: 4px 4px 0px #000000; /* Black Shadow for depth */
+  display: inline-block;
+  font-family: 'Arial Black', 'Impact', sans-serif !important; 
+  /* Removed text-stroke to avoid artifacts */
 }
 
-h3.card-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--text-dark);
+.card-title {
+  font-size: 1.4rem;
+  font-weight: 800;
   margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #000000 !important; /* Always black inside cards */
+  text-transform: uppercase;
 }
 
-p {
-  line-height: 1.6;
-  margin-bottom: 16px;
-  color: #334155;
-}
-
-/* Standard Components */
+/* Component: Comic Card */
 .lesson-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); /* Static shadow */
-  margin-bottom: 24px;
+  background: #ffffff;
+  color: #000000; /* FORCE BLACK TEXT */
+  border: var(--border-thick);
+  box-shadow: var(--shadow-hard);
+  border-radius: 8px; /* Slight roundness */
+  padding: 25px;
+  margin-bottom: 25px;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Comic "Paper" Effect for Card Content */
+.lesson-card p, .lesson-card li, .lesson-card span {
+   color: #000000;
+   font-weight: 500;
+}
+
+/* Grids */
 .lesson-grid-2 {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 24px;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
 }
 
 .lesson-grid-3 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
+  gap: 25px;
 }
 
-/* Inputs & Forms - Clean & Standard */
-.form-group {
-  margin-bottom: 16px;
-}
-
-.form-label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 8px;
-  color: var(--text-dark);
-  font-size: 0.9rem;
-}
-
-.form-input {
+/* Graph Container - Fixed Height Fix */
+.graph-container {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--border-color);
+  height: 500px;
+  min-height: 400px;
+  background: #ffffff;
+  border: 3px solid #000; /* Thicker border */
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Inputs & Buttons */
+.form-input, select {
+  width: 100%;
+  padding: 12px;
+  border: 3px solid #000000; /* COMIC BORDER */
   border-radius: 6px;
+  font-weight: 700; /* Bold input text */
   font-size: 1rem;
-  color: var(--text-dark);
-  background-color: #fff;
-  transition: border-color 0.2s; /* Only border color transition */
+  margin-bottom: 15px;
+  background: #ffffff;
+  color: #000000; /* VISIBLE INPUT TEXT */
+  font-family: 'Courier New', Courier, monospace; /* Tyepewriter feel for inputs */
 }
 
-.form-input:focus {
+.form-input:focus, select:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  background: #fffbeb; 
+  box-shadow: 4px 4px 0px #000;
+  transform: translate(-2px, -2px);
 }
 
-/* Buttons */
 .btn-primary {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: 600;
-  border: none;
+  background: var(--primary-color);
+  color: #fff;
+  border: var(--border-thick);
+  box-shadow: var(--shadow-hard);
+  padding: 12px 24px;
+  font-weight: 700;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  text-transform: uppercase;
+  transition: all 0.1s;
 }
 
-.btn-group {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+.btn-primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #000;
 }
 
 .btn-toggle {
-  background-color: #fff;
-  border: 1px solid var(--border-color);
-  color: var(--text-dark);
+  background: #fff;
+  border: var(--border-thick);
   padding: 8px 16px;
-  border-radius: 6px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
+  transition: all 0.1s;
 }
 
 .btn-toggle.active {
-  background-color: var(--text-dark);
-  color: #fff;
-  border-color: var(--text-dark);
+  background: var(--accent-yellow);
+  box-shadow: 2px 2px 0px #000;
+  transform: translate(-1px, -1px);
 }
 
-/* Results Box */
+/* Result Boxes */
 .results-box {
-  background-color: #f1f5f9;
-  border-radius: 8px;
+  background: var(--bg-off-white);
+  border: var(--border-thick);
   padding: 20px;
   margin-top: 20px;
+  text-align: center;
 }
 
 .results-value-big {
   font-size: 2.5rem;
   font-weight: 800;
   color: var(--primary-color);
-  margin: 10px 0;
 }
 
-/* Utility */
-.text-muted { color: var(--text-light); }
-.text-center { text-align: center; }
-.mb-4 { margin-bottom: 24px; }
-.mt-4 { margin-top: 24px; }
-
-/* Graph Container */
-.graph-container {
-  width: 100%;
-  height: 400px; /* Enforced Height */
-  background: white;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 20px;
-  position: relative;
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .lesson-grid-2, .lesson-grid-3 {
+    grid-template-columns: 1fr;
+  }
+  
+  .graph-container {
+    height: 350px;
+  }
 }

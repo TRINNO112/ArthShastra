@@ -1,6 +1,5 @@
-// AttainableUnattainable.jsx - Attainable and Unattainable Combinations
+// AttainableUnattainable.jsx
 import { useState } from 'react';
-import { FaCheckCircle, FaTimesCircle, FaExclamationTriangle, FaChartLine, FaArrowRight } from 'react-icons/fa';
 import {
   ComposedChart,
   Line,
@@ -9,25 +8,21 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Label,
   ReferenceDot,
-  Scatter,
+  Label,
 } from 'recharts';
-import '../lesson2-retro.css';
+import '../lesson2-core.css';
 
 function AttainableUnattainable() {
   const [selectedPoint, setSelectedPoint] = useState('A');
 
-  // Generate PPC curve
-  const generatePPC = (maxX, maxY, numPoints = 80) => {
+  const generatePPC = (maxX, maxY) => {
     const points = [];
-    for (let i = 0; i <= numPoints; i++) {
-      const t = i / numPoints;
-      const x = maxX * t;
-      const y = maxY * Math.sqrt(1 - t);
+    for (let i = 0; i <= 80; i++) {
+      const t = i / 80;
       points.push({
-        x: parseFloat(x.toFixed(2)),
-        y: parseFloat(y.toFixed(2)),
+        x: Number((maxX * t).toFixed(2)),
+        y: Number((maxY * Math.sqrt(1 - t)).toFixed(2)),
       });
     }
     return points;
@@ -35,345 +30,84 @@ function AttainableUnattainable() {
 
   const ppcCurve = generatePPC(100, 100);
 
-  // Define example points with different classifications
-  const examplePoints = [
-    {
-      id: 'A',
-      x: 50,
-      y: 70.7,
-      type: 'efficient',
-      label: 'Point A',
-      status: 'Efficient & Attainable',
-      description: 'On the PPC curve. Resources are fully and efficiently utilized.',
-      color: '#00ff88',
-      icon: <FaCheckCircle />
-    },
-    {
-      id: 'B',
-      x: 70,
-      y: 54.8,
-      type: 'efficient',
-      label: 'Point B',
-      status: 'Efficient & Attainable',
-      description: 'On the PPC curve. All resources are employed optimally.',
-      color: '#00ff88',
-      icon: <FaCheckCircle />
-    },
-    {
-      id: 'C',
-      x: 30,
-      y: 35,
-      type: 'inefficient',
-      label: 'Point C',
-      status: 'Inefficient but Attainable',
-      description: 'Inside the PPC curve. Indicates underutilization or unemployment of resources.',
-      color: '#ffd700',
-      icon: <FaExclamationTriangle />
-    },
-    {
-      id: 'D',
-      x: 45,
-      y: 50,
-      type: 'inefficient',
-      label: 'Point D',
-      status: 'Inefficient but Attainable',
-      description: 'Inside the PPC curve. Resources are not being used efficiently.',
-      color: '#ffd700',
-      icon: <FaExclamationTriangle />
-    },
-    {
-      id: 'E',
-      x: 85,
-      y: 70,
-      type: 'unattainable',
-      label: 'Point E',
-      status: 'Unattainable',
-      description: 'Outside the PPC curve. Cannot be achieved with current resources and technology.',
-      color: '#ff6b6b',
-      icon: <FaTimesCircle />
-    },
-    {
-      id: 'F',
-      x: 65,
-      y: 80,
-      type: 'unattainable',
-      label: 'Point F',
-      status: 'Unattainable',
-      description: 'Outside the PPC curve. Requires more resources or better technology.',
-      color: '#ff6b6b',
-      icon: <FaTimesCircle />
-    }
+  const points = [
+    { id: 'A', x: 50, y: 70.7, type: 'Efficient', desc: 'On the Curve. Resources fully utilized.', color: '#16a34a' },
+    { id: 'B', x: 30, y: 35, type: 'Inefficient', desc: 'Inside the Curve. Unemployment or waste.', color: '#f59e0b' },
+    { id: 'C', x: 90, y: 80, type: 'Unattainable', desc: 'Outside the Curve. Impossible without growth.', color: '#ef4444' }
   ];
 
-  const selectedPointData = examplePoints.find(p => p.id === selectedPoint);
-
-  // Custom tooltip
-  const CustomTooltip = ({ active, payload }) => {
-    if (active && payload && payload.length > 0) {
-      const data = payload[0].payload;
-      if (data && typeof data.x === 'number' && typeof data.y === 'number') {
-        return (
-          <div className="attainable-tooltip">
-            <p className="attainable-tooltip-text">
-              <span>🌾 Wheat: <strong className="attainable-tooltip-value-green">{data.x.toFixed(1)}</strong></span>
-            </p>
-            <p className="attainable-tooltip-text">
-              <span>🍚 Rice: <strong className="attainable-tooltip-value-cyan">{data.y.toFixed(1)}</strong></span>
-            </p>
-          </div>
-        );
-      }
-    }
-    return null;
-  };
-
-  const getPointButtonClass = (point) => {
-    const baseClass = 'attainable-point-button-base';
-    const isSelected = selectedPoint === point.id;
-    const activeClass = isSelected ? 'attainable-point-button-active' : 'attainable-point-button-inactive';
-    return `${baseClass} ${activeClass}`;
-  };
-
-  const getPointButtonStyle = (point) => {
-    const isSelected = selectedPoint === point.id;
-    return {
-      '--point-color': point.color,
-      background: isSelected ? `linear-gradient(135deg, ${point.color}, ${point.color}cc)` : undefined,
-      color: isSelected ? '#0a0a15' : undefined,
-      boxShadow: isSelected ? `0 4px 20px ${point.color}40` : undefined
-    };
-  };
-
-  const getPointDetailsClass = () => {
-    return 'attainable-point-details';
-  };
-
-  const getPointDetailsStyle = () => {
-    return {
-      '--point-color': selectedPointData.color,
-      background: `linear-gradient(145deg, ${selectedPointData.color}15, ${selectedPointData.color}08)`,
-      borderLeft: `5px solid ${selectedPointData.color}`,
-      boxShadow: `0 4px 20px ${selectedPointData.color}20`
-    };
-  };
+  const active = points.find(p => p.id === selectedPoint);
 
   return (
-    <section className="lesson-section">
-      <div style={{ marginBottom: '30px', textAlign: 'center' }}>
-        <h2 className="retro-header-lg">POINT ANALYSIS</h2>
-        <p className="sys-text" style={{ color: 'var(--retro-dim)' }}>
-          [GRID_SCAN]: Classifying production coordinates.
-        </p>
-      </div>
+    <section>
+      <h2 className="section-title">Attainable & Unattainable Combinations</h2>
 
-      <div className="terminal-card">
-        <h3 className="retro-header-md">
-          <FaChartLine style={{ marginRight: '10px' }} />
-          THREE TYPES OF PRODUCTION POINTS
-        </h3>
+      <div className="lesson-grid-2">
+        <div className="lesson-card">
+          <h3 className="card-title">Graph Analysis</h3>
+          <div className="graph-container">
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart margin={{ top: 20, right: 30, left: 0, bottom: 20 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                <XAxis type="number" dataKey="x" domain={[0, 110]} label={{ value: 'Good X', position: 'bottom' }} />
+                <YAxis type="number" dataKey="y" domain={[0, 110]} label={{ value: 'Good Y', angle: -90, position: 'insideLeft' }} />
+                <Tooltip />
+                <Line data={ppcCurve} type="monotone" dataKey="y" stroke="#2563eb" strokeWidth={3} dot={false} />
 
-        <div className="attainable-graph-container">
-          {/* Graph */}
-          <ResponsiveContainer width="100%" height={450}>
-            <ComposedChart margin={{ top: 20, right: 40, left: 20, bottom: 30 }}>
-              <defs>
-                <linearGradient id="ppcGradient" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#ffd700" />
-                  <stop offset="100%" stopColor="#ffed4e" />
-                </linearGradient>
-                <filter id="pointGlow" x="-50%" y="-50%" width="200%" height="200%">
-                  <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-                  <feMerge>
-                    <feMergeNode in="coloredBlur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-              </defs>
-
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-
-              <XAxis
-                type="number"
-                dataKey="x"
-                domain={[0, 110]}
-                stroke="rgba(255,255,255,0.4)"
-                tick={{ fill: 'rgba(255,255,255,0.7)', fontSize: 11 }}
-              >
-                <Label
-                  value="🌾 Wheat Production →"
-                  offset={-15}
-                  position="insideBottom"
-                  style={{ fill: 'white', fontWeight: '600', fontSize: '12px' }}
-                />
-              </XAxis>
-
-              <YAxis
-                type="number"
-                domain={[0, 110]}
-                stroke="rgba(255,255,255,0.4)"
-                tick={{ fill: 'rgba(255,255,255,0.7)', fontSize: 11 }}
-              >
-                <Label
-                  value="🍚 Rice Production →"
-                  angle={-90}
-                  position="insideLeft"
-                  style={{ fill: 'white', fontWeight: '600', fontSize: '12px' }}
-                />
-              </YAxis>
-
-              <Tooltip content={CustomTooltip} />
-
-              {/* PPC Curve */}
-              <Line
-                data={ppcCurve}
-                type="monotone"
-                dataKey="y"
-                stroke="url(#ppcGradient)"
-                strokeWidth={4}
-                dot={false}
-                isAnimationActive={true}
-                animationDuration={800}
-              />
-
-              {/* Plot all points */}
-              {examplePoints.map((point) => (
-                <ReferenceDot
-                  key={point.id}
-                  x={point.x}
-                  y={point.y}
-                  r={point.id === selectedPoint ? 12 : 9}
-                  fill={point.color}
-                  stroke="white"
-                  strokeWidth={point.id === selectedPoint ? 4 : 3}
-                  style={{
-                    cursor: 'pointer',
-                    filter: point.id === selectedPoint ? 'url(#pointGlow)' : 'none'
-                  }}
-                  onClick={() => setSelectedPoint(point.id)}
-                  label={{
-                    value: point.id,
-                    position: 'top',
-                    fill: point.color,
-                    fontSize: 14,
-                    fontWeight: 'bold'
-                  }}
-                />
-              ))}
-            </ComposedChart>
-          </ResponsiveContainer>
-
-          {/* Point Legend */}
-          <div className="attainable-legend">
-            <div className="attainable-legend-item">
-              <div className="attainable-legend-dot-green" />
-              <span className="attainable-legend-label">Efficient (On PPC)</span>
-            </div>
-            <div className="attainable-legend-item">
-              <div className="attainable-legend-dot-gold" />
-              <span className="attainable-legend-label">Inefficient (Inside PPC)</span>
-            </div>
-            <div className="attainable-legend-item">
-              <div className="attainable-legend-dot-red" />
-              <span className="attainable-legend-label">Unattainable (Outside PPC)</span>
-            </div>
+                {points.map(p => (
+                  <ReferenceDot
+                    key={p.id}
+                    x={p.x}
+                    y={p.y}
+                    r={6}
+                    fill={p.color}
+                    stroke="none"
+                    onClick={() => setSelectedPoint(p.id)}
+                    style={{ cursor: 'pointer' }}
+                  />
+                ))}
+              </ComposedChart>
+            </ResponsiveContainer>
           </div>
-        </div>
 
-        {/* Point Selection Buttons */}
-        <div className="attainable-point-selector">
-          <h4 className="attainable-point-selector-heading">
-            Click on a point to learn more:
-          </h4>
-          <div className="attainable-point-grid">
-            {examplePoints.map((point) => (
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', marginTop: '10px' }}>
+            {points.map(p => (
               <button
-                key={point.id}
-                onClick={() => setSelectedPoint(point.id)}
-                className={getPointButtonClass(point)}
-                style={getPointButtonStyle(point)}
+                key={p.id}
+                onClick={() => setSelectedPoint(p.id)}
+                style={{
+                  padding: '5px 10px',
+                  border: `1px solid ${p.color}`,
+                  color: p.color,
+                  borderRadius: '4px',
+                  background: selectedPoint === p.id ? `${p.color}10` : 'transparent',
+                  fontWeight: 'bold',
+                  cursor: 'pointer'
+                }}
               >
-                {point.label}
+                Point {p.id}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Selected Point Details */}
-        {selectedPointData && (
-          <div className={getPointDetailsClass()} style={getPointDetailsStyle()}>
-            <div className="attainable-point-details-content">
-              <div className="attainable-point-details-icon" style={{ '--icon-color': selectedPointData.color, color: selectedPointData.color }}>
-                {selectedPointData.icon}
-              </div>
-              <div className="attainable-point-details-text">
-                <h3 className="attainable-point-details-title" style={{ '--title-color': selectedPointData.color, color: selectedPointData.color }}>
-                  {selectedPointData.label}: {selectedPointData.status}
-                </h3>
-                <p className="attainable-point-details-description">
-                  {selectedPointData.description}
-                </p>
-                <div className="attainable-point-details-production">
-                  <p className="attainable-point-details-production-text">
-                    <strong>Production:</strong> {selectedPointData.x} units of Wheat + {selectedPointData.y} units of Rice
-                  </p>
-                </div>
-              </div>
+        <div className="lesson-card">
+          <h3 className="card-title">Analysis</h3>
+          {active && (
+            <div style={{ padding: '20px', background: '#f8fafc', borderRadius: '8px', borderLeft: `6px solid ${active.color}` }}>
+              <h4 style={{ color: active.color, fontSize: '1.2rem', marginBottom: '10px' }}>Point {active.id}: {active.type}</h4>
+              <p>{active.desc}</p>
             </div>
-          </div>
-        )}
-      </div>
+          )}
 
-      <div className="feature-grid attainable-feature-grid">
-        <div className="feature-item">
-          <div className="feature-icon green">
-            <FaCheckCircle />
+          <div style={{ marginTop: '30px' }}>
+            <h4 style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '5px', marginBottom: '10px' }}>Key Concepts</h4>
+            <ul style={{ paddingLeft: '20px', lineHeight: '1.8' }}>
+              <li><strong>On the Line:</strong> Full Employment. Efficient.</li>
+              <li><strong>Inside the Line:</strong> Underemployment. Inefficient.</li>
+              <li><strong>Outside the Line:</strong> Scarcity Constraint. Growth needed.</li>
+            </ul>
           </div>
-          <h4>Points ON the PPC</h4>
-          <ul className="bullet-list attainable-feature-list">
-            <li><strong>Attainable:</strong> Can be produced with available resources</li>
-            <li><strong>Efficient:</strong> All resources are fully employed</li>
-            <li><strong>Maximum Production:</strong> Cannot produce more of one good without reducing the other</li>
-          </ul>
-        </div>
-
-        <div className="feature-item">
-          <div className="feature-icon gold">
-            <FaExclamationTriangle />
-          </div>
-          <h4>Points INSIDE the PPC</h4>
-          <ul className="bullet-list attainable-feature-list">
-            <li><strong>Attainable:</strong> Can be easily produced</li>
-            <li><strong>Inefficient:</strong> Resources are underutilized or unemployed</li>
-            <li><strong>Room for Growth:</strong> Production can be increased without trade-offs</li>
-          </ul>
-        </div>
-
-        <div className="feature-item">
-          <div className="feature-icon red">
-            <FaTimesCircle />
-          </div>
-          <h4>Points OUTSIDE the PPC</h4>
-          <ul className="bullet-list attainable-feature-list">
-            <li><strong>Unattainable:</strong> Cannot be produced currently</li>
-            <li><strong>Requires Growth:</strong> Need more resources or better technology</li>
-            <li><strong>Future Goal:</strong> May become attainable if PPC shifts outward</li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="highlight-card purple attainable-movement-card">
-        <div className="highlight-content">
-          <h3 className="attainable-movement-heading">
-            <FaArrowRight />
-            Moving Between Points
-          </h3>
-          <p className="attainable-movement-text">
-            <strong>From Inside to On the PPC:</strong> Achieve full employment and efficient use of resources.
-          </p>
-          <p className="attainable-movement-text-last">
-            <strong>From On to Outside the PPC:</strong> Requires economic growth through increased resources,
-            technological advancement, or improved productivity.
-          </p>
         </div>
       </div>
     </section>
