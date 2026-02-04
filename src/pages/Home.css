@@ -156,9 +156,10 @@
 
 .btn-primary:hover {
   background: #fde047; /* Lighter gold */
+  color: #000; /* Ensure black text */
 }
 
-/* Trust Badges */
+/* Trust Badges - GOLDEN THEME */
 .trust-badges {
   display: flex;
   gap: 15px;
@@ -171,7 +172,7 @@
   gap: 8px;
   padding: 8px 16px;
   background: #1e293b;
-  border: 2px solid var(--color-blue);
+  border: 2px solid var(--color-gold); /* GOLD BORDER */
   border-radius: 50px;
   color: #fff;
   font-weight: 700;
@@ -180,10 +181,10 @@
 }
 
 .trust-item:hover {
-  background: var(--color-blue);
+  background: var(--color-gold);
   color: #000;
   transform: scale(1.05);
-  box-shadow: 0 0 10px var(--color-blue);
+  box-shadow: 0 0 10px var(--color-gold);
 }
 
 
@@ -302,11 +303,11 @@
 }
 
 /* =============================================
-   HOW IT WORKS (Step Cards - MAX WIDTH)
+   HOW IT WORKS (Step Cards - 98% WIDTH)
    ============================================= */
 
 .how-it-works { padding: 80px 0; background: var(--bg-dark); }
-.section-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.section-container { max-width: 1400px; margin: 0 auto; padding: 0 20px; } /* Increased Max Width */
 .section-header { text-align: center; margin-bottom: 60px; }
 
 .section-badge {
@@ -327,9 +328,9 @@
 .steps-container {
   display: flex;
   flex-direction: column;
-  gap: 40px; /* More gap for arrows */
-  width: 100%; /* FULL WIDTH CONTAINER */
-  max-width: 1000px; /* Wider max-width */
+  gap: 80px; /* INCREASED GAP to prevent overlap */
+  width: 98%; /* 98% WIDTH as requested */
+  max-width: none; 
   margin: 0 auto;
 }
 
@@ -340,31 +341,32 @@
   background: #000;
   border: 2px solid #333;
   box-shadow: 4px 4px 0px #222;
-  padding: 40px; /* Larger padding */
+  padding: 40px; 
   text-align: left;
   position: relative;
-  width: 100%; /* MAX WIDTH */
+  width: 100%;
 }
 
 /* ARROW CONNECTOR */
 .step-card:not(:last-child)::after {
   content: "↓";
   position: absolute;
-  bottom: -45px; /* Positioned in gap */
+  bottom: -65px; /* Positioned centered in the 80px gap */
   left: 50%;
   transform: translateX(-50%);
   font-size: 2rem;
   font-weight: 900;
   color: var(--color-gold);
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #333;
+  border: 2px solid var(--color-gold); /* Gold Border for visibility */
   border-radius: 50%;
   z-index: 2;
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.2);
 }
 
 .step-card:hover {
@@ -414,7 +416,15 @@
   transition: all 0.2s;
   z-index: 1;
 }
-.bento-card:hover { transform: translate(-3px, -3px); border-color: var(--color-blue); box-shadow: 8px 8px 0px var(--color-blue); z-index: 5; }
+
+/* GOLD SHADOW ON HOVER */
+.bento-card:hover { 
+  transform: translate(-3px, -3px); 
+  border-color: var(--color-gold); 
+  box-shadow: 8px 8px 0px var(--color-gold); 
+  z-index: 5; 
+}
+
 .bento-card h3 { font-size: 1.4rem; font-weight: 900; color: #fff; margin-bottom: 10px; text-transform: uppercase; }
 .bento-large h3 { font-size: 1.8rem; }
 .bento-card p { color: var(--text-dim); font-weight: 500; line-height: 1.6; }
@@ -509,7 +519,7 @@
 
 
 /* =============================================
-   FAQ SECTION (Wider)
+   FAQ SECTION (98% Width)
    ============================================= */
 
 .faq { padding: 80px 0; background: var(--bg-dark); }
@@ -517,7 +527,8 @@
   display: grid;
   grid-template-columns: 1fr; 
   gap: 20px;
-  max-width: 1000px; /* INCREASED WIDTH */
+  width: 98%; /* 98% WIDTH */
+  max-width: none;
   margin: 0 auto;
 }
 .faq-item { background: #000; border: 2px solid #333; padding: 25px; display: flex; gap: 20px; transition: 0.2s; align-items: flex-start; }
