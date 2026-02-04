@@ -203,19 +203,262 @@ ArthShastra/
 
 ---
 
-## 🎨 CSS Styling System
 
-To prevent the "CSS Mess" of the past, we now use a consolidated styling strategy:
+### 📈 Education Status Update
+- **Microeconomics**: Grade 12 (Pending)
+- **IED**: Grade 12 (Pending)
+- **Statistics**: Construction Started 🚧
 
-1.  **`lessons.css`**: This is the **Single Source of Truth** for all lesson content.
-    - Generic Classes: `.content-card`, `.highlight-card`, `.bullet-list`
-    - Layouts: `.two-column`, `.flex-wrap`
-    - Themes: `.highlight-gold`, `.neon-green`
-    - Specifics: Lesson 7 Simulator, Lesson 8 Cost Curves, Lesson 4 Graphs.
+### 🎨 Lesson Design Styles
+Each lesson features a unique visual identity to keep learning engaging:
 
-2.  **`quiz.css`**: Dedicated styles for the Quiz interface.
+| Lesson       | Style Theme                      |
+| :---         | :---                             |
+| **Lesson 1** | Leonardo da Vinci Notebook       |
+| **Lesson 2** | Comic Book / Graphic Novel       |
+| **Lesson 3** | Brutalism Design                 |
+| **Lesson 4** | Brutalism Design                 |
+| **Lesson 5** | Comic Book Theme                 |
+| **Lesson 6** | Brutalism Design                 |
+| **Lesson 7** | Modern Abstract                  |
+| **Lesson 8** | Industrial Factory Theme         |
+| **Lesson 9** | Corporate Finance Gold           |
+| **Lesson 10**| Strategic Balance / Game Theory  |
+| **Lesson 11**| Logistics & Supply Chain         |
+| **Lesson 12**| Marketplace Simulation           |
+| **Lesson 13**| Terminal / Hacker Theme          |
 
-3.  **Local CSS**: Individual component CSS files (e.g., inside `Lesson3/components/`) are **DEPRECATED**. Do not import them. Always import `../../css/lessons.css`.
+---
+
+
+---
+
+## 📚 Complete Curriculum Roadmap
+
+The ArthShastra curriculum covers the entire Grade 11 Microeconomics syllabus, broken down into interactive modules.
+
+### Unit 1: Introduction to Microeconomics
+#### 📘 [Lesson 1: Introduction](src/pages/Lessons/Lesson1)
+**Theme**: *Leonardo da Vinci Notebook*
+- **Concept of Economics**: Scarcity, Choice, and Wealth.
+- **Micro vs Macro**: The fundamental differences.
+- **Positive vs Normative**: Scientific analysis vs Value judgments.
+- **Economy Types**: Centrally Planned, Market, and Mixed Economies.
+
+#### 👑 [Lesson 2: Central Problems](src/pages/Lessons/Lesson2)
+**Theme**: *Comic Book / Graphic Novel*
+- **What to Produce?**: The allocation of resources.
+- **How to Produce?**: Labor intensive vs Capital intensive techniques.
+- **For Whom to Produce?**: Distribution of income and welfare.
+- **PPC (Production Possibility Curve)**: Shifts, Rotations, and Opportunity Cost.
+
+---
+
+### Unit 2: Consumer Equilibrium and Demand
+#### 🏛️ [Lesson 3: Consumer Equilibrium (Utility)](src/pages/Lessons/Lesson3)
+**Theme**: *Brutalism Design*
+- **Total & Marginal Utility**: The law of diminishing returns.
+- **Single Commodity Case**: Equilibrium condition (MUx = Px).
+- **Two Commodity Case**: Law of Equi-Marginal Utility.
+
+#### 📉 [Lesson 4: Indifference Curve Analysis](src/pages/Lessons/Lesson4)
+**Theme**: *Brutalism Design*
+- **Indifference Statistics**: Monotonic preferences and the MRS.
+- **Budget Line**: Evaluation of purchasing power and price ratio.
+- **Consumer's Equilibrium**: Tangency of IC and Budget Line.
+
+#### 🗯️ [Lesson 5: Theory of Demand](src/pages/Lessons/Lesson5)
+**Theme**: *Comic Book Theme*
+- **Law of Demand**: Inverse relationship between Price and Quantity.
+- **Determinants**: Income, Price of Related Goods (Substitutes/Complements).
+- **Exceptions**: Giffen Goods and Veblen Goods.
+
+#### 💢 [Lesson 6: Price Elasticity of Demand](src/pages/Lessons/Lesson6)
+**Theme**: *Brutalism Design*
+- **Measurement**: Percentage Method and Geometric Method.
+- **Degrees**: Perfectly Elastic to Perfectly Inelastic.
+- **Factors**: Nature of commodity, Time period, Availability of substitutes.
+
+---
+
+### Unit 3: Producer Behaviour and Supply
+#### 🏭 [Lesson 7: Production Function](src/pages/Lessons/Lesson7)
+**Theme**: *Modern Abstract*
+- **Short Run vs Long Run**: Fixed and Variable factors.
+- **Law of Variable Proportions**: TP, AP, and MP relationships.
+- **Returns to a Factor**: Increasing, Diminishing, and Negative returns.
+
+#### 🏭 [Lesson 8: Concept of Cost](src/pages/Lessons/Lesson8)
+**Theme**: *Industrial Factory Theme*
+- **Categories**: Fixed vs Variable, Explicit vs Implicit.
+- **Cost Curves**: The 'U' shape of AC, AVC, and MC.
+- **Relationships**: Why MC intersects AC at its minimum.
+
+#### 💰 [Lesson 9: Concept of Revenue](src/pages/Lessons/Lesson9)
+**Theme**: *Corporate Finance Gold*
+- **TR, AR, MR**: Definitions and calculations.
+- **Market Forms**: Revenue curves in Perfect vs Imperfect completion.
+- **Behavior**: Relationship between TR, AR, and MR.
+
+#### ⚖️ [Lesson 10: Producer's Equilibrium](src/pages/Lessons/Lesson10)
+**Theme**: *Strategic Balance / Game Theory*
+- **Conditions**: MC = MR and MC must be rising.
+- **Analysis**: Break-even point and Shutdown point.
+- **Examples**: Numerical determination of profit maximization.
+
+#### 🚚 [Lesson 11: Theory of Supply](src/pages/Lessons/Lesson11)
+**Theme**: *Logistics & Supply Chain*
+- **Determinants**: Price, Tech, Input prices, Taxes.
+- **Law of Supply**: Direct relationship between Price and Quantity.
+- **Elasticity**: Responsiveness of supply to price changes.
+
+---
+
+### Unit 4: Forms of Market & Price Determination
+#### 🏙️ [Lesson 12: Forms of Market](src/pages/Lessons/Lesson12)
+**Theme**: *Marketplace Simulation*
+- **Perfect Competition**: Large buyers/sellers, homogeneous product.
+- **Monopoly**: Single seller, price maker.
+- **Monopolistic Competition**: Product differentiation.
+- **Oligopoly**: Interdependence and cartels.
+
+#### 💻 [Lesson 13: Market Equilibrium](src/pages/Lessons/Lesson13)
+**Theme**: *Terminal / Hacker Theme*
+- **Equilibrium Price**: Intersection of Demand and Supply.
+- **Shifts**: Effect of change in demand and supply on equilibrium.
+- **Price Control**: Price Ceilings and Price Floors.
+
+---
+
+## 🛠️ Engineering Architecture
+
+ArthShastra is built for scale. Understanding the architecture is key to contributing.
+
+### Directory Structure
+```text
+src/
+├── assets/             # Global static images/icons
+├── components/         # Global shared UI (Buttons, Modals, Cards)
+├── context/            # React Context (Auth, Theme)
+├── css/                # Global Variables (index.css)
+├── data/               # Global static data
+├── hooks/              # Custom Hooks (useScrollTop, usesAuth)
+├── pages/
+│   ├── Home/           # Landing Page
+│   ├── Lessons/        # THE CORE ENGINE
+│   │   ├── css/        # Centralized Lesson Styles
+│   │   │   └── lessons.css
+│   │   ├── components/ # Shared Lesson Components
+│   │   │   └── Quiz.jsx
+│   │   ├── Lesson1/    # Individual Lesson Modules
+│   │   ├── Lesson2/
+│   │   └── ...
+├── services/           # Backend Integrations (Firebase)
+└── App.jsx             # Main Router
+```
+
+### Key Technical Decisions
+1.  **Vite**: Selected for HMR speed. We strictly use `vite.config.js`.
+2.  **No Redux**: State is localized or handled via Context API. This reduces boilerplate.
+3.  **Firebase**: Used for:
+    -   **Auth**: Google/Email Sign-in.
+    -   **Firestore**: Storing user progress (`users/{uid}/progress/{lessonId}`).
+    -   **Performance**: Real-time listeners are minimized to save costs.
+4.  **CSS Variables**: We use a robust system of CSS variables for theming.
+    -   `--card-bg`: Dark mode card backgrounds.
+    -   `--neon-blue`: Primary accent color.
+    -   `--text-primary`: Main text color.
+
+---
+
+## 🎨 Component Design System
+
+We use a "Atomic Design" inspired approach but simplified for educational content.
+
+### 1. The Lesson Container
+Every lesson page (`LessonX.jsx`) follows this strict layout:
+- **Header**: Back button + Breadcrumbs.
+- **Nav**: Horizontal scrolling tab bar for sections.
+- **Main**: The content area rendering the active component.
+- **Footer**: Prev/Next buttons + Progress dots.
+
+### 2. Cards
+We have three types of cards in `lessons.css`:
+- `.content-card`: Standard padding, white/dark bg, subtle shadow.
+- `.highlight-card`: Colored border, used for definitions/formulas.
+- `.interactive-card`: Hover effects, used for clickable elements.
+
+### 3. Quizzes
+The `Quiz.jsx` component is a complex engine that supports:
+- **Multiple Choice**: Standard options.
+- **True/False**: Boolean logic.
+- **Feedback**: Immediate detailed explanation on correct/incorrect answers.
+- **Score Tracking**: Auto-logs to Firebase upon completion.
+
+---
+
+## 🤝 Developer Guide: How to Build a Lesson
+
+Want to add Lesson 14? Follow the **"Factory Model"**:
+
+### Step 1: Create the Directory
+Copy the folder structure of `Lesson12` to `Lesson14`.
+Rename all files from `12` to `14`.
+
+### Step 2: Define Data
+Edit `data/lesson14Data.js`. This is where you define the structure.
+```javascript
+export const lesson14Data = {
+    title: "National Income",
+    sections: [
+        { id: 'intro', name: 'Introduction', icon: FaBook },
+        { id: 'methods', name: 'Measurement', icon: FaCalculator }
+    ],
+    // ...
+}
+```
+
+### Step 3: Build Components
+Create atomic components in `Lesson14/components/`.
+**Rule**: Do NOT write inline CSS. Use classes from `lessons.css`.
+
+### Step 4: Wire it Up
+Import your components into `Lesson14.jsx` and map them in the `renderActiveSection` switch statement.
+
+### Step 5: Route It
+Add the route in `App.jsx`:
+```jsx
+<Route path="/lessons/14" element={<Lesson14 />} />
+```
+
+---
+
+## 🐛 Troubleshooting
+
+### Common Issues
+**1. "Firebase API Key Missing"**
+- Ensure you have a `.env` file in the root.
+- It must contain `VITE_FIREBASE_API_KEY`, etc.
+- Restart the dev server after creating `.env`.
+
+**2. "Module Not Found"**
+- Check your imports. We use absolute paths or relative paths.
+- Ensure case sensitivity (Windows ignores it, Linux enforces it).
+
+**3. "Styles Not Applying"**
+- Did you import `../../css/lessons.css`?
+- Are you using valid class names? Check `lessons.css` for typos.
+
+---
+
+## 📜 License & Assignments
+**Copyright © 2026 ArthShastra Education**.
+Built for CBSE Grade 11 & 12 Economics students.
+Concept & Code by **Amit Pathak**.
+
+*“Economics is the art of making the most of life.” - George Bernard Shaw*
+
+
 
 ---
 
