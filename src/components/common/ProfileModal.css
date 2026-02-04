@@ -125,7 +125,7 @@
   background-image: radial-gradient(var(--pm-border) 1px, transparent 1px);
   background-size: 20px 20px;
   flex-shrink: 0; /* Prevent header from shrinking */
-  padding-top: 40px; /* Space for close button */
+  padding-top: 5px; /* Space for close button */
 }
 
 .pm-avatar {
@@ -211,7 +211,7 @@
 
 .pm-tab {
   flex: 1;
-  padding: 15px;
+  padding: 10px;
   background: transparent;
   border: none;
   font-size: 1.1rem;

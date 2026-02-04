@@ -88,6 +88,7 @@ import {
 } from 'react-icons/ri';
 import TopicSnippets from '../components/common/TopicSnippets';
 import './Home.css';
+import './HomeProcess.css';
 
 function Home() {
   const { user, isAuthenticated } = useAuth();
@@ -585,7 +586,7 @@ function Home() {
             <Link to="/about">About</Link>
           </div>
           <div className="footer-copy">
-            &copy; 2024-25 ArthShastra. All rights reserved.
+            &copy; 2026-27 ArthShastra. All rights reserved.
           </div>
         </div>
       </footer>

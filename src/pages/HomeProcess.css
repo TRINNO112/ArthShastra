@@ -1,0 +1,208 @@
+/* =============================================
+   HOME PAGE - HOW IT WORKS (Premium Timeline)
+   ============================================= */
+
+/* Note: Ensure global variables (colors, etc.) are available or redefined here if needed */
+
+.how-it-works { 
+  padding: 120px 0; 
+  background: #020617; /* Fallback or var(--bg-dark) */
+  border-top: 1px solid #1e293b; 
+  position: relative;
+  overflow: hidden;
+}
+
+.steps-container {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  max-width: 1000px;
+  margin: 60px auto 0;
+  padding: 0 20px;
+  width: 100%;
+}
+
+/* Base Timeline Line (Gray) */
+.steps-container::before {
+  content: "";
+  position: absolute;
+  top: 40px; /* Center of the 80px icon */
+  left: 50px;
+  right: 50px;
+  height: 2px;
+  background: #334155;
+  z-index: 0;
+}
+
+/* Progress Line (Gold - 66% width) */
+.steps-container::after {
+  content: "";
+  position: absolute;
+  top: 40px;
+  left: 50px;
+  width: 0%;
+  height: 2px;
+  background: #facc15; /* var(--color-gold) */
+  z-index: 0;
+  box-shadow: 0 0 10px #facc15;
+  animation: timelineProgress 1.5s ease-out forwards 0.5s;
+}
+
+@keyframes timelineProgress {
+  to { width: 66%; }
+}
+
+.step-card {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: transparent; 
+  padding: 0 15px;
+  transition: transform 0.3s;
+}
+
+.step-card:hover {
+  transform: translateY(-10px);
+}
+
+.step-icon {
+  width: 80px;
+  height: 80px;
+  background: #0f172a;
+  border: 2px solid #334155;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #94a3b8;
+  margin-bottom: 30px;
+  position: relative;
+  transition: all 0.3s;
+  box-shadow: 0 0 0 8px #020617; /* Spacing from line */
+}
+
+/* Active/Hover State for Icons */
+.step-card:hover .step-icon,
+.step-card.active .step-icon {
+  border-color: #facc15; /* gold */
+  color: #facc15;
+  box-shadow: 0 0 0 8px #020617, 0 0 20px rgba(250, 204, 21, 0.3);
+  background: #000;
+}
+
+.step-number {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 30px;
+  height: 30px;
+  background: #334155;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #020617;
+}
+
+.step-card:hover .step-number,
+.step-card.active .step-number {
+  background: #facc15;
+  color: #000;
+}
+
+.step-card h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.step-card p {
+  font-size: 1rem;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+/* Small Arrow below icon */
+.step-line {
+  display: block;
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(to bottom, #facc15, transparent);
+  margin: -20px auto 15px; 
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.step-card:hover .step-line,
+.step-card.active .step-line {
+  opacity: 1;
+  height: 30px;
+}
+
+/* Remove old pseudo-elements */
+.step-card::after { content: none; }
+
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .steps-container { 
+    flex-direction: column; 
+    gap: 40px; 
+    margin-top: 40px;
+    align-items: flex-start;
+    padding-left: 40px; 
+    max-width: 500px;
+  }
+  
+  /* Vertical Line */
+  .steps-container::before {
+    top: 0;
+    bottom: 0;
+    left: 20px; /* Align with icon center */
+    width: 2px;
+    height: 100%;
+    right: auto;
+  }
+  
+  .steps-container::after { display: none; } 
+  
+  .step-card {
+    flex-direction: row; 
+    align-items: flex-start;
+    text-align: left;
+    gap: 20px;
+    padding: 0;
+    width: 100%;
+  }
+
+  .step-card:hover { transform: translateX(5px); }
+
+  .step-icon {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    margin: 0;
+    font-size: 1.5rem;
+    box-shadow: 0 0 0 10px #020617; 
+    z-index: 2;
+  }
+  
+  .step-number {
+    width: 20px; height: 20px; font-size: 0.7rem; top: 0; right: 0;
+  }
+
+  .step-content { flex: 1; }
+  
+  .step-line { display: none; }
+}

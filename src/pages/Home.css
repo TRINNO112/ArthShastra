@@ -303,12 +303,19 @@
 }
 
 /* =============================================
-   HOW IT WORKS (Step Cards - 98% WIDTH)
+   SHARED SECTION STYLES (Restored)
    ============================================= */
 
-.how-it-works { padding: 80px 0; background: var(--bg-dark); }
-.section-container { max-width: 1400px; margin: 0 auto; padding: 0 20px; } /* Increased Max Width */
-.section-header { text-align: center; margin-bottom: 60px; }
+.section-container { 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 0 20px; 
+}
+
+.section-header { 
+  text-align: center; 
+  margin-bottom: 60px; 
+}
 
 .section-badge {
   display: inline-block;
@@ -322,78 +329,18 @@
   border: 2px solid #fff;
 }
 
-.section-title { font-size: 3rem; font-weight: 900; color: #fff; text-transform: uppercase; }
-.section-subtitle { color: var(--text-dim); font-size: 1.1rem; margin-top: 10px; }
-
-.steps-container {
-  display: flex;
-  flex-direction: column;
-  gap: 80px; /* INCREASED GAP to prevent overlap */
-  width: 98%; /* 98% WIDTH as requested */
-  max-width: none; 
-  margin: 0 auto;
+.section-title { 
+  font-size: 3rem; 
+  font-weight: 900; 
+  color: #fff; 
+  text-transform: uppercase; 
 }
 
-.step-card {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  background: #000;
-  border: 2px solid #333;
-  box-shadow: 4px 4px 0px #222;
-  padding: 40px; 
-  text-align: left;
-  position: relative;
-  width: 100%;
+.section-subtitle { 
+  color: var(--text-dim); 
+  font-size: 1.1rem; 
+  margin-top: 10px; 
 }
-
-/* ARROW CONNECTOR */
-.step-card:not(:last-child)::after {
-  content: "↓";
-  position: absolute;
-  bottom: -65px; /* Positioned centered in the 80px gap */
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--color-gold);
-  width: 50px;
-  height: 50px;
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid var(--color-gold); /* Gold Border for visibility */
-  border-radius: 50%;
-  z-index: 2;
-  box-shadow: 0 0 10px rgba(250, 204, 21, 0.2);
-}
-
-.step-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--color-gold);
-  box-shadow: 0 0 20px rgba(250, 204, 21, 0.2);
-}
-
-.step-number {
-  font-size: 3rem;
-  font-weight: 900;
-  color: #000;
-  min-width: 90px;
-  height: 90px;
-  background: var(--color-gold);
-  border: 2px solid #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 4px 4px 0px #000;
-  flex-shrink: 0;
-}
-
-.step-content { flex: 1; }
-.step-card h3 { font-size: 1.8rem; font-weight: 900; margin-bottom: 10px; color: #fff; text-transform: uppercase; white-space: nowrap; }
-.step-card p { color: var(--text-dim); font-weight: 500; font-size: 1.1rem; line-height: 1.6; }
-
 
 /* =============================================
    BENTO GRID
@@ -606,10 +553,31 @@
 .footer-brand { margin-bottom: 10px; }
 .footer-logo { font-size: 2rem; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 2px; }
 .footer-tagline { color: #aaa; font-size: 0.9rem; }
-.footer-links { display: flex; gap: 30px; }
-.footer-links a { color: #fff; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: color 0.2s; }
-.footer-links a:hover { color: var(--color-gold); }
-.footer-copy { color: #555; font-size: 0.8rem; margin-top: 10px; }
+.footer-links { 
+  display: flex; 
+  gap: 30px; 
+  margin-top: 10px;
+}
+.footer-links a { 
+  color: #cbd5e1; 
+  text-decoration: none; 
+  font-weight: 700; 
+  text-transform: uppercase; 
+  transition: all 0.2s;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+.footer-links a:hover { 
+  color: var(--color-gold); 
+  background: rgba(250, 204, 21, 0.1);
+  transform: translateY(-2px);
+}
+.footer-copy { 
+  color: #64748b; 
+  font-size: 0.85rem; 
+  margin-top: 20px; 
+  font-weight: 500;
+}
 
 
 /* =============================================
@@ -626,5 +594,55 @@
   .stat-card-3d:nth-child(n) { transform: none !important; margin-bottom: 15px; }
   .bento-content-row { flex-direction: column; text-align: center; }
   .subject-footer { flex-direction: column; gap: 15px; }
-  .step-card:not(:last-child)::after { display: none; } /* Hide arrows on mobile if needed, or keeping them is fine */
+  /* Responsive Timeline */
+  /* Responsive Timeline (Vertical Stack) */
+  .steps-container { 
+    flex-direction: column; 
+    gap: 40px; 
+    margin-top: 40px;
+    align-items: flex-start; /* Align left */
+    padding-left: 40px; /* Space for line */
+    max-width: 500px;
+  }
+  
+  /* Vertical Line */
+  .steps-container::before {
+    top: 0;
+    bottom: 0;
+    left: 20px; /* Align with icon center */
+    width: 2px;
+    height: 100%;
+    right: auto;
+  }
+  
+  .steps-container::after { display: none; } /* No progress animation on mobile */
+  
+  .step-card {
+    flex-direction: row; /* Horizontal card on mobile */
+    align-items: flex-start;
+    text-align: left;
+    gap: 20px;
+    padding: 0;
+    width: 100%;
+  }
+
+  .step-card:hover { transform: translateX(5px); }
+
+  .step-icon {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    margin: 0;
+    font-size: 1.5rem;
+    box-shadow: 0 0 0 10px var(--bg-dark); /* Cut out line */
+    z-index: 2;
+  }
+  
+  .step-number {
+    width: 20px; height: 20px; font-size: 0.7rem; top: 0; right: 0;
+  }
+
+  .step-content { flex: 1; }
+  
+  .step-line { display: none; }
 }
