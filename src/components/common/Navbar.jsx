@@ -163,6 +163,10 @@ function Navbar() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
           >
+            <button className="mobile-menu-close" onClick={closeMobileMenu}>
+              <FaTimes />
+            </button>
+
             {['Home', 'Lessons', 'Quiz', 'Progress', 'About'].map((item) => (
               <NavLink
                 key={item}

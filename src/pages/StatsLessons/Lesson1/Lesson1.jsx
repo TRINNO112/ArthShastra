@@ -14,6 +14,7 @@ import Introduction from './components/Introduction';
 import ScopeImportance from './components/ScopeImportance';
 import NatureAndDistrust from './components/NatureAndDistrust';
 import Quiz from './components/Quiz';
+import TopicsMenu from '../components/TopicsMenu';
 
 function Lesson1() {
     const [activeTab, setActiveTab] = useState('intro');
@@ -32,6 +33,13 @@ function Lesson1() {
         };
     }, [activeTab]);
 
+    const topics = [
+        { id: 'intro', label: 'Introduction', icon: <FaBook /> },
+        { id: 'scope', label: 'Scope & Functions', icon: <FaGlobe /> },
+        { id: 'nature', label: 'Nature & Distrust', icon: <FaBalanceScale /> },
+        { id: 'quiz', label: 'Quiz', icon: <FaQuestionCircle /> }
+    ];
+
     return (
         <div className="stats-page">
             <div className="stats-container">
@@ -47,37 +55,12 @@ function Lesson1() {
                     <p className="stats-subtitle">Understanding the meaning, scope, and importance of data in Economics</p>
                 </header>
 
-                {/* Navigation Tabs */}
-                <div className="stats-grid-3" style={{ marginBottom: '30px', gap: '10px', gridTemplateColumns: 'repeat(4, 1fr)' }}>
-                    <button
-                        className={`stats-btn ${activeTab === 'intro' ? 'stats-btn-primary' : 'stats-btn-outline'}`}
-                        onClick={() => setActiveTab('intro')}
-                        style={{ justifyContent: 'center' }}
-                    >
-                        <FaBook /> Introduction
-                    </button>
-                    <button
-                        className={`stats-btn ${activeTab === 'scope' ? 'stats-btn-primary' : 'stats-btn-outline'}`}
-                        onClick={() => setActiveTab('scope')}
-                        style={{ justifyContent: 'center' }}
-                    >
-                        <FaGlobe /> Scope & Functions
-                    </button>
-                    <button
-                        className={`stats-btn ${activeTab === 'nature' ? 'stats-btn-primary' : 'stats-btn-outline'}`}
-                        onClick={() => setActiveTab('nature')}
-                        style={{ justifyContent: 'center' }}
-                    >
-                        <FaBalanceScale /> Nature & Distrust
-                    </button>
-                    <button
-                        className={`stats-btn ${activeTab === 'quiz' ? 'stats-btn-primary' : 'stats-btn-outline'}`}
-                        onClick={() => setActiveTab('quiz')}
-                        style={{ justifyContent: 'center', borderColor: activeTab === 'quiz' ? 'var(--stats-primary)' : 'var(--stats-warning)', color: activeTab === 'quiz' ? 'white' : 'var(--stats-warning)' }}
-                    >
-                        <FaQuestionCircle /> Quiz
-                    </button>
-                </div>
+                {/* Navigation Menu (New) */}
+                <TopicsMenu
+                    topics={topics}
+                    activeTab={activeTab}
+                    onSelect={setActiveTab}
+                />
 
                 {/* Content Area */}
                 <div className="stats-content">

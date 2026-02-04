@@ -16,8 +16,8 @@
 }
 
 .nav-header {
-  position: sticky;
-  top: 0;
+  position: relative; /* Scrolls with page */
+  /* top: 0; removed */
   z-index: 1000;
   background: rgba(8, 8, 12, 0.6);
   backdrop-filter: blur(20px) saturate(180%);
@@ -239,6 +239,25 @@
     align-items: center;
     gap: 30px;
     padding: 20px;
+  }
+
+  .mobile-menu-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1002;
+    transition: color 0.2s;
+  }
+
+  .mobile-menu-close:hover {
+    color: var(--neon-gold);
+    transform: scale(1.1);
   }
 
   .mobile-nav-link {

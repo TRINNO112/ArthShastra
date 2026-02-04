@@ -15,6 +15,7 @@ import MethodsOfCollection from './components/MethodsOfCollection';
 import CensusVsSample from './components/CensusVsSample';
 import SamplingErrors from './components/SamplingErrors';
 import Quiz from './components/Quiz';
+import TopicsMenu from '../components/TopicsMenu';
 
 function Lesson2() {
     const [activeTab, setActiveTab] = useState('sources');
@@ -31,6 +32,15 @@ function Lesson2() {
         };
     }, [activeTab]);
 
+    const topics = [
+        { id: 'sources', label: 'Sources of Data', icon: <FaDatabase /> },
+        { id: 'terms', label: 'Important Terms', icon: <FaUsers /> },
+        { id: 'methods', label: 'Methods of Collection', icon: <FaClipboardList /> },
+        { id: 'census', label: 'Census vs Sample', icon: <FaUsers /> }, // Reusing Users icon or find better
+        { id: 'errors', label: 'Sampling Errors', icon: <FaArrowLeft style={{ transform: 'rotate(-45deg)' }} /> }, // Keeping custom icon
+        { id: 'quiz', label: 'Quiz', icon: <FaQuestionCircle /> }
+    ];
+
     return (
         <div className="stats-page">
             <div className="stats-container">
@@ -46,51 +56,12 @@ function Lesson2() {
                     <p className="stats-subtitle">Exploring the sources, methods, and techniques of gathering statistical data</p>
                 </header>
 
-                {/* Navigation Tabs */}
-                <div className="stats-grid-3" style={{ marginBottom: '30px', gap: '10px', gridTemplateColumns: 'repeat(3, 1fr)' }}>
-                    <button
-                        className={`stats-btn ${activeTab === 'sources' ? 'stats-btn-primary' : 'stats-btn-outline'}`}
-                        onClick={() => setActiveTab('sources')}
-                        style={{ justifyContent: 'center' }}
-                    >
-                        <FaDatabase /> Sources
-                    </button>
-                    <button
-                        className={`stats-btn ${activeTab === 'terms' ? 'stats-btn-primary' : 'stats-btn-outline'}`}
-                        onClick={() => setActiveTab('terms')}
-                        style={{ justifyContent: 'center' }}
-                    >
-                        <FaUsers /> Terms
-                    </button>
-                    <button
-                        className={`stats-btn ${activeTab === 'methods' ? 'stats-btn-primary' : 'stats-btn-outline'}`}
-                        onClick={() => setActiveTab('methods')}
-                        style={{ justifyContent: 'center' }}
-                    >
-                        <FaClipboardList /> Methods
-                    </button>
-                    <button
-                        className={`stats-btn ${activeTab === 'census' ? 'stats-btn-primary' : 'stats-btn-outline'}`}
-                        onClick={() => setActiveTab('census')}
-                        style={{ justifyContent: 'center' }}
-                    >
-                        <FaUsers /> Census vs Sample
-                    </button>
-                    <button
-                        className={`stats-btn ${activeTab === 'errors' ? 'stats-btn-primary' : 'stats-btn-outline'}`}
-                        onClick={() => setActiveTab('errors')}
-                        style={{ justifyContent: 'center' }}
-                    >
-                        <FaArrowLeft style={{ transform: 'rotate(-45deg)' }} /> Errors
-                    </button>
-                    <button
-                        className={`stats-btn ${activeTab === 'quiz' ? 'stats-btn-primary' : 'stats-btn-outline'}`}
-                        onClick={() => setActiveTab('quiz')}
-                        style={{ justifyContent: 'center', borderColor: activeTab === 'quiz' ? 'var(--stats-primary)' : 'var(--stats-warning)', color: activeTab === 'quiz' ? 'white' : 'var(--stats-warning)' }}
-                    >
-                        <FaQuestionCircle /> Quiz
-                    </button>
-                </div>
+                {/* Navigation Menu (New) */}
+                <TopicsMenu
+                    topics={topics}
+                    activeTab={activeTab}
+                    onSelect={setActiveTab}
+                />
 
                 {/* Content Area */}
                 <div className="stats-content">
