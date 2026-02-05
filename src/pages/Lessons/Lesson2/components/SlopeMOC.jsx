@@ -38,7 +38,7 @@ function SlopeMOC() {
   return (
     <section>
       {/* Removed inline style to allow CSS class to take effect */}
-      <h2 className="section-title">Slope & Marginal Opportunity Cost</h2>
+      <h2 className="royal-section-title">Slope & Marginal Opportunity Cost</h2>
 
       <div className="lesson-grid-2">
         <div className="lesson-card" style={{ border: '4px solid #000', boxShadow: '8px 8px 0px #2563eb' }}>

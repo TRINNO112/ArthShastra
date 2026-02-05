@@ -89,6 +89,7 @@ import {
 import TopicSnippets from '../components/common/TopicSnippets';
 import './Home.css';
 import './HomeProcess.css';
+import './component_css/MarketStack.css';
 
 function Home() {
   const { user, isAuthenticated } = useAuth();
@@ -111,7 +112,7 @@ function Home() {
               <span className="hero-badge">
                 <HiSparkles className="badge-icon" />
                 Class 11 & 12 Economics
-                <span className="badge-new">2024-25</span>
+                <span className="badge-new">2026-27</span>
               </span>
             </div>
 
@@ -151,44 +152,38 @@ function Home() {
             </div>
           </div>
 
-          {/* Hero Visual - 3D Stats Cards */}
+
+          {/* Hero Visual - Market Stack (Isometric Layers) */}
           <div className="hero-visual">
-            <div className="stats-showcase">
-              <div className="stat-card-3d stat-gold">
-                <div className="stat-glow"></div>
-                <div className="stat-icon-wrapper">
-                  <FaLightbulb />
+            <div className="market-stack">
+
+              {/* Bottom Layer: Theory/Foundation */}
+              <div className="stack-layer layer-bottom">
+                <div className="layer-grid"></div>
+                <div className="layer-content">
+                  <FaBook className="layer-icon" />
+                  <span className="layer-label">Theory</span>
                 </div>
-                <div className="stat-content">
-                  <span className="stat-label">Concept</span>
-                  <span className="stat-number">Clarity</span>
-                </div>
-                <div className="stat-decoration"></div>
               </div>
 
-              <div className="stat-card-3d stat-green">
-                <div className="stat-glow"></div>
-                <div className="stat-icon-wrapper">
-                  <FaChartLine />
+              {/* Middle Layer: Analysis/Graphs */}
+              <div className="stack-layer layer-middle">
+                <div className="layer-grid"></div>
+                <div className="layer-content">
+                  <BsGraphUp className="layer-icon" />
+                  <span className="layer-label">Analysis</span>
                 </div>
-                <div className="stat-content">
-                  <span className="stat-label">Visual</span>
-                  <span className="stat-number">Graphs</span>
-                </div>
-                <div className="stat-decoration"></div>
               </div>
 
-              <div className="stat-card-3d stat-cyan">
-                <div className="stat-glow"></div>
-                <div className="stat-icon-wrapper">
-                  <FaTrophy />
+              {/* Top Layer: Success/Outcomes */}
+              <div className="stack-layer layer-top">
+                <div className="layer-grid"></div>
+                <div className="layer-content">
+                  <FaTrophy className="layer-icon" />
+                  <span className="layer-label">Success</span>
                 </div>
-                <div className="stat-content">
-                  <span className="stat-label">Exam</span>
-                  <span className="stat-number">Success</span>
-                </div>
-                <div className="stat-decoration"></div>
               </div>
+
             </div>
           </div>
         </div>

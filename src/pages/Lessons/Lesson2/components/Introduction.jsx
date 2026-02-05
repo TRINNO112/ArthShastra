@@ -17,7 +17,7 @@ function Introduction() {
   return (
     <section>
       {/* Remove inline style to allow CSS class override */}
-      <h2 className="section-title">
+      <h2 className="royal-section-title">
         The Central Problem: <span style={{ color: '#facc15', textShadow: '2px 2px 0px #000' }}>Scarcity!</span>
       </h2>
 

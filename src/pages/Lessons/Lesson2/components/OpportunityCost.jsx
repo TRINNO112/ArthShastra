@@ -5,7 +5,7 @@ function OpportunityCost() {
   return (
     <section>
       {/* Removed inline style to allow CSS class to take effect */}
-      <h2 className="section-title">
+      <h2 className="royal-section-title">
         <span style={{ background: '#000', padding: '0 5px' }}>Opportunity</span> Cost
       </h2>
 

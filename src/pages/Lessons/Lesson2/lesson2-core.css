@@ -41,6 +41,24 @@ h2.section-title,
   /* Removed text-stroke to avoid artifacts */
 }
 
+/* ROYAL TITLE STYLE (For Visibility on Dark Backgrounds) */
+.royal-section-title {
+  font-family: 'Cinzel', serif !important;
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  font-weight: 800;
+  color: #ffd700 !important;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+  text-shadow: 
+    0 0 10px rgba(255, 215, 0, 0.6),
+    0 0 20px rgba(255, 215, 0, 0.3),
+    2px 2px 0px #000;
+  display: inline-block;
+  border-bottom: 3px double #ffd700;
+  padding-bottom: 10px;
+}
+
 .card-title {
   font-size: 1.4rem;
   font-weight: 800;

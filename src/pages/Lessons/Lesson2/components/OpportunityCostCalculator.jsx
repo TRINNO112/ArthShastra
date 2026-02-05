@@ -36,7 +36,7 @@ function OpportunityCostCalculator() {
 
   return (
     <section>
-      <h2 className="section-title">OC Calculator</h2>
+      <h2 className="royal-section-title">OC Calculator</h2>
 
       <div className="lesson-card" style={{ border: '4px solid #000', boxShadow: '8px 8px 0px #000' }}>
 

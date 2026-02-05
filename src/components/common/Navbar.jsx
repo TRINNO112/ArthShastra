@@ -222,7 +222,7 @@ function Navbar() {
                 <FaTimes />
               </button>
 
-              <div className="modal-header">
+              <div className="auth-modal-header">
                 <div className="modal-icon">
                   <HiAcademicCap />
                 </div>
@@ -230,7 +230,7 @@ function Navbar() {
                 <p>Sign in to track your progress and save your quiz scores</p>
               </div>
 
-              <div className="modal-content">
+              <div className="auth-modal-content">
                 <div className="auth-benefits">
                   <div className="benefit-item">
                     <FaChartLine className="benefit-icon" />

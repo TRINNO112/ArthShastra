@@ -1,0 +1,242 @@
+/* =============================================
+   MARKET STACK - ISOMETRIC 3D HERO VISUAL
+   ============================================= */
+
+:root {
+  --stack-size: 320px;
+  --layer-height: 20px;
+  --layer-gap: 40px; /* Gap between layers in exploded view */
+  --neon-gold: #ffd700;
+  --neon-cyan: #00ffff;
+  --neon-purple: #bd00ff;
+  --glass-bg: rgba(15, 23, 42, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+.hero-visual {
+  perspective: 2000px; /* High perspective for isometric feel */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 600px;
+  overflow: visible;
+}
+
+.market-stack {
+  position: relative;
+  width: var(--stack-size);
+  height: var(--stack-size);
+  transform-style: preserve-3d;
+  transform: rotateX(55deg) rotateZ(-45deg); /* Isometric-ish angle */
+  transition: transform 0.5s ease-out;
+  cursor: pointer;
+}
+
+/* Hover Interaction: Tilt slightly to follow mouse or just reset/enhance angle */
+.market-stack:hover {
+  transform: rotateX(60deg) rotateZ(-45deg) translateZ(20px);
+}
+
+/* =============================================
+   LAYERS (The Glass Plates)
+   ============================================= */
+
+.stack-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 
+    inset 0 0 30px rgba(0,0,0,0.5), /* Inner shadow depth */
+    5px 5px 20px rgba(0,0,0,0.3); /* Drop shadow */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); /* Pop spring effect */
+}
+
+/* Layer 1: Foundation (Bottom) - Purple/Macro */
+.layer-bottom {
+  transform: translateZ(0px);
+  background: rgba(189, 0, 255, 0.05);
+  border-color: rgba(189, 0, 255, 0.3);
+  box-shadow: 0 0 30px rgba(189, 0, 255, 0.1), inset 0 0 30px rgba(189, 0, 255, 0.05);
+  z-index: 1;
+}
+
+/* Layer 2: Analysis (Middle) - Cyan/Micro */
+.layer-middle {
+  transform: translateZ(60px); /* Default height */
+  background: rgba(0, 255, 255, 0.05);
+  border-color: rgba(0, 255, 255, 0.3);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.1), inset 0 0 30px rgba(0, 255, 255, 0.05);
+  z-index: 2;
+}
+
+/* Layer 3: Success (Top) - Gold/Victory */
+.layer-top {
+  transform: translateZ(120px); /* Default height */
+  background: rgba(255, 215, 0, 0.05);
+  border-color: rgba(255, 215, 0, 0.4);
+  box-shadow: 
+    0 0 50px rgba(255, 215, 0, 0.15),
+    inset 0 0 30px rgba(255, 215, 0, 0.05);
+  z-index: 3;
+}
+
+/* =============================================
+   EXPLODED VIEW (Replaced by Animation below)
+   ============================================= */
+
+/* Note: Hover effects are now handled in the Animation section 
+   to allow pausing or forcing state */
+
+/* =============================================
+   CONTINUOUS ANIMATION (Breathing Stack)
+   ============================================= */
+
+@keyframes floatBottom {
+  0%, 100% { transform: translateZ(0px); box-shadow: 0 0 30px rgba(189, 0, 255, 0.1); }
+  50% { transform: translateZ(-30px); box-shadow: 0 0 50px rgba(189, 0, 255, 0.3); }
+}
+
+@keyframes floatMiddle {
+  0%, 100% { transform: translateZ(60px); box-shadow: 0 0 30px rgba(0, 255, 255, 0.1); }
+  50% { transform: translateZ(100px); box-shadow: 0 0 50px rgba(0, 255, 255, 0.3); }
+}
+
+@keyframes floatTop {
+  0%, 100% { transform: translateZ(120px); box-shadow: 0 0 50px rgba(255, 215, 0, 0.15); }
+  50% { transform: translateZ(240px); box-shadow: 0 0 80px rgba(255, 215, 0, 0.4); }
+}
+
+/* Apply Animations */
+.layer-bottom {
+  animation: floatBottom 6s ease-in-out infinite;
+}
+
+.layer-middle {
+  animation: floatMiddle 6s ease-in-out infinite;
+}
+
+.layer-top {
+  animation: floatTop 6s ease-in-out infinite;
+}
+
+/* Pause on hover to let user examine */
+.market-stack:hover .stack-layer {
+  animation-play-state: paused;
+}
+
+/* Override previous hover transforms since we have animation now */
+.market-stack:hover .layer-bottom { transform: translateZ(-30px); }
+.market-stack:hover .layer-middle { transform: translateZ(100px); }
+.market-stack:hover .layer-top { transform: translateZ(240px); }
+
+/* =============================================
+   LAYER CONTENT (Icons & Decor)
+   ============================================= */
+
+/* Rotate content BACK so it looks flat to the viewer despite the isometric skew */
+.layer-content {
+  transform: rotateZ(45deg) rotateX(-55deg); /* Counter-rotate */
+  text-align: center;
+  pointer-events: none; /* Let clicks pass through */
+}
+
+.layer-icon {
+  font-size: 4rem;
+  filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));
+  margin-bottom: 10px;
+  display: block;
+}
+
+.layer-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+  padding: 5px 12px;
+  border-radius: 4px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: white;
+  display: inline-block;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.market-stack:hover .layer-label {
+  opacity: 1;
+  background: rgba(0,0,0,0.8);
+}
+
+/* Icon Colors */
+.layer-bottom .layer-icon { color: var(--neon-purple); }
+.layer-middle .layer-icon { color: var(--neon-cyan); }
+.layer-top .layer-icon { color: var(--neon-gold); }
+
+/* =============================================
+   DECORATIVE GRID LINES (On layers)
+   ============================================= */
+
+.layer-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  border-radius: 20px;
+  pointer-events: none;
+}
+
+/* Side Panels for 3D Thickness (Pseudo-elements) */
+/* This gives the glass "thickness" */
+.stack-layer::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 10px; /* Thickness */
+  bottom: -10px;
+  left: 0;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotateX(90deg);
+  transform-origin: top;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.stack-layer::after {
+  content: '';
+  position: absolute;
+  width: 10px; /* Thickness */
+  height: 100%;
+  top: 0;
+  right: -10px;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotateY(90deg);
+  transform-origin: left;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  :root {
+    --stack-size: 240px;
+  }
+  .hero-visual { height: 450px; }
+  .layer-icon { font-size: 3rem; }
+}

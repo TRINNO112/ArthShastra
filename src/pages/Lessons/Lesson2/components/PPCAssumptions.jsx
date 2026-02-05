@@ -28,7 +28,7 @@ function PPCAssumptions() {
   return (
     <section>
       {/* Removed inline style to allow CSS class to take effect */}
-      <h2 className="section-title">
+      <h2 className="royal-section-title">
         Game Rules <span style={{ fontSize: '0.6em', verticalAlign: 'middle', background: '#000', color: '#fff', padding: '2px 8px', transform: 'rotate(2deg)', display: 'inline-block' }}>(Assumptions)</span>
       </h2>
 

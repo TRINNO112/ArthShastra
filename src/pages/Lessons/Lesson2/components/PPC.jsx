@@ -5,7 +5,7 @@ import '../lesson2-core.css';
 function PPC() {
   return (
     <section>
-      <h2 className="section-title">Production Possibility Frontier</h2>
+      <h2 className="royal-section-title">Production Possibility Frontier</h2>
 
       {/* Main Layout: Graph + Core Definition */}
       <div className="lesson-grid-2" style={{ marginBottom: '30px' }}>

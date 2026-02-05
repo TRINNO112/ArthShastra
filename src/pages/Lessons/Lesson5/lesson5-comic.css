@@ -211,7 +211,7 @@
   border: 2px solid var(--comic-ink); /* CSS clip-path doesn't support border directly, simulated via wrapper if needed */
 }
 
-/* Badge Style */
+/* Badge Style (Generic - used in cards) */
 .comic-badge {
   background: var(--comic-ink);
   color: white;
@@ -221,6 +221,23 @@
   display: inline-block;
   border: 2px solid white;
   box-shadow: 3px 3px 0px rgba(0,0,0,0.3);
+}
+
+/* Corner Badge (Issue Number - 45deg) */
+.comic-badge-corner {
+  position: absolute;
+  top: 30px;
+  right: -35px;
+  background: var(--action-red);
+  color: white;
+  padding: 8px 40px;
+  transform: rotate(45deg);
+  font-family: var(--font-comic-title);
+  font-size: 1rem;
+  border: 2px solid white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  white-space: nowrap;
 }
 
 /* ==========================================

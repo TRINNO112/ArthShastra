@@ -9,6 +9,7 @@ const Quiz = () => {
             quizId="lesson2-quiz"
             title="Lesson 2 Quiz"
             subtitle="Test your knowledge on Central Problems & PPC"
+            titleClass="royal-section-title"
         />
     );
 };

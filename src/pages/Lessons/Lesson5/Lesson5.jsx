@@ -114,12 +114,18 @@ function Lesson5() {
 
       {/* Header */}
       <header className="lesson-header" style={{ background: 'transparent', border: 'none', boxShadow: 'none', padding: '0 0 2rem 0' }}>
-        <div className="header-container" style={{ display: 'block', textAlign: 'center' }}>
+        <div className="header-container" style={{ display: 'block', textAlign: 'center', position: 'relative', overflow: 'visible' }}>
           <Link to="/lessons" className="comic-btn secondary" style={{ position: 'absolute', top: '20px', left: '20px', fontSize: '1rem' }}>
             <FaArrowLeft /> Back
           </Link>
 
-          <div className="comic-badge" style={{ fontSize: '1.2rem', marginBottom: '1rem', background: 'var(--action-red)' }}>
+          <div className="comic-badge" style={{
+            fontSize: '0.9rem',
+            position: 'absolute',
+            top: '30px',
+            right: '-40px',
+            background: 'var(--action-red)'
+          }}>
             ISSUE #5: MICROECONOMICS
           </div>
 

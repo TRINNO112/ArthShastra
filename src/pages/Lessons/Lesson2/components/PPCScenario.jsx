@@ -101,7 +101,7 @@ export default function PPCScenario() {
 
   return (
     <section>
-      <h2 className="section-title">Strategic Simulator</h2>
+      <h2 className="royal-section-title">Strategic Simulator</h2>
 
       {/* EVENT SELECTOR */}
       <div className="lesson-card" style={{ border: '4px solid #000', marginBottom: '20px', textAlign: 'center', padding: '20px' }}>

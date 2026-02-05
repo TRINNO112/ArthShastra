@@ -23,11 +23,14 @@ const BreakEvenShutdown = () => {
     useEffect(() => {
         if (!dimensions.width) return;
 
+        // Draw Chart Logic
+
         const svg = d3.select(svgRef.current);
         svg.selectAll('*').remove();
 
         const { width, height } = dimensions;
-        const margin = { top: 40, right: 60, bottom: 60, left: 60 };
+        // Reduced margins for mobile
+        const margin = { top: 20, right: 10, bottom: 40, left: 35 };
         const innerWidth = width - margin.left - margin.right;
         const innerHeight = height - margin.top - margin.bottom;
 
@@ -254,8 +257,8 @@ const BreakEvenShutdown = () => {
                     </button>
                 </div>
 
-                <div ref={containerRef} className="chart-wrapper-flex" style={{ height: '450px' }}>
-                    <svg ref={svgRef} className="chart-container-d3" style={{ height: '100%' }}></svg>
+                <div ref={containerRef} className="chart-wrapper-flex panel-screen chart-full-width" style={{ height: '450px', padding: 0 }}>
+                    <svg ref={svgRef} className="chart-container-d3" style={{ height: '100%', width: '100%' }}></svg>
                 </div>
 
                 <div className="explanation-content" style={{ marginTop: '30px', padding: '20px' }}>

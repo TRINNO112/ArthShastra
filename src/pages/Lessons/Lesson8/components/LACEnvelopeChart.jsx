@@ -29,7 +29,7 @@ const LACEnvelopeChart = () => {
         const svg = d3.select(svgRef.current);
         svg.selectAll('*').remove(); // Clear previous
 
-        const margin = { top: 20, right: 30, bottom: 50, left: 50 };
+        const margin = { top: 20, right: 10, bottom: 40, left: 35 };
         const innerWidth = width - margin.left - margin.right;
         const innerHeight = height - margin.top - margin.bottom;
 

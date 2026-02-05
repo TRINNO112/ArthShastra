@@ -40,7 +40,7 @@ function AttainableUnattainable() {
 
   return (
     <section>
-      <h2 className="section-title">Attainable & Unattainable Combinations</h2>
+      <h2 className="royal-section-title">Attainable & Unattainable Combinations</h2>
 
       <div className="lesson-grid-2">
         <div className="lesson-card">

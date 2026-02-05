@@ -5343,8 +5343,46 @@
   padding: 1.5rem !important;
 }
 
-/* LESSON4 RESPONSIVE FIXES - Mobile Overflow (Desktop Unchanged) */
-  @media (max-width: 768px) {
+/* LESSON4 RESPONSIVE FIXES - Mobile & Tablet optimizations */
+@media (max-width: 768px) {
+  /* Reduce main container padding to min possible */
+  .lesson-container,
+  .lesson-container.factory-theme,
+  .lesson-container.factory-theme .content-container,
+  .lesson-content .content-container {
+    padding: 0 5px !important;
+  }
+
+  .lesson-content {
+    padding-top: 20px !important; /* Reduce top gap */
+  }
+
+  /* Short/Long Run Grid */
+  .short-long-grid {
+    grid-template-columns: 1fr; /* Stack vertically */
+    gap: 20px;
+    width: 100%;
+    padding: 0; /* Remove internal padding */
+  }
+
+  .comic-panel {
+    width: 100% !important; /* Force full width cards */
+    margin: 0 !important;
+  }
+
+  /* Force chart container to use max space */
+  .control-panel.lac-chart-panel {
+    padding: 10px 5px !important; /* Minimal side padding */
+    width: 100% !important;
+    margin: 20px 0 !important;
+    border-radius: 8px;
+  }
+
+  .panel-screen {
+    padding: 5px !important; /* Remove internal padding */
+    border: none !important; /* Optional: cleaner look on small screens */
+    background: transparent !important;
+  }
     .advantage-item {
       padding: 1rem !important;
       margin-bottom: 1rem !important;

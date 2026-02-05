@@ -34,7 +34,7 @@ function TabularRepresentation() {
 
   return (
     <section>
-      <h2 className="section-title">Production Possibility Schedule</h2>
+      <h2 className="royal-section-title">Production Possibility Schedule</h2>
 
       <div className="lesson-grid-2">
         <div className="lesson-card">

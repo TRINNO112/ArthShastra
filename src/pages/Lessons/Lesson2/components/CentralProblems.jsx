@@ -5,7 +5,7 @@ function CentralProblems() {
   return (
     <section>
       {/* Removed inline style to allow CSS class to take effect */}
-      <h2 className="section-title">
+      <h2 className="royal-section-title">
         The Big 3 Questions
       </h2>
 

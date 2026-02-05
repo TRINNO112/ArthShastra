@@ -21,7 +21,7 @@ const ShortLongRun = () => {
         </p>
       </div>
 
-      <div className="comic-container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', maxWidth: '1000px', margin: '0 auto' }}>
+      <div className="short-long-grid comic-container">
 
         {/* SHORT RUN - COMIC PANEL */}
         <div className="comic-panel" style={{ background: '#2C2F33', color: '#fff', padding: '20px', borderRadius: '12px', boxShadow: '8px 8px 0px #000', border: '3px solid #ffcc00', position: 'relative' }}>
@@ -94,7 +94,7 @@ const ShortLongRun = () => {
       </div>
 
       {/* LAC ENVELOPE */}
-      <div className="control-panel" style={{ marginTop: '40px' }}>
+      <div className="control-panel lac-chart-panel" style={{ marginTop: '40px' }}>
         <h4 style={{ color: '#fff', fontFamily: 'Black Ops One, cursive', textAlign: 'center' }}>
           LAC ENVELOPE CURVE
         </h4>
@@ -102,7 +102,7 @@ const ShortLongRun = () => {
           "The Envelope that holds all Short Run Plants"
         </div>
 
-        <div className="panel-screen">
+        <div className="panel-screen chart-full-width">
           <LACEnvelopeChart />
         </div>
       </div>

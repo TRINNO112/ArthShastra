@@ -313,18 +313,143 @@
   padding: 20px;
 }
 
+/* =============================================
+   AUTH MODAL - PREMIUM DARK THEME
+   ============================================= */
+
 /* Base Modal Style */
 .auth-modal {
-  border: var(--border-thick) solid var(--comic-border);
-  box-shadow: 10px 10px 0 var(--comic-shadow);
-  border-radius: 0; /* Boxy comic look */
+  border: 1px solid rgba(255, 215, 0, 0.3) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.1) !important;
+  border-radius: 20px !important; 
   width: 100%;
   overflow: hidden;
-  color: var(--comic-border); /* FORCE BLACK TEXT */
+  color: var(--text-primary) !important;
   position: relative;
+  background: rgba(15, 23, 42, 0.95) !important;
+  backdrop-filter: blur(20px);
+  max-width: 420px;
 }
 
-.auth-modal { max-width: 400px; }
+/* Auth Modal Internals */
+
+.auth-modal-header {
+  text-align: center;
+  padding: 30px 30px 20px;
+  background: rgba(255, 215, 0, 0.02);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.1) !important;
+}
+
+.modal-icon {
+  font-size: 3rem;
+  color: var(--neon-gold);
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.3));
+  display: flex;
+  justify-content: center;
+}
+
+.auth-modal-header h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff !important;
+  margin-bottom: 10px;
+  line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5) !important;
+  background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.auth-modal-header p {
+  color: var(--text-secondary) !important;
+  font-size: 0.95rem;
+  font-weight: 500;
+  max-width: 90%;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* Modal Content Area */
+.auth-modal-content {
+  padding: 30px;
+  background: transparent !important; 
+  color: var(--text-primary) !important;
+}
+
+.auth-benefits {
+  margin-bottom: 30px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  color: #e0e0e0 !important;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.benefit-item:last-child {
+  margin-bottom: 0;
+}
+
+.benefit-icon {
+  color: var(--neon-gold);
+  font-size: 1.2rem;
+  filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+}
+
+.google-signin-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 16px;
+  background: white;
+  border: none;
+  border-radius: 50px; /* Pill shape */
+  font-weight: 700;
+  font-size: 1rem;
+  color: #1a1a1a;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: none; /* Google brand standard */
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.google-signin-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.2);
+  background: #f8f8f8;
+}
+
+.google-signin-btn:active {
+  transform: translateY(0);
+}
+
+.google-icon {
+  color: #DB4437;
+  font-size: 1.4rem;
+}
+
+.auth-note {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 20px;
+  font-style: normal;
+  opacity: 0.7;
+}
 
 /* ... (Modal Close Button styles remain similar but ensuring contrast) ... */
 .modal-close {
@@ -359,13 +484,7 @@
 }
 
 /* Profile styles moved to ProfileModal.css */
-  border-bottom: var(--border-thick) solid var(--comic-border);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-image: radial-gradient(var(--comic-border) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
+/* Removed broken orphan styles */
 
 .profile-avatar-large {
   width: 120px;

@@ -11,7 +11,8 @@ function SharedQuiz({
     tfQuestions = [],
     quizId,
     title = "Test Your Knowledge",
-    subtitle = "Answer all questions to check your understanding"
+    subtitle = "Answer all questions to check your understanding",
+    titleClass = ""
 }) {
     // Answer states
     const [mcqAnswers, setMcqAnswers] = useState({});
@@ -227,7 +228,7 @@ function SharedQuiz({
                 {/* Section Header */}
                 <div className="section-header-lesson" style={{ textAlign: 'center', marginBottom: '40px' }}>
                     <span className="section-badge-lesson" style={{ background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(5px)' }}>Assessment</span>
-                    <h2 className="section-title-lesson" style={{ fontSize: '2.5rem', marginTop: '10px' }}>{title}</h2>
+                    <h2 className={titleClass || "section-title-lesson"} style={{ fontSize: '2.5rem', marginTop: '10px' }}>{title}</h2>
                     <p className="section-subtitle-lesson" style={{ color: 'rgba(255,255,255,0.6)' }}>{subtitle}</p>
                 </div>
 
