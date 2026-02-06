@@ -28,14 +28,14 @@ const DiagramIntro = () => {
 
             <h3 className="stats-title" style={{ marginTop: '50px' }}>GENERAL RULES FOR CONSTRUCTION</h3>
             <div style={{ background: '#0f172a', padding: '30px', borderRadius: '15px', border: '1px solid #334155' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div className="stats-grid-2">
 
-                    <RuleItem icon={<FaHeading />} title="Title" desc="Every diagram must have a clear, precise title at the top." />
-                    <RuleItem icon={<FaRuler />} title="Proper Scale" desc="Choose a scale that fits the size of the paper. Frame the diagram centrally." />
-                    <RuleItem icon={<FaCheckCircle />} title="Index / Legend" desc="If different colors/shades are used, an index must explain what they represent." />
-                    <RuleItem icon={<FaTable />} title="Source Note" desc="Always mention where the data came from at the bottom." />
-                    <RuleItem icon={<FaCheckCircle />} title="Simplicity" desc="Do not overcrowd. It should be as simple and self-explanatory as possible." />
-                    <RuleItem icon={<FaCheckCircle />} title="Selection of Type" desc="Choose the right diagram (Bar vs Pie) based on the nature of data." />
+                    <RuleItem icon={<FaHeading />} title="1. Proper Title" desc="Every diagram must have a sequential number, a clear title, and the time period it refers to." />
+                    <RuleItem icon={<FaRuler />} title="2. Proper Scale" desc="Scale must be chosen to fit the paper size. Mention 1cm = 100 units clearly." />
+                    <RuleItem icon={<FaCheckCircle />} title="3. Index (Legend)" desc="Essential when using multiple colors. Explains what each shade/pattern represents." />
+                    <RuleItem icon={<FaTable />} title="4. Source Note" desc="Always verify credibility by mentioning the data source at the bottom." />
+                    <RuleItem icon={<FaCheckCircle />} title="5. Simplicity" desc="Avoid overcrowding. A diagram should be self-explanatory and neat." />
+                    <RuleItem icon={<FaCheckCircle />} title="6. Choice of Technique" desc="Use Bar Diagrams for comparisons and Pie Charts for proportional breakdowns." />
 
                 </div>
             </div>

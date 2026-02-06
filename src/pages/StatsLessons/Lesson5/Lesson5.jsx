@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaArrowLeft, FaChartBar, FaChartPie, FaRulerCombined, FaClipboardList } from 'react-icons/fa';
+import { FaArrowLeft, FaChartBar, FaChartPie, FaRulerCombined, FaClipboardList, FaLightbulb } from 'react-icons/fa';
 import '../css/stats-theme.css';
 import { logLessonProgress } from '../../../services/firebase';
 
@@ -13,6 +13,7 @@ import { logLessonProgress } from '../../../services/firebase';
 import DiagramIntro from './components/DiagramIntro';
 import BarDiagrams from './components/BarDiagrams';
 import PieChart from './components/PieChart';
+import ChartWizard from './components/ChartWizard';
 import Quiz from './components/Quiz';
 import TopicsMenu from '../components/TopicsMenu';
 
@@ -35,6 +36,7 @@ const Lesson5 = () => {
         { id: 'intro', label: 'Basics & Rules', icon: <FaRulerCombined /> },
         { id: 'bar', label: 'Bar Diagrams', icon: <FaChartBar /> },
         { id: 'pie', label: 'Pie Charts', icon: <FaChartPie /> },
+        { id: 'wizard', label: 'Chart Wizard', icon: <FaLightbulb /> },
         { id: 'quiz', label: 'Quiz', icon: <FaClipboardList /> }
     ];
 
@@ -65,6 +67,7 @@ const Lesson5 = () => {
                     {activeTab === 'intro' && <DiagramIntro />}
                     {activeTab === 'bar' && <BarDiagrams />}
                     {activeTab === 'pie' && <PieChart />}
+                    {activeTab === 'wizard' && <ChartWizard />}
                     {activeTab === 'quiz' && <Quiz />}
                 </div>
 
@@ -75,7 +78,8 @@ const Lesson5 = () => {
                         onClick={() => {
                             if (activeTab === 'bar') setActiveTab('intro');
                             if (activeTab === 'pie') setActiveTab('bar');
-                            if (activeTab === 'quiz') setActiveTab('pie');
+                            if (activeTab === 'wizard') setActiveTab('pie');
+                            if (activeTab === 'quiz') setActiveTab('wizard');
                         }}
                         disabled={activeTab === 'intro'}
                         style={{ opacity: activeTab === 'intro' ? 0.5 : 1, cursor: activeTab === 'intro' ? 'not-allowed' : 'pointer' }}
@@ -88,7 +92,8 @@ const Lesson5 = () => {
                         onClick={() => {
                             if (activeTab === 'intro') setActiveTab('bar');
                             if (activeTab === 'bar') setActiveTab('pie');
-                            if (activeTab === 'pie') setActiveTab('quiz');
+                            if (activeTab === 'pie') setActiveTab('wizard');
+                            if (activeTab === 'wizard') setActiveTab('quiz');
                         }}
                         disabled={activeTab === 'quiz'}
                         style={{ display: activeTab === 'quiz' ? 'none' : 'flex' }}
