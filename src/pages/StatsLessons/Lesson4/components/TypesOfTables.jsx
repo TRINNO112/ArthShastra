@@ -29,7 +29,7 @@ const TypesOfTables = () => {
             <p className="stats-subtitle">Explore the distinct structural and functional differences.</p>
 
             {/* Premium Tab Navigation */}
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px', background: '#0f172a', padding: '5px', borderRadius: '50px', width: 'fit-content', margin: '0 auto 40px auto', border: '1px solid #334155' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px', background: '#0f172a', padding: '5px', borderRadius: '50px', width: 'fit-content', margin: '20px auto 40px auto', border: '1px solid #334155' }}>
                 {tabs.map(tab => (
                     <button
                         key={tab.id}
