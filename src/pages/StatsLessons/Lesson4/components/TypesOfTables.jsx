@@ -28,30 +28,76 @@ const TypesOfTables = () => {
             <h2 className="stats-title" style={{ fontSize: '2rem' }}>CLASSIFICATION OF TABLES</h2>
             <p className="stats-subtitle">Explore the distinct structural and functional differences.</p>
 
-            {/* Premium Tab Navigation */}
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px', background: '#0f172a', padding: '5px', borderRadius: '50px', width: 'fit-content', margin: '20px auto 40px auto', border: '1px solid #334155' }}>
-                {tabs.map(tab => (
-                    <button
-                        key={tab.id}
-                        onClick={() => setActiveTab(tab.id)}
-                        style={{
-                            padding: '12px 25px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '10px',
-                            borderRadius: '40px',
-                            border: 'none',
-                            background: activeTab === tab.id ? 'var(--stats-primary)' : 'transparent',
-                            color: activeTab === tab.id ? '#fff' : '#94a3b8',
-                            cursor: 'pointer',
-                            fontWeight: activeTab === tab.id ? 'bold' : 'normal',
-                            transition: 'all 0.3s ease',
-                            fontSize: '0.95rem'
-                        }}
-                    >
-                        {tab.icon} {tab.label}
-                    </button>
-                ))}
+            {/* Navigation - Responsive */}
+            <div>
+                {/* Desktop Tabs (Hidden on Mobile) */}
+                <div className="desktop-only" style={{ display: 'flex', justifyContent: 'center', background: '#0f172a', padding: '5px', borderRadius: '50px', width: 'fit-content', margin: '20px auto 40px auto', border: '1px solid #334155' }}>
+                    {tabs.map(tab => (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            style={{
+                                padding: '12px 25px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '10px',
+                                borderRadius: '40px',
+                                border: 'none',
+                                background: activeTab === tab.id ? 'var(--stats-primary)' : 'transparent',
+                                color: activeTab === tab.id ? '#fff' : '#94a3b8',
+                                cursor: 'pointer',
+                                fontWeight: activeTab === tab.id ? 'bold' : 'normal',
+                                transition: 'all 0.3s ease',
+                                fontSize: '0.95rem'
+                            }}
+                        >
+                            {tab.icon} {tab.label}
+                        </button>
+                    ))}
+                </div>
+
+                {/* Mobile Dropdown (Visible on Mobile) */}
+                <div className="mobile-only" style={{ display: 'none', width: '100%', maxWidth: '400px', margin: '20px auto 40px auto' }}>
+                    <div style={{ position: 'relative' }}>
+                        <select
+                            value={activeTab}
+                            onChange={(e) => setActiveTab(e.target.value)}
+                            style={{
+                                width: '100%',
+                                padding: '15px',
+                                paddingLeft: '45px',
+                                background: '#1e293b',
+                                color: '#fff',
+                                border: '1px solid #475569',
+                                borderRadius: '12px',
+                                fontSize: '1rem',
+                                outline: 'none',
+                                appearance: 'none',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            {tabs.map(tab => (
+                                <option key={tab.id} value={tab.id}>
+                                    {tab.label}
+                                </option>
+                            ))}
+                        </select>
+                        <div style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', color: 'var(--stats-primary)', pointerEvents: 'none' }}>
+                            {tabs.find(t => t.id === activeTab)?.icon}
+                        </div>
+                        <div style={{ position: 'absolute', right: '15px', top: '40%', transform: 'translateY(-50%)', color: '#94a3b8', pointerEvents: 'none' }}>
+                            ▼
+                        </div>
+                    </div>
+                </div>
+
+                {/* Responsive Styles */}
+                <style>{`
+                    @media (max-width: 768px) {
+                        .desktop-only { display: none !important; }
+                        .mobile-only { display: block !important; }
+                    }
+                `}</style>
             </div>
 
             {/* Content Area */}
@@ -125,9 +171,8 @@ const TypesOfTables = () => {
                     </div>
                 )}
 
-                {/* 2. BY ORIGINALITY */}
                 {activeTab === 'originality' && (
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
+                    <div className="stats-grid-2">
                         <TableContainer title="Original Table (Absolute)" type="Raw Data" color="#8b5cf6">
                             <p style={{ fontSize: '0.9rem', color: '#cbd5e1', marginBottom: '15px' }}>
                                 Data presented exactly as collected. Absolute numbers.
