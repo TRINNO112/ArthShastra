@@ -70,7 +70,14 @@ const TwoVariableGraph = () => {
                             />
                             <YAxis
                                 stroke="#94a3b8"
-                                label={{ value: 'Value ($ Million)', angle: -90, position: 'insideLeft', offset: 10, fill: '#94a3b8' }}
+                                label={{
+                                    value: 'Value ($ Million)',
+                                    angle: -90,
+                                    position: 'insideLeft',
+                                    offset: 5,
+                                    style: { textAnchor: 'middle' },
+                                    fill: '#94a3b8'
+                                }}
                                 domain={yDomain}
                                 allowDataOverflow={true} // Ensures clean cut
                             />

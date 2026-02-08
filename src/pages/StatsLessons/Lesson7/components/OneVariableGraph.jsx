@@ -45,7 +45,7 @@ const OneVariableGraph = () => {
                     <ResponsiveContainer width="100%" height="90%">
                         <LineChart
                             data={data}
-                            margin={{ top: 20, right: 30, left: 10, bottom: 20 }}
+                            margin={{ top: 20, right: 30, left: 30, bottom: 20 }}
                         >
                             <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
                             <XAxis
@@ -55,7 +55,14 @@ const OneVariableGraph = () => {
                             />
                             <YAxis
                                 stroke="#94a3b8"
-                                label={{ value: 'Population (Crores)', angle: -90, position: 'insideLeft', fill: '#94a3b8' }}
+                                label={{
+                                    value: 'Population (Crores)',
+                                    angle: -90,
+                                    position: 'insideLeft',
+                                    offset: 10,
+                                    style: { textAnchor: 'middle' },
+                                    fill: '#94a3b8'
+                                }}
                                 domain={[0, 140]}
                             />
                             <Tooltip

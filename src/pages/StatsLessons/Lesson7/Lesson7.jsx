@@ -13,6 +13,7 @@ import { logLessonProgress } from '../../../services/firebase';
 import TimeIntro from './components/TimeIntro';
 import OneVariableGraph from './components/OneVariableGraph';
 import TwoVariableGraph from './components/TwoVariableGraph';
+import GraphAnalysis from './components/GraphAnalysis';
 import Quiz from './components/Quiz';
 import TopicsMenu from '../components/TopicsMenu';
 
@@ -35,6 +36,7 @@ const Lesson7 = () => {
         { id: 'intro', label: 'Intro & Rules', icon: <FaCalendarAlt /> },
         { id: 'one-var', label: 'One Variable', icon: <FaChartLine /> },
         { id: 'two-var', label: 'Two Variable', icon: <FaToggleOn /> },
+        { id: 'analysis', label: 'Trend Analysis', icon: <FaChartLine /> },
         { id: 'quiz', label: 'Quiz', icon: <FaClipboardList /> }
     ];
 
@@ -65,6 +67,7 @@ const Lesson7 = () => {
                     {activeTab === 'intro' && <TimeIntro />}
                     {activeTab === 'one-var' && <OneVariableGraph />}
                     {activeTab === 'two-var' && <TwoVariableGraph />}
+                    {activeTab === 'analysis' && <GraphAnalysis />}
                     {activeTab === 'quiz' && <Quiz />}
                 </div>
 
@@ -75,7 +78,8 @@ const Lesson7 = () => {
                         onClick={() => {
                             if (activeTab === 'one-var') setActiveTab('intro');
                             if (activeTab === 'two-var') setActiveTab('one-var');
-                            if (activeTab === 'quiz') setActiveTab('two-var');
+                            if (activeTab === 'analysis') setActiveTab('two-var');
+                            if (activeTab === 'quiz') setActiveTab('analysis');
                         }}
                         disabled={activeTab === 'intro'}
                         style={{ opacity: activeTab === 'intro' ? 0.5 : 1, cursor: activeTab === 'intro' ? 'not-allowed' : 'pointer' }}
@@ -88,7 +92,8 @@ const Lesson7 = () => {
                         onClick={() => {
                             if (activeTab === 'intro') setActiveTab('one-var');
                             if (activeTab === 'one-var') setActiveTab('two-var');
-                            if (activeTab === 'two-var') setActiveTab('quiz');
+                            if (activeTab === 'two-var') setActiveTab('analysis');
+                            if (activeTab === 'analysis') setActiveTab('quiz');
                         }}
                         disabled={activeTab === 'quiz'}
                         style={{ display: activeTab === 'quiz' ? 'none' : 'flex' }}
