@@ -168,6 +168,7 @@ const ArithmeticMean = () => {
                                     value={rawData}
                                     onChange={(e) => setRawData(e.target.value)}
                                     className="stats-input"
+                                    style={{ background: '#0f172a', color: '#fff', border: '1px solid #334155' }}
                                 />
                             </div>
                         )}
@@ -181,6 +182,7 @@ const ArithmeticMean = () => {
                                         value={discreteX}
                                         onChange={(e) => setDiscreteX(e.target.value)}
                                         className="stats-input"
+                                        style={{ background: '#0f172a', color: '#fff', border: '1px solid #334155' }}
                                     />
                                 </div>
                                 <div>
@@ -190,6 +192,7 @@ const ArithmeticMean = () => {
                                         value={discreteF}
                                         onChange={(e) => setDiscreteF(e.target.value)}
                                         className="stats-input"
+                                        style={{ background: '#0f172a', color: '#fff', border: '1px solid #334155' }}
                                     />
                                 </div>
                             </>
@@ -205,6 +208,7 @@ const ArithmeticMean = () => {
                                         value={assumedMean}
                                         onChange={(e) => setAssumedMean(Number(e.target.value))}
                                         className="stats-input"
+                                        style={{ background: '#0f172a', color: '#fff', border: '1px solid #334155' }}
                                     />
                                 </div>
                                 {method === 'stepdev' && (
@@ -215,6 +219,7 @@ const ArithmeticMean = () => {
                                             value={commonFactor}
                                             onChange={(e) => setCommonFactor(Number(e.target.value))}
                                             className="stats-input"
+                                            style={{ background: '#0f172a', color: '#fff', border: '1px solid #334155' }}
                                         />
                                     </div>
                                 )}

@@ -1,123 +1,118 @@
 import React, { useState } from 'react';
-import { FaChevronDown, FaChevronUp, FaBookOpen } from 'react-icons/fa';
+import { FaChevronDown, FaChevronUp, FaBookOpen, FaCalculator } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import { practiceData, Fraction } from './MeanPracticeData';
 
 const PracticeAccordion = ({ title, problems }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div style={{ marginBottom: '15px', border: '1px solid #334155', borderRadius: '8px', overflow: 'hidden' }}>
+        <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 border border-slate-700 rounded-xl overflow-hidden shadow-lg bg-slate-900/50 backdrop-blur-sm"
+        >
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                style={{
-                    width: '100%',
-                    padding: '15px',
-                    background: '#1e293b',
-                    border: 'none',
-                    color: '#fff',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    cursor: 'pointer',
-                    fontSize: '1.1rem'
-                }}
+                className="w-full p-5 bg-gradient-to-r from-slate-800 to-slate-900 border-b border-slate-700 text-white flex justify-between items-center cursor-pointer hover:bg-slate-800 transition-colors"
             >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <FaBookOpen style={{ color: '#3b82f6' }} /> {title}
+                <div className="flex items-center gap-3 text-lg font-semibold text-blue-400">
+                    <FaBookOpen className="text-xl" />
+                    <span>{title}</span>
                 </div>
-                {isOpen ? <FaChevronUp /> : <FaChevronDown />}
+                <div className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+                    <FaChevronDown className="text-slate-400" />
+                </div>
             </button>
 
-            {isOpen && (
-                <div style={{ background: '#0f172a', padding: '20px' }}>
-                    {problems.map((prob, idx) => (
-                        <div key={idx} style={{ marginBottom: '20px', borderBottom: '1px solid #334155', paddingBottom: '20px' }}>
-                            <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
-                                <span style={{ background: '#3b82f6', color: '#fff', padding: '2px 8px', borderRadius: '4px', height: 'fit-content', fontSize: '0.8rem' }}>Q{idx + 1}</span>
-                                <p style={{ margin: 0, color: '#e2e8f0', lineHeight: '1.6' }}>{prob.question}</p>
-                            </div>
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                    >
+                        <div className="p-6 bg-slate-900/80 space-y-8">
+                            {problems.map((prob, idx) => (
+                                <div key={idx} className="border-b border-slate-700/50 last:border-0 pb-8 last:pb-0">
+                                    <div className="flex items-start gap-4 mb-4">
+                                        <span className="bg-blue-600 text-white px-2 py-1 rounded text-xs font-bold whitespace-nowrap mt-1 shadow-sm">
+                                            Q{idx + 1}
+                                        </span>
+                                        <div className="w-full">
+                                            <p className="text-slate-200 text-base font-medium leading-relaxed mb-3">
+                                                {prob.q}
+                                            </p>
 
-                            {prob.visual && ( // Check if there's a visual/table component for the question
-                                <div style={{ margin: '10px 0 10px 30px', overflowX: 'auto' }}>
-                                    {prob.visual}
-                                </div>
-                            )}
+                                            {prob.table && (
+                                                <div className="my-4 overflow-x-auto rounded-lg border border-slate-700 shadow-sm">
+                                                    {prob.table}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
 
-                            <details style={{ marginLeft: '30px' }}>
-                                <summary style={{ color: '#10b981', cursor: 'pointer', marginBottom: '10px' }}>Show Solution</summary>
-                                <div style={{ background: '#1e293b', padding: '15px', borderRadius: '8px', color: '#cbd5e1', fontSize: '0.9rem', whiteSpace: 'pre-wrap' }}>
-                                    {prob.solution}
+                                    <details className="group">
+                                        <summary className="flex items-center gap-2 text-emerald-400 font-semibold cursor-pointer select-none hover:text-emerald-300 transition-colors mb-3">
+                                            <FaCalculator />
+                                            <span>Show Detailed Solution</span>
+                                            <FaChevronDown className="w-3 h-3 transition-transform group-open:rotate-180" />
+                                        </summary>
+
+                                        <motion.div
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            className="pl-4 border-l-2 border-emerald-500/30 ml-2 space-y-4"
+                                        >
+                                            {prob.solTable && (
+                                                <div className="overflow-x-auto rounded-lg border border-slate-700 bg-slate-800/50">
+                                                    {prob.solTable}
+                                                </div>
+                                            )}
+
+                                            <div className="bg-slate-800/80 p-4 rounded-lg border border-slate-700">
+                                                <h4 className="text-slate-400 text-sm font-bold uppercase tracking-wider mb-2">Calculation Steps</h4>
+                                                <div className="text-white text-lg font-mono">
+                                                    {prob.calc}
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    </details>
                                 </div>
-                            </details>
+                            ))}
                         </div>
-                    ))}
-                </div>
-            )}
-        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.div>
     );
 };
 
 const MeanPractice = () => {
-    // Individual Series Problems
-    const individualProblems = [
-        {
-            question: "Calculate the arithmetic mean of the following marks obtained by 10 students: 40, 50, 55, 78, 58, 60, 73, 35, 43, 48.",
-            solution: "Method: Direct (ΣX / N)\n\nΣX = 40 + 50 + 55 + 78 + 58 + 60 + 73 + 35 + 43 + 48 = 540\nN = 10\nMean = 540 / 10 = 54"
-        },
-        {
-            question: "Following are the daily wages of 5 workers: ₹100, ₹150, ₹200, ₹250, ₹300. Calculate mean using Short-cut method (Assume A = 200).",
-            solution: "X: 100, 150, 200, 250, 300\nA = 200\nd (X-A): -100, -50, 0, 50, 100\nΣd = 0\n\nMean = A + (Σd/N) = 200 + (0/5) = 200"
-        },
-        // ... (Imagine 3 more similar variations)
-    ];
-
-    // Discrete Series Problems
-    const discreteProblems = [
-        {
-            question: "Calculate Mean: Marks (X): 10, 20, 30, 40, 50 | Students (f): 5, 10, 40, 20, 25",
-            visual: (
-                <table className="stats-table" style={{ width: '100%', maxWidth: '300px', fontSize: '0.8rem' }}>
-                    <thead><tr><th>X</th><th>f</th></tr></thead>
-                    <tbody>
-                        <tr><td>10</td><td>5</td></tr><tr><td>20</td><td>10</td></tr><tr><td>30</td><td>40</td></tr><tr><td>40</td><td>20</td></tr><tr><td>50</td><td>25</td></tr>
-                    </tbody>
-                </table>
-            ),
-            solution: "1. Calculate fX: 50, 200, 1200, 800, 1250\n2. ΣfX = 3500\n3. Σf = 100\n4. Mean = 3500 / 100 = 35"
-        }
-    ];
-
-    // Continuous Series Problems
-    const continuousProblems = [
-        {
-            question: "Calculate Mean (Exclusive Series): 0-10 (5), 10-20 (10), 20-30 (25), 30-40 (30), 40-50 (20), 50-60 (10)",
-            solution: "1. Find Mid-values (m): 5, 15, 25, 35, 45, 55\n2. Multiply fm\n3. Σfm = 3300, Σf = 100\n4. Mean = 33"
-        }
-    ];
-
-    // Missing Value Problems
-    const missingProblems = [
-        {
-            question: "If the mean of the following distribution is 25, find the missing frequency 'f'.\nX: 10, 20, 30, 40, 50\nFreq: 5, 10, f, 5, 10",
-            solution: "Mean = 25, Σf = 30 + f\nΣfX = 50 + 200 + 30f + 200 + 500 = 950 + 30f\nFormula: 25 = (950 + 30f) / (30 + f)\n25(30 + f) = 950 + 30f\n750 + 25f = 950 + 30f\n5f = 200 => f = 40"
-        }
-    ];
-
-
     return (
-        <div className="stats-section animate-fadeIn">
-            <h2 className="stats-title">PRACTICE SUMS</h2>
-            <p className="stats-subtitle">Master Mean with 15+ Solved Problems</p>
-
-            <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-                <PracticeAccordion title="Type 1: Individual Series (5 Sums)" problems={[...individualProblems, ...individualProblems, individualProblems[0]]} />
-                <PracticeAccordion title="Type 2: Discrete Series (5 Sums)" problems={[...discreteProblems, ...discreteProblems, ...discreteProblems, ...discreteProblems, discreteProblems[0]]} />
-                <PracticeAccordion title="Type 3: Continuous Series (5 Sums)" problems={[...continuousProblems, ...continuousProblems, ...continuousProblems, ...continuousProblems, continuousProblems[0]]} />
-                <PracticeAccordion title="Type 4: Missing Values & Corrections (5 Sums)" problems={[...missingProblems, ...missingProblems, ...missingProblems, ...missingProblems, missingProblems[0]]} />
+        <div className="w-full max-w-4xl mx-auto p-4 space-y-6 animate-fadeIn">
+            <div className="text-center mb-10 space-y-2">
+                <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
+                    Master Arithmetic Mean
+                </h2>
+                <p className="text-slate-400 text-lg">
+                    Comprehensive practice set covering all series types
+                </p>
             </div>
 
-            <p style={{ textAlign: 'center', color: '#64748b', fontSize: '0.9rem', marginTop: '20px' }}>
-                * Problems are duplicated for preview purposes to meet the "20 sums" count requirement visually.
-            </p>
+            {practiceData.map((section) => (
+                <PracticeAccordion
+                    key={section.id}
+                    title={section.title}
+                    problems={section.problems}
+                />
+            ))}
+
+            <div className="mt-8 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg text-center text-amber-200 text-sm">
+                <p>💡 Tip: Pay attention to the assumed mean (A) in Short-cut and Step-Deviation methods.</p>
+            </div>
         </div>
     );
 };
