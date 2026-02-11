@@ -15,6 +15,7 @@ import MedianCalculator from './components/MedianCalculator';
 import ModeCalculator from './components/ModeCalculator';
 import MedianPractice from './components/MedianPractice';
 import ModePractice from './components/ModePractice';
+import Quiz from './components/Quiz';
 import TopicsMenu from '../components/TopicsMenu';
 
 const Lesson9 = () => {
@@ -74,12 +75,7 @@ const Lesson9 = () => {
                     {activeTab === 'medianPractice' && <MedianPractice />}
                     {activeTab === 'modeCalc' && <ModeCalculator />}
                     {activeTab === 'modePractice' && <ModePractice />}
-                    {activeTab === 'quiz' && (
-                        <div className="stats-card" style={{ textAlign: 'center', padding: '60px 30px' }}>
-                            <h2 className="stats-title" style={{ fontSize: '1.5rem' }}>Quiz Coming Soon</h2>
-                            <p className="stats-subtitle">Practice the problems first, quiz will be added shortly!</p>
-                        </div>
-                    )}
+                    {activeTab === 'quiz' && <Quiz />}
                 </div>
 
                 {/* Footer Navigation */}
