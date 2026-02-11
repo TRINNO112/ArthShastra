@@ -8,6 +8,14 @@ export const Fraction = ({ num, den }) => (
     </span>
 );
 
+// Helper for X-Bar (Mean Symbol)
+export const XBar = ({ sub }) => (
+    <span style={{ display: 'inline-block' }}>
+        <span style={{ textDecoration: 'overline' }}>X</span>
+        {sub && <sub style={{ verticalAlign: 'sub', fontSize: '0.7em' }}>{sub}</sub>}
+    </span>
+);
+
 // --- Styles for Tables ---
 const tableStyle = { width: '100%', minWidth: '300px', fontSize: '0.9rem', textAlign: 'center', borderCollapse: 'collapse', overflowX: 'auto' };
 const thStyle = { background: 'rgba(0, 153, 255, 0.1)', color: 'var(--neon-blue)', padding: '12px', border: '1px solid var(--border-color)', fontWeight: '600', whiteSpace: 'nowrap' };
@@ -309,25 +317,25 @@ const cum_q2_sol = (
 
 const corrected_mean_sol = (
     <div style={{ padding: '15px', background: 'rgba(30, 41, 59, 0.5)', borderRadius: '8px', color: '#cbd5e1' }}>
-        <p><strong>Given:</strong> {`$\\bar{X} = 40$, $N = 100$.`}</p>
-        <p>1. Calculate Incorrect $\Sigma X$:<br />
-            {`$\\Sigma X = N \\times \\bar{X} = 100 \\times 40 = 4000$`}</p>
-        <p>2. Correct $\Sigma X$:<br />
-            Correct {`$\\Sigma X = 4000 - \\text{Wrong Item} + \\text{Correct Item}$`}<br />
-            {`$= 4000 - 83 + 53 = 3970$`}</p>
+        <p><strong>Given:</strong> <XBar /> = 40, N = 100.</p>
+        <p>1. Calculate Incorrect ΣX:<br />
+            ΣX = N × <XBar /> = 100 × 40 = 4000</p>
+        <p>2. Correct ΣX:<br />
+            Correct ΣX = 4000 - Wrong Item + Correct Item<br />
+            = 4000 - 83 + 53 = 3970</p>
         <p>3. Calculate Correct Mean:<br />
-            Correct Mean = {`$\\frac{3970}{100} = 39.7$`}</p>
+            Correct Mean = 3970 / 100 = 39.7</p>
     </div>
 );
 
 const combined_mean_sol = (
     <div style={{ padding: '15px', background: 'rgba(30, 41, 59, 0.5)', borderRadius: '8px', color: '#cbd5e1' }}>
-        <p><strong>Group 1:</strong> {`$N_1=50, \\bar{X}_1=60$`} <br />
-            <strong>Group 2:</strong> {`$N_2=40, \\bar{X}_2=55$`}</p>
-        <p>Formula: {`$\\bar{X}_{12} = \\frac{N_1\\bar{X}_1 + N_2\\bar{X}_2}{N_1 + N_2}$`}</p>
+        <p><strong>Group 1:</strong> N<sub>1</sub> = 50, <XBar sub="1" /> = 60 <br />
+            <strong>Group 2:</strong> N<sub>2</sub> = 40, <XBar sub="2" /> = 55</p>
+        <p>Formula: <XBar sub="12" /> = (N<sub>1</sub><XBar sub="1" /> + N<sub>2</sub><XBar sub="2" />) / (N<sub>1</sub> + N<sub>2</sub>)</p>
         <p>Calculation:<br />
-            {`$\\bar{X}_{12} = \\frac{(50 \\times 60) + (40 \\times 55)}{50 + 40}$`}<br />
-            {`$= \\frac{3000 + 2200}{90} = \\frac{5200}{90} = 57.78$`}</p>
+            <XBar sub="12" /> = (50 × 60 + 40 × 55) / (50 + 40)<br />
+            = (3000 + 2200) / 90 = 5200 / 90 = 57.78</p>
     </div>
 );
 
@@ -341,24 +349,24 @@ export const practiceData = [
                 q: "1. Calculate Arithmetic Mean of marks: 40, 50, 55, 78, 58, 60, 73, 35, 43, 48.",
                 table: ind_q1_table,
                 solTable: ind_q1_sol,
-                calc: <span>Mean {`$\\bar{X}$`} = <Fraction num="ΣX" den="N" /> = <Fraction num="540" den="10" /> = 54 Marks</span>
+                calc: <span>Mean <XBar /> = <Fraction num="ΣX" den="N" /> = <Fraction num="540" den="10" /> = 54 Marks</span>
             },
             {
                 q: "2. Calculate Mean Income using Short-cut Method (Assumed Mean = 2000).",
                 table: ind_q2_table,
                 solTable: ind_q2_sol,
-                calc: <span>Mean {`$\\bar{X}$`} = A + <Fraction num="Σd" den="N" /> = 2000 + <Fraction num="-400" den="6" /> = 2000 - 66.67 = 1933.33</span>
+                calc: <span>Mean <XBar /> = A + <Fraction num="Σd" den="N" /> = 2000 + <Fraction num="-400" den="6" /> = 2000 - 66.67 = 1933.33</span>
             },
             {
                 q: "3. The mean of 5 numbers is 24. If one number is excluded, their mean becomes 22. Find the excluded number.",
                 table: null,
-                solTable: <div style={{ padding: '10px', color: '#cbd5e1' }}>{`$\\bar{X}_1 = 24, N_1 = 5 \\Rightarrow \\Sigma X_1 = 120$`}<br />{`$\\bar{X}_2 = 22, N_2 = 4 \\Rightarrow \\Sigma X_2 = 88$`}<br />Excluded Number = {`$120 - 88 = 32$`}</div>,
+                solTable: <div style={{ padding: '10px', color: '#cbd5e1' }}><XBar sub="1" /> = 24, N<sub>1</sub> = 5 ⇒ ΣX<sub>1</sub> = 120<br /><XBar sub="2" /> = 22, N<sub>2</sub> = 4 ⇒ ΣX<sub>2</sub> = 88<br />Excluded Number = 120 - 88 = 32</div>,
                 calc: <span>Ans: 32</span>
             },
             {
                 q: "4. The mean height of 10 students is 150cm. Later it was found that one value was wrongly copied as 140 instead of 160. Find correct mean.",
                 table: null,
-                solTable: <div style={{ padding: '10px', color: '#cbd5e1' }}>Wrong {`$\\Sigma X = 150 \\times 10 = 1500$`}<br />Correct {`$\\Sigma X = 1500 - 140 + 160 = 1520$`}<br />Correct Mean = {`$1520/10 = 152$`} cm</div>,
+                solTable: <div style={{ padding: '10px', color: '#cbd5e1' }}>Wrong ΣX = 150 × 10 = 1500<br />Correct ΣX = 1500 - 140 + 160 = 1520<br />Correct Mean = 1520 / 10 = 152 cm</div>,
                 calc: <span>Correct Mean: 152 cm</span>
             }
         ]
@@ -371,19 +379,19 @@ export const practiceData = [
                 q: "1. Calculate Mean using Direct Method.",
                 table: disc_q1_table,
                 solTable: disc_q1_sol,
-                calc: <span>Mean {`$\\bar{X}$`} = <Fraction num="ΣfX" den="Σf" /> = <Fraction num="560" den="19" /> = 29.47</span>
+                calc: <span>Mean <XBar /> = <Fraction num="ΣfX" den="Σf" /> = <Fraction num="560" den="19" /> = 29.47</span>
             },
             {
                 q: "2. Calculate Mean using Short-cut Method (Assumed Mean = 160).",
                 table: disc_q2_table,
                 solTable: disc_q2_sol,
-                calc: <span>Mean {`$\\bar{X}$`} = A + <Fraction num="Σfd" den="Σf" /> = 160 + <Fraction num="-50" den="50" /> = 160 - 1 = 159</span>
+                calc: <span>Mean <XBar /> = A + <Fraction num="Σfd" den="Σf" /> = 160 + <Fraction num="-50" den="50" /> = 160 - 1 = 159</span>
             },
             {
                 q: "3. Find the missing frequency if Mean is 31. X: 10, 20, 30, 40, 50. f: 5, 8, ?, 12, 5.", // Simple conceptual
                 table: disc_q3_table,
                 solTable: disc_q3_sol,
-                calc: <span>{`$\\bar{X} = \\frac{\\Sigma fX}{\\Sigma f} \\Rightarrow 31 = \\frac{940 + 30f}{30 + f} \\Rightarrow 930 + 31f = 940 + 30f \\Rightarrow f = 10$`}</span >
+                calc: <span><XBar /> = ΣfX / Σf ⇒ 31 = (940 + 30f) / (30 + f) ⇒ 930 + 31f = 940 + 30f ⇒ f = 10</span>
             }
         ]
     },
@@ -395,13 +403,13 @@ export const practiceData = [
                 q: "1. Calculate Mean using Direct Method.",
                 table: cont_q1_table,
                 solTable: cont_q1_sol,
-                calc: <span>Mean {`$\\bar{X}$`} = <Fraction num="Σfm" den="Σf" /> = <Fraction num="1250" den="50" /> = 25</span>
+                calc: <span>Mean <XBar /> = <Fraction num="Σfm" den="Σf" /> = <Fraction num="1250" den="50" /> = 25</span>
             },
             {
                 q: "2. Calculate Mean from Inclusive Series (Step-Deviation).",
                 table: cont_q2_table,
                 solTable: cont_q2_sol,
-                calc: <span>Mean {`$\\bar{X}$`} = A + (<Fraction num="Σfd'" den="Σf" />) × C = 24.5 + (<Fraction num="-14" den="40" />) × 10 = 24.5 - 3.5 = 21</span>
+                calc: <span>Mean <XBar /> = A + (<Fraction num="Σfd'" den="Σf" />) × C = 24.5 + (<Fraction num="-14" den="40" />) × 10 = 24.5 - 3.5 = 21</span>
             },
             {
                 q: "3. Calculate Mean (Open-ended). Below 10, 10-20, 20-30, 30-40, Above 40. f: 5, 10, 20, 10, 5.", // Same as logic as Q1 essentially
@@ -419,13 +427,13 @@ export const practiceData = [
                 q: "1. Calculate Mean from 'Less Than' Cumulative Frequency Distribution.",
                 table: cum_q1_table,
                 solTable: cum_q1_sol,
-                calc: <span>Mean {`$\\bar{X}$`} = <Fraction num="Σfm" den="Σf" /> = <Fraction num="1265" den="49" /> = 25.82</span>
+                calc: <span>Mean <XBar /> = <Fraction num="Σfm" den="Σf" /> = <Fraction num="1265" den="49" /> = 25.82</span>
             },
             {
                 q: "2. Calculate Mean from 'More Than' Cumulative Frequency Distribution.",
                 table: cum_q2_table,
                 solTable: cum_q2_sol,
-                calc: <span>Mean {`$\\bar{X}$`} = <Fraction num="Σfm" den="Σf" /> = <Fraction num="1200" den="50" /> = 24</span>
+                calc: <span>Mean <XBar /> = <Fraction num="Σfm" den="Σf" /> = <Fraction num="1200" den="50" /> = 24</span>
             },
             {
                 q: "3. Correct Mean: Mean of 100 items is 40. One item 53 was misread as 83. Find correct mean.",

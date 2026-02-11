@@ -135,15 +135,9 @@ const MeanPractice = () => {
     return (
         <div className="mean-practice-container">
             <div className="practice-header">
-                <span className="practice-badge">Lesson 8 • Practice Series</span>
-
                 <h2 className="practice-title">
                     Solved Problems
                 </h2>
-
-                <p className="practice-subtitle">
-                    Master Arithmetic Mean with our curated collection of <span className="highlight-text">20+ verified examples</span> across all statistical series.
-                </p>
             </div>
 
             <div className="accordions-wrapper">
