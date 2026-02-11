@@ -1,11 +1,10 @@
+import React from 'react';
+
 /**
  * Lesson 10: Measures of Dispersion — Practice Problems Data
  * 
  * NCERT Class 11 Statistics Ch. 6
  * Topics: Range, Quartile Deviation, Mean Deviation, Standard Deviation, Variance, CV
- * 
- * NOTE: Avoid using special Unicode symbols like the square root sign
- * as they may not render in all browsers/fonts. Use plain text descriptions instead.
  */
 
 /* =============================================
@@ -70,6 +69,14 @@ export const rangeProblems = [
     }
 ];
 
+/* Helper for fractions */
+const Fraction = ({ num, den }) => (
+    <span style={{ display: 'inline-block', textAlign: 'center', verticalAlign: 'middle', margin: '0 4px' }}>
+        <span style={{ display: 'block', borderBottom: '1px solid currentColor', paddingBottom: '1px', fontSize: '0.9em' }}>{num}</span>
+        <span style={{ display: 'block', paddingTop: '1px', fontSize: '0.9em' }}>{den}</span>
+    </span>
+);
+
 /* =============================================
    QUARTILE DEVIATION PROBLEMS (4)
    ============================================= */
@@ -82,11 +89,11 @@ export const qdProblems = [
             steps: [
                 'Data (already sorted): 15, 18, 20, 22, 25, 27, 30, 35, 40',
                 'N = 9',
-                'Q1 = Size of (N+1)/4 th item = 10/4 = 2.5th item',
-                'Q1 = 18 + 0.5 x (20 - 18) = 18 + 1 = 19',
-                'Q3 = Size of 3(N+1)/4 th item = 30/4 = 7.5th item',
-                'Q3 = 30 + 0.5 x (35 - 30) = 30 + 2.5 = 32.5',
-                'Q.D. = (Q3 - Q1) / 2 = (32.5 - 19) / 2 = 6.75'
+                <span>Q<sub>1</sub> = Size of <Fraction num="N+1" den="4" /> th item = <Fraction num="10" den="4" /> = 2.5th item</span>,
+                'Q1 = 18 + 0.5(20 - 18) = 18 + 1 = 19',
+                <span>Q<sub>3</sub> = Size of <Fraction num="3(N+1)" den="4" /> th item = <Fraction num="30" den="4" /> = 7.5th item</span>,
+                'Q3 = 30 + 0.5(35 - 30) = 30 + 2.5 = 32.5',
+                <span>Q.D. = <Fraction num={<>Q<sub>3</sub> - Q<sub>1</sub></>} den="2" /> = <Fraction num="32.5 - 19" den="2" /> = 6.75</span>
             ],
             result: 6.75,
         }
@@ -97,10 +104,10 @@ export const qdProblems = [
         question: 'From the above data, find the Coefficient of Quartile Deviation.',
         solution: {
             steps: [
-                'Q1 = 19, Q3 = 32.5 (from previous)',
-                'Coefficient of Q.D. = (Q3 - Q1) / (Q3 + Q1)',
-                '= (32.5 - 19) / (32.5 + 19)',
-                '= 13.5 / 51.5 = 0.262'
+                <span>Q<sub>1</sub> = 19, Q<sub>3</sub> = 32.5 (from previous)</span>,
+                <span>Coeff of Q.D. = <Fraction num={<>Q<sub>3</sub> - Q<sub>1</sub></>} den={<>Q<sub>3</sub> + Q<sub>1</sub></>} /></span>,
+                <span>= <Fraction num="32.5 - 19" den="32.5 + 19" /></span>,
+                <span>= <Fraction num="13.5" den="51.5" /> = 0.262</span>
             ],
             result: 0.262,
         }
@@ -128,11 +135,11 @@ export const qdProblems = [
             ],
             steps: [
                 'N = 40',
-                'Q1 = Size of (N+1)/4 th item = 41/4 = 10.25th item',
+                <span>Q<sub>1</sub> = Size of <Fraction num="N+1" den="4" /> = <Fraction num="41" den="4" /> = 10.25th item</span>,
                 'c.f. just exceeding 10.25 is 25, so Q1 = 30',
-                'Q3 = Size of 3(N+1)/4 th item = 3 x 41/4 = 30.75th item',
+                <span>Q<sub>3</sub> = Size of <Fraction num="3(N+1)" den="4" /> = 30.75th item</span>,
                 'c.f. just exceeding 30.75 is 35, so Q3 = 40',
-                'Q.D. = (Q3 - Q1) / 2 = (40 - 30) / 2 = 5'
+                <span>Q.D. = <Fraction num="40 - 30" den="2" /> = 5</span>
             ],
             result: 5,
         }
@@ -160,11 +167,11 @@ export const qdProblems = [
             ],
             steps: [
                 'N = 50',
-                'Q1: N/4 = 12.5, Q1 class = 10-20 (c.f. = 17 >= 12.5)',
-                'Q1 = 10 + ((12.5 - 5) / 12) x 10 = 10 + 6.25 = 16.25',
-                'Q3: 3N/4 = 37.5, Q3 class = 30-40 (c.f. = 45 >= 37.5)',
-                'Q3 = 30 + ((37.5 - 35) / 10) x 10 = 30 + 2.5 = 32.5',
-                'Q.D. = (Q3 - Q1) / 2 = (32.5 - 16.25) / 2 = 8.125'
+                <span>Q<sub>1</sub>: N/4 = 12.5, Q<sub>1</sub> class = 10-20 (c.f. 17 &gt; 12.5)</span>,
+                <span>Q<sub>1</sub> = 10 + <Fraction num="12.5 - 5" den="12" /> &times; 10 = 10 + 6.25 = 16.25</span>,
+                <span>Q<sub>3</sub>: 3N/4 = 37.5, Q<sub>3</sub> class = 30-40 (c.f. 45 &gt; 37.5)</span>,
+                <span>Q<sub>3</sub> = 30 + <Fraction num="37.5 - 35" den="10" /> &times; 10 = 30 + 2.5 = 32.5</span>,
+                <span>Q.D. = <Fraction num="32.5 - 16.25" den="2" /> = 8.125</span>
             ],
             result: 8.125,
         }
@@ -181,10 +188,10 @@ export const mdProblems = [
         question: 'Calculate M.D. from Mean: 2, 4, 7, 8, 9',
         solution: {
             steps: [
-                'Mean = (2 + 4 + 7 + 8 + 9) / 5 = 30 / 5 = 6',
+                <span>Mean = <Fraction num="2 + 4 + 7 + 8 + 9" den="5" /> = <Fraction num="30" den="5" /> = 6</span>,
                 'Deviations |x - Mean|:  |2-6|=4, |4-6|=2, |7-6|=1, |8-6|=2, |9-6|=3',
                 'Sum of |x - Mean| = 4 + 2 + 1 + 2 + 3 = 12',
-                'M.D.(Mean) = Sum / N = 12 / 5 = 2.4'
+                <span>M.D.(X&#772;) = <Fraction num="Sum" den="N" /> = <Fraction num="12" den="5" /> = 2.4</span>
             ],
             result: 2.4,
         }
@@ -199,7 +206,7 @@ export const mdProblems = [
                 'N = 7 (Odd), Median (M) = 4th item = 7',
                 'Deviations |x - M|:  |3-7|=4, |5-7|=2, |7-7|=0, |7-7|=0, |9-7|=2, |11-7|=4, |13-7|=6',
                 'Sum of |x - M| = 4 + 2 + 0 + 0 + 2 + 4 + 6 = 18',
-                'M.D.(M) = Sum / N = 18 / 7 = 2.571'
+                <span>M.D.(M) = <Fraction num="Sum" den="N" /> = <Fraction num="18" den="7" /> = 2.571</span>
             ],
             result: 2.571,
         }
@@ -228,10 +235,10 @@ export const mdProblems = [
             steps: [
                 'Sum of f.x = 20+60+150+160+50 = 440',
                 'N = Sum of f = 30',
-                'Mean = 440 / 30 = 14.67 (approx 14 for deviations)',
-                'Calculate |x - Mean| for each x and multiply by f',
+                <span>Mean (X&#772;) = <Fraction num="440" den="30" /> = 14.67 (approx 14 for deviations)</span>,
+                <span>Calculate |x - X&#772;| for each x and multiply by f</span>,
                 'Sum of f.|x - Mean| = 36+24+10+48+22 = 140',
-                'M.D.(Mean) = 140 / 30 = 4.67'
+                <span>M.D.(X&#772;) = <Fraction num="140" den="30" /> = 4.67</span>
             ],
             result: 4.67,
         }
@@ -261,10 +268,10 @@ export const mdProblems = [
                 'Find mid-values (m) of each class',
                 'Sum of f.m = 25+120+375+560+270 = 1350',
                 'N = 50',
-                'Mean = 1350 / 50 = 27 (approx 26 for working)',
+                <span>Mean = <Fraction num="1350" den="50" /> = 27 (approx 26 for working)</span>,
                 'Calculate |m - Mean| for each class and multiply by f',
                 'Sum of f.|m - Mean| = 105+88+15+144+114 = 466',
-                'M.D.(Mean) = 466 / 50 = 9.32'
+                <span>M.D.(X&#772;) = <Fraction num="466" den="50" /> = 9.32</span>
             ],
             result: 9.32,
         }
@@ -277,8 +284,8 @@ export const mdProblems = [
             steps: [
                 'M.D.(Mean) = 9.32 (calculated above)',
                 'Mean = 27',
-                'Coefficient of M.D. = M.D.(Mean) / Mean',
-                '= 9.32 / 27 = 0.345'
+                <span>Coefficient of M.D. = <Fraction num="M.D.(Mean)" den="Mean" /></span>,
+                <span>= <Fraction num="9.32" den="27" /> = 0.345</span>
             ],
             result: 0.345,
         }
@@ -303,11 +310,11 @@ export const sdProblems = [
                 { x: 12, d: 4, d2: 16 }
             ],
             steps: [
-                'Mean = (4+6+8+10+12) / 5 = 40 / 5 = 8',
+                <span>Mean = <Fraction num="4+6+8+10+12" den="5" /> = <Fraction num="40" den="5" /> = 8</span>,
                 'Calculate deviations (x - Mean) and square them',
                 'Sum of (x - Mean)² = 16+4+0+4+16 = 40',
-                'Variance = Sum of (x - Mean)² / N = 40 / 5 = 8',
-                'S.D. = Square root of 8 = 2.83'
+                <span>Variance (&sigma;<sup>2</sup>) = <Fraction num="Sum (x-Mean)²" den="N" /> = <Fraction num="40" den="5" /> = 8</span>,
+                <span>S.D. (&sigma;) = <span style={{ display: 'inline-flex', alignItems: 'center' }}><span style={{ fontSize: '1.2em', marginRight: '2px' }}>&radic;</span><span style={{ borderTop: '1px solid currentColor', paddingTop: '1px' }}>8</span></span> = 2.83</span>
             ],
             result: 2.83,
         }
@@ -327,11 +334,11 @@ export const sdProblems = [
             ],
             steps: [
                 'Take Assumed Mean A = 30, Step h = 10',
-                'd = (x - 30) / 10',
+                <span>d = <Fraction num="x - 30" den="10" /></span>,
                 'Sum of d = -2-1+0+1+2 = 0',
                 'Sum of d² = 4+1+0+1+4 = 10',
-                'S.D. = h x Square root of (Sum d²/N - (Sum d/N)²)',
-                'S.D. = 10 x Square root of (10/5 - 0) = 10 x 1.414 = 14.14'
+                <span>S.D. = h &times; <span style={{ display: 'inline-flex', alignItems: 'center' }}><span style={{ fontSize: '1.2em', marginRight: '2px' }}>&radic;</span><span style={{ borderTop: '1px solid currentColor', paddingTop: '1px' }}><Fraction num="&Sigma;d²" den="N" /> - (<Fraction num="&Sigma;d" den="N" />)<sup>2</sup></span></span></span>,
+                <span>S.D. = 10 &times; <span style={{ display: 'inline-flex', alignItems: 'center' }}><span style={{ fontSize: '1.2em', marginRight: '2px' }}>&radic;</span><span style={{ borderTop: '1px solid currentColor', paddingTop: '1px' }}><Fraction num="10" den="5" /> - 0</span></span> = 10 &times; 1.414 = 14.14</span>
             ],
             result: 14.14,
         }
@@ -359,10 +366,10 @@ export const sdProblems = [
             ],
             steps: [
                 'Sum of f.x = 12+40+108+80+60 = 300',
-                'N = 25, Mean = 300/25 = 12',
-                'Sum of f(x-Mean)² = 192+80+0+80+192 = 544',
-                'Variance = 544 / 25 = 21.76',
-                'S.D. = Square root of 21.76 = 4.665'
+                <span>N = 25, Mean = <Fraction num="300" den="25" /> = 12</span>,
+                <span>Sum of f(x-Mean)² = 192+80+0+80+192 = 544</span>,
+                <span>Variance = <Fraction num="544" den="25" /> = 21.76</span>,
+                <span>S.D. = <span style={{ display: 'inline-flex', alignItems: 'center' }}><span style={{ fontSize: '1.2em', marginRight: '2px' }}>&radic;</span><span style={{ borderTop: '1px solid currentColor', paddingTop: '1px' }}>21.76</span></span> = 4.665</span>
             ],
             result: '4.665 (Variance = 21.76)',
         }
@@ -390,13 +397,13 @@ export const sdProblems = [
             ],
             steps: [
                 'A = 25 (mid-value of middle class), h = 10',
-                'd = (m - 25) / 10',
+                <span>d = <Fraction num="m - 25" den="10" /></span>,
                 'Sum of f.d = -10-8+0+16+12 = 10',
                 'Sum of f.d² = 20+8+0+16+24 = 68',
                 'N = 50',
-                'S.D. = h x Square root of (Sum f.d²/N - (Sum f.d/N)²)',
-                'S.D. = 10 x Square root of (68/50 - (10/50)²)',
-                'S.D. = 10 x Square root of (1.36 - 0.04) = 10 x 1.149 = 11.49'
+                <span>S.D. = h &times; <span style={{ display: 'inline-flex', alignItems: 'center' }}><span style={{ fontSize: '1.2em', marginRight: '2px' }}>&radic;</span><span style={{ borderTop: '1px solid currentColor', paddingTop: '1px' }}><Fraction num="&Sigma;fd²" den="N" /> - (<Fraction num="&Sigma;fd" den="N" />)<sup>2</sup></span></span></span>,
+                <span>S.D. = 10 &times; <span style={{ display: 'inline-flex', alignItems: 'center' }}><span style={{ fontSize: '1.2em', marginRight: '2px' }}>&radic;</span><span style={{ borderTop: '1px solid currentColor', paddingTop: '1px' }}><Fraction num="68" den="50" /> - (<Fraction num="10" den="50" />)<sup>2</sup></span></span></span>,
+                <span>S.D. = 10 &times; <span style={{ display: 'inline-flex', alignItems: 'center' }}><span style={{ fontSize: '1.2em', marginRight: '2px' }}>&radic;</span><span style={{ borderTop: '1px solid currentColor', paddingTop: '1px' }}>1.36 - 0.04</span></span> = 10 &times; 1.149 = 11.49</span>
             ],
             result: 11.49,
         }
@@ -408,9 +415,9 @@ export const sdProblems = [
         solution: {
             steps: [
                 'S.D. = 11.49 (from previous)',
-                'Mean = A + (Sum f.d / N) x h = 25 + (10/50) x 10 = 25 + 2 = 27',
-                'C.V. = (S.D. / Mean) x 100',
-                'C.V. = (11.49 / 27) x 100 = 42.56%'
+                <span>Mean = A + <Fraction num="&Sigma;fd" den="N" /> &times; h = 25 + <Fraction num="10" den="50" /> &times; 10 = 25 + 2 = 27</span>,
+                <span>C.V. = <Fraction num="S.D." den="Mean" /> &times; 100</span>,
+                <span>C.V. = <Fraction num="11.49" den="27" /> &times; 100 = 42.56%</span>
             ],
             result: '42.56%',
         }
@@ -421,8 +428,8 @@ export const sdProblems = [
         question: 'Series A: Mean = 50, S.D. = 10. Series B: Mean = 40, S.D. = 12. Which is more consistent?',
         solution: {
             steps: [
-                'C.V. of Series A = (S.D./Mean) x 100 = (10/50) x 100 = 20%',
-                'C.V. of Series B = (S.D./Mean) x 100 = (12/40) x 100 = 30%',
+                <span>C.V.(A) = <Fraction num="S.D." den="Mean" /> &times; 100 = <Fraction num="10" den="50" /> &times; 100 = 20%</span>,
+                <span>C.V.(B) = <Fraction num="S.D." den="Mean" /> &times; 100 = <Fraction num="12" den="40" /> &times; 100 = 30%</span>,
                 'Lower C.V. means MORE consistent',
                 'C.V.(A) = 20% < C.V.(B) = 30%',
                 'Therefore, Series A is more consistent'
