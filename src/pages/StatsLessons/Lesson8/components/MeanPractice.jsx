@@ -1,8 +1,45 @@
 import React, { useState } from 'react';
 import { FaChevronDown, FaBookOpen, FaCalculator } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
-import { practiceData } from './MeanPracticeData';
+import { practiceData, XBar } from './MeanPracticeData';
 import './MeanPractice.css';
+
+// Notation Legend Component
+const NotationLegend = () => (
+    <div className="notation-legend">
+        <h4 className="legend-title">Key Terms (NCERT Notation)</h4>
+        <div className="legend-grid">
+            <div className="legend-item">
+                <span className="legend-symbol">x<sub>i</sub></span>
+                <span className="legend-desc">Variable / Mid-value</span>
+            </div>
+            <div className="legend-item">
+                <span className="legend-symbol">f<sub>i</sub></span>
+                <span className="legend-desc">Frequency</span>
+            </div>
+            <div className="legend-item">
+                <span className="legend-symbol"><XBar /></span>
+                <span className="legend-desc">Arithmetic Mean</span>
+            </div>
+            <div className="legend-item">
+                <span className="legend-symbol">N</span>
+                <span className="legend-desc">Total Frequency (Σf<sub>i</sub>)</span>
+            </div>
+            <div className="legend-item">
+                <span className="legend-symbol">d<sub>i</sub></span>
+                <span className="legend-desc">Deviation (x<sub>i</sub> - A)</span>
+            </div>
+            <div className="legend-item">
+                <span className="legend-symbol">u<sub>i</sub></span>
+                <span className="legend-desc">Step Deviation</span>
+            </div>
+            <div className="legend-item">
+                <span className="legend-symbol">A</span>
+                <span className="legend-desc">Assumed Mean</span>
+            </div>
+        </div>
+    </div>
+);
 
 // Reusable Solution Toggle Component
 const SolutionToggle = ({ prob }) => {
@@ -139,6 +176,8 @@ const MeanPractice = () => {
                     Solved Problems
                 </h2>
             </div>
+
+            <NotationLegend />
 
             <div className="accordions-wrapper">
                 {practiceData.map((section) => (
