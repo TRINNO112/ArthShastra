@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaCalculator, FaTable, FaMagic } from 'react-icons/fa';
+import { XBar } from './MeanPracticeData';
+import './MeanComponents.css';
 
 const ArithmeticMean = () => {
     const [seriesType, setSeriesType] = useState('individual'); // individual, discrete, continuous
@@ -36,7 +38,7 @@ const ArithmeticMean = () => {
                     steps = [
                         `ΣX = ${sumX}`,
                         `N = ${N}`,
-                        `Mean (X̄) = ${sumX} / ${N} = ${mean.toFixed(2)}`
+                        `Mean (<XBar />) = ${sumX} / ${N} = ${mean.toFixed(2)}`
                     ];
                 } else {
                     // Shortcut: A + Σd/N
@@ -47,7 +49,7 @@ const ArithmeticMean = () => {
                         `Assumed Mean (A) = ${assumedMean}`,
                         `Deviations (d = X - A): [${d.join(', ')}]`,
                         `Σd = ${sumD}`,
-                        `Mean (X̄) = ${assumedMean} + (${sumD} / ${N}) = ${mean.toFixed(2)}`
+                        `Mean (<XBar />) = ${assumedMean} + (${sumD} / ${N}) = ${mean.toFixed(2)}`
                     ];
                 }
                 setResult({ mean, steps });
@@ -70,7 +72,7 @@ const ArithmeticMean = () => {
                     steps = [
                         `Σf = ${N}`,
                         `ΣfX = ${sumFX}`,
-                        `Mean (X̄) = ${sumFX} / ${N} = ${mean.toFixed(2)}`
+                        `Mean (<XBar />) = ${sumFX} / ${N} = ${mean.toFixed(2)}`
                     ];
                 } else if (method === 'shortcut') {
                     // A + Σfd/Σf
@@ -81,7 +83,7 @@ const ArithmeticMean = () => {
                     steps = [
                         `A = ${assumedMean}`,
                         `Σfd = ${sumFD}`,
-                        `Mean (X̄) = ${assumedMean} + (${sumFD} / ${N}) = ${mean.toFixed(2)}`
+                        `Mean (<XBar />) = ${assumedMean} + (${sumFD} / ${N}) = ${mean.toFixed(2)}`
                     ];
                 } else if (method === 'stepdev') {
                     // A + (Σfd'/Σf) * C
@@ -94,7 +96,7 @@ const ArithmeticMean = () => {
                         `A = ${assumedMean}, C = ${commonFactor}`,
                         `d' = (X - A) / C`,
                         `Σfd' = ${sumFDPrime}`,
-                        `Mean (X̄) = ${assumedMean} + (${sumFDPrime} / ${N}) × ${commonFactor} = ${mean.toFixed(2)}`
+                        `Mean (<XBar />) = ${assumedMean} + (${sumFDPrime} / ${N}) × ${commonFactor} = ${mean.toFixed(2)}`
                     ];
                 }
                 setResult({ mean, steps });
@@ -159,7 +161,7 @@ const ArithmeticMean = () => {
                     </div>
 
                     {/* Data Inputs */}
-                    <div style={{ background: '#1e293b', padding: '15px', borderRadius: '10px' }}>
+                    <div style={{ background: 'rgba(0,0,0,0.2)', padding: '15px', borderRadius: '10px' }}>
                         {seriesType === 'individual' && (
                             <div>
                                 <label className="stats-label-text">Data (Values separated by comma):</label>
@@ -176,7 +178,7 @@ const ArithmeticMean = () => {
                         {seriesType === 'discrete' && (
                             <>
                                 <div style={{ marginBottom: '10px' }}>
-                                    <label className="stats-label-text">X (Values):</label>
+                                    <label className="stats-label-text">x<sub>i</sub> (Values):</label>
                                     <input
                                         type="text"
                                         value={discreteX}
@@ -186,7 +188,7 @@ const ArithmeticMean = () => {
                                     />
                                 </div>
                                 <div>
-                                    <label className="stats-label-text">f (Frequencies):</label>
+                                    <label className="stats-label-text">f<sub>i</sub> (Frequencies):</label>
                                     <input
                                         type="text"
                                         value={discreteF}
@@ -234,12 +236,18 @@ const ArithmeticMean = () => {
                     {result ? (
                         <div>
                             <div style={{ fontSize: '2.5rem', color: '#10b981', fontWeight: 'bold', marginBottom: '20px' }}>
-                                X̄ = {result.mean.toFixed(2)}
+                                <XBar /> = {result.mean.toFixed(2)}
                             </div>
                             <div style={{ display: 'grid', gap: '10px' }}>
                                 {result.steps.map((step, i) => (
-                                    <div key={i} style={{ padding: '10px', background: '#1e293b', borderRadius: '5px', color: '#cbd5e1', borderLeft: '3px solid #3b82f6' }}>
-                                        {step}
+                                    <div key={i} className="calc-step-item">
+                                        {/* Parse step string to replace XBar placeholder if exists, simple text replacement */}
+                                        {step.split('<XBar />').map((part, idx, arr) => (
+                                            <span key={idx}>
+                                                {part}
+                                                {idx < arr.length - 1 && <XBar />}
+                                            </span>
+                                        ))}
                                     </div>
                                 ))}
                             </div>
