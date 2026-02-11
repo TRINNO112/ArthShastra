@@ -10,11 +10,11 @@ export const Fraction = ({ num, den }) => (
 
 // --- Styles for Tables ---
 const tableStyle = { width: '100%', minWidth: '300px', fontSize: '0.9rem', textAlign: 'center', borderCollapse: 'collapse', overflowX: 'auto' };
-const thStyle = { background: 'rgba(56, 189, 248, 0.1)', color: '#38bdf8', padding: '12px', border: '1px solid #334155', fontWeight: '600', whiteSpace: 'nowrap' };
-const tdStyle = { padding: '10px', border: '1px solid #334155', color: '#cbd5e1' };
-const highlightTd = { ...tdStyle, color: '#fbbf24', fontWeight: 'bold' };
-const resultTd = { ...tdStyle, color: '#34d399', fontWeight: 'bold' };
-const rowHighlight = { background: 'rgba(51, 65, 85, 0.3)' };
+const thStyle = { background: 'rgba(0, 153, 255, 0.1)', color: 'var(--neon-blue)', padding: '12px', border: '1px solid var(--border-color)', fontWeight: '600', whiteSpace: 'nowrap' };
+const tdStyle = { padding: '10px', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' };
+const highlightTd = { ...tdStyle, color: 'var(--neon-gold)', fontWeight: 'bold' };
+const resultTd = { ...tdStyle, color: 'var(--neon-green)', fontWeight: 'bold' };
+const rowHighlight = { background: 'rgba(255, 255, 255, 0.05)' };
 
 
 // ==========================================

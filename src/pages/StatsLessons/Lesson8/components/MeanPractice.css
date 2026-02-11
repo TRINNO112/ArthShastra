@@ -1,0 +1,328 @@
+/* =============================================
+   MEAN PRACTICE - Component Styles
+   Theme: Dark Glass Premium
+   ============================================= */
+
+.mean-practice-container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--spacing-xl) var(--spacing-md);
+  padding-bottom: var(--spacing-3xl);
+  animation: fadeIn var(--transition-base);
+}
+
+/* --- Header Section --- */
+.practice-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  position: relative;
+}
+
+.practice-badge {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-lg);
+  background: rgba(0, 153, 255, 0.1);
+  border: 1px solid rgba(0, 153, 255, 0.2);
+  color: var(--neon-blue);
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: var(--spacing-md);
+}
+
+.practice-title {
+  font-size: var(--font-size-4xl);
+  font-weight: 900;
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: var(--spacing-md);
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.practice-subtitle {
+  color: var(--text-secondary);
+  font-size: var(--font-size-lg);
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 300;
+}
+
+.highlight-text {
+  color: var(--neon-blue);
+  font-weight: 600;
+}
+
+/* --- Accordion Card --- */
+.practice-accordion {
+  margin-bottom: var(--spacing-lg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-lg);
+  background: rgba(22, 22, 31, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.practice-accordion:hover {
+  border-color: rgba(0, 153, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 153, 255, 0.1);
+}
+
+.accordion-trigger {
+  width: 100%;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-primary);
+  transition: all var(--transition-base);
+}
+
+.accordion-trigger:hover {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.08) 100%);
+}
+
+.accordion-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: rgba(0, 153, 255, 0.1);
+  border-radius: var(--border-radius-sm);
+  color: var(--neon-blue);
+  margin-right: var(--spacing-md);
+  transition: all var(--transition-base);
+}
+
+.accordion-trigger:hover .accordion-icon-box {
+  background: rgba(0, 153, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.accordion-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.accordion-chevron {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  color: var(--text-secondary);
+  transition: all var(--transition-base);
+}
+
+.accordion-trigger:hover .accordion-chevron {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+/* --- Problem Content --- */
+.accordion-content {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
+  padding: var(--spacing-xl);
+}
+
+.problem-container {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+  padding-bottom: var(--spacing-xl);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.problem-container:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.problem-number {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-sm);
+  color: var(--neon-blue);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.problem-body {
+  flex-grow: 1;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  transition: border-color var(--transition-base);
+}
+
+.problem-body:hover {
+  border-color: rgba(0, 153, 255, 0.3);
+}
+
+.question-text {
+  font-size: var(--font-size-lg);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+  font-weight: 500;
+}
+
+/* --- Tables --- */
+.data-table-container {
+  overflow-x: auto;
+  margin: var(--spacing-md) 0;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* The tables themselves are styled inline in MeanPracticeData.jsx mostly, 
+   but we can add overrides here if needed */
+
+/* --- Solution Toggle --- */
+.solution-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--neon-green);
+  font-weight: 600;
+  background: transparent;
+  padding: var(--spacing-sm) 0;
+  margin-top: var(--spacing-md);
+  transition: all var(--transition-base);
+}
+
+.solution-toggle-btn:hover {
+  color: #00cc6a; /* Darker green on hover */
+}
+
+.toggle-icon-wrap {
+  width: 32px;
+  height: 32px;
+  background: rgba(0, 255, 136, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition-base);
+}
+
+.solution-toggle-btn:hover .toggle-icon-wrap {
+  background: rgba(0, 255, 136, 0.2);
+}
+
+.solution-details {
+  border-left: 2px solid rgba(0, 255, 136, 0.3);
+  margin-left: var(--spacing-md);
+  padding-left: var(--spacing-lg);
+  margin-top: var(--spacing-md);
+}
+
+.solution-card {
+  background: rgba(22, 22, 31, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  margin-top: var(--spacing-md);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.solution-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--neon-green);
+}
+
+.calc-header {
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.calc-content {
+  color: var(--text-primary);
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size-base);
+  line-height: 1.8;
+  overflow-x: auto;
+}
+
+/* --- Pro Tip --- */
+.pro-tip-box {
+  margin-top: var(--spacing-2xl);
+  padding: var(--spacing-lg);
+  background: linear-gradient(90deg, rgba(255, 170, 0, 0.05) 0%, rgba(255, 170, 0, 0.02) 100%);
+  border: 1px solid rgba(255, 170, 0, 0.2);
+  border-radius: var(--border-radius);
+  text-align: center;
+  color: var(--warning);
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--transition-base);
+}
+
+.pro-tip-box:hover {
+  border-color: rgba(255, 170, 0, 0.4);
+}
+
+.pro-tip-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 170, 0, 0.1), transparent 70%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .practice-title {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .accordion-trigger {
+    padding: var(--spacing-md);
+  }
+  
+  .problem-container {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .problem-number {
+    width: 32px;
+    height: 32px;
+    font-size: var(--font-size-sm);
+  }
+}

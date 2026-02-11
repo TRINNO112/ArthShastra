@@ -1,27 +1,92 @@
 import React, { useState } from 'react';
-import { FaChevronDown, FaChevronUp, FaBookOpen, FaCalculator } from 'react-icons/fa';
+import { FaChevronDown, FaBookOpen, FaCalculator } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
-import { practiceData, Fraction } from './MeanPracticeData';
+import { practiceData } from './MeanPracticeData';
+import './MeanPractice.css';
+
+// Reusable Solution Toggle Component
+const SolutionToggle = ({ prob }) => {
+    const [showSolution, setShowSolution] = useState(false);
+
+    return (
+        <div className="solution-section">
+            <button
+                onClick={() => setShowSolution(!showSolution)}
+                className="solution-toggle-btn"
+            >
+                <div className="toggle-icon-wrap">
+                    <FaCalculator size={14} />
+                </div>
+                <span>{showSolution ? 'Hide Solution' : 'Show Detailed Solution'}</span>
+                <FaChevronDown
+                    className={`transition-transform duration-300 ${showSolution ? 'rotate-180' : ''}`}
+                    size={12}
+                    style={{
+                        transform: showSolution ? 'rotate(180deg)' : 'rotate(0deg)',
+                        transition: 'transform 0.3s ease'
+                    }}
+                />
+            </button>
+
+            <AnimatePresence>
+                {showSolution && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        className="solution-wrapper"
+                        style={{ overflow: 'hidden' }}
+                    >
+                        <div className="solution-details">
+                            {prob.solTable && (
+                                <div className="data-table-container">
+                                    <div style={{ minWidth: 'max-content', padding: '10px' }}>
+                                        {prob.solTable}
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="solution-card">
+                                <h4 className="calc-header">
+                                    <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: 'var(--neon-green)', marginRight: '8px' }}></span>
+                                    Calculation Steps
+                                </h4>
+                                <div className="calc-content">
+                                    {prob.calc}
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
+};
 
 const PracticeAccordion = ({ title, problems }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-6 border border-slate-700 rounded-xl overflow-hidden shadow-lg bg-slate-900/50 backdrop-blur-sm"
-        >
+        <div className="practice-accordion">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full p-5 bg-gradient-to-r from-slate-800 to-slate-900 border-b border-slate-700 text-white flex justify-between items-center cursor-pointer hover:bg-slate-800 transition-colors"
+                className="accordion-trigger"
             >
-                <div className="flex items-center gap-3 text-lg font-semibold text-blue-400">
-                    <FaBookOpen className="text-xl" />
-                    <span>{title}</span>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <div className="accordion-icon-box">
+                        <FaBookOpen size={20} />
+                    </div>
+                    <span className="accordion-title">
+                        {title}
+                    </span>
                 </div>
-                <div className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
-                    <FaChevronDown className="text-slate-400" />
+                <div className="accordion-chevron" style={{
+                    transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                    color: isOpen ? 'var(--neon-blue)' : 'inherit',
+                    background: isOpen ? 'rgba(0, 153, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)'
+                }}>
+                    <FaChevronDown />
                 </div>
             </button>
 
@@ -31,87 +96,72 @@ const PracticeAccordion = ({ title, problems }) => {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden"
+                        transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
+                        style={{ overflow: 'hidden' }}
                     >
-                        <div className="p-6 bg-slate-900/80 space-y-8">
+                        <div className="accordion-content">
                             {problems.map((prob, idx) => (
-                                <div key={idx} className="border-b border-slate-700/50 last:border-0 pb-8 last:pb-0">
-                                    <div className="flex items-start gap-4 mb-4">
-                                        <span className="bg-blue-600 text-white px-2 py-1 rounded text-xs font-bold whitespace-nowrap mt-1 shadow-sm">
-                                            Q{idx + 1}
-                                        </span>
-                                        <div className="w-full">
-                                            <p className="text-slate-200 text-base font-medium leading-relaxed mb-3">
-                                                {prob.q}
-                                            </p>
-
-                                            {prob.table && (
-                                                <div className="my-4 overflow-x-auto rounded-lg border border-slate-700 shadow-sm">
-                                                    {prob.table}
-                                                </div>
-                                            )}
-                                        </div>
+                                <div key={idx} className="problem-container">
+                                    <div className="problem-number">
+                                        Q{idx + 1}
                                     </div>
 
-                                    <details className="group">
-                                        <summary className="flex items-center gap-2 text-emerald-400 font-semibold cursor-pointer select-none hover:text-emerald-300 transition-colors mb-3">
-                                            <FaCalculator />
-                                            <span>Show Detailed Solution</span>
-                                            <FaChevronDown className="w-3 h-3 transition-transform group-open:rotate-180" />
-                                        </summary>
+                                    <div className="problem-body">
+                                        <p className="question-text">
+                                            {prob.q}
+                                        </p>
 
-                                        <motion.div
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            className="pl-4 border-l-2 border-emerald-500/30 ml-2 space-y-4"
-                                        >
-                                            {prob.solTable && (
-                                                <div className="overflow-x-auto rounded-lg border border-slate-700 bg-slate-800/50">
-                                                    {prob.solTable}
-                                                </div>
-                                            )}
-
-                                            <div className="bg-slate-800/80 p-4 rounded-lg border border-slate-700">
-                                                <h4 className="text-slate-400 text-sm font-bold uppercase tracking-wider mb-2">Calculation Steps</h4>
-                                                <div className="text-white text-lg font-mono">
-                                                    {prob.calc}
+                                        {prob.table && (
+                                            <div className="data-table-container">
+                                                <div style={{ minWidth: 'max-content' }}>
+                                                    {prob.table}
                                                 </div>
                                             </div>
-                                        </motion.div>
-                                    </details>
+                                        )}
+
+                                        <SolutionToggle prob={prob} />
+                                    </div>
                                 </div>
                             ))}
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
-        </motion.div>
+        </div>
     );
 };
 
 const MeanPractice = () => {
     return (
-        <div className="w-full max-w-4xl mx-auto p-4 space-y-6 animate-fadeIn">
-            <div className="text-center mb-10 space-y-2">
-                <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">
-                    Master Arithmetic Mean
+        <div className="mean-practice-container">
+            <div className="practice-header">
+                <span className="practice-badge">Lesson 8 • Practice Series</span>
+
+                <h2 className="practice-title">
+                    Solved Problems
                 </h2>
-                <p className="text-slate-400 text-lg">
-                    Comprehensive practice set covering all series types
+
+                <p className="practice-subtitle">
+                    Master Arithmetic Mean with our curated collection of <span className="highlight-text">20+ verified examples</span> across all statistical series.
                 </p>
             </div>
 
-            {practiceData.map((section) => (
-                <PracticeAccordion
-                    key={section.id}
-                    title={section.title}
-                    problems={section.problems}
-                />
-            ))}
+            <div className="accordions-wrapper">
+                {practiceData.map((section) => (
+                    <PracticeAccordion
+                        key={section.id}
+                        title={section.title}
+                        problems={section.problems}
+                    />
+                ))}
+            </div>
 
-            <div className="mt-8 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg text-center text-amber-200 text-sm">
-                <p>💡 Tip: Pay attention to the assumed mean (A) in Short-cut and Step-Deviation methods.</p>
+            <div className="pro-tip-box">
+                <div className="pro-tip-glow"></div>
+                <p style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ fontSize: '1.5rem' }}>💡</span>
+                    <span><strong>Pro Tip:</strong> Always check if the series is Inclusive or Exclusive before calculating.</span>
+                </p>
             </div>
         </div>
     );
