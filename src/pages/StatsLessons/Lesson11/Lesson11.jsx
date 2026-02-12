@@ -11,6 +11,11 @@ import { logLessonProgress } from '../../../services/firebase';
 
 // Components
 import CorrelationIntro from './components/CorrelationIntro';
+import ScatterDiagram from './components/ScatterDiagram';
+import KarlPearson from './components/KarlPearson';
+import SpearmanRank from './components/SpearmanRank';
+import PracticalProblems from './components/PracticalProblems';
+import Quiz from './components/Quiz';
 import TopicsMenu from '../components/TopicsMenu';
 
 const Lesson11 = () => {
@@ -32,6 +37,7 @@ const Lesson11 = () => {
         { id: 'scatter', label: 'Scatter Diagram', icon: <FaChartLine /> },
         { id: 'pearson', label: 'Karl Pearson (r)', icon: <FaChartBar /> },
         { id: 'spearman', label: 'Spearman Rank (R)', icon: <FaSortNumericDown /> },
+        { id: 'practical', label: 'Practice Problems', icon: <FaChartLine /> },
         { id: 'quiz', label: 'Quiz', icon: <FaClipboardList /> }
     ];
 
@@ -74,15 +80,11 @@ const Lesson11 = () => {
                 {/* Content */}
                 <div className="stats-content">
                     {activeTab === 'intro' && <CorrelationIntro />}
-                    {activeTab === 'scatter' && <ComingSoonSection title="Scatter Diagrams" />}
-                    {activeTab === 'pearson' && <ComingSoonSection title="Karl Pearson's Method" />}
-                    {activeTab === 'spearman' && <ComingSoonSection title="Spearman's Rank Correlation" />}
-                    {activeTab === 'quiz' && (
-                        <div className="stats-card" style={{ textAlign: 'center', padding: '60px 30px' }}>
-                            <h2 className="stats-title" style={{ fontSize: '1.5rem' }}>Quiz Coming Soon</h2>
-                            <p className="stats-subtitle">Practice the problems first, quiz will be added shortly!</p>
-                        </div>
-                    )}
+                    {activeTab === 'scatter' && <ScatterDiagram />}
+                    {activeTab === 'pearson' && <KarlPearson />}
+                    {activeTab === 'spearman' && <SpearmanRank />}
+                    {activeTab === 'practical' && <PracticalProblems />}
+                    {activeTab === 'quiz' && <Quiz />}
                 </div>
 
                 {/* Footer Navigation */}
