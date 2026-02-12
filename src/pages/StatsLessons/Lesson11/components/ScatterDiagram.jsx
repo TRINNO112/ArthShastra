@@ -3,70 +3,56 @@ import { FaChartLine, FaArrowUp, FaArrowDown, FaRandom } from 'react-icons/fa';
 
 const ScatterDiagram = () => {
 
-    // Mini-chart component for reusable scatter plots
+    // Mini-chart component using SVG for correct trend lines
     const MiniScatter = ({ type, color, title, desc }) => {
-        // Generate points based on type
-        const points = [];
-        for (let i = 0; i < 20; i++) {
-            let x = 10 + Math.random() * 80;
-            let y;
-            if (type === 'positive') {
-                y = x + (Math.random() * 20 - 10); // y follows x
-            } else if (type === 'negative') {
-                y = 100 - x + (Math.random() * 20 - 10); // y opposes x
-            } else {
-                y = 10 + Math.random() * 80; // random
-            }
-            // Clamp
-            y = Math.max(5, Math.min(95, y));
-            points.push({ x, y });
-        }
+        // SVG coordinate system: (0,0) is top-left, Y increases downward
+        // Use fixed points for cleaner, predictable illustration in standard charts
+        const points = type === 'positive'
+            ? [{ x: 10, y: 10 }, { x: 20, y: 25 }, { x: 30, y: 30 }, { x: 40, y: 45 }, { x: 50, y: 55 }, { x: 60, y: 60 }, { x: 70, y: 75 }, { x: 80, y: 85 }, { x: 90, y: 90 }]
+            : type === 'negative'
+                ? [{ x: 10, y: 90 }, { x: 20, y: 75 }, { x: 30, y: 70 }, { x: 40, y: 55 }, { x: 50, y: 45 }, { x: 60, y: 40 }, { x: 70, y: 25 }, { x: 80, y: 15 }, { x: 90, y: 10 }]
+                : [{ x: 15, y: 40 }, { x: 25, y: 80 }, { x: 35, y: 20 }, { x: 45, y: 60 }, { x: 55, y: 30 }, { x: 65, y: 85 }, { x: 75, y: 10 }, { x: 85, y: 50 }, { x: 95, y: 70 }];
 
         return (
             <div style={{
-                background: 'rgba(255, 255, 255, 0.03)',
+                background: 'var(--stats-bg-alt)',
                 borderRadius: 'var(--stats-radius)',
-                padding: '15px',
-                border: `1px solid ${color}30`,
-                textAlign: 'center'
+                padding: '20px',
+                border: `1px solid ${color}20`,
+                textAlign: 'center',
+                boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
             }}>
-                <div style={{
-                    height: '120px',
-                    borderLeft: '2px solid rgba(255,255,255,0.2)',
-                    borderBottom: '2px solid rgba(255,255,255,0.2)',
-                    position: 'relative',
-                    marginBottom: '10px',
-                    background: `linear-gradient(to bottom right, ${color}10, transparent)`,
-                    overflow: 'hidden'
-                }}>
-                    {points.map((p, i) => (
-                        <div key={i} style={{
-                            position: 'absolute',
-                            left: `${p.x}%`,
-                            bottom: `${p.y}%`,
-                            width: '4px',
-                            height: '4px',
-                            borderRadius: '50%',
-                            background: color,
-                            boxShadow: `0 0 4px ${color}`
-                        }} />
-                    ))}
-                    {type !== 'none' && (
-                        <div style={{
-                            position: 'absolute',
-                            left: '10%', bottom: type === 'positive' ? '10%' : '90%',
-                            width: '80%', height: '2px',
-                            background: color,
-                            opacity: 0.3,
-                            transform: type === 'positive' ? 'rotate(-45deg)' : 'rotate(45deg)',
-                            transformOrigin: type === 'positive' ? 'bottom left' : 'top left',
-                            bottom: type === 'negative' ? 'auto' : '10%',
-                            top: type === 'negative' ? '10%' : 'auto'
-                        }} />
-                    )}
+                <div style={{ height: '160px', marginBottom: '15px' }}>
+                    <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
+                        {/* Background with Grid */}
+                        <rect x="0" y="0" width="100" height="100" fill="rgba(255,255,255,0.02)" rx="4" />
+                        {[20, 40, 60, 80].map(val => (
+                            <React.Fragment key={val}>
+                                <line x1="0" y1={val} x2="100" y2={val} stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" />
+                                <line x1={val} y1="0" x2={val} y2="100" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" />
+                            </React.Fragment>
+                        ))}
+
+                        {/* Axes */}
+                        <line x1="0" y1="0" x2="0" y2="100" stroke="var(--stats-text-muted)" strokeWidth="1" />
+                        <line x1="0" y1="100" x2="100" y2="100" stroke="var(--stats-text-muted)" strokeWidth="1" />
+
+                        {/* Data Points */}
+                        {points.map((p, i) => (
+                            <circle key={i} cx={p.x} cy={100 - p.y} r="3" fill={color} />
+                        ))}
+
+                        {/* Professional Trend Line */}
+                        {type === 'positive' && (
+                            <line x1="5" y1="95" x2="95" y2="5" stroke={color} strokeWidth="1" strokeDasharray="4" opacity="0.4" />
+                        )}
+                        {type === 'negative' && (
+                            <line x1="5" y1="5" x2="95" y2="95" stroke={color} strokeWidth="1" strokeDasharray="4" opacity="0.4" />
+                        )}
+                    </svg>
                 </div>
-                <h4 style={{ color: color, margin: '5px 0', fontSize: '1rem' }}>{title}</h4>
-                <p style={{ color: 'var(--stats-text-muted)', fontSize: '0.8rem', margin: 0 }}>{desc}</p>
+                <h4 style={{ color: color, margin: '5px 0', fontSize: '1.1rem', fontWeight: '700' }}>{title}</h4>
+                <p style={{ color: 'var(--stats-text-muted)', fontSize: '0.85rem', margin: 0, lineHeight: '1.4' }}>{desc}</p>
             </div>
         );
     };
@@ -99,7 +85,7 @@ const ScatterDiagram = () => {
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
 
-                    {/* Perfect Positive */}
+                    {/* Positive */}
                     <MiniScatter
                         type="positive"
                         color="#10b981"
@@ -107,7 +93,7 @@ const ScatterDiagram = () => {
                         desc="Points go UP from left to right. Both variables increase together."
                     />
 
-                    {/* Perfect Negative */}
+                    {/* Negative */}
                     <MiniScatter
                         type="negative"
                         color="#ef4444"
