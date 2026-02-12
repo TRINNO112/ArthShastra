@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { FaCalculator, FaTable, FaLightbulb } from 'react-icons/fa';
+import { FaCalculator, FaTable, FaLightbulb, FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const PracticalProblems = () => {
+    const [showSol1, setShowSol1] = useState(false);
+    const [showSol2, setShowSol2] = useState(false);
 
     // Helper to render fractions
     const Fraction = ({ num, den }) => (
@@ -81,78 +83,99 @@ const PracticalProblems = () => {
                 </div>
 
                 <div className="stats-solution-toggle">
-                    <h4 style={{ color: '#10b981', borderBottom: '1px solid rgba(16, 185, 129, 0.3)', paddingBottom: '10px', marginBottom: '15px' }}>Solution: Actual Mean Method</h4>
+                    <button
+                        onClick={() => setShowSol1(!showSol1)}
+                        className="stats-btn"
+                        style={{
+                            width: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '10px',
+                            background: showSol1 ? 'rgba(16, 185, 129, 0.2)' : 'var(--stats-primary)',
+                            borderColor: showSol1 ? '#10b981' : 'transparent',
+                            marginBottom: '15px'
+                        }}
+                    >
+                        {showSol1 ? <><FaEyeSlash /> Hide Solution</> : <><FaEye /> Show Detailed Solution</>}
+                    </button>
 
-                    {/* Step 1: Means */}
-                    <p style={{ color: 'var(--stats-text)', marginBottom: '10px' }}>
-                        <strong>Step 1: Calculate Means</strong><br />
-                        &Sigma;X = 30, N = 5 &rArr; Mean (X&#772;) = 30/5 = 6<br />
-                        &Sigma;Y = 40, N = 5 &rArr; Mean (&#562;) = 40/5 = 8
-                    </p>
+                    {showSol1 && (
+                        <div style={{ animation: 'slideDown 0.3s ease-out' }}>
+                            <h4 style={{ color: '#10b981', borderBottom: '1px solid rgba(16, 185, 129, 0.3)', paddingBottom: '10px', marginBottom: '15px' }}>Solution: Actual Mean Method</h4>
 
-                    {/* Table */}
-                    <div className="stats-table-container" style={{ marginBottom: '20px' }}>
-                        <table className="stats-table" style={{ fontSize: '0.9rem', width: '100%' }}>
-                            <thead>
-                                <tr>
-                                    <th>X</th>
-                                    <th>Y</th>
-                                    <th>x (X-X&#772;)</th>
-                                    <th>y (Y-&#562;)</th>
-                                    <th>x²</th>
-                                    <th>y²</th>
-                                    <th>xy</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>6</td><td>9</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
-                                <tr><td>2</td><td>11</td><td>-4</td><td>3</td><td>16</td><td>9</td><td>-12</td></tr>
-                                <tr><td>10</td><td>5</td><td>4</td><td>-3</td><td>16</td><td>9</td><td>-12</td></tr>
-                                <tr><td>4</td><td>8</td><td>-2</td><td>0</td><td>4</td><td>0</td><td>0</td></tr>
-                                <tr><td>8</td><td>7</td><td>2</td><td>-1</td><td>4</td><td>1</td><td>-2</td></tr>
-                                <tr style={{ fontWeight: 'bold', background: 'rgba(255,255,255,0.05)' }}>
-                                    <td>Sum=30</td>
-                                    <td>Sum=40</td>
-                                    <td>0</td>
-                                    <td>0</td>
-                                    <td>&Sigma;x²=40</td>
-                                    <td>&Sigma;y²=20</td>
-                                    <td>&Sigma;xy=-26</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                            {/* Step 1: Means */}
+                            <p style={{ color: 'var(--stats-text)', marginBottom: '10px' }}>
+                                <strong>Step 1: Calculate Means</strong><br />
+                                &Sigma;X = 30, N = 5 &rArr; Mean (X&#772;) = 30/5 = 6<br />
+                                &Sigma;Y = 40, N = 5 &rArr; Mean (&#562;) = 40/5 = 8
+                            </p>
 
-                    {/* Calculation */}
-                    <div className="stats-formula" style={{ margin: '0 0 15px 0', fontSize: '1.2rem' }}>
-                        <span>r = </span>
-                        <Fraction
-                            num={<span>&Sigma;xy</span>}
-                            den={<Sqrt><span>&Sigma;x<sup>2</sup> &times; &Sigma;y<sup>2</sup></span></Sqrt>}
-                        />
-                        <span> = </span>
-                        <Fraction
-                            num={<span>-26</span>}
-                            den={<Sqrt><span>40 &times; 20</span></Sqrt>}
-                        />
-                        <span> = </span>
-                        <Fraction
-                            num={<span>-26</span>}
-                            den={<Sqrt><span>800</span></Sqrt>}
-                        />
-                    </div>
-                    <div className="stats-formula" style={{ margin: '0 0 15px 0', fontSize: '1.2rem' }}>
-                        <span> = </span>
-                        <Fraction
-                            num={<span>-26</span>}
-                            den={<span>28.28</span>}
-                        />
-                        <span> = <strong style={{ color: '#ef4444' }}>-0.92</strong></span>
-                    </div>
+                            {/* Table */}
+                            <div className="stats-table-container" style={{ marginBottom: '20px' }}>
+                                <table className="stats-table" style={{ fontSize: '0.9rem', width: '100%' }}>
+                                    <thead>
+                                        <tr>
+                                            <th>X</th>
+                                            <th>Y</th>
+                                            <th>x (X-X&#772;)</th>
+                                            <th>y (Y-&#562;)</th>
+                                            <th>x²</th>
+                                            <th>y²</th>
+                                            <th>xy</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>6</td><td>9</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+                                        <tr><td>2</td><td>11</td><td>-4</td><td>3</td><td>16</td><td>9</td><td>-12</td></tr>
+                                        <tr><td>10</td><td>5</td><td>4</td><td>-3</td><td>16</td><td>9</td><td>-12</td></tr>
+                                        <tr><td>4</td><td>8</td><td>-2</td><td>0</td><td>4</td><td>0</td><td>0</td></tr>
+                                        <tr><td>8</td><td>7</td><td>2</td><td>-1</td><td>4</td><td>1</td><td>-2</td></tr>
+                                        <tr style={{ fontWeight: 'bold', background: 'rgba(255,255,255,0.05)' }}>
+                                            <td>Sum=30</td>
+                                            <td>Sum=40</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>&Sigma;x²=40</td>
+                                            <td>&Sigma;y²=20</td>
+                                            <td>&Sigma;xy=-26</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                    <p style={{ color: 'var(--stats-text)', background: 'rgba(239, 68, 68, 0.1)', padding: '10px', borderRadius: '4px', borderLeft: '3px solid #ef4444' }}>
-                        <strong>Interpretation:</strong> There is a <strong style={{ color: '#ef4444' }}>High Degree of Negative Correlation</strong> between X and Y.
-                    </p>
+                            {/* Calculation */}
+                            <div className="stats-formula" style={{ margin: '0 0 15px 0', fontSize: '1.2rem' }}>
+                                <span>r = </span>
+                                <Fraction
+                                    num={<span>&Sigma;xy</span>}
+                                    den={<Sqrt><span>&Sigma;x<sup>2</sup> &times; &Sigma;y<sup>2</sup></span></Sqrt>}
+                                />
+                                <span> = </span>
+                                <Fraction
+                                    num={<span>-26</span>}
+                                    den={<Sqrt><span>40 &times; 20</span></Sqrt>}
+                                />
+                                <span> = </span>
+                                <Fraction
+                                    num={<span>-26</span>}
+                                    den={<Sqrt><span>800</span></Sqrt>}
+                                />
+                            </div>
+                            <div className="stats-formula" style={{ margin: '0 0 15px 0', fontSize: '1.2rem' }}>
+                                <span> = </span>
+                                <Fraction
+                                    num={<span>-26</span>}
+                                    den={<span>28.28</span>}
+                                />
+                                <span> = <strong style={{ color: '#ef4444' }}>-0.92</strong></span>
+                            </div>
+
+                            <p style={{ color: 'var(--stats-text)', background: 'rgba(239, 68, 68, 0.1)', padding: '10px', borderRadius: '4px', borderLeft: '3px solid #ef4444' }}>
+                                <strong>Interpretation:</strong> There is a <strong style={{ color: '#ef4444' }}>High Degree of Negative Correlation</strong> between X and Y.
+                            </p>
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -210,65 +233,86 @@ const PracticalProblems = () => {
                 </div>
 
                 <div className="stats-solution-toggle">
-                    <h4 style={{ color: '#10b981', borderBottom: '1px solid rgba(16, 185, 129, 0.3)', paddingBottom: '10px', marginBottom: '15px' }}>Solution</h4>
+                    <button
+                        onClick={() => setShowSol2(!showSol2)}
+                        className="stats-btn"
+                        style={{
+                            width: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '10px',
+                            background: showSol2 ? 'rgba(16, 185, 129, 0.2)' : 'var(--stats-primary)',
+                            borderColor: showSol2 ? '#10b981' : 'transparent',
+                            marginBottom: '15px'
+                        }}
+                    >
+                        {showSol2 ? <><FaEyeSlash /> Hide Solution</> : <><FaEye /> Show Detailed Solution</>}
+                    </button>
 
-                    {/* Table */}
-                    <div className="stats-table-container" style={{ marginBottom: '20px' }}>
-                        <table className="stats-table" style={{ fontSize: '0.9rem', width: '100%' }}>
-                            <thead>
-                                <tr>
-                                    <th>R1 (Judge 1)</th>
-                                    <th>R2 (Judge 2)</th>
-                                    <th>D (R1 - R2)</th>
-                                    <th>D²</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>1</td><td>5</td><td>-4</td><td>16</td></tr>
-                                <tr><td>2</td><td>4</td><td>-2</td><td>4</td></tr>
-                                <tr><td>3</td><td>3</td><td>0</td><td>0</td></tr>
-                                <tr><td>4</td><td>2</td><td>2</td><td>4</td></tr>
-                                <tr><td>5</td><td>1</td><td>4</td><td>16</td></tr>
-                                <tr style={{ fontWeight: 'bold', background: 'rgba(255,255,255,0.05)' }}>
-                                    <td>N=5</td>
-                                    <td></td>
-                                    <td>&Sigma;D = 0</td>
-                                    <td>&Sigma;D² = 40</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    {showSol2 && (
+                        <div style={{ animation: 'slideDown 0.3s ease-out' }}>
+                            <h4 style={{ color: '#10b981', borderBottom: '1px solid rgba(16, 185, 129, 0.3)', paddingBottom: '10px', marginBottom: '15px' }}>Solution</h4>
 
-                    {/* Calculation */}
-                    <div className="stats-formula" style={{ margin: '0 0 15px 0', fontSize: '1.2rem' }}>
-                        <span>R = 1 - </span>
-                        <Fraction
-                            num={<span>6 &Sigma;D²</span>}
-                            den={<span>N(N² - 1)</span>}
-                        />
-                        <span> = 1 - </span>
-                        <Fraction
-                            num={<span>6 &times; 40</span>}
-                            den={<span>5(25 - 1)</span>}
-                        />
-                    </div>
-                    <div className="stats-formula" style={{ margin: '0 0 15px 0', fontSize: '1.2rem' }}>
-                        <span> = 1 - </span>
-                        <Fraction
-                            num={<span>240</span>}
-                            den={<span>5 &times; 24</span>}
-                        />
-                        <span> = 1 - </span>
-                        <Fraction
-                            num={<span>240</span>}
-                            den={<span>120</span>}
-                        />
-                        <span> = 1 - 2 = <strong style={{ color: '#ef4444' }}>-1</strong></span>
-                    </div>
+                            {/* Table */}
+                            <div className="stats-table-container" style={{ marginBottom: '20px' }}>
+                                <table className="stats-table" style={{ fontSize: '0.9rem', width: '100%' }}>
+                                    <thead>
+                                        <tr>
+                                            <th>R1 (Judge 1)</th>
+                                            <th>R2 (Judge 2)</th>
+                                            <th>D (R1 - R2)</th>
+                                            <th>D²</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>1</td><td>5</td><td>-4</td><td>16</td></tr>
+                                        <tr><td>2</td><td>4</td><td>-2</td><td>4</td></tr>
+                                        <tr><td>3</td><td>3</td><td>0</td><td>0</td></tr>
+                                        <tr><td>4</td><td>2</td><td>2</td><td>4</td></tr>
+                                        <tr><td>5</td><td>1</td><td>4</td><td>16</td></tr>
+                                        <tr style={{ fontWeight: 'bold', background: 'rgba(255,255,255,0.05)' }}>
+                                            <td>N=5</td>
+                                            <td></td>
+                                            <td>&Sigma;D = 0</td>
+                                            <td>&Sigma;D² = 40</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                    <p style={{ color: 'var(--stats-text)', background: 'rgba(239, 68, 68, 0.1)', padding: '10px', borderRadius: '4px', borderLeft: '3px solid #ef4444' }}>
-                        <strong>Interpretation:</strong> There is a <strong style={{ color: '#ef4444' }}>Perfect Negative Correlation</strong> (-1) between the rankings of the two judges. They have completely opposite tastes!
-                    </p>
+                            {/* Calculation */}
+                            <div className="stats-formula" style={{ margin: '0 0 15px 0', fontSize: '1.2rem' }}>
+                                <span>R = 1 - </span>
+                                <Fraction
+                                    num={<span>6 &Sigma;D²</span>}
+                                    den={<span>N(N² - 1)</span>}
+                                />
+                                <span> = 1 - </span>
+                                <Fraction
+                                    num={<span>6 &times; 40</span>}
+                                    den={<span>5(25 - 1)</span>}
+                                />
+                            </div>
+                            <div className="stats-formula" style={{ margin: '0 0 15px 0', fontSize: '1.2rem' }}>
+                                <span> = 1 - </span>
+                                <Fraction
+                                    num={<span>240</span>}
+                                    den={<span>5 &times; 24</span>}
+                                />
+                                <span> = 1 - </span>
+                                <Fraction
+                                    num={<span>240</span>}
+                                    den={<span>120</span>}
+                                />
+                                <span> = 1 - 2 = <strong style={{ color: '#ef4444' }}>-1</strong></span>
+                            </div>
+
+                            <p style={{ color: 'var(--stats-text)', background: 'rgba(239, 68, 68, 0.1)', padding: '10px', borderRadius: '4px', borderLeft: '3px solid #ef4444' }}>
+                                <strong>Interpretation:</strong> There is a <strong style={{ color: '#ef4444' }}>Perfect Negative Correlation</strong> (-1) between the rankings of the two judges. They have completely opposite tastes!
+                            </p>
+                        </div>
+                    )}
                 </div>
             </div>
 
