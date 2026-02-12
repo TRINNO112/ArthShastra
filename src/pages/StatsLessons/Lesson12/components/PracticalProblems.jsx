@@ -1,6 +1,31 @@
 import React, { useState } from 'react';
 import { FaCalculator, FaTable, FaLightbulb, FaEye, FaEyeSlash, FaCheckCircle, FaMoneyBillWave, FaArrowRight, FaQuestionCircle, FaStar } from 'react-icons/fa';
 
+/**
+ * AnimatedSolution Component
+ * Handles smooth opening and closing animations by transitioning max-height and opacity.
+ */
+const AnimatedSolution = ({ isOpen, children, isConceptual }) => {
+    return (
+        <div style={{
+            maxHeight: isOpen ? '1000px' : '0px',
+            opacity: isOpen ? 1 : 0,
+            overflow: 'hidden',
+            transition: 'max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in-out',
+            transform: isConceptual && isOpen ? 'scale(1)' : isConceptual ? 'scale(0.95)' : 'none',
+            transformOrigin: 'top',
+            marginTop: isOpen ? '20px' : '0px'
+        }}>
+            <div style={{
+                paddingBottom: '20px',
+                animation: isConceptual && isOpen ? 'boxOpen 0.5s ease-out' : 'none'
+            }}>
+                {children}
+            </div>
+        </div>
+    );
+};
+
 const PracticalProblems = () => {
     const [activeSols, setActiveSols] = useState({});
 
@@ -34,6 +59,16 @@ const PracticalProblems = () => {
 
     return (
         <div style={{ animation: 'fadeIn 0.5s ease-out', paddingBottom: '60px' }}>
+            {/* Custom Animations Style */}
+            <style>
+                {`
+                    @keyframes boxOpen {
+                        0% { transform: perspective(500px) rotateX(-20deg) scale(0.9); opacity: 0; }
+                        100% { transform: perspective(500px) rotateX(0deg) scale(1); opacity: 1; }
+                    }
+                `}
+            </style>
+
             {/* Header */}
             <div className="stats-card" style={{ textAlign: 'center', marginBottom: '30px', borderBottom: '3px solid var(--stats-primary)', borderRadius: '15px' }}>
                 <h2 className="stats-title" style={{ letterSpacing: '3px', textTransform: 'uppercase' }}>Examination Laboratory</h2>
@@ -74,36 +109,34 @@ const PracticalProblems = () => {
                     {activeSols.p1 ? <><FaEyeSlash /> Hide Solution</> : <><FaEye /> Reveal Step-by-Step Table</>}
                 </button>
 
-                {activeSols.p1 && (
-                    <div style={{ animation: 'slideDown 0.3s ease-out', marginTop: '20px' }}>
-                        <div className="stats-table-container">
-                            <table className="stats-table" style={{ fontSize: '0.9rem' }}>
-                                <thead style={{ background: 'rgba(59, 130, 246, 0.2)' }}>
-                                    <tr><th>Item</th><th>P₁q₀</th><th>P₀q₀</th><th>P₁q₁</th><th>P₀q₁</th></tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td>Cloth</td><td>1500</td><td>1000</td><td>1800</td><td>1200</td></tr>
-                                    <tr><td>Fuel</td><td>1600</td><td>1000</td><td>1200</td><td>750</td></tr>
-                                    <tr><td>Others</td><td>1250</td><td>1000</td><td>1500</td><td>1200</td></tr>
-                                    <tr style={{ fontWeight: 'bold', background: 'rgba(255,255,255,0.05)' }}>
-                                        <td>TOTAL</td><td>4350</td><td>3000</td><td>4500</td><td>3150</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                <AnimatedSolution isOpen={activeSols.p1}>
+                    <div className="stats-table-container">
+                        <table className="stats-table" style={{ fontSize: '0.9rem' }}>
+                            <thead style={{ background: 'rgba(59, 130, 246, 0.2)' }}>
+                                <tr><th>Item</th><th>P₁q₀</th><th>P₀q₀</th><th>P₁q₁</th><th>P₀q₁</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Cloth</td><td>1500</td><td>1000</td><td>1800</td><td>1200</td></tr>
+                                <tr><td>Fuel</td><td>1600</td><td>1000</td><td>1200</td><td>750</td></tr>
+                                <tr><td>Others</td><td>1250</td><td>1000</td><td>1500</td><td>1200</td></tr>
+                                <tr style={{ fontWeight: 'bold', background: 'rgba(255,255,255,0.05)' }}>
+                                    <td>TOTAL</td><td>4350</td><td>3000</td><td>4500</td><td>3150</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style={{ display: 'grid', gap: '20px', marginTop: '20px' }}>
+                        <div className="stats-formula" style={{ fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
+                            <span>L = </span><Fraction num="4350" den="3000" multiplier="100" /><span> = </span><strong style={{ color: '#3b82f6', marginLeft: '10px' }}>145.00</strong>
                         </div>
-                        <div style={{ display: 'grid', gap: '20px', marginTop: '20px' }}>
-                            <div className="stats-formula" style={{ fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
-                                <span>L = </span><Fraction num="4350" den="3000" multiplier="100" /><span> = </span><strong style={{ color: '#3b82f6', marginLeft: '10px' }}>145.00</strong>
-                            </div>
-                            <div className="stats-formula" style={{ fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
-                                <span>P = </span><Fraction num="4500" den="3150" multiplier="100" /><span> = </span><strong style={{ color: '#ec4899', marginLeft: '10px' }}>142.86</strong>
-                            </div>
-                            <div className="stats-formula" style={{ fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
-                                <span>F = </span><Sqrt>145.00 &times; 142.86</Sqrt><span> = </span><strong style={{ color: '#f59e0b', marginLeft: '10px' }}>143.93</strong>
-                            </div>
+                        <div className="stats-formula" style={{ fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
+                            <span>P = </span><Fraction num="4500" den="3150" multiplier="100" /><span> = </span><strong style={{ color: '#ec4899', marginLeft: '10px' }}>142.86</strong>
+                        </div>
+                        <div className="stats-formula" style={{ fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
+                            <span>F = </span><Sqrt>145.00 &times; 142.86</Sqrt><span> = </span><strong style={{ color: '#f59e0b', marginLeft: '10px' }}>143.93</strong>
                         </div>
                     </div>
-                )}
+                </AnimatedSolution>
             </div>
 
             {/* ═══ PROBLEM 2: CPI ═══ */}
@@ -134,27 +167,25 @@ const PracticalProblems = () => {
                     {activeSols.p2 ? <><FaEyeSlash /> Hide Solution</> : <><FaEye /> Reveal Calculation Table</>}
                 </button>
 
-                {activeSols.p2 && (
-                    <div style={{ animation: 'slideDown 0.3s ease-out', marginTop: '20px' }}>
-                        <div className="stats-table-container" style={{ marginBottom: '20px' }}>
-                            <table className="stats-table">
-                                <thead style={{ background: 'rgba(16, 185, 129, 0.2)' }}>
-                                    <tr><th>Group</th><th>W</th><th>I</th><th>W &times; I</th></tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td>Food</td><td>45</td><td>160</td><td>7200</td></tr>
-                                    <tr><td>Rent</td><td>15</td><td>140</td><td>2100</td></tr>
-                                    <tr><td>Cloth</td><td>20</td><td>180</td><td>3600</td></tr>
-                                    <tr><td>Misc</td><td>20</td><td>150</td><td>3000</td></tr>
-                                    <tr style={{ fontWeight: 'bold' }}><td>TOTAL</td><td>100</td><td>-</td><td>15900</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="stats-formula" style={{ fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
-                            <span>CPI = </span><Fraction num="ΣWI" den="ΣW" /><span> = </span><Fraction num="15900" den="100" /><span> = </span><strong style={{ color: '#10b981', marginLeft: '10px' }}>159.00</strong>
-                        </div>
+                <AnimatedSolution isOpen={activeSols.p2}>
+                    <div className="stats-table-container">
+                        <table className="stats-table">
+                            <thead style={{ background: 'rgba(16, 185, 129, 0.2)' }}>
+                                <tr><th>Group</th><th>W</th><th>I</th><th>W &times; I</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Food</td><td>45</td><td>160</td><td>7200</td></tr>
+                                <tr><td>Rent</td><td>15</td><td>140</td><td>2100</td></tr>
+                                <tr><td>Cloth</td><td>20</td><td>180</td><td>3600</td></tr>
+                                <tr><td>Misc</td><td>20</td><td>150</td><td>3000</td></tr>
+                                <tr style={{ fontWeight: 'bold' }}><td>TOTAL</td><td>100</td><td>-</td><td>15900</td></tr>
+                            </tbody>
+                        </table>
                     </div>
-                )}
+                    <div className="stats-formula" style={{ fontSize: '1.2rem', display: 'flex', alignItems: 'center', marginTop: '20px' }}>
+                        <span>CPI = </span><Fraction num="ΣWI" den="ΣW" /><span> = </span><Fraction num="15900" den="100" /><span> = </span><strong style={{ color: '#10b981', marginLeft: '10px' }}>159.00</strong>
+                    </div>
+                </AnimatedSolution>
             </div>
 
             {/* ═══ PROBLEM 3: SIMPLE AGGREGATIVE ═══ */}
@@ -185,13 +216,11 @@ const PracticalProblems = () => {
                     {activeSols.p3 ? 'Hide Solution' : 'Show Solution'}
                 </button>
 
-                {activeSols.p3 && (
-                    <div style={{ animation: 'slideDown 0.3s ease-out', marginTop: '20px' }}>
-                        <div className="stats-formula" style={{ display: 'flex', alignItems: 'center', fontSize: '1.25rem' }}>
-                            <span>P₀₁ = </span><Fraction num="ΣP₁" den="ΣP₀" /><span> &times; 100 = </span><Fraction num="3490" den="2700" multiplier="100" /><span> = </span><strong style={{ color: '#6366f1', marginLeft: '10px' }}>129.26</strong>
-                        </div>
+                <AnimatedSolution isOpen={activeSols.p3}>
+                    <div className="stats-formula" style={{ display: 'flex', alignItems: 'center', fontSize: '1.25rem' }}>
+                        <span>P₀₁ = </span><Fraction num="ΣP₁" den="ΣP₀" /><span> &times; 100 = </span><Fraction num="3490" den="2700" multiplier="100" /><span> = </span><strong style={{ color: '#6366f1', marginLeft: '10px' }}>129.26</strong>
                     </div>
-                )}
+                </AnimatedSolution>
             </div>
 
             {/* ═══ PROBLEM 4: AVG OF RELATIVES ═══ */}
@@ -217,29 +246,27 @@ const PracticalProblems = () => {
                     {activeSols.p4 ? 'Hide Solution' : 'Show Table Solution'}
                 </button>
 
-                {activeSols.p4 && (
-                    <div style={{ animation: 'slideDown 0.3s ease-out', marginTop: '20px' }}>
-                        <div className="stats-table-container">
-                            <table className="stats-table">
-                                <thead style={{ background: 'rgba(236, 72, 153, 0.2)' }}>
-                                    <tr><th>Item</th><th>P₀</th><th>P₁</th><th>I = (P₁/P₀) &times; 100</th></tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td>A</td><td>40</td><td>60</td><td>150.0</td></tr>
-                                    <tr><td>B</td><td>80</td><td>100</td><td>125.0</td></tr>
-                                    <tr><td>C</td><td>100</td><td>150</td><td>150.0</td></tr>
-                                    <tr style={{ fontWeight: 'bold' }}><td>Sum (Σ)</td><td colSpan="2">-</td><td>425.0</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="stats-formula" style={{ display: 'flex', alignItems: 'center', marginTop: '15px' }}>
-                            <span>Index = </span><Fraction num="ΣI" den="N" /><span> = </span><Fraction num="425" den="3" /><span> = </span><strong style={{ color: '#ec4899', marginLeft: '10px' }}>141.67</strong>
-                        </div>
+                <AnimatedSolution isOpen={activeSols.p4}>
+                    <div className="stats-table-container">
+                        <table className="stats-table">
+                            <thead style={{ background: 'rgba(236, 72, 153, 0.2)' }}>
+                                <tr><th>Item</th><th>P₀</th><th>P₁</th><th>I = (P₁/P₀) &times; 100</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>A</td><td>40</td><td>60</td><td>150.0</td></tr>
+                                <tr><td>B</td><td>80</td><td>100</td><td>125.0</td></tr>
+                                <tr><td>C</td><td>100</td><td>150</td><td>150.0</td></tr>
+                                <tr style={{ fontWeight: 'bold' }}><td>Sum (Σ)</td><td colSpan="2">-</td><td>425.0</td></tr>
+                            </tbody>
+                        </table>
                     </div>
-                )}
+                    <div className="stats-formula" style={{ display: 'flex', alignItems: 'center', marginTop: '15px' }}>
+                        <span>Index = </span><Fraction num="ΣI" den="N" /><span> = </span><Fraction num="425" den="3" /><span> = </span><strong style={{ color: '#ec4899', marginLeft: '10px' }}>141.67</strong>
+                    </div>
+                </AnimatedSolution>
             </div>
 
-            {/* ═══ PROBLEM 5: REAL WAGES (THE VERIFICATION) ═══ */}
+            {/* ═══ PROBLEM 5: REAL WAGES ═══ */}
             <div className="stats-card" style={{ marginBottom: '30px', borderLeft: '5px solid #ef4444', paddingLeft: '20px' }}>
                 <h3 className="stats-card-heading" style={{ borderColor: '#ef4444' }}>
                     <FaMoneyBillWave style={{ color: '#ef4444' }} /> Problem 5: Purchasing Power Challenge
@@ -254,22 +281,20 @@ const PracticalProblems = () => {
                     {activeSols.p5 ? 'Hide Solution' : 'Show Calculation'}
                 </button>
 
-                {activeSols.p5 && (
-                    <div style={{ animation: 'slideDown 0.3s ease-out', marginTop: '20px' }}>
-                        <div className="stats-formula" style={{ display: 'flex', alignItems: 'center', fontSize: '1.3rem' }}>
-                            <span>Real Wage = </span><Fraction num="Salary" den="CPI" /><span> &times; 100</span>
-                        </div>
-                        <div className="stats-formula" style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
-                            <span>2024 Real Wage = </span><Fraction num="18000" den="200" multiplier="100" /><span> = </span><strong style={{ color: '#10b981', marginLeft: '10px' }}>₹9,000</strong>
-                        </div>
-                        <div className="stats-problem-box" style={{ borderLeft: '4px solid #f59e0b', paddingLeft: '20px', background: 'rgba(245, 158, 11, 0.05)', marginTop: '15px' }}>
-                            <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--stats-text)' }}>
-                                <FaLightbulb style={{ color: '#f59e0b', marginRight: '8px' }} />
-                                <strong>Reality Check:</strong> Although the notebook says ₹18,000, it effectively only buys what ₹9,000 could buy in 2018. The worker is poorer!
-                            </p>
-                        </div>
+                <AnimatedSolution isOpen={activeSols.p5}>
+                    <div className="stats-formula" style={{ display: 'flex', alignItems: 'center', fontSize: '1.3rem' }}>
+                        <span>Real Wage = </span><Fraction num="Salary" den="CPI" /><span> &times; 100</span>
                     </div>
-                )}
+                    <div className="stats-formula" style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
+                        <span>2024 Real Wage = </span><Fraction num="18000" den="200" multiplier="100" /><span> = </span><strong style={{ color: '#10b981', marginLeft: '10px' }}>₹9,000</strong>
+                    </div>
+                    <div className="stats-problem-box" style={{ borderLeft: '4px solid #f59e0b', paddingLeft: '20px', background: 'rgba(245, 158, 11, 0.05)', marginTop: '15px' }}>
+                        <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--stats-text)' }}>
+                            <FaLightbulb style={{ color: '#f59e0b', marginRight: '8px' }} />
+                            <strong>Reality Check:</strong> Although the notebook says ₹18,000, it effectively only buys what ₹9,000 could buy in 2018. The worker is poorer!
+                        </p>
+                    </div>
+                </AnimatedSolution>
             </div>
 
             {/* ═══ PROBLEM 6: WEIGHTED INDICES (Set 2) ═══ */}
@@ -279,7 +304,7 @@ const PracticalProblems = () => {
                 </h3>
                 <div className="stats-problem-box" style={{ background: 'var(--stats-bg-alt)', padding: '20px', borderRadius: '12px', marginBottom: '20px' }}>
                     <p style={{ color: 'var(--stats-text)', marginBottom: '15px', fontWeight: '500' }}>
-                        Calculate (a) Laspeyres, (b) Paasche, and (c) Fisher's indices for this food-basket:
+                        Another test! Calculate (a) Laspeyres, (b) Paasche, and (c) Fisher's indices:
                     </p>
                     <div className="stats-table-container">
                         <table className="stats-table">
@@ -298,38 +323,36 @@ const PracticalProblems = () => {
                     {activeSols.p6 ? <><FaEyeSlash /> Hide Solution</> : <><FaEye /> Reveal Full Numerical Table</>}
                 </button>
 
-                {activeSols.p6 && (
-                    <div style={{ animation: 'slideDown 0.3s ease-out', marginTop: '20px' }}>
-                        <div className="stats-table-container">
-                            <table className="stats-table" style={{ fontSize: '0.85rem' }}>
-                                <thead style={{ background: 'rgba(139, 92, 246, 0.2)' }}>
-                                    <tr><th>Item</th><th>P₁q₀</th><th>P₀q₀</th><th>P₁q₁</th><th>P₀q₁</th></tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td>Fruit</td><td>500</td><td>400</td><td>400</td><td>320</td></tr>
-                                    <tr><td>Veg</td><td>600</td><td>400</td><td>480</td><td>320</td></tr>
-                                    <tr style={{ fontWeight: 'bold', background: 'rgba(255,255,255,0.05)' }}>
-                                        <td>TOTAL</td><td>1100</td><td>800</td><td>880</td><td>640</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                <AnimatedSolution isOpen={activeSols.p6}>
+                    <div className="stats-table-container">
+                        <table className="stats-table" style={{ fontSize: '0.85rem' }}>
+                            <thead style={{ background: 'rgba(139, 92, 246, 0.2)' }}>
+                                <tr><th>Item</th><th>P₁q₀</th><th>P₀q₀</th><th>P₁q₁</th><th>P₀q₁</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Fruit</td><td>500</td><td>400</td><td>400</td><td>320</td></tr>
+                                <tr><td>Veg</td><td>600</td><td>400</td><td>480</td><td>320</td></tr>
+                                <tr style={{ fontWeight: 'bold', background: 'rgba(255,255,255,0.05)' }}>
+                                    <td>TOTAL</td><td>1100</td><td>800</td><td>880</td><td>640</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style={{ display: 'grid', gap: '20px', marginTop: '20px' }}>
+                        <div className="stats-formula" style={{ display: 'flex', alignItems: 'center' }}>
+                            <span>L = </span><Fraction num="1100" den="800" multiplier="100" /><span> = </span><strong style={{ color: '#3b82f6', marginLeft: '10px' }}>137.50</strong>
                         </div>
-                        <div style={{ display: 'grid', gap: '20px', marginTop: '20px' }}>
-                            <div className="stats-formula" style={{ display: 'flex', alignItems: 'center' }}>
-                                <span>L = </span><Fraction num="1100" den="800" multiplier="100" /><span> = </span><strong style={{ color: '#3b82f6', marginLeft: '10px' }}>137.50</strong>
-                            </div>
-                            <div className="stats-formula" style={{ display: 'flex', alignItems: 'center' }}>
-                                <span>P = </span><Fraction num="880" den="640" multiplier="100" /><span> = </span><strong style={{ color: '#ec4899', marginLeft: '10px' }}>137.50</strong>
-                            </div>
-                            <div className="stats-formula" style={{ display: 'flex', alignItems: 'center' }}>
-                                <span>F = </span><Sqrt>137.50 &times; 137.50</Sqrt><span> = </span><strong style={{ color: '#f59e0b', marginLeft: '10px' }}>137.50</strong>
-                            </div>
+                        <div className="stats-formula" style={{ display: 'flex', alignItems: 'center' }}>
+                            <span>P = </span><Fraction num="880" den="640" multiplier="100" /><span> = </span><strong style={{ color: '#ec4899', marginLeft: '10px' }}>137.50</strong>
+                        </div>
+                        <div className="stats-formula" style={{ display: 'flex', alignItems: 'center' }}>
+                            <span>F = </span><Sqrt>137.50 &times; 137.50</Sqrt><span> = </span><strong style={{ color: '#f59e0b', marginLeft: '10px' }}>137.50</strong>
                         </div>
                     </div>
-                )}
+                </AnimatedSolution>
             </div>
 
-            {/* ═══ PROBLEM 7: CONCEPT CHECK A ═══ */}
+            {/* ═══ PROBLEM 7: CONCEPT CHECK A (Special Animation) ═══ */}
             <div className="stats-card" style={{ marginBottom: '30px', borderLeft: '5px solid #f59e0b', paddingLeft: '20px' }}>
                 <h3 className="stats-card-heading" style={{ borderColor: '#f59e0b' }}>
                     <FaQuestionCircle style={{ color: '#f59e0b' }} /> Problem 7: Why is Fisher's Index "Ideal"?
@@ -344,22 +367,20 @@ const PracticalProblems = () => {
                     {activeSols.p7 ? <><FaEyeSlash /> Hide Explanation</> : <><FaEye /> Reveal Conceptual Logic</>}
                 </button>
 
-                {activeSols.p7 && (
-                    <div style={{ animation: 'slideDown 0.3s ease-out', padding: '15px 0' }}>
-                        <div className="stats-problem-box" style={{ borderLeft: '4px solid #f59e0b', paddingLeft: '20px', background: 'rgba(245, 158, 11, 0.05)' }}>
-                            <p style={{ margin: 0, color: 'var(--stats-text)', lineHeight: '1.6' }}>
-                                <FaArrowRight style={{ color: '#f59e0b', marginRight: '8px' }} />
-                                Fisher's Index is "Ideal" because it uses the <strong>Geometric Mean</strong> to balance the biases of Laspeyres and Paasche. Crucially, it satisfies:
-                                <br /><br />
-                                1. <strong>Time Reversal Test:</strong> Consistency when base and current years are swapped.<br />
-                                2. <strong>Factor Reversal Test:</strong> Consistency when price and quantity factors are swapped.
-                            </p>
-                        </div>
+                <AnimatedSolution isOpen={activeSols.p7} isConceptual={true}>
+                    <div className="stats-problem-box" style={{ borderLeft: '4px solid #f59e0b', paddingLeft: '20px', background: 'rgba(245, 158, 11, 0.05)' }}>
+                        <p style={{ margin: 0, color: 'var(--stats-text)', lineHeight: '1.6' }}>
+                            <FaArrowRight style={{ color: '#f59e0b', marginRight: '8px' }} />
+                            Fisher's Index is "Ideal" because it uses the <strong>Geometric Mean</strong> to balance the biases of Laspeyres and Paasche. Crucially, it satisfies:
+                            <br /><br />
+                            1. <strong>Time Reversal Test:</strong> Consistency when base and current years are swapped.<br />
+                            2. <strong>Factor Reversal Test:</strong> Consistency when price and quantity factors are swapped.
+                        </p>
                     </div>
-                )}
+                </AnimatedSolution>
             </div>
 
-            {/* ═══ PROBLEM 8: CONCEPT CHECK B ═══ */}
+            {/* ═══ PROBLEM 8: CONCEPT CHECK B (Special Animation) ═══ */}
             <div className="stats-card" style={{ borderLeft: '5px solid #06b6d4', paddingLeft: '20px' }}>
                 <h3 className="stats-card-heading" style={{ borderColor: '#06b6d4' }}>
                     <FaQuestionCircle style={{ color: '#06b6d4' }} /> Problem 8: The "Base Year" Protocol
@@ -374,21 +395,19 @@ const PracticalProblems = () => {
                     {activeSols.p8 ? <><FaEyeSlash /> Hide Explanation</> : <><FaEye /> Reveal Professional Answer</>}
                 </button>
 
-                {activeSols.p8 && (
-                    <div style={{ animation: 'slideDown 0.3s ease-out', padding: '15px 0' }}>
-                        <div className="stats-problem-box" style={{ borderLeft: '4px solid #06b6d4', paddingLeft: '20px', background: 'rgba(6, 182, 212, 0.05)' }}>
-                            <p style={{ margin: 0, color: 'var(--stats-text)', lineHeight: '1.6' }}>
-                                <FaArrowRight style={{ color: '#06b6d4', marginRight: '8px' }} />
-                                A Base Year must be a <strong>Normal Year</strong>. This means:
-                                <ul style={{ marginTop: '10px' }}>
-                                    <li>No major economic shocks (War, Pandemic, Extreme Famine).</li>
-                                    <li>Relative social and political stability.</li>
-                                    <li>It should not be too distant from the current year to ensure relevance.</li>
-                                </ul>
-                            </p>
-                        </div>
+                <AnimatedSolution isOpen={activeSols.p8} isConceptual={true}>
+                    <div className="stats-problem-box" style={{ borderLeft: '4px solid #06b6d4', paddingLeft: '20px', background: 'rgba(6, 182, 212, 0.05)' }}>
+                        <p style={{ margin: 0, color: 'var(--stats-text)', lineHeight: '1.6' }}>
+                            <FaArrowRight style={{ color: '#06b6d4', marginRight: '8px' }} />
+                            A Base Year must be a <strong>Normal Year</strong>. This means:
+                            <ul style={{ marginTop: '10px' }}>
+                                <li>No major economic shocks (War, Pandemic, Extreme Famine).</li>
+                                <li>Relative social and political stability.</li>
+                                <li>It should not be too distant from the current year to ensure relevance.</li>
+                            </ul>
+                        </p>
                     </div>
-                )}
+                </AnimatedSolution>
             </div>
 
         </div>
