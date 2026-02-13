@@ -4,7 +4,7 @@ import { FaGlobeAmericas, FaHospital, FaUniversity, FaChartLine, FaRobot, FaLeaf
 /**
  * PracticalApplications - "The Lens of Truth"
  * Concept: User moves a "searchlight" (cursor) to reveal hidden statistical data.
- * Reduced to 6 High-Impact Sectors.
+ * Reduced to 6 High-Impact Sectors with optimized spacing.
  */
 const PracticalApplications = () => {
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -22,14 +22,14 @@ const PracticalApplications = () => {
     };
 
     const modules = [
-        // Top Row
+        // Top Row - Spaced at 18%, 50%, 82%
         {
             id: 'health',
             icon: <FaHospital />,
             title: "Healthcare",
             stat: "R₀ = 1.2",
             desc: "Outbreak Prediction",
-            top: 25, left: 15,
+            top: 25, left: 18,
             color: "#10b981"
         },
         {
@@ -47,7 +47,7 @@ const PracticalApplications = () => {
             title: "Space",
             stat: "Δv = 9.8",
             desc: "Orbital Mechanics",
-            top: 25, left: 85,
+            top: 25, left: 82,
             color: "#f43f5e"
         },
         // Bottom Row
@@ -57,7 +57,7 @@ const PracticalApplications = () => {
             title: "Markets",
             stat: "σ = 15.4%",
             desc: "Risk Analysis",
-            top: 75, left: 15,
+            top: 75, left: 18,
             color: "#3b82f6"
         },
         {
@@ -75,7 +75,7 @@ const PracticalApplications = () => {
             title: "Polling",
             stat: "±3% Margin",
             desc: "Sampling Error",
-            top: 75, left: 85,
+            top: 75, left: 82,
             color: "#6366f1"
         }
     ];
@@ -97,7 +97,7 @@ const PracticalApplications = () => {
                 onMouseMove={handleMouseMove}
                 style={{
                     width: '100%',
-                    height: '600px',
+                    height: '800px', // Increased height to prevent overlap
                     position: 'relative',
                     borderRadius: '24px',
                     overflow: 'hidden',

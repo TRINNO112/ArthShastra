@@ -58,43 +58,66 @@ const CaseStudy = () => {
     // Stricter Achievement Logic
     const checkAchievements = (currentCards) => {
         // ROW MASTER: 
-        // 1. Sort by Y position.
-        // 2. Find groups of 5+ cards within a small Y-variance (e.g. 5%).
-        // 3. For these groups, check if X-coordinates are roughly sequential or compact?
-        //    Actually, "Visual Row" usually means similar Y. Let's start there but be strict.
-
+        // 1. Group cards into "Y-clusters" (cards with similar Y)
+        // Sort by Y first to easily find clusters
         const sortedByY = [...currentCards].sort((a, b) => a.y - b.y);
-        let maxRowStreak = 0;
-        let currentRowStreak = 1;
+
+        if (sortedByY.length === 0) return;
+
+        const clusters = [];
+        let currentCluster = [sortedByY[0]];
 
         for (let i = 1; i < sortedByY.length; i++) {
-            // Strict Y alignment: variance < 3%
+            // If Y difference is small (< 3%), belongs to same "visual row"
             if (Math.abs(sortedByY[i].y - sortedByY[i - 1].y) < 3) {
-                // Also check if X is reasonably close? No, let's just force straight line.
-                // But wait, if they are piled on top of each other, that's not a row.
-                // Check if X-distance is significant?
-                currentRowStreak++;
+                currentCluster.push(sortedByY[i]);
             } else {
-                maxRowStreak = Math.max(maxRowStreak, currentRowStreak);
-                currentRowStreak = 1;
+                clusters.push(currentCluster);
+                currentCluster = [sortedByY[i]];
             }
         }
-        maxRowStreak = Math.max(maxRowStreak, currentRowStreak);
+        clusters.push(currentCluster);
 
-        // GRID MASTER:
-        // A "Grid" implies multiple rows?
-        // Or just that ALL cards are somewhat aligned?
-        // Let's count how many cards are "aligned" with at least one neighbor.
+        let maxRowStreak = 0;
+
+        // 2. For each cluster, check X-sequence (Visual Adjacency)
+        clusters.forEach(cluster => {
+            if (cluster.length < 5) return; // Optimization: Must have at least 5 to qualify
+
+            // Sort by X to check order
+            cluster.sort((a, b) => a.x - b.x);
+
+            let currentSeq = 1;
+            for (let k = 1; k < cluster.length; k++) {
+                const dx = cluster[k].x - cluster[k - 1].x;
+                // Strict Adjacency Rule:
+                // - Must be > 2% apart (not completely overlapping/stacked)
+                // - Must be < 25% apart (not too far, visually connected)
+                if (dx > 2 && dx < 25) {
+                    currentSeq++;
+                } else {
+                    maxRowStreak = Math.max(maxRowStreak, currentSeq);
+                    currentSeq = 1;
+                }
+            }
+            maxRowStreak = Math.max(maxRowStreak, currentSeq);
+        });
+
+        // GRID MASTER: Count of aligned neighbors (simpler logic, "organized chaos")
         let alignedCount = 0;
         for (let i = 0; i < currentCards.length; i++) {
-            const c1 = currentCards[i];
-            // Check if it has a neighbor in X or Y
+            // Check if card has AT LEAST ONE neighbor aligned either horizontally or vertically
             const hasNeighbor = currentCards.some((c2, j) => {
                 if (i === j) return false;
-                const dy = Math.abs(c1.y - c2.y);
-                const dx = Math.abs(c1.x - c2.x);
-                // Neighbor in Row (similar Y, close X) OR Column (similar X, close Y)
-                return (dy < 3 && dx < 20) || (dx < 3 && dy < 20);
+                const dy = Math.abs(currentCards[i].y - c2.y);
+                const dx = Math.abs(currentCards[i].x - c2.x);
+
+                // Horizontal Alignment: Similar Y, Close X
+                const isRowNeighbor = (dy < 3 && dx > 2 && dx < 25);
+                // Vertical Alignment: Similar X, Close Y
+                const isColNeighbor = (dx < 3 && dy > 2 && dy < 25);
+
+                return isRowNeighbor || isColNeighbor;
             });
             if (hasNeighbor) alignedCount++;
         }
@@ -102,14 +125,11 @@ const CaseStudy = () => {
         const newAchievements = [...achievements];
         let toastMsg = null;
 
-        // Condition: Must align 5 cards perfectly in a row (stricter Y check)
-        // AND ensuring they aren't just a pile (handled by visual expectation, user unlikely to pile).
         if (maxRowStreak >= 5 && !achievements.includes('row_master')) {
             newAchievements.push('row_master');
             toastMsg = "🏆 Achievement Unlocked: Row Master (Perfect Line!)";
         }
 
-        // Condition: 15+ cards are part of a structure
         if (alignedCount >= 15 && !achievements.includes('grid_master')) {
             newAchievements.push('grid_master');
             toastMsg = "🌟 MEGA Achievement: GRID MASTER (Organized Chaos!)";
@@ -165,11 +185,8 @@ const CaseStudy = () => {
     const handleMouseUp = () => {
         if (dragItem.current !== null) {
             setCards(prev => {
-                const newCards = prev.map((c, i) => i === dragItem.current ? { ...c, isDragging: false, rotation: 0 } : c); // No rotation on drop for easier alignment
-
-                // Add a small delay/debounce or just check immediately?
-                // Check immediately is fine.
-                checkAchievements(newCards);
+                const newCards = prev.map((c, i) => i === dragItem.current ? { ...c, isDragging: false, rotation: 0 } : c);
+                checkAchievements(newCards); // Check achievements only after dropping
                 return newCards;
             });
             dragItem.current = null;
