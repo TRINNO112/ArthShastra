@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaArrowLeft, FaTools, FaProjectDiagram, FaGlobeAmericas, FaQuestionCircle } from 'react-icons/fa';
+import { FaArrowLeft, FaTools, FaProjectDiagram, FaGlobeAmericas, FaQuestionCircle, FaClipboardList } from 'react-icons/fa';
 import '../css/stats-theme.css';
 import { logLessonProgress } from '../../../services/firebase';
 
 // Components
 import StatsUsageIntro from './components/StatsUsageIntro';
 import ProjectSteps from './components/ProjectSteps';
+import CaseStudy from './components/CaseStudy';
 import PracticalApplications from './components/PracticalApplications';
 import Quiz from './components/Quiz';
 import TopicsMenu from '../components/TopicsMenu';
@@ -27,7 +28,8 @@ const Lesson13 = () => {
 
     const topics = [
         { id: 'intro', label: 'Overview', icon: <FaTools /> },
-        { id: 'steps', label: 'Project Steps', icon: <FaProjectDiagram /> },
+        { id: 'methodology', label: 'Methodology', icon: <FaProjectDiagram /> },
+        { id: 'casestudy', label: 'Case Study', icon: <FaClipboardList /> },
         { id: 'apps', label: 'Applications', icon: <FaGlobeAmericas /> },
         { id: 'quiz', label: 'Final Quiz', icon: <FaQuestionCircle /> }
     ];
@@ -60,7 +62,8 @@ const Lesson13 = () => {
                 {/* Main Content Area */}
                 <div className="stats-content">
                     {activeTab === 'intro' && <StatsUsageIntro />}
-                    {activeTab === 'steps' && <ProjectSteps />}
+                    {activeTab === 'methodology' && <ProjectSteps />}
+                    {activeTab === 'casestudy' && <CaseStudy />}
                     {activeTab === 'apps' && <PracticalApplications />}
                     {activeTab === 'quiz' && <Quiz />}
                 </div>

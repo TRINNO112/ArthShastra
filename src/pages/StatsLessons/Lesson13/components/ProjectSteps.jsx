@@ -1,64 +1,63 @@
 import React from 'react';
-import { FaProjectDiagram, FaClipboardList, FaSearch, FaChartBar, FaFileAlt } from 'react-icons/fa';
+import { FaProjectDiagram, FaClipboardList, FaSearch, FaChartBar, FaFileAlt, FaUserEdit, FaCheckDouble } from 'react-icons/fa';
 
 const ProjectSteps = () => {
-    const steps = [
-        { icon: <FaSearch />, title: "Problem Identification", desc: "Defining the objective of the study (e.g., 'Analyzing the impact of social media on student study hours')." },
-        { icon: <FaClipboardList />, title: "Data Collection", desc: "Choosing primary surveys for first-hand student feedback or secondary logs from app-usage databases." },
-        { icon: <FaProjectDiagram />, title: "Organization", desc: "Classifying the raw response hours into a frequency distribution (e.g., 0-2 hours, 2-4 hours)." },
-        { icon: <FaChartBar />, title: "Analysis", desc: "Calculating the Mean study time and its Correlation with screen time to find patterns." },
-        { icon: <FaFileAlt />, title: "Interpretation", desc: "Concluding whether high screen time directly reduces study efficiency and suggesting better habits." }
+    const methodology = [
+        { icon: <FaSearch />, title: "Problem Definition", desc: "Identify the critical economic question. Is it about poverty, unemployment, or consumer behavior?" },
+        { icon: <FaUserEdit />, title: "Pilot Survey", desc: "Always conduct a trial run with a small group to check if your questions are clear and unbiased." },
+        { icon: <FaClipboardList />, title: "Data Collection Strategy", desc: "Choose your source. Primary (Survey/Interview) or Secondary (Reports/Websites)." },
+        { icon: <FaProjectDiagram />, title: "Data Processing", desc: "Clean the raw data, classify it into frequency arrays, and organize it into formal tables." },
+        { icon: <FaChartBar />, title: "Analytical Tools", desc: "Apply Mean, Median, Correlation, or Index Numbers depending on the objective." },
+        { icon: <FaFileAlt />, title: "Final Interpretation", desc: "Translate numbers into words. What does a Correlation of 0.8 actually mean for the policy?" }
     ];
 
     return (
-        <div className="project-steps" style={{ animation: 'fadeIn 0.5s ease-out' }}>
-            <div className="stats-card" style={{ paddingLeft: '20px', marginBottom: '30px' }}>
-                <h3 className="stats-card-heading" style={{ color: 'var(--stats-primary)' }}>
-                    <FaClipboardList /> How to Conduct a Statistical Project
+        <div className="project-methodology" style={{ animation: 'fadeIn 0.5s ease-out' }}>
+            <div className="stats-card" style={{ padding: '30px', borderLeft: '5px solid var(--stats-primary)' }}>
+                <h3 className="stats-card-heading" style={{ color: 'var(--stats-primary)', fontSize: '1.8rem' }}>
+                    <FaClipboardList /> The Professional Methodology
                 </h3>
+                <p style={{ margin: '15px 0 30px', opacity: 0.8 }}>Before starting your Case Study, you must follow this rigorous 6-step framework used by professional economists.</p>
 
-                <div className="timeline" style={{ marginTop: '30px', position: 'relative' }}>
-                    {steps.map((step, index) => (
-                        <div key={index} className="timeline-item" style={{ display: 'flex', gap: '20px', marginBottom: '30px' }}>
-                            <div className="timeline-icon" style={{
-                                width: '50px',
-                                height: '50px',
-                                background: 'var(--stats-primary)',
-                                borderRadius: '50%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontSize: '1.5rem',
-                                color: '#fff',
-                                flexShrink: 0
+                <div className="methodology-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+                    {methodology.map((step, index) => (
+                        <div key={index} style={{
+                            background: 'var(--stats-bg-alt)',
+                            padding: '25px',
+                            borderRadius: '20px',
+                            border: '1px solid rgba(255,255,255,0.05)',
+                            position: 'relative',
+                            overflow: 'hidden'
+                        }}>
+                            <div style={{
+                                position: 'absolute',
+                                right: '-10px',
+                                top: '-10px',
+                                fontSize: '4rem',
+                                opacity: 0.05,
+                                color: 'var(--stats-primary)'
                             }}>
                                 {step.icon}
                             </div>
-                            <div className="timeline-content" style={{ background: 'var(--stats-bg-alt)', padding: '20px', borderRadius: '15px', width: '100%' }}>
-                                <h4 style={{ color: 'var(--stats-primary)', marginBottom: '5px' }}>Step {index + 1}: {step.title}</h4>
-                                <p style={{ margin: 0, fontSize: '0.95rem' }}>{step.desc}</p>
-                            </div>
+                            <h4 style={{ color: 'var(--stats-primary)', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <span style={{ fontSize: '0.8rem', opacity: 0.6 }}>0{index + 1}</span> {step.title}
+                            </h4>
+                            <p style={{ margin: 0, fontSize: '0.9rem', lineHeight: '1.6', opacity: 0.85 }}>{step.desc}</p>
                         </div>
                     ))}
                 </div>
             </div>
 
-            {/* Worked Example Section */}
-            <div className="stats-card" style={{ borderLeft: '5px solid #ec4899', paddingLeft: '20px' }}>
-                <h3 className="stats-card-heading" style={{ color: '#ec4899' }}>
-                    <FaProjectDiagram /> Worked Example: The "Street Food" Study
-                </h3>
-                <div className="stats-problem-box" style={{ background: 'rgba(236, 72, 153, 0.05)', padding: '20px', borderRadius: '15px' }}>
-                    <p style={{ color: 'var(--stats-text)', fontSize: '0.95rem', lineHeight: '1.6' }}>
-                        Imagine you want to study the <strong>Expenditure on Street Food</strong> by students. Here is how your project would look:
-                    </p>
-                    <ul style={{ marginTop: '15px', display: 'grid', gap: '10px' }}>
-                        <li><strong>1. Identification:</strong> "How much do Grade 11 students spend on street food monthly?"</li>
-                        <li><strong>2. Collection:</strong> You distribute a Google Form (Primary Data) to 50 classmates.</li>
-                        <li><strong>3. Organization:</strong> You create a table with class intervals (₹0-500, ₹501-1000, etc.).</li>
-                        <li><strong>4. Analysis:</strong> You find that the <em>Mean</em> expenditure is ₹1,200/month.</li>
-                        <li><strong>5. Conclusion:</strong> You observe that students living in hostels spend 40% more than locals, and suggest healthier cafeteria options.</li>
-                    </ul>
+            {/* Checklist Section */}
+            <div className="stats-card" style={{ marginTop: '30px', background: 'rgba(16, 185, 129, 0.05)', border: '1px solid rgba(16, 185, 129, 0.1)' }}>
+                <h4 style={{ color: '#10b981', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <FaCheckDouble /> Investigator's Checklist
+                </h4>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
+                    <div style={{ padding: '10px', background: 'rgba(255,255,255,0.02)', borderRadius: '10px' }}>✓ Accuracy in data entry</div>
+                    <div style={{ padding: '10px', background: 'rgba(255,255,255,0.02)', borderRadius: '10px' }}>✓ Logical sequencing of survey</div>
+                    <div style={{ padding: '10px', background: 'rgba(255,255,255,0.02)', borderRadius: '10px' }}>✓ Clear sampling objective</div>
+                    <div style={{ padding: '10px', background: 'rgba(255,255,255,0.02)', borderRadius: '10px' }}>✓ Confidentiality of respondents</div>
                 </div>
             </div>
         </div>
