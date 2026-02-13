@@ -1,19 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import {
     FaTable, FaDatabase, FaChartBar, FaFileSignature, FaArrowRight,
-    FaUndo, FaChartPie, FaListUl, FaSearch, FaChalkboardTeacher,
-    FaLightbulb, FaBoxOpen, FaProjectDiagram
+    FaUndo, FaChartPie, FaListUl, FaChalkboardTeacher,
+    FaLightbulb, FaUser, FaUsers, FaTrophy, FaStar
 } from 'react-icons/fa';
 
 /**
- * CaseStudy Component - The Teacher's Edition
- * Purpose: Demonstrates the full statistical workflow with instructional guidance.
+ * CaseStudy Component - The "Raw to Refined" Redesign
+ * Features: Draggable Raw Data Cards, Interactive Charts, Pictograms, Gamified Achievements.
  */
 const CaseStudy = () => {
     const [step, setStep] = useState(1);
     const [chartType, setChartType] = useState('bar');
+    const [hoveredPieSection, setHoveredPieSection] = useState(null); // 'low', 'mid', 'high'
+    const [achievements, setAchievements] = useState([]); // 'row_master', 'grid_master'
+    const [showToast, setShowToast] = useState(null); // 'Row Master Unlocked!', etc.
 
-    // Expanded Multi-Variable Dataset (20 Responses)
+    // Theme Colors
+    const primaryColor = "#4f46e5"; // Indigo
+    const accentColor = "#10b981";  // Emerald
+    const warningColor = "#f59e0b"; // Amber
+    const darkBg = "#0f172a";       // Slate 900
+    const cardBg = "#1e293b";       // Slate 800
+
+    // Data - 20 Students
     const rawData = [
         { name: "Aman", exp: 450, type: "Oily" }, { name: "Priya", exp: 1200, type: "Healthy" },
         { name: "Rahul", exp: 800, type: "Oily" }, { name: "Sanya", exp: 1500, type: "Gourmet" },
@@ -27,376 +37,482 @@ const CaseStudy = () => {
         { name: "Yash", exp: 1050, type: "Gourmet" }, { name: "Riya", exp: 500, type: "Snack" }
     ];
 
+    // State for Draggable Cards
+    const [cards, setCards] = useState([]);
+
+    // Initialize random positions only once on mount
+    useEffect(() => {
+        const initialCards = rawData.map((item, index) => ({
+            ...item,
+            id: index,
+            x: Math.random() * 80 + 5, // %
+            y: Math.random() * 80 + 5, // %
+            rotation: Math.random() * 40 - 20,
+            zIndex: Math.floor(Math.random() * 10),
+            isDragging: false
+        }));
+        setCards(initialCards);
+    }, []);
+
+    // Achievement Logic
+    const checkAchievements = (currentCards) => {
+        // ROW MASTER: Check if 5+ cards are aligned roughly in a Y-row
+        // Sort by Y position
+        const sortedByY = [...currentCards].sort((a, b) => a.y - b.y);
+        let maxRowStreak = 0;
+        let currentRowStreak = 1;
+
+        for (let i = 1; i < sortedByY.length; i++) {
+            // If Y difference is less than 5%, consider them in same "row"
+            if (Math.abs(sortedByY[i].y - sortedByY[i - 1].y) < 5) {
+                currentRowStreak++;
+            } else {
+                maxRowStreak = Math.max(maxRowStreak, currentRowStreak);
+                currentRowStreak = 1;
+            }
+        }
+        maxRowStreak = Math.max(maxRowStreak, currentRowStreak);
+
+        const newAchievements = [...achievements];
+        let toastMsg = null;
+
+        if (maxRowStreak >= 5 && !achievements.includes('row_master')) {
+            newAchievements.push('row_master');
+            toastMsg = "🏆 Achievement Unlocked: Row Master!";
+        }
+
+        if (maxRowStreak >= 15 && !achievements.includes('grid_master')) {
+            newAchievements.push('grid_master');
+            toastMsg = "🌟 MEGA Achievement: GRID MASTER!";
+        }
+
+        if (toastMsg) {
+            setAchievements(newAchievements);
+            setShowToast(toastMsg);
+            setTimeout(() => setShowToast(null), 3000);
+        }
+    };
+
+    // Drag Logic
+    const dragItem = useRef(null);
+    const dragOffset = useRef({ x: 0, y: 0 });
+
+    const handleMouseDown = (e, index) => {
+        dragItem.current = index;
+        const card = cards[index];
+        const container = e.currentTarget.parentElement.getBoundingClientRect();
+        dragOffset.current = {
+            startX: e.clientX,
+            startY: e.clientY,
+            startTop: card.y,
+            startLeft: card.x,
+            width: container.width,
+            height: container.height
+        };
+        setCards(prev => prev.map((c, i) => i === index ? { ...c, zIndex: 100, isDragging: true } : c));
+    };
+
+    const handleMouseMove = (e) => {
+        if (dragItem.current === null) return;
+
+        const { startX, startY, startTop, startLeft, width, height } = dragOffset.current;
+        const deltaX = ((e.clientX - startX) / width) * 100;
+        const deltaY = ((e.clientY - startY) / height) * 100;
+
+        setCards(prev => prev.map((c, i) => {
+            if (i === dragItem.current) {
+                return {
+                    ...c,
+                    x: Math.min(95, Math.max(0, startLeft + deltaX)),
+                    y: Math.min(90, Math.max(0, startTop + deltaY)),
+                    rotation: 0
+                };
+            }
+            return c;
+        }));
+    };
+
+    const handleMouseUp = () => {
+        if (dragItem.current !== null) {
+            setCards(prev => {
+                const newCards = prev.map((c, i) => i === dragItem.current ? { ...c, isDragging: false, rotation: Math.random() * 4 - 2 } : c);
+                checkAchievements(newCards); // Check achievements on drop
+                return newCards;
+            });
+            dragItem.current = null;
+        }
+    };
+
     const organizedData = [
-        { range: "0 - 500", count: 4, percent: 20 },
-        { range: "501 - 1000", count: 8, percent: 40 },
-        { range: "1001 - 1500", count: 8, percent: 40 }
+        { range: "0 - 500", count: 4, percent: 20, label: "Budget", color: warningColor },
+        { range: "501 - 1000", count: 8, percent: 40, label: "Standard", color: accentColor },
+        { range: "1001 - 1500", count: 8, percent: 40, label: "Premium", color: primaryColor }
     ];
 
-    // Theme Colors (High Contrast)
-    const primaryColor = "#2563eb"; // Deep Cobalt Blue
-    const accentColor = "#059669";  // Deep Forest Green
-    const warningColor = "#d97706"; // Amber
+    const teacherNotes = {
+        1: (
+            <>
+                <p><strong>Step 1: The Chaos of Collection.</strong> This is <strong>Raw Data</strong>. Go ahead, <strong>drag the cards around!</strong> Try to align them in a row. Can you become a <strong>"Row Master"</strong>?</p>
+            </>
+        ),
+        2: (
+            <>
+                <p><strong>Step 2: Creating Order.</strong> We classify the data into groups. Now we can see a pattern: most students spend in the mid-to-high range. This tabular form is the first step of analysis.</p>
+            </>
+        ),
+        3: (
+            <>
+                <p><strong>Step 3: Visual Storytelling.</strong> Charts make patterns obvious instantly. Explore the <strong>Bar Chart</strong> for quantity, <strong>Pie Chart</strong> for proportions, and <strong>Pictogram</strong> to see individual impact.</p>
+            </>
+        ),
+        4: (
+            <>
+                <p><strong>Step 4: The Conclusion.</strong> Statistics leads to action. High spending on unhealthy food suggests we need a policy intervention: A subsidized healthy canteen.</p>
+            </>
+        )
+    };
 
     return (
-        <div className="case-study-container" style={{
-            animation: 'fadeIn 0.5s ease-out',
-            width: '100%',
-            maxWidth: '1200px',
-            margin: '0 auto',
-            overflow: 'hidden', // Containment fix
-            position: 'relative'
-        }}>
-
-            {/* Header Section */}
-            <div className="stats-card" style={{
-                marginBottom: '30px',
-                borderLeft: `8px solid ${primaryColor}`,
-                background: 'rgba(37, 99, 235, 0.05)'
+        <div
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            style={{
+                width: '100%',
+                color: '#e2e8f0',
+                fontFamily: "'Inter', sans-serif",
+                overflow: 'hidden',
+                userSelect: 'none'
             }}>
-                <h2 className="stats-card-heading" style={{ color: primaryColor }}>
-                    <FaDatabase /> Case Study: The Campus Food Economy
-                </h2>
-                <p style={{ opacity: 0.8, fontSize: '1.1rem' }}>A Step-by-Step Simulation of a real Statistical Project.</p>
-            </div>
-
-            {/* Stepper Navigation */}
-            <div className="case-stepper" style={{
-                display: 'flex',
-                justifyContent: 'space-around',
-                marginBottom: '40px',
-                background: 'rgba(255,255,255,0.03)',
-                padding: '20px',
-                borderRadius: '15px',
-                border: '1px solid rgba(255,255,255,0.05)',
-                overflowX: 'auto',
-                gap: '10px'
-            }}>
-                {[
-                    { id: 1, label: "Raw Data", icon: <FaListUl /> },
-                    { id: 2, label: "Classification", icon: <FaTable /> },
-                    { id: 3, label: "Visualization", icon: <FaChartBar /> },
-                    { id: 4, label: "Policy", icon: <FaFileSignature /> }
-                ].map((s) => (
-                    <div
-                        key={s.id}
-                        onClick={() => setStep(s.id)}
-                        style={{
-                            cursor: 'pointer',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            gap: '5px',
-                            color: step >= s.id ? primaryColor : 'rgba(255,255,255,0.2)',
-                            transition: '0.3s',
-                            opacity: step === s.id ? 1 : 0.6
-                        }}
-                    >
-                        <div style={{
-                            width: '40px',
-                            height: '40px',
-                            borderRadius: '12px',
-                            background: step >= s.id ? primaryColor : 'rgba(255,255,255,0.1)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            color: '#fff',
-                            fontSize: '1.2rem',
-                            boxShadow: step === s.id ? `0 0 15px ${primaryColor}40` : 'none'
-                        }}>{s.icon}</div>
-                        <span style={{ fontSize: '0.8rem', fontWeight: step === s.id ? 'bold' : 'normal' }}>{s.label}</span>
-                    </div>
-                ))}
-            </div>
-
-            {/* Teacher's Guidance / Professor's Note */}
+            {/* Header */}
             <div style={{
-                background: 'rgba(245, 158, 11, 0.05)',
-                border: '1px dashed rgba(245, 158, 11, 0.3)',
+                marginBottom: '40px',
+                textAlign: 'center',
                 padding: '20px',
-                borderRadius: '15px',
-                marginBottom: '30px',
-                display: 'flex',
-                gap: '15px',
-                alignItems: 'flex-start'
+                background: `linear-gradient(135deg, ${primaryColor}20, transparent)`,
+                borderRadius: '20px',
+                border: `1px solid ${primaryColor}40`
             }}>
-                <div style={{ color: warningColor, fontSize: '1.5rem', marginTop: '5px' }}><FaChalkboardTeacher /></div>
-                <div>
-                    <h4 style={{ color: warningColor, margin: '0 0 5px 0' }}>Teacher's Note: Phase {step}</h4>
-                    <p style={{ margin: 0, fontSize: '0.95rem', opacity: 0.9, lineHeight: '1.5' }}>
-                        {step === 1 && "Look at this mess! We have 20 surveys, but we can't tell the 'General Trend' just by looking. This is 'Raw Data'—it lacks structure and meaning."}
-                        {step === 2 && "Magic happens here! We are grouping individual responses into 'Classes'. Notice how the chaos of 20 names turns into 3 simple rows of logic."}
-                        {step === 3 && "Now we 'paint' the numbers. Humans understand shapes better than digits. We'll use multiple chart types to see this data from different angles."}
-                        {step === 4 && "The Final Goal: We don't do math just for fun. We do it to fix problems. Based on our 'Mean' and 'Mode', we will propose a real school policy."}
-                    </p>
+                <h2 style={{ fontSize: '2rem', color: '#fff', marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px' }}>
+                    <FaDatabase style={{ color: primaryColor }} /> Case Study: Campus Food Economy
+                </h2>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '10px' }}>
+                    <span style={{ opacity: 0.7 }}>From Raw Surveys to Policy Decisions</span>
+                    {/* Achievement Badges */}
+                    {achievements.includes('row_master') && <span title="Row Master: Aligned 5+ cards" style={{ color: '#fbbf24', display: 'flex', alignItems: 'center', gap: '5px' }}><FaTrophy /> Row Master</span>}
+                    {achievements.includes('grid_master') && <span title="Grid Master: Organized everything!" style={{ color: '#f472b6', display: 'flex', alignItems: 'center', gap: '5px' }}><FaStar /> GRID MASTER</span>}
                 </div>
             </div>
 
-            {/* Content Area */}
-            <div className="case-content" style={{ minHeight: '500px', width: '100%' }}>
-                {step === 1 && (
-                    <div className="step-1" style={{ animation: 'slideInRight 0.5s' }}>
-                        <div style={{ marginBottom: '20px' }}>
-                            <h3 style={{ color: primaryColor, marginBottom: '5px' }}>Step 1: The "Messy" Logbook</h3>
-                            <p style={{ opacity: 0.7 }}>Primary data collected via Direct Personal Investigation.</p>
-                        </div>
+            {/* Teacher's Note */}
+            <div style={{
+                background: '#1e293b',
+                borderLeft: `6px solid ${warningColor}`,
+                padding: '20px',
+                borderRadius: '0 12px 12px 0',
+                marginBottom: '40px',
+                display: 'flex', gap: '20px', alignItems: 'center',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+            }}>
+                <div style={{ fontSize: '1.8rem', color: warningColor }}><FaChalkboardTeacher /></div>
+                <div style={{ lineHeight: '1.6', fontSize: '1.05rem' }}>{teacherNotes[step]}</div>
+            </div>
 
-                        {/* THE FIX: Fixed Width + Centered Container for Raw Data */}
-                        <div style={{
-                            maxHeight: '400px',
-                            overflowY: 'auto',
-                            padding: '10px',
-                            background: 'rgba(0,0,0,0.3)',
-                            borderRadius: '15px',
-                            border: '1px solid rgba(255,255,255,0.05)',
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-                            gap: '15px',
-                        }} className="stats-scrollbar">
-                            {rawData.map((d, i) => (
-                                <div key={i} style={{
-                                    background: 'var(--stats-bg-alt)',
-                                    padding: '15px',
-                                    borderRadius: '12px',
-                                    border: '1px solid rgba(255,255,255,0.05)',
-                                    transition: 'transform 0.2s',
-                                    position: 'relative',
-                                    overflow: 'hidden'
-                                }}>
-                                    <div style={{
-                                        position: 'absolute', top: 0, right: 0,
-                                        padding: '4px 8px', fontSize: '0.6rem',
-                                        background: d.type === 'Healthy' ? '#059669' : '#374151',
-                                        color: '#fff', borderRadius: '0 0 0 10px'
-                                    }}>{d.type}</div>
-                                    <div style={{ fontSize: '0.75rem', opacity: 0.5, textTransform: 'uppercase' }}>Respondent</div>
-                                    <div style={{ fontSize: '1rem', fontWeight: 'bold', color: primaryColor }}>{d.name}</div>
-                                    <div style={{ fontSize: '1.4rem', fontWeight: '900', marginTop: '5px' }}>₹{d.exp}</div>
+            {/* Achievement Toast */}
+            {showToast && (
+                <div style={{
+                    position: 'fixed', top: '20%', left: '50%', transform: 'translate(-50%, -50%)',
+                    background: 'rgba(0, 0, 0, 0.9)', color: '#fbbf24', padding: '20px 40px',
+                    borderRadius: '50px', border: '2px solid #fbbf24',
+                    fontSize: '1.5rem', fontWeight: 'bold', zIndex: 1000,
+                    animation: 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                }}>
+                    {showToast}
+                </div>
+            )}
+
+            {/* Main Stage */}
+            <div style={{
+                position: 'relative',
+                minHeight: '600px',
+                background: '#0f172a',
+                borderRadius: '24px',
+                border: '1px solid #334155',
+                overflow: 'hidden',
+                boxShadow: 'inset 0 0 50px rgba(0,0,0,0.5)',
+                transition: 'all 0.5s ease'
+            }}>
+                {/* STEP 1: RAW DATA (DRAGGABLE) */}
+                {step === 1 && (
+                    <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', animation: 'fadeIn 1s' }}>
+                        {cards.map((item, index) => (
+                            <div key={item.id}
+                                onMouseDown={(e) => handleMouseDown(e, index)}
+                                style={{
+                                    position: 'absolute',
+                                    top: `${item.y}%`,
+                                    left: `${item.x}%`,
+                                    transform: `rotate(${item.rotation}deg) scale(${item.isDragging ? 1.1 : 1})`,
+                                    zIndex: item.zIndex,
+                                    background: '#fff',
+                                    color: '#1e293b',
+                                    padding: '15px 20px',
+                                    borderRadius: '4px',
+                                    boxShadow: item.isDragging ? '0 20px 25px -5px rgba(0, 0, 0, 0.5)' : '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
+                                    width: '160px',
+                                    fontFamily: "'Courier New', Courier, monospace",
+                                    cursor: item.isDragging ? 'grabbing' : 'grab',
+                                    transition: item.isDragging ? 'none' : 'transform 0.2s, box-shadow 0.2s',
+                                }}
+                            >
+                                <div style={{ borderBottom: '1px dashed #cbd5e1', paddingBottom: '5px', marginBottom: '5px', fontWeight: 'bold', color: primaryColor }}>{item.name}</div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <span style={{ fontSize: '1.4rem', fontWeight: '900' }}>₹{item.exp}</span>
+                                    <span style={{ fontSize: '0.7rem', background: item.type === 'Healthy' ? '#10b981' : item.type === 'Oily' ? '#f43f5e' : '#f59e0b', color: '#fff', padding: '2px 6px', borderRadius: '4px' }}>{item.type}</span>
                                 </div>
+                            </div>
+                        ))}
+                        {/* Instruction Hint */}
+                        <div style={{ position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', background: 'rgba(0,0,0,0.5)', padding: '10px 20px', borderRadius: '20px', pointerEvents: 'none', color: '#fff', fontSize: '0.9rem' }}>
+                            Drag cards into a straight horizontal line to get achievements!
+                        </div>
+                    </div>
+                )}
+
+                {/* STEP 2: TABLE */}
+                {step === 2 && (
+                    <div style={{ padding: '40px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', animation: 'slideUp 0.5s ease-out' }}>
+                        <h3 style={{ textAlign: 'center', color: accentColor, marginBottom: '30px' }}>Organized Frequency Table</h3>
+                        <table style={{ width: '90%', margin: '0 auto', borderCollapse: 'collapse', background: '#1e293b', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.2)' }}>
+                            <thead style={{ background: primaryColor, color: '#fff' }}>
+                                <tr>
+                                    <th style={{ padding: '20px', textAlign: 'left' }}>Expenditure Range</th>
+                                    <th style={{ padding: '20px', textAlign: 'center' }}>Student Count</th>
+                                    <th style={{ padding: '20px', textAlign: 'left' }}>Distribution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {organizedData.map((row, i) => (
+                                    <tr key={i} style={{ borderBottom: '1px solid #334155' }}>
+                                        <td style={{ padding: '20px', fontSize: '1.2rem', fontWeight: 'bold' }}>₹{row.range}</td>
+                                        <td style={{ padding: '20px', fontSize: '1.5rem', textAlign: 'center', color: accentColor }}>{row.count}</td>
+                                        <td style={{ padding: '20px' }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                                <div style={{ flex: 1, background: '#334155', height: '10px', borderRadius: '5px', overflow: 'hidden' }}>
+                                                    <div style={{ width: `${row.percent}%`, background: accentColor, height: '100%' }}></div>
+                                                </div>
+                                                <span>{row.percent}%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+
+                {/* STEP 3: VISUALIZATION */}
+                {step === 3 && (
+                    <div style={{ padding: '40px', height: '100%', animation: 'fadeIn 0.5s' }}>
+                        {/* Chart Toggle Buttons */}
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '40px' }}>
+                            {['bar', 'pie', 'pictogram'].map(type => (
+                                <button key={type} onClick={() => setChartType(type)}
+                                    style={{
+                                        padding: '10px 25px',
+                                        background: chartType === type ? primaryColor : '#334155',
+                                        border: 'none', borderRadius: '8px', color: '#fff',
+                                        cursor: 'pointer', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px', transition: '0.3s'
+                                    }}>
+                                    {type === 'bar' && <FaChartBar />}
+                                    {type === 'pie' && <FaChartPie />}
+                                    {type === 'pictogram' && <FaUsers />}
+                                    {type.charAt(0).toUpperCase() + type.slice(1)} View
+                                </button>
                             ))}
                         </div>
-                    </div>
-                )}
 
-                {step === 2 && (
-                    <div className="step-2" style={{ animation: 'slideInRight 0.5s' }}>
-                        <h3 style={{ marginBottom: '20px', color: primaryColor }}>Step 2: From Chaos to Classification</h3>
-                        <div style={{ overflowX: 'auto', borderRadius: '15px', border: '1px solid rgba(255,255,255,0.1)' }}>
-                            <table style={{ width: '100%', borderCollapse: 'collapse', background: 'rgba(255,255,255,0.02)' }}>
-                                <thead>
-                                    <tr style={{ background: primaryColor, color: '#fff' }}>
-                                        <th style={{ padding: '20px', textAlign: 'left' }}>Daily Expenditure (₹)</th>
-                                        <th style={{ padding: '20px', textAlign: 'left' }}>Frequency (Count)</th>
-                                        <th style={{ padding: '20px', textAlign: 'left' }}>Market Share (%)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {organizedData.map((row, i) => (
-                                        <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                                            <td style={{ padding: '20px', fontSize: '1.1rem' }}>{row.range}</td>
-                                            <td style={{ padding: '20px', fontWeight: 'bold', fontSize: '1.5rem', color: accentColor }}>{row.count}</td>
-                                            <td style={{ padding: '20px' }}>
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                                                    <div style={{ background: 'rgba(255,255,255,0.05)', height: '12px', flex: 1, borderRadius: '6px', overflow: 'hidden' }}>
-                                                        <div style={{ background: accentColor, height: '100%', width: `${row.percent}%` }}></div>
-                                                    </div>
-                                                    <span style={{ fontWeight: 'bold' }}>{row.percent}%</span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                )}
+                        {/* Chart Area */}
+                        <div style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
 
-                {step === 3 && (
-                    <div className="step-3" style={{ animation: 'slideInRight 0.5s' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '50px' }}>
-                            <h3 style={{ color: primaryColor }}>Step 3: Multi-Visual Inspection</h3>
-                            <div style={{ display: 'flex', background: 'rgba(255,255,255,0.05)', borderRadius: '12px', padding: '6px', gap: '5px' }}>
-                                {[
-                                    { id: 'bar', icon: <FaChartBar />, label: "Bar" },
-                                    { id: 'pie', icon: <FaChartPie />, label: "Pie" },
-                                    { id: 'box', icon: <FaBoxOpen />, label: "Range" }
-                                ].map(t => (
-                                    <button
-                                        key={t.id}
-                                        onClick={() => setChartType(t.id)}
-                                        style={{
-                                            padding: '10px 20px', borderRadius: '8px', border: 'none',
-                                            background: chartType === t.id ? primaryColor : 'transparent',
-                                            color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px',
-                                            transition: '0.3s'
-                                        }}
-                                    >
-                                        {t.icon} {t.label}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div style={{
-                            height: '350px',
-                            background: 'rgba(0,0,0,0.2)',
-                            borderRadius: '20px',
-                            padding: '30px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            border: '1px solid rgba(255,255,255,0.05)'
-                        }}>
+                            {/* BAR CHART WITH AXES */}
                             {chartType === 'bar' && (
-                                <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-around', width: '100%', height: '250px' }}>
-                                    {organizedData.map((row, i) => (
-                                        <div key={i} style={{ width: '150px', textAlign: 'center' }}>
-                                            <div style={{ fontWeight: 'bold', marginBottom: '10px' }}>{row.count}</div>
+                                <div style={{
+                                    width: '80%',
+                                    height: '320px',
+                                    position: 'relative',
+                                    borderLeft: '2px solid #94a3b8',
+                                    borderBottom: '2px solid #94a3b8',
+                                    display: 'flex',
+                                    alignItems: 'flex-end',  // Ensure bars align to bottom
+                                    justifyContent: 'space-around',
+                                    padding: '0 20px'
+                                }}>
+                                    {/* Y-Axis Label */}
+                                    <div style={{ position: 'absolute', left: '-50px', top: '50%', transform: 'rotate(-90deg)', color: '#94a3b8', fontSize: '0.9rem', whiteSpace: 'nowrap' }}>Number of Students</div>
+
+                                    {/* Y-Axis Markers */}
+                                    {[0, 2, 4, 6, 8, 10].map(val => (
+                                        <div key={val} style={{ position: 'absolute', left: '-25px', bottom: `${val * 10}%`, color: '#64748b', fontSize: '0.8rem' }}>{val}</div>
+                                    ))}
+
+                                    {organizedData.map((d, i) => (
+                                        <div key={i} style={{
+                                            textAlign: 'center',
+                                            width: '20%',
+                                            height: '100%', // Container needs full height for flex-end to work
+                                            display: 'flex', // Inner flex to bottom align
+                                            flexDirection: 'column',
+                                            justifyContent: 'flex-end',
+                                            alignItems: 'center'
+                                        }}>
                                             <div style={{
-                                                height: `${row.count * 25}px`,
-                                                background: `linear-gradient(to top, ${primaryColor}, #60a5fa)`,
-                                                borderRadius: '10px 10px 0 0',
-                                                boxShadow: `0 0 20px ${primaryColor}30`
-                                            }}></div>
-                                            <div style={{ marginTop: '15px', fontSize: '0.9rem' }}>{row.range}</div>
+                                                height: `${d.count * 10}%`, // 10% per student (max 10)
+                                                width: '50px', // Explicit width
+                                                background: `linear-gradient(to top, ${d.color}, ${primaryColor})`,
+                                                borderRadius: '6px 6px 0 0',
+                                                transition: 'height 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                                                boxShadow: `0 0 15px ${d.color}40`,
+                                                marginBottom: '5px' // Space from axis
+                                            }}>
+                                                <span style={{ display: 'block', marginTop: '-25px', color: '#fff', fontWeight: 'bold' }}>{d.count}</span>
+                                            </div>
+                                            <div style={{ position: 'absolute', bottom: '-30px', color: '#cbd5e1', fontSize: '0.8rem', fontWeight: 'bold', width: '100px' }}>{d.range}</div>
                                         </div>
                                     ))}
+
+                                    {/* X-Axis Label */}
+                                    <div style={{ position: 'absolute', bottom: '-50px', left: '0', right: '0', textAlign: 'center', color: '#94a3b8', fontSize: '0.9rem' }}>Expenditure Range (₹)</div>
                                 </div>
                             )}
 
+                            {/* PIE CHART WITH HOVER */}
                             {chartType === 'pie' && (
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '60px' }}>
-                                    <svg width="220" height="220" viewBox="0 0 42 42" style={{ transform: 'rotate(-90deg)', filter: 'drop-shadow(0 0 10px rgba(0,0,0,0.5))' }}>
-                                        <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#1e293b" strokeWidth="6"></circle>
-                                        <circle cx="21" cy="21" r="15.915" fill="transparent" stroke={primaryColor} strokeWidth="6" strokeDasharray="20 80" strokeDashoffset="0"></circle>
-                                        <circle cx="21" cy="21" r="15.915" fill="transparent" stroke={accentColor} strokeWidth="6" strokeDasharray="40 60" strokeDashoffset="-20"></circle>
-                                        <circle cx="21" cy="21" r="15.915" fill="transparent" stroke={warningColor} strokeWidth="6" strokeDasharray="40 60" strokeDashoffset="-60"></circle>
-                                    </svg>
-                                    <div style={{ display: 'grid', gap: '15px' }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}><div style={{ width: '15px', height: '15px', background: primaryColor, borderRadius: '3px' }}></div> Budget (20%)</div>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}><div style={{ width: '15px', height: '15px', background: accentColor, borderRadius: '3px' }}></div> Regular (40%)</div>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}><div style={{ width: '15px', height: '15px', background: warningColor, borderRadius: '3px' }}></div> Premium (40%)</div>
-                                    </div>
-                                </div>
-                            )}
+                                    <div style={{ position: 'relative', width: '320px', height: '320px' }}>
+                                        <svg viewBox="0 0 32 32" style={{ transform: 'rotate(-90deg)', borderRadius: '50%', overflow: 'visible' }}>
+                                            {/* Low Spending (20%) */}
+                                            <circle r="16" cx="16" cy="16" fill="transparent"
+                                                stroke={warningColor} strokeWidth={hoveredPieSection === 'low' ? "8" : "6"}
+                                                strokeDasharray="20 80"
+                                                style={{ transition: 'all 0.3s' }}
+                                                onMouseEnter={() => setHoveredPieSection('low')} onMouseLeave={() => setHoveredPieSection(null)}
+                                            />
+                                            {/* Mid Spending (40%) */}
+                                            <circle r="16" cx="16" cy="16" fill="transparent"
+                                                stroke={accentColor} strokeWidth={hoveredPieSection === 'mid' ? "8" : "6"}
+                                                strokeDasharray="40 60" strokeDashoffset="-20"
+                                                style={{ transition: 'all 0.3s' }}
+                                                onMouseEnter={() => setHoveredPieSection('mid')} onMouseLeave={() => setHoveredPieSection(null)}
+                                            />
+                                            {/* High Spending (40%) */}
+                                            <circle r="16" cx="16" cy="16" fill="transparent"
+                                                stroke={primaryColor} strokeWidth={hoveredPieSection === 'high' ? "8" : "6"}
+                                                strokeDasharray="40 60" strokeDashoffset="-60"
+                                                style={{ transition: 'all 0.3s' }}
+                                                onMouseEnter={() => setHoveredPieSection('high')} onMouseLeave={() => setHoveredPieSection(null)}
+                                            />
+                                        </svg>
 
-                            {chartType === 'box' && (
-                                <div style={{ width: '100%', textAlign: 'center' }}>
-                                    <h4 style={{ color: primaryColor, marginBottom: '30px' }}>Dispersion Analysis (The Box Plot Logic)</h4>
-                                    <div style={{ position: 'relative', width: '80%', margin: '0 auto', height: '100px', display: 'flex', alignItems: 'center' }}>
-                                        {/* Main Range Line */}
-                                        <div style={{ height: '4px', width: '100%', background: 'rgba(255,255,255,0.1)', position: 'absolute' }}></div>
-                                        <div style={{ height: '40px', width: '2px', background: '#fff', position: 'absolute', left: '0' }}><span style={{ position: 'absolute', bottom: '-25px', left: '-15px' }}>₹300</span></div>
-                                        <div style={{ height: '40px', width: '2px', background: '#fff', position: 'absolute', right: '0' }}><span style={{ position: 'absolute', bottom: '-25px', right: '-15px' }}>₹1500</span></div>
-
-                                        {/* Interquartile Range (Box) */}
-                                        <div style={{
-                                            position: 'absolute', left: '20%', right: '20%', height: '60px',
-                                            background: `${primaryColor}30`, border: `2px solid ${primaryColor}`,
-                                            display: 'flex', alignItems: 'center', justifyContent: 'center'
-                                        }}>
-                                            <div style={{ height: '100%', width: '3px', background: '#ff4d4d' }}></div> {/* Median */}
+                                        {/* Center Text */}
+                                        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}>
+                                            <div style={{ fontSize: '2rem', fontWeight: 'bold', color: hoveredPieSection === 'low' ? warningColor : hoveredPieSection === 'mid' ? accentColor : hoveredPieSection === 'high' ? primaryColor : '#fff' }}>
+                                                {hoveredPieSection ? (hoveredPieSection === 'low' ? '20%' : '40%') : '100%'}
+                                            </div>
+                                            <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>Share</div>
                                         </div>
                                     </div>
-                                    <p style={{ marginTop: '50px', fontSize: '0.9rem', opacity: 0.6 }}>The box shows where 50% of the students fall. The whiskers show the total span.</p>
+
+                                    {/* Legend */}
+                                    <div style={{ display: 'grid', gap: '15px' }}>
+                                        <div onMouseEnter={() => setHoveredPieSection('high')} onMouseLeave={() => setHoveredPieSection(null)}
+                                            style={{ cursor: 'pointer', padding: '10px 15px', background: hoveredPieSection === 'high' ? 'rgba(255,255,255,0.05)' : 'transparent', borderRadius: '8px', transition: '0.2s', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                            <div style={{ width: '15px', height: '15px', background: primaryColor, borderRadius: '4px' }}></div>
+                                            <div>
+                                                <div style={{ fontWeight: 'bold' }}>Premium (High)</div>
+                                                <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>₹1001 - ₹1500</div>
+                                            </div>
+                                        </div>
+                                        <div onMouseEnter={() => setHoveredPieSection('mid')} onMouseLeave={() => setHoveredPieSection(null)}
+                                            style={{ cursor: 'pointer', padding: '10px 15px', background: hoveredPieSection === 'mid' ? 'rgba(255,255,255,0.05)' : 'transparent', borderRadius: '8px', transition: '0.2s', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                            <div style={{ width: '15px', height: '15px', background: accentColor, borderRadius: '4px' }}></div>
+                                            <div>
+                                                <div style={{ fontWeight: 'bold' }}>Standard (Mid)</div>
+                                                <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>₹501 - ₹1000</div>
+                                            </div>
+                                        </div>
+                                        <div onMouseEnter={() => setHoveredPieSection('low')} onMouseLeave={() => setHoveredPieSection(null)}
+                                            style={{ cursor: 'pointer', padding: '10px 15px', background: hoveredPieSection === 'low' ? 'rgba(255,255,255,0.05)' : 'transparent', borderRadius: '8px', transition: '0.2s', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                            <div style={{ width: '15px', height: '15px', background: warningColor, borderRadius: '4px' }}></div>
+                                            <div>
+                                                <div style={{ fontWeight: 'bold' }}>Budget (Low)</div>
+                                                <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>₹0 - ₹500</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* PICTOGRAM - REPLACES BOX PLOT */}
+                            {chartType === 'pictogram' && (
+                                <div style={{ width: '100%', textAlign: 'center', padding: '0 40px' }}>
+                                    <h4 style={{ color: '#94a3b8', marginBottom: '30px' }}>Each icon represents 1 Student</h4>
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(10, 1fr)', gap: '15px', justifyContent: 'center' }}>
+                                        {/* Render 20 Icons */}
+                                        {/* 4 Low (Warning Color) */}
+                                        {[...Array(4)].map((_, i) => (
+                                            <div key={`low-${i}`} style={{ color: warningColor, animation: 'fadeIn 0.3s' }}>
+                                                <FaUser style={{ fontSize: '2rem' }} />
+                                            </div>
+                                        ))}
+                                        {/* 8 Mid (Accent Color) */}
+                                        {[...Array(8)].map((_, i) => (
+                                            <div key={`mid-${i}`} style={{ color: accentColor, animation: 'fadeIn 0.5s' }}>
+                                                <FaUser style={{ fontSize: '2rem' }} />
+                                            </div>
+                                        ))}
+                                        {/* 8 High (Primary Color) */}
+                                        {[...Array(8)].map((_, i) => (
+                                            <div key={`high-${i}`} style={{ color: primaryColor, animation: 'fadeIn 0.7s' }}>
+                                                <FaUser style={{ fontSize: '2rem' }} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', marginTop: '40px' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><div style={{ width: '12px', height: '12px', background: warningColor, borderRadius: '50%' }}></div> Budget (4)</div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><div style={{ width: '12px', height: '12px', background: accentColor, borderRadius: '50%' }}></div> Standard (8)</div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><div style={{ width: '12px', height: '12px', background: primaryColor, borderRadius: '50%' }}></div> Premium (8)</div>
+                                    </div>
                                 </div>
                             )}
                         </div>
                     </div>
                 )}
 
+                {/* STEP 4: CONCLUSION */}
                 {step === 4 && (
-                    <div className="step-4" style={{ animation: 'slideInRight 0.5s' }}>
-                        <div style={{ display: 'flex', gap: '20px', marginBottom: '30px', alignItems: 'center' }}>
-                            <div style={{ fontSize: '2.5rem', color: accentColor }}><FaProjectDiagram /></div>
-                            <h3 style={{ color: primaryColor, margin: 0 }}>Step 4: The Investigator's Verdict</h3>
-                        </div>
-
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
-                            <div className="stats-card" style={{ borderTop: `5px solid ${primaryColor}` }}>
-                                <h4 style={{ color: primaryColor }}>The Diagnostics</h4>
-                                <ul style={{ paddingLeft: '20px', lineHeight: '2', opacity: 0.9 }}>
-                                    <li><strong>Mean Spending:</strong> ₹890</li>
-                                    <li><strong>Mode Group:</strong> ₹501 - ₹1500 (80%)</li>
-                                    <li><strong>Skewness:</strong> Data leans towards higher spending.</li>
-                                </ul>
-                            </div>
-                            <div className="stats-card" style={{ borderTop: `5px solid ${accentColor}` }}>
-                                <h4 style={{ color: accentColor }}>The Proposed Solution</h4>
-                                <p style={{ lineHeight: '1.6', opacity: 0.9 }}>
-                                    Based on the high frequency of "Oily" food and "Gourmet" spending, the school should:
-                                </p>
-                                <div style={{ background: 'rgba(255,255,255,0.03)', padding: '15px', borderRadius: '10px', fontSize: '0.9rem', border: '1px solid rgba(255,255,255,0.1)' }}>
-                                    "Launch a **Health-First Cafeteria** with a fixed ₹600 monthly meal plan. This aligns with the 'Median' expenditure while improving student health."
-                                </div>
-                            </div>
-                        </div>
+                    <div style={{ padding: '60px', textAlign: 'center', animation: 'fadeIn 0.8s' }}>
+                        <div style={{ fontSize: '4rem', color: accentColor, marginBottom: '20px' }}><FaFileSignature /></div>
+                        <h2 style={{ fontSize: '2.5rem', color: '#fff', marginBottom: '20px' }}>Policy Recommendation</h2>
+                        <p style={{ fontSize: '1.2rem', lineHeight: '1.6', maxWidth: '800px', margin: '0 auto 40px', color: '#cbd5e1' }}>
+                            "Based on the analysis, we observe high spending correlated with unhealthy food choices.
+                            Recommendation: Implement a <strong>Subsidized Healthy Meal Plan</strong> at ₹600/month."
+                        </p>
+                        <button onClick={() => setStep(1)} style={{ padding: '15px 40px', fontSize: '1.2rem', fontWeight: 'bold', background: primaryColor, color: '#fff', border: 'none', borderRadius: '50px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
+                            <FaUndo /> Restart Analysis
+                        </button>
                     </div>
                 )}
             </div>
 
-            {/* High Contrast Navigation Buttons */}
-            <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                marginTop: '60px',
-                paddingTop: '30px',
-                borderTop: '1px solid rgba(255,255,255,0.1)'
-            }}>
-                {step > 1 && (
-                    <button
-                        onClick={() => setStep(step - 1)}
-                        className="stats-btn"
-                        style={{ border: '2px solid rgba(255,255,255,0.3)', color: '#fff', padding: '15px 40px' }}
-                    >
-                        Back to Phase {step - 1}
+            {/* Controls */}
+            {step < 4 && (
+                <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'center' }}>
+                    <button onClick={() => setStep(s => s + 1)} style={{ background: '#fff', color: '#000', border: 'none', padding: '15px 50px', fontSize: '1.2rem', fontWeight: 'bold', borderRadius: '50px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 0 20px rgba(255,255,255,0.2)', transition: 'transform 0.2s' }}>
+                        Next Phase <FaArrowRight />
                     </button>
-                )}
-                <div style={{ flex: 1 }}></div>
-                {step < 4 ? (
-                    <button
-                        onClick={() => setStep(step + 1)}
-                        className="stats-btn"
-                        style={{
-                            background: '#2563eb', // Cobalt Blue (Standard High Contrast)
-                            color: '#ffffff',
-                            padding: '18px 50px',
-                            fontSize: '1.1rem',
-                            fontWeight: 'bold',
-                            boxShadow: '0 10px 25px rgba(37, 99, 235, 0.5)', // Strong Shadow
-                            border: 'none',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '15px',
-                            transition: '0.3s transform'
-                        }}
-                        onMouseEnter={(e) => e.target.style.transform = 'translateY(-2px)'}
-                        onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
-                    >
-                        Advance to Phase {step + 1} <FaArrowRight />
-                    </button>
-                ) : (
-                    <button
-                        onClick={() => setStep(1)}
-                        className="stats-btn"
-                        style={{
-                            background: accentColor,
-                            color: '#fff',
-                            padding: '18px 50px',
-                            border: 'none',
-                            fontWeight: 'bold'
-                        }}
-                    >
-                        <FaUndo /> Restart New Analysis
-                    </button>
-                )}
-            </div>
-
-            {/* Lightbulb Pro Tip */}
-            <div style={{ marginTop: '40px', textAlign: 'center', opacity: 0.6, fontSize: '0.85rem', display: 'flex', justifyContent: 'center', gap: '10px', alignItems: 'center' }}>
-                <FaLightbulb /> <span>Pro-Tip: Statistical tools are only as good as the interpretation of the investigator.</span>
-            </div>
+                </div>
+            )}
         </div>
     );
 };
