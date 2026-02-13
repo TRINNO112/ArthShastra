@@ -3,8 +3,8 @@ import { FaGlobeAmericas, FaHospital, FaUniversity, FaChartLine, FaRobot, FaLeaf
 
 /**
  * PracticalApplications - "The Lens of Truth"
- * Concept: User moves a "searchlight" (cursor) to reveal hidden statistical data
- * on top of a "real world" background. Expanded to 10 sectors.
+ * Concept: User moves a "searchlight" (cursor) to reveal hidden statistical data.
+ * Reduced to 6 High-Impact Sectors.
  */
 const PracticalApplications = () => {
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -22,31 +22,23 @@ const PracticalApplications = () => {
     };
 
     const modules = [
+        // Top Row
         {
             id: 'health',
             icon: <FaHospital />,
             title: "Healthcare",
             stat: "R₀ = 1.2",
-            desc: "Predicting Outbreaks",
-            top: 20, left: 10,
+            desc: "Outbreak Prediction",
+            top: 25, left: 15,
             color: "#10b981"
-        },
-        {
-            id: 'stocks',
-            icon: <FaChartLine />,
-            title: "Markets",
-            stat: "σ = 15.4%",
-            desc: "Risk Modelling",
-            top: 20, left: 30,
-            color: "#3b82f6"
         },
         {
             id: 'ai',
             icon: <FaRobot />,
             title: "AI / ML",
             stat: "P(x) > 0.9",
-            desc: "Neural Nets",
-            top: 20, left: 50,
+            desc: "Deep Learning",
+            top: 25, left: 50,
             color: "#8b5cf6"
         },
         {
@@ -54,9 +46,19 @@ const PracticalApplications = () => {
             icon: <FaRocket />,
             title: "Space",
             stat: "Δv = 9.8",
-            desc: "Trajectory Calc",
-            top: 20, left: 70,
+            desc: "Orbital Mechanics",
+            top: 25, left: 85,
             color: "#f43f5e"
+        },
+        // Bottom Row
+        {
+            id: 'stocks',
+            icon: <FaChartLine />,
+            title: "Markets",
+            stat: "σ = 15.4%",
+            desc: "Risk Analysis",
+            top: 75, left: 15,
+            color: "#3b82f6"
         },
         {
             id: 'sports',
@@ -64,35 +66,8 @@ const PracticalApplications = () => {
             title: "Sports",
             stat: "xG = 2.4",
             desc: "Sabermetrics",
-            top: 20, left: 90,
+            top: 75, left: 50,
             color: "#f59e0b"
-        },
-        {
-            id: 'economy',
-            icon: <FaUniversity />,
-            title: "Inflation",
-            stat: "CPI ↑ 5.4%",
-            desc: "Monetary Policy",
-            top: 70, left: 10,
-            color: "#f59e0b"
-        },
-        {
-            id: 'climate',
-            icon: <FaLeaf />,
-            title: "Climate",
-            stat: "+1.5°C",
-            desc: "Time Series",
-            top: 70, left: 30,
-            color: "#059669"
-        },
-        {
-            id: 'ecom',
-            icon: <FaShoppingCart />,
-            title: "E-Comm",
-            stat: "CTR 2.1%",
-            desc: "Recommenders",
-            top: 70, left: 50,
-            color: "#db2777"
         },
         {
             id: 'politics',
@@ -100,17 +75,8 @@ const PracticalApplications = () => {
             title: "Polling",
             stat: "±3% Margin",
             desc: "Sampling Error",
-            top: 70, left: 70,
+            top: 75, left: 85,
             color: "#6366f1"
-        },
-        {
-            id: 'insurance',
-            icon: <FaShieldAlt />,
-            title: "Insurance",
-            stat: "Risk 0.01",
-            desc: "Actuarial Sci",
-            top: 70, left: 90,
-            color: "#475569"
         }
     ];
 
@@ -200,22 +166,22 @@ const PracticalApplications = () => {
                             animation: 'float 4s ease-in-out infinite'
                         }}>
                             {/* Connecting Lines */}
-                            <div style={{ position: 'absolute', width: '150px', height: '150px', border: `1px dashed ${m.color}`, borderRadius: '50%', animation: 'spin 10s linear infinite' }}></div>
+                            <div style={{ position: 'absolute', width: '180px', height: '180px', border: `1px dashed ${m.color}`, borderRadius: '50%', animation: 'spin 10s linear infinite' }}></div>
 
-                            <div style={{ fontSize: '4rem', color: m.color, filter: `drop-shadow(0 0 20px ${m.color})` }}>{m.icon}</div>
+                            <div style={{ fontSize: '5rem', color: m.color, filter: `drop-shadow(0 0 20px ${m.color})` }}>{m.icon}</div>
 
                             <div style={{
                                 background: 'rgba(0,0,0,0.8)',
                                 border: `1px solid ${m.color}`,
                                 padding: '10px 20px',
                                 borderRadius: '10px',
-                                marginTop: '15px',
+                                marginTop: '20px',
                                 textAlign: 'center',
-                                minWidth: '150px'
+                                minWidth: '160px'
                             }}>
                                 <div style={{ color: m.color, fontSize: '0.9rem', fontWeight: 'bold' }}>STATISTICS DETECTED</div>
-                                <div style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: '5px 0' }}>{m.stat}</div>
-                                <div style={{ fontSize: '0.8rem', opacity: 0.8 }}>{m.desc}</div>
+                                <div style={{ fontSize: '1.8rem', fontWeight: 'bold', margin: '5px 0' }}>{m.stat}</div>
+                                <div style={{ fontSize: '0.9rem', opacity: 0.8 }}>{m.desc}</div>
                             </div>
                         </div>
                     ))}

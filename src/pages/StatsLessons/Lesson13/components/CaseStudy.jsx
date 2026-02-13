@@ -2,7 +2,7 @@ import React, { useState, useMemo, useRef, useEffect } from 'react';
 import {
     FaTable, FaDatabase, FaChartBar, FaFileSignature, FaArrowRight,
     FaUndo, FaChartPie, FaListUl, FaChalkboardTeacher,
-    FaLightbulb, FaUser, FaUsers, FaTrophy, FaStar
+    FaLightbulb, FaUser, FaUsers, FaTrophy, FaStar, FaInfoCircle
 } from 'react-icons/fa';
 
 /**
@@ -45,8 +45,9 @@ const CaseStudy = () => {
         const initialCards = rawData.map((item, index) => ({
             ...item,
             id: index,
-            x: Math.random() * 80 + 5, // %
-            y: Math.random() * 80 + 5, // %
+            // Random scatter initially
+            x: Math.random() * 80 + 5,
+            y: Math.random() * 80 + 5,
             rotation: Math.random() * 40 - 20,
             zIndex: Math.floor(Math.random() * 10),
             isDragging: false
@@ -54,17 +55,24 @@ const CaseStudy = () => {
         setCards(initialCards);
     }, []);
 
-    // Achievement Logic
+    // Stricter Achievement Logic
     const checkAchievements = (currentCards) => {
-        // ROW MASTER: Check if 5+ cards are aligned roughly in a Y-row
-        // Sort by Y position
+        // ROW MASTER: 
+        // 1. Sort by Y position.
+        // 2. Find groups of 5+ cards within a small Y-variance (e.g. 5%).
+        // 3. For these groups, check if X-coordinates are roughly sequential or compact?
+        //    Actually, "Visual Row" usually means similar Y. Let's start there but be strict.
+
         const sortedByY = [...currentCards].sort((a, b) => a.y - b.y);
         let maxRowStreak = 0;
         let currentRowStreak = 1;
 
         for (let i = 1; i < sortedByY.length; i++) {
-            // If Y difference is less than 5%, consider them in same "row"
-            if (Math.abs(sortedByY[i].y - sortedByY[i - 1].y) < 5) {
+            // Strict Y alignment: variance < 3%
+            if (Math.abs(sortedByY[i].y - sortedByY[i - 1].y) < 3) {
+                // Also check if X is reasonably close? No, let's just force straight line.
+                // But wait, if they are piled on top of each other, that's not a row.
+                // Check if X-distance is significant?
                 currentRowStreak++;
             } else {
                 maxRowStreak = Math.max(maxRowStreak, currentRowStreak);
@@ -73,17 +81,38 @@ const CaseStudy = () => {
         }
         maxRowStreak = Math.max(maxRowStreak, currentRowStreak);
 
+        // GRID MASTER:
+        // A "Grid" implies multiple rows?
+        // Or just that ALL cards are somewhat aligned?
+        // Let's count how many cards are "aligned" with at least one neighbor.
+        let alignedCount = 0;
+        for (let i = 0; i < currentCards.length; i++) {
+            const c1 = currentCards[i];
+            // Check if it has a neighbor in X or Y
+            const hasNeighbor = currentCards.some((c2, j) => {
+                if (i === j) return false;
+                const dy = Math.abs(c1.y - c2.y);
+                const dx = Math.abs(c1.x - c2.x);
+                // Neighbor in Row (similar Y, close X) OR Column (similar X, close Y)
+                return (dy < 3 && dx < 20) || (dx < 3 && dy < 20);
+            });
+            if (hasNeighbor) alignedCount++;
+        }
+
         const newAchievements = [...achievements];
         let toastMsg = null;
 
+        // Condition: Must align 5 cards perfectly in a row (stricter Y check)
+        // AND ensuring they aren't just a pile (handled by visual expectation, user unlikely to pile).
         if (maxRowStreak >= 5 && !achievements.includes('row_master')) {
             newAchievements.push('row_master');
-            toastMsg = "🏆 Achievement Unlocked: Row Master!";
+            toastMsg = "🏆 Achievement Unlocked: Row Master (Perfect Line!)";
         }
 
-        if (maxRowStreak >= 15 && !achievements.includes('grid_master')) {
+        // Condition: 15+ cards are part of a structure
+        if (alignedCount >= 15 && !achievements.includes('grid_master')) {
             newAchievements.push('grid_master');
-            toastMsg = "🌟 MEGA Achievement: GRID MASTER!";
+            toastMsg = "🌟 MEGA Achievement: GRID MASTER (Organized Chaos!)";
         }
 
         if (toastMsg) {
@@ -109,6 +138,7 @@ const CaseStudy = () => {
             width: container.width,
             height: container.height
         };
+        // Bring to front
         setCards(prev => prev.map((c, i) => i === index ? { ...c, zIndex: 100, isDragging: true } : c));
     };
 
@@ -135,8 +165,11 @@ const CaseStudy = () => {
     const handleMouseUp = () => {
         if (dragItem.current !== null) {
             setCards(prev => {
-                const newCards = prev.map((c, i) => i === dragItem.current ? { ...c, isDragging: false, rotation: Math.random() * 4 - 2 } : c);
-                checkAchievements(newCards); // Check achievements on drop
+                const newCards = prev.map((c, i) => i === dragItem.current ? { ...c, isDragging: false, rotation: 0 } : c); // No rotation on drop for easier alignment
+
+                // Add a small delay/debounce or just check immediately?
+                // Check immediately is fine.
+                checkAchievements(newCards);
                 return newCards;
             });
             dragItem.current = null;
@@ -152,7 +185,7 @@ const CaseStudy = () => {
     const teacherNotes = {
         1: (
             <>
-                <p><strong>Step 1: The Chaos of Collection.</strong> This is <strong>Raw Data</strong>. Go ahead, <strong>drag the cards around!</strong> Try to align them in a row. Can you become a <strong>"Row Master"</strong>?</p>
+                <p><strong>Step 1: The Chaos of Collection.</strong> This is <strong>Raw Data</strong>. Go ahead, <strong>drag adjacent cards into a straight line!</strong> Can you organize them enough to become a <strong>"Row Master"</strong>?</p>
             </>
         ),
         2: (
@@ -199,8 +232,8 @@ const CaseStudy = () => {
                 <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '10px' }}>
                     <span style={{ opacity: 0.7 }}>From Raw Surveys to Policy Decisions</span>
                     {/* Achievement Badges */}
-                    {achievements.includes('row_master') && <span title="Row Master: Aligned 5+ cards" style={{ color: '#fbbf24', display: 'flex', alignItems: 'center', gap: '5px' }}><FaTrophy /> Row Master</span>}
-                    {achievements.includes('grid_master') && <span title="Grid Master: Organized everything!" style={{ color: '#f472b6', display: 'flex', alignItems: 'center', gap: '5px' }}><FaStar /> GRID MASTER</span>}
+                    {achievements.includes('row_master') && <span title="Row Master: Aligned 5+ cards" style={{ color: '#fbbf24', display: 'flex', alignItems: 'center', gap: '5px', animation: 'popIn 0.5s' }}><FaTrophy /> Row Master</span>}
+                    {achievements.includes('grid_master') && <span title="Grid Master: Organized everything!" style={{ color: '#f472b6', display: 'flex', alignItems: 'center', gap: '5px', animation: 'popIn 0.5s' }}><FaStar /> GRID MASTER</span>}
                 </div>
             </div>
 
@@ -222,9 +255,10 @@ const CaseStudy = () => {
             {showToast && (
                 <div style={{
                     position: 'fixed', top: '20%', left: '50%', transform: 'translate(-50%, -50%)',
-                    background: 'rgba(0, 0, 0, 0.9)', color: '#fbbf24', padding: '20px 40px',
+                    background: 'rgba(0, 0, 0, 0.95)', color: '#fbbf24', padding: '20px 40px',
                     borderRadius: '50px', border: '2px solid #fbbf24',
                     fontSize: '1.5rem', fontWeight: 'bold', zIndex: 1000,
+                    boxShadow: '0 0 50px #fbbf24',
                     animation: 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
                 }}>
                     {showToast}
@@ -263,6 +297,7 @@ const CaseStudy = () => {
                                     fontFamily: "'Courier New', Courier, monospace",
                                     cursor: item.isDragging ? 'grabbing' : 'grab',
                                     transition: item.isDragging ? 'none' : 'transform 0.2s, box-shadow 0.2s',
+                                    opacity: item.isDragging ? 0.9 : 1
                                 }}
                             >
                                 <div style={{ borderBottom: '1px dashed #cbd5e1', paddingBottom: '5px', marginBottom: '5px', fontWeight: 'bold', color: primaryColor }}>{item.name}</div>
@@ -273,8 +308,8 @@ const CaseStudy = () => {
                             </div>
                         ))}
                         {/* Instruction Hint */}
-                        <div style={{ position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', background: 'rgba(0,0,0,0.5)', padding: '10px 20px', borderRadius: '20px', pointerEvents: 'none', color: '#fff', fontSize: '0.9rem' }}>
-                            Drag cards into a straight horizontal line to get achievements!
+                        <div style={{ position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', background: 'rgba(0,0,0,0.6)', padding: '10px 20px', borderRadius: '20px', pointerEvents: 'none', color: '#fff', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <FaInfoCircle /> Drag cards into a straight horizontal line (gap &lt; 3%) to unlock achievements!
                         </div>
                     </div>
                 )}
