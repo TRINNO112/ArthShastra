@@ -260,6 +260,8 @@ function Lessons() {
           {activeGrade === '11' && <div className="grade-active-indicator"><BsCheckCircleFill /></div>}
         </div>
 
+        {/* Class 12 Card - Hidden for now to focus on Grade 11 completion */}
+        {/*
         <div
           className={`grade-card ${activeGrade === '12' ? 'active' : ''}`}
           onClick={() => handleGradeChange('12')}
@@ -277,6 +279,7 @@ function Lessons() {
           </div>
           {activeGrade === '12' && <div className="grade-active-indicator"><BsCheckCircleFill /></div>}
         </div>
+        */}
       </div>
 
       {/* Subject Cards */}
