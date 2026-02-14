@@ -3,6 +3,31 @@ import { FaCheckCircle, FaTimesCircle, FaTrophy, FaRedo, FaArrowRight, FaQuestio
 import { submitDetailedQuizAttempt, getQuizAnalytics } from '../../../services/firebase';
 import '../css/quiz.css';
 
+// Helper: get a stable ID for a question (fallback to type + index)
+const getQId = (q, index, prefix = 'q') => q.id !== undefined ? q.id : `${prefix}_${index}`;
+
+// Helper: get the correct answer index for MCQ questions
+const getMcqCorrect = (q) => {
+    if (q.correct !== undefined) return q.correct;
+    if (q.correctAnswer !== undefined) {
+        if (typeof q.correctAnswer === 'number') return q.correctAnswer;
+        if (typeof q.correctAnswer === 'string' && q.options) {
+            const idx = q.options.findIndex(opt => opt === q.correctAnswer);
+            return idx >= 0 ? idx : undefined;
+        }
+    }
+    return undefined;
+};
+
+// Helper: get the correct answer for TF questions
+const getTfCorrect = (q) => {
+    if (q.correct !== undefined) return typeof q.correct === 'boolean' ? q.correct : String(q.correct).toLowerCase() === 'true';
+    if (q.answer !== undefined) return typeof q.answer === 'boolean' ? q.answer : String(q.answer).toLowerCase() === 'true';
+    if (q.isTrue !== undefined) return typeof q.isTrue === 'boolean' ? q.isTrue : String(q.isTrue).toLowerCase() === 'true';
+    if (q.correctAnswer !== undefined) return typeof q.correctAnswer === 'boolean' ? q.correctAnswer : String(q.correctAnswer).toLowerCase() === 'true';
+    return undefined;
+};
+
 /**
  * Shared Quiz Component - Zen Premium Edition
  */
@@ -114,13 +139,15 @@ function SharedQuiz({
 
         // Calculate scores
         let mcqScore = 0;
-        mcqQuestions.forEach(q => {
-            if (mcqAnswers[q.id] === q.correct) mcqScore++;
+        mcqQuestions.forEach((q, index) => {
+            const qId = getQId(q, index, 'mcq');
+            if (mcqAnswers[qId] === getMcqCorrect(q)) mcqScore++;
         });
 
         let tfScore = 0;
-        tfQuestions.forEach(q => {
-            if (tfAnswers[q.id] === q.correct) tfScore++;
+        tfQuestions.forEach((q, index) => {
+            const qId = getQId(q, index, 'tf');
+            if (tfAnswers[qId] === getTfCorrect(q)) tfScore++;
         });
 
         const totalScore = mcqScore + tfScore;
@@ -136,24 +163,30 @@ function SharedQuiz({
                     totalQuestions: mcqQuestions.length + tfQuestions.length,
                     totalTimeSpent: finalTimeSpent,
                     questionAnalytics: [
-                        ...mcqQuestions.map(q => ({
-                            id: q.id || 'unknown',
-                            type: 'mcq',
-                            isCorrect: mcqAnswers[q.id] === q.correct,
-                            questionText: q.question || '',
-                            // FIX: Handle undefined answer (skipped) to prevent Firestore error
-                            userAnswerText: mcqAnswers[q.id] !== undefined ? q.options[mcqAnswers[q.id]] : 'Skipped',
-                            correctAnswerText: q.options[q.correct] || ''
-                        })),
-                        ...tfQuestions.map(q => ({
-                            id: q.id || 'unknown',
-                            type: 'tf',
-                            isCorrect: tfAnswers[q.id] === q.correct,
-                            questionText: q.question || '',
-                            // FIX: Handle undefined answer (skipped)
-                            userAnswer: tfAnswers[q.id] !== undefined ? tfAnswers[q.id] : null,
-                            correctAnswer: q.correct
-                        }))
+                        ...mcqQuestions.map((q, index) => {
+                            const qId = getQId(q, index, 'mcq');
+                            const correct = getMcqCorrect(q);
+                            return {
+                                id: qId,
+                                type: 'mcq',
+                                isCorrect: mcqAnswers[qId] === correct,
+                                questionText: q.question || '',
+                                userAnswerText: mcqAnswers[qId] !== undefined ? q.options[mcqAnswers[qId]] : 'Skipped',
+                                correctAnswerText: correct !== undefined ? q.options[correct] || '' : ''
+                            };
+                        }),
+                        ...tfQuestions.map((q, index) => {
+                            const qId = getQId(q, index, 'tf');
+                            const correct = getTfCorrect(q);
+                            return {
+                                id: qId,
+                                type: 'tf',
+                                isCorrect: tfAnswers[qId] === correct,
+                                questionText: q.question || '',
+                                userAnswer: tfAnswers[qId] !== undefined ? tfAnswers[qId] : null,
+                                correctAnswer: correct
+                            };
+                        })
                     ]
                 });
 
@@ -257,12 +290,15 @@ function SharedQuiz({
                 {mcqQuestions.length > 0 && (
                     <div className="quiz-block animate-fadeInUp">
                         <div className="questions-container">
-                            {mcqQuestions.map((q, index) => (
-                                <div key={q.id || index} className={`question-card ${showResults ? 'show-result' : ''}`}>
+                            {mcqQuestions.map((q, index) => {
+                                const qId = getQId(q, index, 'mcq');
+                                const correct = getMcqCorrect(q);
+                                return (
+                                <div key={qId} className={`question-card ${showResults ? 'show-result' : ''}`}>
                                     <div className="question-header">
                                         <span className="question-number">Q{index + 1}</span>
                                         {showResults && (
-                                            mcqAnswers[q.id] === q.correct
+                                            mcqAnswers[qId] === correct
                                                 ? <FaCheckCircle className="result-icon correct" />
                                                 : <FaTimesCircle className="result-icon wrong" />
                                         )}
@@ -273,21 +309,22 @@ function SharedQuiz({
                                         {q.options.map((opt, idx) => (
                                             <button
                                                 key={idx}
-                                                className={`option-btn ${mcqAnswers[q.id] === idx ? 'selected' : ''}
-                            ${showResults && idx === q.correct ? 'correct' : ''}
-                            ${showResults && mcqAnswers[q.id] === idx && idx !== q.correct ? 'wrong' : ''}`}
-                                                onClick={() => handleMcqAnswer(q.id, idx)}
+                                                className={`option-btn ${mcqAnswers[qId] === idx ? 'selected' : ''}
+                            ${showResults && idx === correct ? 'correct' : ''}
+                            ${showResults && mcqAnswers[qId] === idx && idx !== correct ? 'wrong' : ''}`}
+                                                onClick={() => handleMcqAnswer(qId, idx)}
                                                 disabled={showResults}
                                             >
                                                 <span className="option-letter">{String.fromCharCode(65 + idx)}</span>
                                                 <span className="option-text">{opt}</span>
-                                                {showResults && idx === q.correct && <FaCheckCircle className="option-icon correct" />}
-                                                {showResults && mcqAnswers[q.id] === idx && idx !== q.correct && <FaTimesCircle className="option-icon wrong" />}
+                                                {showResults && idx === correct && <FaCheckCircle className="option-icon correct" />}
+                                                {showResults && mcqAnswers[qId] === idx && idx !== correct && <FaTimesCircle className="option-icon wrong" />}
                                             </button>
                                         ))}
                                     </div>
                                 </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
                 )}
@@ -296,12 +333,15 @@ function SharedQuiz({
                 {tfQuestions.length > 0 && (
                     <div className="quiz-block animate-fadeInUp">
                         <div className="questions-container">
-                            {tfQuestions.map((q, index) => (
-                                <div key={q.id || index} className={`question-card tf-card ${showResults ? 'show-result' : ''}`}>
+                            {tfQuestions.map((q, index) => {
+                                const qId = getQId(q, index, 'tf');
+                                const correct = getTfCorrect(q);
+                                return (
+                                <div key={qId} className={`question-card tf-card ${showResults ? 'show-result' : ''}`}>
                                     <div className="question-header">
                                         <span className="question-number">Q{mcqQuestions.length + index + 1}</span>
                                         {showResults && (
-                                            tfAnswers[q.id] === q.correct
+                                            tfAnswers[qId] === correct
                                                 ? <FaCheckCircle className="result-icon correct" />
                                                 : <FaTimesCircle className="result-icon wrong" />
                                         )}
@@ -310,20 +350,20 @@ function SharedQuiz({
 
                                     <div className="tf-options" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                                         <button
-                                            className={`tf-btn ${tfAnswers[q.id] === true ? 'selected' : ''}
-                            ${showResults && q.correct === true ? 'correct' : ''}
-                            ${showResults && tfAnswers[q.id] === true && !q.correct ? 'wrong' : ''}`}
-                                            onClick={() => handleTfAnswer(q.id, true)}
+                                            className={`tf-btn ${tfAnswers[qId] === true ? 'selected' : ''}
+                            ${showResults && correct === true ? 'correct' : ''}
+                            ${showResults && tfAnswers[qId] === true && correct !== true ? 'wrong' : ''}`}
+                                            onClick={() => handleTfAnswer(qId, true)}
                                             disabled={showResults}
                                         >
                                             <FaCheckCircle className="tf-icon" style={{ marginRight: '10px' }} />
                                             True
                                         </button>
                                         <button
-                                            className={`tf-btn ${tfAnswers[q.id] === false ? 'selected' : ''}
-                            ${showResults && q.correct === false ? 'correct' : ''}
-                            ${showResults && tfAnswers[q.id] === false && q.correct ? 'wrong' : ''}`}
-                                            onClick={() => handleTfAnswer(q.id, false)}
+                                            className={`tf-btn ${tfAnswers[qId] === false ? 'selected' : ''}
+                            ${showResults && correct === false ? 'correct' : ''}
+                            ${showResults && tfAnswers[qId] === false && correct !== false ? 'wrong' : ''}`}
+                                            onClick={() => handleTfAnswer(qId, false)}
                                             disabled={showResults}
                                         >
                                             <FaTimesCircle className="tf-icon" style={{ marginRight: '10px' }} />
@@ -331,7 +371,8 @@ function SharedQuiz({
                                         </button>
                                     </div>
                                 </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
                 )}
@@ -387,7 +428,7 @@ function SharedQuiz({
                                 </div>
                                 <div className="breakdown-item">
                                     <span className="breakdown-value" style={{ color: '#34c759' }}>
-                                        {mcqQuestions.filter(q => mcqAnswers[q.id] === q.correct).length}
+                                        {mcqQuestions.filter((q, i) => mcqAnswers[getQId(q, i, 'mcq')] === getMcqCorrect(q)).length}
                                     </span>
                                     <span className="breakdown-label">MCQ Correct</span>
                                 </div>
