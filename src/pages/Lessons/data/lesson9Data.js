@@ -79,6 +79,76 @@ export const lesson9Data = {
             options: ["Yes", "No", "Only in Perfect Competition", "Never"],
             correctAnswer: "Yes",
             explanation: "Yes, if a firm has to lower price drastically to sell one more unit, the loss on previous units might outweight the gain from the new unit, making MR negative."
+        },
+        {
+            id: 11,
+            question: "Total Revenue (TR) is calculated as:",
+            options: ["Price × Quantity", "Price / Quantity", "Price + Quantity", "Price - Cost"],
+            correctAnswer: "Price × Quantity",
+            explanation: "TR = P × Q. It is the total amount of money received by the firm from selling its output."
+        },
+        {
+            id: 12,
+            question: "Under imperfect competition, the MR curve lies:",
+            options: ["Above the AR curve", "Below the AR curve", "On the AR curve", "Parallel to X-axis"],
+            correctAnswer: "Below the AR curve",
+            explanation: "Under imperfect competition, to sell more, price must fall. MR falls faster than AR because MR reflects the revenue loss on all previous units too."
+        },
+        {
+            id: 13,
+            question: "If TR at 5 units is ₹100 and TR at 6 units is ₹108, then MR of the 6th unit is:",
+            options: ["₹108", "₹100", "₹8", "₹18"],
+            correctAnswer: "₹8",
+            explanation: "MR = TR(6) - TR(5) = 108 - 100 = ₹8."
+        },
+        {
+            id: 14,
+            question: "Under perfect competition, the TR curve is:",
+            options: ["A downward-sloping curve", "A straight line from origin with positive slope", "An inverted U-shape", "A horizontal line"],
+            correctAnswer: "A straight line from origin with positive slope",
+            explanation: "Since P is constant, TR = P × Q increases linearly, forming a straight line through the origin."
+        },
+        {
+            id: 15,
+            question: "Under imperfect competition, the TR curve is:",
+            options: ["A straight line", "An inverted U-shape (rises then falls)", "A horizontal line", "Always increasing"],
+            correctAnswer: "An inverted U-shape (rises then falls)",
+            explanation: "TR first rises (when MR > 0), reaches maximum (when MR = 0), and then falls (when MR < 0)."
+        },
+        {
+            id: 16,
+            question: "Revenue refers to:",
+            options: ["Profit earned by a firm", "Income received from sale of output", "Cost of production", "Wages paid to workers"],
+            correctAnswer: "Income received from sale of output",
+            explanation: "Revenue is the income (receipts) a firm gets from selling its goods and services."
+        },
+        {
+            id: 17,
+            question: "When AR is falling, MR:",
+            options: ["Falls faster than AR", "Falls slower than AR", "Remains constant", "Rises"],
+            correctAnswer: "Falls faster than AR",
+            explanation: "When the firm lowers price to sell more, MR drops more steeply because it also accounts for the revenue lost on all previous units."
+        },
+        {
+            id: 18,
+            question: "If AR = ₹10 at all levels of output, MR is:",
+            options: ["₹10", "₹0", "Greater than ₹10", "Less than ₹10"],
+            correctAnswer: "₹10",
+            explanation: "Constant AR (price) means perfect competition. Here AR = MR = Price = ₹10."
+        },
+        {
+            id: 19,
+            question: "The relationship between AR and MR under monopoly can be expressed as:",
+            options: ["MR = AR", "MR > AR", "MR < AR", "MR = 2 × AR"],
+            correctAnswer: "MR < AR",
+            explanation: "Under monopoly, price must be lowered to sell more. MR is always less than AR (price) for all units after the first."
+        },
+        {
+            id: 20,
+            question: "If a firm's AR is ₹20 and it sells 10 units, its TR is:",
+            options: ["₹20", "₹10", "₹200", "₹30"],
+            correctAnswer: "₹200",
+            explanation: "TR = AR × Q = 20 × 10 = ₹200."
         }
     ],
     tfQuestions: [
@@ -111,6 +181,36 @@ export const lesson9Data = {
             question: "In Perfect Competition, slope of TR curve is constant.",
             correctAnswer: "True",
             explanation: "The slope of TR is MR. In Perfect Competition, MR is constant (equal to Price), so the slope of TR is constant."
+        },
+        {
+            id: 6,
+            question: "Under imperfect competition, AR and MR curves are both downward sloping.",
+            correctAnswer: "True",
+            explanation: "Both AR and MR fall as output increases, but MR falls at a faster rate than AR."
+        },
+        {
+            id: 7,
+            question: "MR can never be greater than AR.",
+            correctAnswer: "False",
+            explanation: "For the very first unit sold, MR = AR. Under perfect competition, MR always equals AR. So MR is not always less than AR."
+        },
+        {
+            id: 8,
+            question: "TR is always positive regardless of output level.",
+            correctAnswer: "True",
+            explanation: "TR = Price × Quantity. Since both price and quantity are positive (or zero), TR can never be negative."
+        },
+        {
+            id: 9,
+            question: "Under perfect competition, the MR curve is a horizontal straight line.",
+            correctAnswer: "True",
+            explanation: "Since price is constant, MR = Price at every level of output, forming a horizontal line."
+        },
+        {
+            id: 10,
+            question: "When MR = 0, a rational firm under imperfect competition should stop increasing output.",
+            correctAnswer: "True",
+            explanation: "At MR = 0, TR is maximum. Beyond this, MR becomes negative and TR starts falling."
         }
     ]
 };

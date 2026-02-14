@@ -61,6 +61,66 @@ export const lesson2Data = {
       question: "Economic growth is represented on PPC by:",
       options: ["Movement along the curve", "Leftward shift", "Rightward shift", "Being on the curve"],
       correct: 2
+    },
+    {
+      id: 11,
+      question: "A point outside the PPC indicates:",
+      options: ["Efficient production", "Underutilization of resources", "Unattainable with current resources", "Wastage of resources"],
+      correct: 2
+    },
+    {
+      id: 12,
+      question: "The Marginal Rate of Transformation (MRT) is also known as:",
+      options: ["Average Opportunity Cost", "Marginal Opportunity Cost", "Total Cost", "Fixed Cost"],
+      correct: 1
+    },
+    {
+      id: 13,
+      question: "In a market economy, the problem of 'What to produce' is solved by:",
+      options: ["Government directives", "Consumer preferences (demand)", "Central planning board", "Traditional customs"],
+      correct: 1
+    },
+    {
+      id: 14,
+      question: "PPC is a straight line when:",
+      options: ["MRT is increasing", "MRT is decreasing", "MRT is constant", "Resources are underutilized"],
+      correct: 2
+    },
+    {
+      id: 15,
+      question: "The problem of 'How to produce' is related to:",
+      options: ["Distribution of income", "Choice of technique of production", "Quantity of goods to produce", "Consumption pattern"],
+      correct: 1
+    },
+    {
+      id: 16,
+      question: "Which economy relies on the price mechanism to solve central problems?",
+      options: ["Centrally Planned Economy", "Market Economy", "Traditional Economy", "Socialist Economy"],
+      correct: 1
+    },
+    {
+      id: 17,
+      question: "The problem of 'For whom to produce' is essentially about:",
+      options: ["Resource allocation", "Distribution of national income", "Technology choice", "Export decisions"],
+      correct: 1
+    },
+    {
+      id: 18,
+      question: "PPC assumes:",
+      options: ["Resources are unlimited", "Technology changes constantly", "Resources are fully and efficiently employed", "Only one good is produced"],
+      correct: 2
+    },
+    {
+      id: 19,
+      question: "If MRT is increasing, the PPC will be:",
+      options: ["A straight line", "Convex to the origin", "Concave to the origin", "A vertical line"],
+      correct: 2
+    },
+    {
+      id: 20,
+      question: "Mixed economy is a combination of:",
+      options: ["Traditional and modern economies", "Market and planned economies", "Domestic and foreign economies", "Agricultural and industrial economies"],
+      correct: 1
     }
   ],
 
@@ -88,6 +148,31 @@ export const lesson2Data = {
     {
       id: 5,
       question: "Clean India Mission (Swachh Bharat Abhiyan) can lead to a rightward shift in PPC due to better health/efficiency of labor.",
+      correct: true
+    },
+    {
+      id: 6,
+      question: "A centrally planned economy has no role for market forces.",
+      correct: true
+    },
+    {
+      id: 7,
+      question: "PPC can shift to the left if there is destruction of resources due to war or natural disaster.",
+      correct: true
+    },
+    {
+      id: 8,
+      question: "Opportunity cost of a good is zero if resources have only one use.",
+      correct: true
+    },
+    {
+      id: 9,
+      question: "India is an example of a pure market economy.",
+      correct: false
+    },
+    {
+      id: 10,
+      question: "The central problems of an economy arise due to scarcity of resources relative to unlimited wants.",
       correct: true
     }
   ]

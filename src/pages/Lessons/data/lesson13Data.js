@@ -217,6 +217,126 @@ export const lesson13Data = {
             ],
             correctAnswer: 1,
             explanation: "The massive drop in demand (lowering price) outweighs the slight drop in supply (raising price). Net effect is lower price."
+        },
+        {
+            id: 11,
+            question: "Equilibrium price is also called:",
+            options: [
+                "Maximum price",
+                "Minimum price",
+                "Market-clearing price",
+                "Ceiling price"
+            ],
+            correctAnswer: 2,
+            explanation: "At equilibrium, quantity demanded equals quantity supplied — the market 'clears' with no excess demand or supply."
+        },
+        {
+            id: 12,
+            question: "A 'Price Floor' (Minimum Support Price) set above equilibrium causes:",
+            options: [
+                "Shortage",
+                "Surplus (Excess Supply)",
+                "No effect",
+                "Equilibrium"
+            ],
+            correctAnswer: 1,
+            explanation: "At the high floor price, QS > QD, creating a surplus. The government often buys the excess (like in MSP for crops)."
+        },
+        {
+            id: 13,
+            question: "If supply increases while demand remains constant:",
+            options: [
+                "Price rises, Quantity falls",
+                "Price falls, Quantity rises",
+                "Price rises, Quantity rises",
+                "Price falls, Quantity falls"
+            ],
+            correctAnswer: 1,
+            explanation: "Increased supply creates excess supply at old price. Price falls and quantity rises to reach new equilibrium."
+        },
+        {
+            id: 14,
+            question: "Excess Demand at a given price means:",
+            options: [
+                "QD < QS",
+                "QD > QS",
+                "QD = QS",
+                "Both QD and QS are zero"
+            ],
+            correctAnswer: 1,
+            explanation: "Excess demand means quantity demanded exceeds quantity supplied at the prevailing price."
+        },
+        {
+            id: 15,
+            question: "In the Walrasian approach, equilibrium is reached through adjustment of:",
+            options: [
+                "Quantity",
+                "Price",
+                "Technology",
+                "Government policy"
+            ],
+            correctAnswer: 1,
+            explanation: "Walras focused on price adjustment: excess demand pushes price up, excess supply pushes price down, until equilibrium."
+        },
+        {
+            id: 16,
+            question: "In the Marshallian approach, equilibrium is reached through adjustment of:",
+            options: [
+                "Price",
+                "Quantity (output)",
+                "Income",
+                "Tastes"
+            ],
+            correctAnswer: 1,
+            explanation: "Marshall focused on quantity adjustment: if demand price > supply price, firms increase output, and vice versa."
+        },
+        {
+            id: 17,
+            question: "If both Demand and Supply decrease, the effect on equilibrium quantity is:",
+            options: [
+                "Quantity definitely rises",
+                "Quantity definitely falls",
+                "Quantity stays the same",
+                "Cannot be determined"
+            ],
+            correctAnswer: 1,
+            explanation: "Both decreases reduce quantity. Whether price rises or falls depends on which shift is larger."
+        },
+        {
+            id: 18,
+            question: "Government imposes a tax on a commodity. This will:",
+            options: [
+                "Shift demand to the left",
+                "Shift supply to the left, raising equilibrium price",
+                "Shift supply to the right",
+                "Have no effect on equilibrium"
+            ],
+            correctAnswer: 1,
+            explanation: "Tax increases cost of production, shifting supply leftward. This raises equilibrium price and reduces quantity."
+        },
+        {
+            id: 19,
+            question: "If D increases and S decreases simultaneously, what happens to price?",
+            options: [
+                "Definitely falls",
+                "Definitely rises",
+                "Remains the same",
+                "Cannot be determined"
+            ],
+            correctAnswer: 1,
+            explanation: "Both shifts push price upward: increased demand raises price, decreased supply also raises price. Price definitely rises."
+        },
+        {
+            id: 20,
+            question: "At equilibrium, which of the following is true?",
+            options: [
+                "There is excess demand",
+                "There is excess supply",
+                "Quantity demanded equals quantity supplied",
+                "Price is at its maximum"
+            ],
+            correctAnswer: 2,
+            explanation: "Equilibrium is defined as the point where QD = QS. There is no tendency for the market to change."
         }
     ],
 
@@ -251,6 +371,36 @@ export const lesson13Data = {
             question: "A Price Floor is only binding if set ABOVE the equilibrium price.",
             correctAnswer: true,
             explanation: "True. A floor below equilibrium is irrelevant because the market price is already higher than the floor."
+        },
+        {
+            id: 6,
+            question: "Excess supply at a given price will push the price downward.",
+            correctAnswer: true,
+            explanation: "True. Sellers compete to sell unsold stock by lowering prices until equilibrium is restored."
+        },
+        {
+            id: 7,
+            question: "A Price Ceiling above the equilibrium price has no practical effect.",
+            correctAnswer: true,
+            explanation: "True. If the ceiling is above equilibrium, the market naturally settles below it, making the ceiling non-binding."
+        },
+        {
+            id: 8,
+            question: "If Demand increases and Supply decreases, the effect on quantity is always determinable.",
+            correctAnswer: false,
+            explanation: "False. The effect on quantity depends on the relative magnitudes of the two shifts and is therefore indeterminate."
+        },
+        {
+            id: 9,
+            question: "Market equilibrium ensures that there is no wastage of resources.",
+            correctAnswer: true,
+            explanation: "True. At equilibrium, exactly the quantity demanded is produced and sold — no surplus or shortage exists."
+        },
+        {
+            id: 10,
+            question: "A subsidy to producers shifts the supply curve to the right and lowers equilibrium price.",
+            correctAnswer: true,
+            explanation: "True. Subsidy reduces cost, increases supply (rightward shift), creating excess supply that pushes price down."
         }
     ]
 };

@@ -90,6 +90,36 @@ export const lesson7Data = {
       question: "What happens to AP when MP > AP?",
       options: ["AP falls", "AP remains constant", "AP rises", "AP becomes negative"],
       correct: 2
+    },
+    {
+      question: "Returns to scale refers to the change in output when:",
+      options: ["Only labor is increased", "Only capital is increased", "All inputs are changed proportionately", "Technology changes"],
+      correct: 2
+    },
+    {
+      question: "Which of the following is a cause of diminishing returns to a factor?",
+      options: ["Better coordination of factors", "Optimum factor proportion", "Overcrowding and poor coordination due to excess variable factor", "Increasing efficiency"],
+      correct: 2
+    },
+    {
+      question: "AP is at its maximum when:",
+      options: ["MP is zero", "MP equals AP", "MP is at maximum", "TP is at maximum"],
+      correct: 1
+    },
+    {
+      question: "In Stage III of production, TP is:",
+      options: ["Rising", "At maximum", "Falling", "Constant"],
+      correct: 2
+    },
+    {
+      question: "The short-run production function is also known as:",
+      options: ["Law of Returns to Scale", "Law of Variable Proportions", "Law of Demand", "Law of Supply"],
+      correct: 1
+    },
+    {
+      question: "MP curve cuts the AP curve:",
+      options: ["From below at AP's minimum", "From above at AP's maximum", "At AP's minimum", "At AP's maximum"],
+      correct: 3
     }
   ],
   tfQuestions: [
@@ -116,6 +146,22 @@ export const lesson7Data = {
     {
       question: "Ideally, a firm should operate in Stage I where returns are increasing.",
       correct: false
+    },
+    {
+      question: "AP can never be negative even when MP is negative.",
+      correct: true
+    },
+    {
+      question: "When MP is negative, adding more variable factor actually reduces total output.",
+      correct: true
+    },
+    {
+      question: "The law of variable proportions assumes that all units of the variable factor are equally efficient.",
+      correct: true
+    },
+    {
+      question: "In the long run, there are no fixed factors of production.",
+      correct: true
     }
   ]
 };
