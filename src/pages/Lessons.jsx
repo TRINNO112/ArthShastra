@@ -51,7 +51,7 @@ const lessonsData = {
     name: 'Statistics for Economics',
     shortName: 'Statistics',
     grade: '11',
-    icon: '📊',
+    icon: <IoStatsChart />,
     color: 'cyan',
     description: 'Learn to collect, organize and analyze economic data',
     chapters: [
@@ -74,7 +74,7 @@ const lessonsData = {
     name: 'Introductory Microeconomics',
     shortName: 'Microeconomics',
     grade: '11',
-    icon: '📈',
+    icon: <IoTrendingUp />,
     color: 'gold',
     description: 'Study individual economic units - consumers, firms & markets',
     chapters: [
@@ -98,7 +98,7 @@ const lessonsData = {
     name: 'Introductory Macroeconomics',
     shortName: 'Macroeconomics',
     grade: '12',
-    icon: '🏛️',
+    icon: <RiGovernmentLine />,
     color: 'green',
     description: 'Study the economy as a whole - national income, money & policy',
     chapters: [
@@ -122,7 +122,7 @@ const lessonsData = {
     name: 'Indian Economic Development',
     shortName: 'Indian Economy',
     grade: '12',
-    icon: '🇮🇳',
+    icon: <FaFire />,
     color: 'orange',
     description: 'Explore India\'s economic journey and current challenges',
     chapters: [
