@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaChartBar, FaChartPie, FaRulerCombined, FaClipboardList, FaLightbulb } from 'react-icons/fa';
 import '../css/stats-theme.css';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 
 // Components
 import DiagramIntro from './components/DiagramIntro';
@@ -20,17 +21,19 @@ import TopicsMenu from '../components/TopicsMenu';
 const Lesson5 = () => {
     const [activeTab, setActiveTab] = useState('intro');
     const lessonId = 'stats-5';
+    const { logActivity } = useAuth();
 
-    // Track time and progress
+    useEffect(() => {
+        if (logActivity) logActivity('lesson_visit', { lessonId, lessonName: 'Measures of Central Tendency', chapter: 'Stats Ch 5' });
+    }, [logActivity, lessonId]);
+
     useEffect(() => {
         const startTime = Date.now();
         return () => {
-            const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60); // in minutes
-            if (timeSpent > 0 || activeTab === 'quiz') {
-                logLessonProgress(lessonId, Math.max(timeSpent, 1), activeTab === 'quiz');
-            }
+            const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
+            if (timeSpent > 0) logLessonProgress(lessonId, timeSpent);
         };
-    }, [activeTab]);
+    }, [lessonId]);
 
     const topics = [
         { id: 'intro', label: 'Basics & Rules', icon: <FaRulerCombined /> },

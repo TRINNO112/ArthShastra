@@ -6,6 +6,7 @@ import { Introduction, MarketSimulation, Certification, MarketNotes, NewsWire, O
 import Quiz from '../Lesson3/components/Quiz'; // Standard Shared Quiz
 import { lesson13Data } from '../data/lesson13Data';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 import MicroTopicsMenu from '../components/MicroTopicsMenu';
 import './lesson13.css';
 import '../css/lessons.css';
@@ -25,11 +26,21 @@ function Lesson13() {
     const [activeSection, setActiveSection] = useState(() => localStorage.getItem('lesson13-activeSection') || 'intro');
     const [startTime] = useState(() => Date.now());
     const lessonId = 'micro11-13';
+    const { logActivity } = useAuth();
+
+    useEffect(() => {
+        if (logActivity) {
+            logActivity('lesson_visit', { lessonId, lessonName: 'Oligopoly', chapter: 'Chapter 13' });
+        }
+    }, [logActivity, lessonId]);
 
     useEffect(() => localStorage.setItem('lesson13-activeSection', activeSection), [activeSection]);
     useEffect(() => {
-        return () => logLessonProgress(lessonId, Math.max(Math.round((Date.now() - startTime) / 1000 / 60), 1), activeSection === 'quiz');
-    }, [startTime, lessonId, activeSection]);
+        return () => {
+            const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
+            if (timeSpent > 0) logLessonProgress(lessonId, timeSpent);
+        };
+    }, [startTime, lessonId]);
 
     const currentIndex = sections.findIndex(s => s.id === activeSection);
 

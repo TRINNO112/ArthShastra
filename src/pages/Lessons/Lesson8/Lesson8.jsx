@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaDollarSign, FaTable, FaChartLine, FaBalanceScale, FaClock, FaIndustry, FaCalculator, FaQuestionCircle, FaProjectDiagram, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { lesson8Data } from '../data/lesson8Data';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 import './lesson8.css'; // THEME IMPORT
 // Components (add as created)
 import { Introduction, CostSchedule, CostCurvesChart, FixedVariableCosts, ShortLongRun, RealWorldExamples, PracticeProblems, Quiz, CostRelationships, TotalCostCurves, BreakEvenShutdown } from './components';
@@ -34,6 +35,13 @@ function Lesson8() {
   });
   const [startTime] = useState(() => Date.now());
   const lessonId = 'micro11-8';
+  const { logActivity } = useAuth();
+
+  useEffect(() => {
+    if (logActivity) {
+      logActivity('lesson_visit', { lessonId, lessonName: 'Revenue', chapter: 'Chapter 8' });
+    }
+  }, [logActivity, lessonId]);
 
   useEffect(() => {
     localStorage.setItem('lesson8-activeSection', activeSection);
@@ -42,9 +50,11 @@ function Lesson8() {
   useEffect(() => {
     return () => {
       const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
-      logLessonProgress(lessonId, Math.max(timeSpent, 1), activeSection === 'quiz');
+      if (timeSpent > 0) {
+        logLessonProgress(lessonId, timeSpent);
+      }
     };
-  }, [startTime, lessonId, activeSection]);
+  }, [startTime, lessonId]);
 
   const currentIndex = sections.findIndex(s => s.id === activeSection);
 

@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaSortAmountDown, FaChartBar, FaBookOpen, FaCalculator, FaClipboardList } from 'react-icons/fa';
 import '../css/stats-theme.css';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 
 // Components
 import CentralTendencyIntro from './components/CentralTendencyIntro';
@@ -21,17 +22,19 @@ import TopicsMenu from '../components/TopicsMenu';
 const Lesson9 = () => {
     const [activeTab, setActiveTab] = useState('intro');
     const lessonId = 'stats-9';
+    const { logActivity } = useAuth();
 
-    // Track time and progress
+    useEffect(() => {
+        if (logActivity) logActivity('lesson_visit', { lessonId, lessonName: 'Uses of Statistical Tools', chapter: 'Stats Ch 9' });
+    }, [logActivity, lessonId]);
+
     useEffect(() => {
         const startTime = Date.now();
         return () => {
             const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
-            if (timeSpent > 0 || activeTab === 'quiz') {
-                logLessonProgress(lessonId, Math.max(timeSpent, 1), activeTab === 'quiz');
-            }
+            if (timeSpent > 0) logLessonProgress(lessonId, timeSpent);
         };
-    }, [activeTab]);
+    }, [lessonId]);
 
     const topics = [
         { id: 'intro', label: 'Introduction', icon: <FaSortAmountDown /> },

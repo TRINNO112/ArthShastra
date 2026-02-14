@@ -5,6 +5,7 @@ import { FaArrowLeft, FaBalanceScale, FaChartLine, FaClipboardList, FaChevronLef
 import { Quiz, EquilibriumIntro, LogicExplainer, EquilibriumSchedule, EquilibriumGraph, PracticeProblems, DecisionGame, RealWorldExample } from './components';
 import { lesson10Data } from '../data/lesson10Data';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 import MicroTopicsMenu from '../components/MicroTopicsMenu';
 import '../css/lessons.css';
 
@@ -23,11 +24,21 @@ function Lesson10() {
     const [activeSection, setActiveSection] = useState(() => localStorage.getItem('lesson10-activeSection') || 'intro');
     const [startTime] = useState(() => Date.now());
     const lessonId = 'micro11-10';
+    const { logActivity } = useAuth();
+
+    useEffect(() => {
+        if (logActivity) {
+            logActivity('lesson_visit', { lessonId, lessonName: 'Market Equilibrium', chapter: 'Chapter 10' });
+        }
+    }, [logActivity, lessonId]);
 
     useEffect(() => localStorage.setItem('lesson10-activeSection', activeSection), [activeSection]);
     useEffect(() => {
-        return () => logLessonProgress(lessonId, Math.max(Math.round((Date.now() - startTime) / 1000 / 60), 1), activeSection === 'quiz');
-    }, [startTime, lessonId, activeSection]);
+        return () => {
+            const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
+            if (timeSpent > 0) logLessonProgress(lessonId, timeSpent);
+        };
+    }, [startTime, lessonId]);
 
     const currentIndex = sections.findIndex(s => s.id === activeSection);
     const handleSectionChange = (id) => setActiveSection(id);

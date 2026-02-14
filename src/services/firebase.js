@@ -215,8 +215,11 @@ export async function submitDetailedQuizAttempt(quizId, attemptData) {
 
     if (percentage > currentBest) statsUpdate.quizzes.bestScore = percentage;
     if (percentage >= 50) {
-      // Just store the ID in the user doc for quick "Done" checks
-      await updateDoc(userRef, { 'stats.quizzes.completedIds': arrayUnion(quizId) });
+      // Mark both quiz and lesson as completed when passing
+      await updateDoc(userRef, {
+        'stats.quizzes.completedIds': arrayUnion(quizId),
+        'stats.lessons.completedIds': arrayUnion(quizId)
+      });
     }
 
     console.log("💾 [FIREBASE] Updating User Stats...");
@@ -267,29 +270,16 @@ export async function logUserActivity(userId, type, details) {
 }
 
 // --- LESSON PROGRESS ---
-export async function logLessonProgress(lessonId, timeSpent, completed) {
+// Only tracks time spent. Completion is handled by submitDetailedQuizAttempt (>=50% quiz pass).
+export async function logLessonProgress(lessonId, timeSpent) {
   try {
     const userId = getUserId();
-    const userRef = doc(db, 'users', userId);
-
-    // Check local cache/db first to prevent double counting
-    const userSnap = await getDoc(userRef);
-    const currentCompletedIds = userSnap.data()?.stats?.lessons?.completedIds || [];
-    const isAlreadyCompleted = currentCompletedIds.includes(lessonId);
 
     const statsUpdate = {
       lessons: {
-        started: 1,
-        completed: (completed && !isAlreadyCompleted) ? 1 : 0,
         totalTimeSpent: timeSpent
       }
     };
-
-    if (completed) {
-      await updateDoc(userRef, {
-        'stats.lessons.completedIds': arrayUnion(lessonId)
-      });
-    }
 
     await updateUserStats(userId, statsUpdate);
     return { success: true };

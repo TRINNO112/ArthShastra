@@ -26,6 +26,7 @@ import {
 } from './components';
 import { lesson1Data } from '../data/lesson1Data';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 import MicroTopicsMenu from '../components/MicroTopicsMenu';
 // Shared styles for lessons
 import './lesson1-davinci.css'; // Da Vinci Theme Override
@@ -42,7 +43,7 @@ const sections = [
 ];
 
 function Lesson1() {
-  // Load active section from localStorage, default to 'intro'
+  const { user, logActivity } = useAuth();
   const [activeSection, setActiveSection] = useState(() => {
     const saved = localStorage.getItem('lesson1-activeSection');
     return saved || 'intro';
@@ -50,21 +51,31 @@ function Lesson1() {
   const [startTime] = useState(() => Date.now());
   const lessonId = 'micro11-1';
 
+  // Log lesson visit activity
+  useEffect(() => {
+    if (logActivity) {
+      logActivity('lesson_visit', {
+        lessonId,
+        lessonName: 'Introduction to Economics',
+        chapter: 'Chapter 1'
+      });
+    }
+  }, [logActivity, lessonId]);
+
   // Save active section to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('lesson1-activeSection', activeSection);
   }, [activeSection]);
 
-  // Track time spent and completion
+  // Track time spent on unmount only
   useEffect(() => {
     return () => {
-      const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60); // minutes
-      const completed = activeSection === 'quiz'; // Considered completed if user reached quiz
-      if (timeSpent > 0 || activeSection === 'quiz') {
-        logLessonProgress(lessonId, Math.max(timeSpent, 1), completed);
+      const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
+      if (timeSpent > 0) {
+        logLessonProgress(lessonId, timeSpent);
       }
     };
-  }, [startTime, lessonId, activeSection]);
+  }, [startTime, lessonId]);
 
   const currentIndex = sections.findIndex(s => s.id === activeSection);
 

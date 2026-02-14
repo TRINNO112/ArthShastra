@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaLayerGroup, FaSitemap, FaCube, FaTable, FaTools, FaQuestionCircle } from 'react-icons/fa';
 import '../css/stats-theme.css';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 
 // Components
 import OrganizationBasics from './components/OrganizationBasics';
@@ -21,17 +22,19 @@ import TopicsMenu from '../components/TopicsMenu';
 function Lesson3() {
     const [activeTab, setActiveTab] = useState('basics');
     const lessonId = 'stats-3';
+    const { logActivity } = useAuth();
 
-    // Track time and progress
+    useEffect(() => {
+        if (logActivity) logActivity('lesson_visit', { lessonId, lessonName: 'Organisation of Data', chapter: 'Stats Ch 3' });
+    }, [logActivity, lessonId]);
+
     useEffect(() => {
         const startTime = Date.now();
         return () => {
-            const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60); // in minutes
-            if (timeSpent > 0 || activeTab === 'quiz') {
-                logLessonProgress(lessonId, Math.max(timeSpent, 1), activeTab === 'quiz');
-            }
+            const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
+            if (timeSpent > 0) logLessonProgress(lessonId, timeSpent);
         };
-    }, [activeTab]);
+    }, [lessonId]);
 
     const topics = [
         { id: 'basics', label: 'Basics', icon: <FaLayerGroup /> },

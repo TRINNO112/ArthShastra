@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaBook, FaGlobe, FaBalanceScale, FaQuestionCircle } from 'react-icons/fa';
 import '../css/stats-theme.css';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 
 // Components
 import Introduction from './components/Introduction';
@@ -19,19 +20,23 @@ import TopicsMenu from '../components/TopicsMenu';
 function Lesson1() {
     const [activeTab, setActiveTab] = useState('intro');
     const lessonId = 'stats-1';
+    const { logActivity } = useAuth();
 
-    // Track time and progress
+    useEffect(() => {
+        if (logActivity) {
+            logActivity('lesson_visit', { lessonId, lessonName: 'Introduction to Statistics', chapter: 'Stats Ch 1' });
+        }
+    }, [logActivity, lessonId]);
+
     useEffect(() => {
         const startTime = Date.now();
         return () => {
-            const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60); // in minutes
-            // If user spent at least 1 minute or finished the quiz, log it
-            // Only mark as complete if they reach the quiz section
-            if (timeSpent > 0 || activeTab === 'quiz') {
-                logLessonProgress(lessonId, Math.max(timeSpent, 1), activeTab === 'quiz');
+            const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
+            if (timeSpent > 0) {
+                logLessonProgress(lessonId, timeSpent);
             }
         };
-    }, [activeTab]);
+    }, [lessonId]);
 
     const topics = [
         { id: 'intro', label: 'Introduction', icon: <FaBook /> },

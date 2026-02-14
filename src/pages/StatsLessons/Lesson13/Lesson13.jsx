@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaTools, FaProjectDiagram, FaGlobeAmericas, FaQuestionCircle, FaClipboardList } from 'react-icons/fa';
 import '../css/stats-theme.css';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 
 // Components
 import StatsUsageIntro from './components/StatsUsageIntro';
@@ -15,16 +16,19 @@ import TopicsMenu from '../components/TopicsMenu';
 const Lesson13 = () => {
     const [activeTab, setActiveTab] = useState('intro');
     const lessonId = 'stats-13';
+    const { logActivity } = useAuth();
+
+    useEffect(() => {
+        if (logActivity) logActivity('lesson_visit', { lessonId, lessonName: 'Variance', chapter: 'Stats Ch 13' });
+    }, [logActivity, lessonId]);
 
     useEffect(() => {
         const startTime = Date.now();
         return () => {
             const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
-            if (timeSpent > 0 || activeTab === 'quiz') {
-                logLessonProgress(lessonId, Math.max(timeSpent, 1), activeTab === 'quiz');
-            }
+            if (timeSpent > 0) logLessonProgress(lessonId, timeSpent);
         };
-    }, [activeTab]);
+    }, [lessonId]);
 
     const topics = [
         { id: 'intro', label: 'Overview', icon: <FaTools /> },

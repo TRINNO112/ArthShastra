@@ -22,6 +22,7 @@ import {
 } from './components'; // Components imported from index.js
 import { lesson5Data } from '../data/lesson5Data';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 import MicroTopicsMenu from '../components/MicroTopicsMenu';
 import '../css/lessons.css'; // Shared lesson styles
 import './lesson5-comic.css'; // Comic Book Theme Styles
@@ -46,22 +47,28 @@ function Lesson5() {
   });
   const [startTime] = useState(() => Date.now());
   const lessonId = 'micro11-5';
+  const { logActivity } = useAuth();
+
+  useEffect(() => {
+    if (logActivity) {
+      logActivity('lesson_visit', { lessonId, lessonName: 'Elasticity of Demand', chapter: 'Chapter 5' });
+    }
+  }, [logActivity, lessonId]);
 
   // Save active section to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('lesson5-activeSection', activeSection);
   }, [activeSection]);
 
-  // Track time spent and completion
+  // Track time spent on unmount only
   useEffect(() => {
     return () => {
       const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
-      const completed = activeSection === 'quiz';
-      if (timeSpent > 0 || activeSection === 'quiz') {
-        logLessonProgress(lessonId, Math.max(timeSpent, 1), completed);
+      if (timeSpent > 0) {
+        logLessonProgress(lessonId, timeSpent);
       }
     };
-  }, [startTime, lessonId, activeSection]);
+  }, [startTime, lessonId]);
 
   const currentIndex = sections.findIndex(s => s.id === activeSection);
 

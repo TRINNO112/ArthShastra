@@ -25,6 +25,7 @@ import {
     Quiz
 } from './components';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 import MicroTopicsMenu from '../components/MicroTopicsMenu';
 import '../css/lessons.css';
 
@@ -46,6 +47,13 @@ function Lesson9() {
     });
     const [startTime] = useState(() => Date.now());
     const lessonId = 'micro11-9';
+    const { logActivity } = useAuth();
+
+    useEffect(() => {
+        if (logActivity) {
+            logActivity('lesson_visit', { lessonId, lessonName: 'Supply', chapter: 'Chapter 9' });
+        }
+    }, [logActivity, lessonId]);
 
     useEffect(() => {
         localStorage.setItem('lesson9-activeSection', activeSection);
@@ -54,12 +62,11 @@ function Lesson9() {
     useEffect(() => {
         return () => {
             const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
-            const completed = activeSection === 'quiz';
-            if (timeSpent > 0 || activeSection === 'quiz') {
-                logLessonProgress(lessonId, Math.max(timeSpent, 1), completed);
+            if (timeSpent > 0) {
+                logLessonProgress(lessonId, timeSpent);
             }
         };
-    }, [startTime, lessonId, activeSection]);
+    }, [startTime, lessonId]);
 
     const currentIndex = sections.findIndex(s => s.id === activeSection);
 

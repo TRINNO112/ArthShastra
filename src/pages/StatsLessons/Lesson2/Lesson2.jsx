@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaDatabase, FaClipboardList, FaUsers, FaQuestionCircle } from 'react-icons/fa';
 import '../css/stats-theme.css';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 
 // Components
 import SourcesOfData from './components/SourcesOfData';
@@ -20,17 +21,19 @@ import TopicsMenu from '../components/TopicsMenu';
 function Lesson2() {
     const [activeTab, setActiveTab] = useState('sources');
     const lessonId = 'stats-2';
+    const { logActivity } = useAuth();
 
-    // Track time and progress
+    useEffect(() => {
+        if (logActivity) logActivity('lesson_visit', { lessonId, lessonName: 'Collection of Data', chapter: 'Stats Ch 2' });
+    }, [logActivity, lessonId]);
+
     useEffect(() => {
         const startTime = Date.now();
         return () => {
-            const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60); // in minutes
-            if (timeSpent > 0 || activeTab === 'quiz') {
-                logLessonProgress(lessonId, Math.max(timeSpent, 1), activeTab === 'quiz');
-            }
+            const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
+            if (timeSpent > 0) logLessonProgress(lessonId, timeSpent);
         };
-    }, [activeTab]);
+    }, [lessonId]);
 
     const topics = [
         { id: 'sources', label: 'Sources of Data', icon: <FaDatabase /> },

@@ -25,6 +25,7 @@ import {
 } from './components';
 import { lesson3Data } from '../data/lesson3Data';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 import MicroTopicsMenu from '../components/MicroTopicsMenu';
 import '../css/lessons.css'; // Shared lesson styles
 
@@ -57,22 +58,28 @@ function Lesson3() {
   });
   const [startTime] = useState(() => Date.now());
   const lessonId = 'micro11-3';
+  const { logActivity } = useAuth();
+
+  useEffect(() => {
+    if (logActivity) {
+      logActivity('lesson_visit', { lessonId, lessonName: 'Consumer Equilibrium', chapter: 'Chapter 3' });
+    }
+  }, [logActivity, lessonId]);
 
   // Save active section to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('lesson3-activeSection', activeSection);
   }, [activeSection]);
 
-  // Track time spent and completion
+  // Track time spent on unmount only
   useEffect(() => {
     return () => {
       const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
-      const completed = activeSection === 'quiz';
-      if (timeSpent > 0 || activeSection === 'quiz') {
-        logLessonProgress(lessonId, Math.max(timeSpent, 1), completed);
+      if (timeSpent > 0) {
+        logLessonProgress(lessonId, timeSpent);
       }
     };
-  }, [startTime, lessonId, activeSection]);
+  }, [startTime, lessonId]);
 
   const currentIndex = sections.findIndex(s => s.id === activeSection);
 

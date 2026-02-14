@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaBalanceScale, FaCalculator, FaBookOpen, FaClipboardList, FaLaptopCode } from 'react-icons/fa';
 import '../css/stats-theme.css';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 
 // Components
 import MeanIntro from './components/MeanIntro';
@@ -20,17 +21,19 @@ import TopicsMenu from '../components/TopicsMenu';
 const Lesson8 = () => {
     const [activeTab, setActiveTab] = useState('intro');
     const lessonId = 'stats-8';
+    const { logActivity } = useAuth();
 
-    // Track time and progress
+    useEffect(() => {
+        if (logActivity) logActivity('lesson_visit', { lessonId, lessonName: 'Index Numbers', chapter: 'Stats Ch 8' });
+    }, [logActivity, lessonId]);
+
     useEffect(() => {
         const startTime = Date.now();
         return () => {
-            const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60); // in minutes
-            if (timeSpent > 0 || activeTab === 'quiz') {
-                logLessonProgress(lessonId, Math.max(timeSpent, 1), activeTab === 'quiz');
-            }
+            const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
+            if (timeSpent > 0) logLessonProgress(lessonId, timeSpent);
         };
-    }, [activeTab]);
+    }, [lessonId]);
 
     const topics = [
         { id: 'intro', label: 'Concept of Average', icon: <FaBalanceScale /> },

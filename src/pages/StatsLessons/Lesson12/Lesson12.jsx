@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaHistory, FaListOl, FaWeightHanging, FaShoppingCart, FaCalculator, FaClipboardList } from 'react-icons/fa';
 import '../css/stats-theme.css';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 
 // Components
 import IndexIntro from './components/IndexIntro';
@@ -21,16 +22,19 @@ import TopicsMenu from '../components/TopicsMenu';
 const Lesson12 = () => {
     const [activeTab, setActiveTab] = useState('intro');
     const lessonId = 'stats-12';
+    const { logActivity } = useAuth();
+
+    useEffect(() => {
+        if (logActivity) logActivity('lesson_visit', { lessonId, lessonName: 'Standard Deviation', chapter: 'Stats Ch 12' });
+    }, [logActivity, lessonId]);
 
     useEffect(() => {
         const startTime = Date.now();
         return () => {
             const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
-            if (timeSpent > 0 || activeTab === 'quiz') {
-                logLessonProgress(lessonId, Math.max(timeSpent, 1), activeTab === 'quiz');
-            }
+            if (timeSpent > 0) logLessonProgress(lessonId, timeSpent);
         };
-    }, [activeTab]);
+    }, [lessonId]);
 
     const topics = [
         { id: 'intro', label: 'Index Basics', icon: <FaHistory /> },

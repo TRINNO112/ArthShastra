@@ -15,6 +15,7 @@ import {
 import Quiz from '../Lesson3/components/Quiz';
 import { lesson12Data } from '../data/lesson12Data';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 import MicroTopicsMenu from '../components/MicroTopicsMenu';
 import '../css/lessons.css'; // Shared lesson styles
 
@@ -24,6 +25,13 @@ function Lesson12() {
     const [activeSection, setActiveSection] = useState(() => localStorage.getItem('lesson12-activeSection') || 'concept');
     const [startTime] = useState(() => Date.now());
     const lessonId = 'micro11-12';
+    const { logActivity } = useAuth();
+
+    useEffect(() => {
+        if (logActivity) {
+            logActivity('lesson_visit', { lessonId, lessonName: 'Monopoly', chapter: 'Chapter 12' });
+        }
+    }, [logActivity, lessonId]);
 
     useEffect(() => localStorage.setItem('lesson12-activeSection', activeSection), [activeSection]);
 
@@ -31,10 +39,9 @@ function Lesson12() {
     useEffect(() => {
         return () => {
             const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
-            const completed = activeSection === 'practice';
-            if (timeSpent > 0 || activeSection === 'quiz') logLessonProgress(lessonId, Math.max(timeSpent, 1), completed);
+            if (timeSpent > 0) logLessonProgress(lessonId, timeSpent);
         };
-    }, [startTime, lessonId, activeSection]);
+    }, [startTime, lessonId]);
 
     const currentIndex = sections.findIndex(s => s.id === activeSection);
 

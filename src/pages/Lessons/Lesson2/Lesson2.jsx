@@ -28,6 +28,7 @@ import {
 } from './components';
 import { lesson2Data } from '../data/lesson2Data';
 import { logLessonProgress } from '../../../services/firebase';
+import { useAuth } from '../../../context/AuthContext';
 import MicroTopicsMenu from '../components/MicroTopicsMenu';
 import './lesson2-core.css'; // Clean Professional Theme
 
@@ -46,6 +47,7 @@ const sections = [
 ];
 
 function Lesson2() {
+  const { logActivity } = useAuth();
   // Load active section from localStorage, default to 'intro'
   const [activeSection, setActiveSection] = useState(() => {
     const saved = localStorage.getItem('lesson2-activeSection');
@@ -53,6 +55,17 @@ function Lesson2() {
   });
   const [startTime] = useState(() => Date.now());
   const lessonId = 'micro11-2';
+
+  // Log lesson visit activity
+  useEffect(() => {
+    if (logActivity) {
+      logActivity('lesson_visit', {
+        lessonId,
+        lessonName: 'Central Problems',
+        chapter: 'Chapter 2'
+      });
+    }
+  }, [logActivity, lessonId]);
 
   // Save active section to localStorage whenever it changes
   useEffect(() => {
@@ -62,12 +75,11 @@ function Lesson2() {
   useEffect(() => {
     return () => {
       const timeSpent = Math.round((Date.now() - startTime) / 1000 / 60);
-      const completed = activeSection === 'quiz';
-      if (timeSpent > 0 || activeSection === 'quiz') {
-        logLessonProgress(lessonId, Math.max(timeSpent, 1), completed);
+      if (timeSpent > 0) {
+        logLessonProgress(lessonId, timeSpent);
       }
     };
-  }, [startTime, lessonId, activeSection]);
+  }, [startTime, lessonId]);
 
   const currentIndex = sections.findIndex(s => s.id === activeSection);
 
