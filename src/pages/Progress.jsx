@@ -4,9 +4,6 @@ import { db } from '../services/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell
-} from 'recharts';
-import {
     FaFire, FaBookOpen, FaClock, FaTrophy, FaCalendarAlt,
     FaGraduationCap, FaChartBar, FaHistory, FaStar, FaBolt,
     FaSkullCrossbones, FaRedo, FaTimes, FaLock, FaChevronLeft, FaChevronRight
@@ -63,7 +60,7 @@ const Progress = () => {
                     const tb = b.timestamp?.toMillis ? b.timestamp.toMillis() : 0;
                     return tb - ta;
                 });
-                quizzes = quizzes.slice(0, 10);
+                quizzes = quizzes.slice(0, 50);
             } catch (error) {
                 console.error("Error fetching quiz_attempts:", error);
             }
@@ -414,61 +411,75 @@ const Progress = () => {
                 </div>
             </motion.div>
 
-            {/* === PERFORMANCE CHART === */}
+            {/* === MASTERY CARDS (REPLACED GRAPH) === */}
             <motion.div className="cp-panel" variants={itemVariants}>
-                <div className="cp-caption-box">PERFORMANCE HISTORY!</div>
-                <div className="cp-chart-container">
-                    {chartData.length > 0 ? (
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={chartData} barCategoryGap="20%">
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" vertical={false} />
-                                <XAxis
-                                    dataKey="quizLabel"
-                                    stroke="#6b6b80"
-                                    fontSize={12}
-                                    tickLine={false}
-                                    axisLine={false}
-                                />
-                                <YAxis stroke="#6b6b80" fontSize={12} tickLine={false} axisLine={false} domain={[0, 100]} tickFormatter={v => `${v}%`} />
-                                <Tooltip
-                                    contentStyle={{
-                                        background: '#1a1a2e',
-                                        border: '3px solid #FFDC00',
-                                        borderRadius: '0',
-                                        fontFamily: "'Comic Neue', cursive",
-                                        fontWeight: 700,
-                                        boxShadow: '4px 4px 0 #111'
-                                    }}
-                                    itemStyle={{ color: '#FFDC00' }}
-                                    labelStyle={{ color: '#fff', fontWeight: 700 }}
-                                    formatter={(value) => [`${value}%`, 'Score']}
-                                    labelFormatter={(label, payload) => {
-                                        if (payload && payload[0]) return `${payload[0].payload.name}`;
-                                        return label;
-                                    }}
-                                />
-                                <Bar
-                                    dataKey="score"
-                                    animationDuration={1500}
-                                    radius={[4, 4, 0, 0]}
-                                >
-                                    {chartData.map((entry, index) => (
-                                        <Cell
-                                            key={`cell-${index}`}
-                                            fill={entry.score >= 80 ? '#2ECC40' : entry.score >= 50 ? '#FFDC00' : '#FF4136'}
-                                            stroke={entry.score >= 80 ? '#2ECC40' : entry.score >= 50 ? '#FFDC00' : '#FF4136'}
-                                            strokeWidth={2}
-                                        />
-                                    ))}
-                                </Bar>
-                            </BarChart>
-                        </ResponsiveContainer>
-                    ) : (
-                        <div className="cp-empty-panel">
-                            <FaHistory className="cp-empty-icon" />
-                            <p>No quiz history yet. Take a quiz to see your power levels!</p>
+                <div className="cp-caption-box">TOPIC MASTERY!</div>
+                <p className="cp-panel-hint">
+                    Mastery is calculated based on your <strong>best performance</strong> across all attempts.
+                    Reach 100% to become a <strong>LEGEND</strong>!
+                </p>
+                <div className="cp-mastery-grid">
+                    {/* Microeconomics Mastery */}
+                    <div className="cp-mastery-card micro">
+                        <div className="cp-mastery-header">
+                            <div className="cp-mastery-icon"><FaChartBar /></div>
+                            <h3>MICROECONOMICS</h3>
                         </div>
-                    )}
+                        <div className="cp-mastery-stats">
+                            <div className="cp-m-stat">
+                                <span className="cp-m-label">MAX POWER</span>
+                                <span className="cp-m-value">
+                                    {Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('micro')).map(q => q.percentage || 0))}%
+                                </span>
+                            </div>
+                            <div className="cp-m-stat">
+                                <span className="cp-m-label">RANK</span>
+                                <span className="cp-m-rank">
+                                    {(() => {
+                                        const best = Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('micro')).map(q => q.percentage || 0));
+                                        if (best === 100) return 'LEGEND';
+                                        if (best >= 80) return 'ELITE';
+                                        if (best >= 50) return 'WARRIOR';
+                                        return 'NOVICE';
+                                    })()}
+                                </span>
+                            </div>
+                        </div>
+                        <div className="cp-mastery-footer">
+                            <span>Quizzes Done: {quizHistory.filter(q => q.quizId?.includes('micro')).length}</span>
+                        </div>
+                    </div>
+
+                    {/* Statistics Mastery */}
+                    <div className="cp-mastery-card stats">
+                        <div className="cp-mastery-header">
+                            <div className="cp-mastery-icon"><FaHistory /></div>
+                            <h3>STATISTICS</h3>
+                        </div>
+                        <div className="cp-mastery-stats">
+                            <div className="cp-m-stat">
+                                <span className="cp-m-label">MAX POWER</span>
+                                <span className="cp-m-value">
+                                    {Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('stats')).map(q => q.percentage || 0))}%
+                                </span>
+                            </div>
+                            <div className="cp-m-stat">
+                                <span className="cp-m-label">RANK</span>
+                                <span className="cp-m-rank">
+                                    {(() => {
+                                        const best = Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('stats')).map(q => q.percentage || 0));
+                                        if (best === 100) return 'LEGEND';
+                                        if (best >= 80) return 'ELITE';
+                                        if (best >= 50) return 'WARRIOR';
+                                        return 'NOVICE';
+                                    })()}
+                                </span>
+                            </div>
+                        </div>
+                        <div className="cp-mastery-footer">
+                            <span>Quizzes Done: {quizHistory.filter(q => q.quizId?.includes('stats')).length}</span>
+                        </div>
+                    </div>
                 </div>
             </motion.div>
 
@@ -489,10 +500,9 @@ const Progress = () => {
                                         <p>{activity.timestamp?.toDate ? activity.timestamp.toDate().toLocaleString() : 'Recent'}</p>
                                     </div>
                                     {activity._source === 'quiz' && (
-                                        <div className={`cp-score-badge ${
-                                            activity.percentage >= 80 ? 'great' :
+                                        <div className={`cp-score-badge ${activity.percentage >= 80 ? 'great' :
                                             activity.percentage >= 50 ? 'good' : 'fail'
-                                        }`}>
+                                            }`}>
                                             {activity.percentage}%
                                         </div>
                                     )}

@@ -9,6 +9,7 @@ import Navbar from './components/common/Navbar';
 import Home from './pages/Home';
 import Lessons from './pages/Lessons';
 import About from './pages/About';
+import Journey from './pages/Journey';
 import Progress from './pages/Progress';
 import Lesson1 from './pages/Lessons/Lesson1';
 import Lesson2 from './pages/Lessons/Lesson2';
@@ -56,6 +57,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/lessons" element={<Lessons />} />
               <Route path="/about" element={<About />} />
+              <Route path="/journey" element={<Journey />} />
               <Route path="/progress" element={<Progress />} />
 
               {/* Microeconomics Class 11 Lessons */}

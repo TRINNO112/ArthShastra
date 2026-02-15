@@ -1,0 +1,163 @@
+.journey-analog {
+  min-height: 100vh;
+  background-color: #f4f1ea;
+  padding: 80px 5%;
+  position: relative;
+  overflow-x: hidden;
+  font-family: 'Special Elite', serif;
+}
+
+.journey-hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 80px;
+  position: relative;
+}
+
+.back-to-archives {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  color: #c9ada7;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.back-to-archives:hover {
+  color: #222;
+}
+
+.vertical-tape {
+  position: absolute;
+  left: -20px;
+  top: 50px;
+  background: rgba(180, 0, 0, 0.7);
+  color: white;
+  padding: 5px 20px;
+  transform: rotate(-90deg);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.hero-box h1 {
+  font-size: 4rem;
+  color: #222;
+  margin: 0;
+  line-height: 1;
+}
+
+.highlight-ink {
+  color: #d4a373;
+  position: relative;
+}
+
+.highlight-ink::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: rgba(212, 163, 115, 0.2);
+  z-index: -1;
+}
+
+.meta-info {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: rgba(0,0,0,0.4);
+  margin-top: 10px;
+  text-align: center;
+}
+
+.chronicle-line {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  padding: 60px 0;
+}
+
+.chronicle-line::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(0,0,0,0.08);
+  transform: translateX(-50%);
+}
+
+.lore-card {
+  width: 46%;
+  margin-bottom: 80px;
+  position: relative;
+}
+
+.lore-card:nth-child(even) {
+  margin-left: auto;
+}
+
+.lore-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: #222;
+  color: #fff;
+  padding: 4px 12px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.lore-content-box {
+  background: white;
+  padding: 25px;
+  box-shadow: 10px 10px 0 rgba(0,0,0,0.02);
+  border: 1px solid rgba(0,0,0,0.05);
+  display: flex;
+  gap: 20px;
+}
+
+.lore-icon {
+  font-size: 1.5rem;
+  color: #d4a373;
+}
+
+.lore-text h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.3rem;
+  color: #222;
+}
+
+.lore-text p {
+  margin: 0;
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+.chronicle-footer {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 0.8rem;
+  color: rgba(0,0,0,0.3);
+  letter-spacing: 3px;
+}
+
+@media (max-width: 768px) {
+  .chronicle-line::before {
+    left: 20px;
+  }
+  .lore-card {
+    width: calc(100% - 40px);
+    margin-left: 40px !important;
+  }
+  .hero-box h1 {
+    font-size: 2.5rem;
+  }
+}

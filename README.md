@@ -175,14 +175,15 @@ ArthShastra/
 │   │               ├── BreakEvenShutdown.jsx
 │   │               ├── CostCurvesChart.jsx
 │   │               ├── CostRelationships.jsx
-│   │               ├── CostSchedule.jsx
-│   │               ├── FixedVariableCosts.jsx
-│   │               ├── LACEnvelopeChart.jsx
-│   │               ├── PracticeProblems.jsx
-│   │               ├── RealWorldExamples.jsx
-│   │               ├── ShortLongRun.jsx
-│   │               └── TotalCostCurves.jsx
+│   │               ├── PriceCeilingFloor.jsx
+│   │               ├── ShiftsInEquilibrium.jsx
+│   │               └── SupplyDemandEquilibrium.jsx
 │   │
+│   └── StatsLessons/   # 📊 STATISTICS MODULES
+│       ├── Lesson1/ (Introduction & Scope)
+│       ├── Lesson2/ (Collection of Data)
+│       └── ...
+│
 │   ├── services/           # Backend Logic
 │   │   └── firebase.js
 │   │
@@ -227,6 +228,9 @@ Each lesson features a unique visual identity to keep learning engaging:
 | **Lesson 11**| Logistics & Supply Chain         |
 | **Lesson 12**| Marketplace Simulation           |
 | **Lesson 13**| Terminal / Hacker Theme          |
+| **Stats L1** | Vintage Newspaper                |
+| **Stats L2** | Modern Data Dashboard             |
+| **Stats L13**| Project Archive / Case Study     |
 
 ---
 
@@ -327,6 +331,27 @@ The ArthShastra curriculum covers the entire Grade 11 Microeconomics syllabus, b
 - **Equilibrium Price**: Intersection of Demand and Supply.
 - **Shifts**: Effect of change in demand and supply on equilibrium.
 - **Price Control**: Price Ceilings and Price Floors.
+
+---
+
+### Unit 5: Statistics for Economics
+#### 📰 [Stats Lesson 1: Introduction](src/pages/StatsLessons/Lesson1)
+**Theme**: *Vintage Newspaper*
+- **Nature of Statistics**: Plural and Singular sense.
+- **Importance**: Why we need data to stop guessing.
+- **Distrust of Stats**: "Lies, Damned Lies, and Statistics."
+
+#### 📊 [Stats Lesson 2: Collection of Data](src/pages/StatsLessons/Lesson2)
+**Theme**: *Modern Data Dashboard*
+- **Primary vs Secondary**: Direct vs Indirect collection.
+- **Census vs Sample**: When to count everyone vs when to guess.
+- **Sampling Errors**: Why your data might be lying to you.
+
+#### 📁 [Stats Lesson 13: Project Work & Case Study](src/pages/StatsLessons/Lesson13)
+**Theme**: *Project Archive / Case Study*
+- **The Case Study**: Real-world data analysis engine.
+- **Project Steps**: From hypothesis to conclusion.
+- **Data Visualization**: Making numbers look less boring.
 
 ---
 
@@ -454,7 +479,7 @@ Add the route in `App.jsx`:
 ## 📜 License & Assignments
 **Copyright © 2026 ArthShastra Education**.
 Built for CBSE Grade 11 & 12 Economics students.
-Concept & Code by **Amit Pathak**.
+Concept & Code by **TRINNO ASPHALT**.
 
 *“Economics is the art of making the most of life.” - George Bernard Shaw*
 

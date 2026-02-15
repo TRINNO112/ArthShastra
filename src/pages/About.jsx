@@ -1,132 +1,230 @@
-// About Page - ArthShastra
-import { FaGithub, FaLinkedin, FaHeart, FaCode } from 'react-icons/fa';
+// About Page - ArthShastra (Analog Researcher Edition)
+import { useState } from 'react';
+import {
+  FaHeart, FaPenNib, FaSearch, FaHistory,
+  FaStickyNote, FaThumbtack, FaExternalLinkAlt, FaGithub, FaLinkedin, FaCode
+} from 'react-icons/fa';
+import {
+  SiReact, SiVite, SiFirebase, SiFramer, SiD3Dotjs, SiJavascript
+} from 'react-icons/si';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import './About.css';
 
 function About() {
+  const [activeNote, setActiveNote] = useState(null);
+
+  const researchNotes = [
+    {
+      id: 1,
+      label: 'MEMO #25',
+      title: 'The Recharts Breakup',
+      content: 'Lesson 1 used Recharts. It was great for simple things, but the moment I wanted to build "Interactive Supply/Demand Curves", it basically told me to go away. Switched to D3 because I wanted total control over the pixels.',
+      color: 'yellow'
+    },
+    {
+      id: 2,
+      label: 'LOG #28',
+      title: 'The "17K" insertions',
+      content: '17,000 lines in the first commit. Most of it was me staring at the screen and copy-pasting CSS variables while I should have been studying for my Economics unit test.',
+      color: 'blue'
+    },
+    {
+      id: 3,
+      label: 'DRAFT #01',
+      title: 'Macro Stress',
+      content: 'Everyone asking for Macroeconomics content. Bro, I\'m literally studying Class 12 right now. I need to master it before I can explain it to you guys without failing my own boards!',
+      color: 'pink'
+    },
+    {
+      id: 4,
+      label: 'NOTE #07',
+      title: 'The "Vibe" Choice',
+      content: 'Someone asked why the site looks like a vintage researcher\'s desk. Because standard ed-tech apps look like they were designed in a hospital. We needed some soul here.',
+      color: 'yellow'
+    }
+  ];
+
   return (
-    <div className="about-page">
-      {/* Hero Section */}
-      <section className="about-hero">
-        <span className="about-badge">About ArthShastra</span>
-        <h1>
-          Learn Economics,
-          <span className="text-gradient"> The Desi Way</span>
-        </h1>
-        <p>
-          An interactive learning platform designed for Class 12 Commerce students
-          who want to master Economics without the boring textbook experience.
+    <div className="about-analog">
+      {/* Paper Grain Overlay */}
+      <div className="paper-texture"></div>
+
+      {/* Hero Header */}
+      <motion.header
+        className="about-hero-journal"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <div className="tape-header">FIELD NOTES: PROJECT ARTHSHASTRA</div>
+        <div className="hero-content">
+          <div className="scribble" style={{ top: '-40px', left: '20px', fontSize: '1.2rem' }}>"Finally working..."</div>
+          <h1>THE <span className="hand-drawn-circle">RESEARCH</span> LOG</h1>
+          <p className="sub-notes">
+            [INTERNAL MEMO]: Building educational tools that actually help students learn...
+            and that nobody is probably going to use because Instagram Reels exist.
+          </p>
+        </div>
+      </motion.header>
+
+      {/* Origin Section */}
+      <section className="journal-section">
+        <div className="section-tab">01. THE ORIGIN</div>
+        <div className="journal-entry">
+          <p>
+            <strong>ArthShastra</strong> wasn't created by a big tech company or an ed-tech giant.
+            It was built by me, <strong>TRINNO</strong>, in my bedroom after realizing that standard
+            textbooks are the best cure for insomnia.
+          </p>
+          <p>
+            On <strong>Thursday, Dec 25, 2025</strong>, while everyone else was busy opening presents,
+            I opened Visual Studio Code. I didn't want a "LMS" (Learning Management System);
+            I wanted a <span className="pencil-circle">LMS</span> - Learning Materials that don't,
+            well, <em>Suck</em>.
+          </p>
+          <div className="interaction-hint">
+            <FaStickyNote /> Click the pinned research notes below to decode some internal monologue.
+          </div>
+        </div>
+      </section>
+
+      {/* NEW: Interactive Research Board */}
+      <section className="journal-section board-section">
+        <div className="section-tab">02. BOARD OF INFLUENCE</div>
+        <div className="research-board">
+          <div className="pins-container">
+            {researchNotes.map((note) => (
+              <motion.div
+                key={note.id}
+                className={`board-pin ${note.color} ${activeNote?.id === note.id ? 'active' : ''}`}
+                whileHover={{ scale: 1.1, rotate: 0 }}
+                onClick={() => setActiveNote(activeNote?.id === note.id ? null : note)}
+              >
+                <div className="pin-head"><FaThumbtack /></div>
+                <span className="pin-label">{note.label}</span>
+              </motion.div>
+            ))}
+          </div>
+
+          <AnimatePresence mode="wait">
+            {activeNote && (
+              <motion.div
+                className={`note-viewer ${activeNote.color}`}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                key={activeNote.id}
+              >
+                <div className="note-tape">INTERNAL USE ONLY</div>
+                <h3>{activeNote.title}</h3>
+                <p>{activeNote.content}</p>
+              </motion.div>
+            )}
+            {!activeNote && (
+              <motion.div className="note-viewer-placeholder">
+                <p>[SELECT A NOTE TO VIEW LOGS]</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <svg className="scribble-arrow" viewBox="0 0 100 50" style={{ position: 'absolute', bottom: '-40px', right: '10%' }}>
+            <path d="M10,10 Q50,40 90,10" fill="none" stroke="#c00" strokeWidth="2" strokeDasharray="5,5" />
+            <path d="M85,5 L95,10 L85,15" fill="none" stroke="#c00" strokeWidth="2" />
+          </svg>
+        </div>
+      </section>
+
+      {/* NEW: The Philosophy Section */}
+      <section className="journal-section philosophy-section">
+        <div className="section-tab">03. THE DESIGN PHILOSOPHY</div>
+        <div className="journal-entry">
+          <div className="quote-block">
+            "If it looks like a textbook, it's already dead."
+          </div>
+          <p>
+            The philosophy is simple: <strong>High-end Aesthetics + Brutal Honesty.</strong>
+            We use premium dark modes and glassmorphism not because it's fancy, but because
+            it makes you want to stay in the app longer than your focus span allows.
+          </p>
+          <p>
+            I'm building this while <span className="pencil-circle">I should be doing my own homework</span>.
+            This is not a syllabus completion tool; it's a "I finally get what this graph means" tool.
+          </p>
+        </div>
+      </section>
+
+      {/* Tech Stack - Sticky Notes */}
+      <section className="journal-section">
+        <div className="section-tab">04. LABORATORY STACK</div>
+        <div className="sticky-note-grid">
+          <div className="sticky-note blue lrg">
+            <span>REACT Framework</span>
+            <SiReact className="branding-logo" />
+            <p className="note-mini-text">The backbone of my insanity. React 19 because why not live on the edge.</p>
+          </div>
+          <div className="sticky-note yellow lrg">
+            <span>VITE Build Tool</span>
+            <SiVite className="branding-logo" />
+            <p className="note-mini-text">Fast enough to keep up with my caffeine-fueled mood swings.</p>
+          </div>
+          <div className="sticky-note green lrg">
+            <span>D3.js Charts</span>
+            <div className="logo-group">
+              <SiD3Dotjs className="branding-logo" />
+              <FaHistory />
+            </div>
+            <p className="note-mini-text">Recharts was too limiting for my "Dirty Work". D3 lets me build the curves I actually need.</p>
+          </div>
+          <div className="sticky-note pink lrg">
+            <span>MOTION Engine</span>
+            <SiFramer className="branding-logo" />
+            <p className="note-mini-text">Animations that distract you from the fact that I'm still a student.</p>
+          </div>
+          <div className="sticky-note blue lrg">
+            <span>CLOUDBASE Fire</span>
+            <SiFirebase className="branding-logo" />
+            <p className="note-mini-text">Saving your rank while I worry about my own pre-board results.</p>
+          </div>
+          <div className="sticky-note yellow lrg">
+            <span>CORE Logic</span>
+            <SiJavascript className="branding-logo" />
+            <p className="note-mini-text">Pure vanilla chaos that somehow hasn't broken the entire app yet.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Separate Journey Link */}
+      <section className="journal-section journey-redirect">
+        <div className="section-tab priority">05. CHRONOLOGICAL ARCHIVES</div>
+        <div className="journal-entry">
+          <p>
+            Curious about every single commit and development phase?
+            Access the deep archives of my Sunday-morning (and Thursday-morning) grind.
+          </p>
+          <Link to="/journey" className="archive-btn">
+            ACCESS JOURNEY ARCHIVES <FaExternalLinkAlt />
+          </Link>
+        </div>
+      </section>
+
+      {/* Bio / Footer */}
+      <footer className="journal-footer">
+        <div className="bio-card">
+          <div className="bio-photo">
+            <FaCode />
+          </div>
+          <div className="bio-text">
+            <h3>DEVELOPER: TRINNO ASPHALT</h3>
+            <p>Still in Class 12th. Obsessed with high-end UI. Probably wasting my time on developing this thing!</p>
+            <div className="bio-links">
+              <a href="https://github.com" title="The Source"><FaGithub /></a>
+              <a href="https://linkedin.com" title="The Professional Side"><FaLinkedin /></a>
+            </div>
+          </div>
+        </div>
+        <p className="copyright-note">
+          &copy; 2026 PROJECT ARTHSHASTRA | MADE WITH <FaHeart /> FOR THE REBELS.
         </p>
-      </section>
-
-      {/* Story Section */}
-      <section className="about-section">
-        <div className="section-header">
-          <h2>The Story</h2>
-        </div>
-        <div className="about-card">
-          <p>
-            <strong>ArthShastra</strong> was born out of a simple observation:
-            most students struggle with Economics not because it's hard,
-            but because it's taught in a way that doesn't connect with them.
-          </p>
-          <p>
-            Complex concepts explained in simple Hindi/Hinglish.
-            Interactive quizzes that actually make you think.
-            Progress tracking so you know exactly where you stand.
-          </p>
-          <p>
-            This is what <em>real learning</em> looks like.
-          </p>
-        </div>
-      </section>
-
-      {/* What's Covered */}
-      <section className="about-section">
-        <div className="section-header">
-          <h2>What's Covered</h2>
-        </div>
-        <div className="coverage-grid">
-          <div className="coverage-card micro">
-            <div className="coverage-icon">📈</div>
-            <h3>Microeconomics</h3>
-            <ul>
-              <li>Consumer Behavior & Demand</li>
-              <li>Producer Behavior & Supply</li>
-              <li>Market Forms & Price Determination</li>
-              <li>Elasticity Concepts</li>
-              <li>Cost & Revenue Analysis</li>
-            </ul>
-          </div>
-          <div className="coverage-card macro">
-            <div className="coverage-icon">🏛️</div>
-            <h3>Macroeconomics</h3>
-            <ul>
-              <li>National Income Accounting</li>
-              <li>Money & Banking</li>
-              <li>Government Budget & Fiscal Policy</li>
-              <li>Balance of Payments</li>
-              <li>Foreign Exchange</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Tech Stack */}
-      <section className="about-section">
-        <div className="section-header">
-          <h2>Built With</h2>
-        </div>
-        <div className="tech-grid">
-          <div className="tech-item">
-            <span className="tech-icon">⚛️</span>
-            <span>React</span>
-          </div>
-          <div className="tech-item">
-            <span className="tech-icon">⚡</span>
-            <span>Vite</span>
-          </div>
-          <div className="tech-item">
-            <span className="tech-icon">🔥</span>
-            <span>Firebase</span>
-          </div>
-          <div className="tech-item">
-            <span className="tech-icon">🎨</span>
-            <span>CSS3</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Creator Section */}
-      <section className="about-section">
-        <div className="section-header">
-          <h2>Created By</h2>
-        </div>
-        <div className="creator-card">
-          <div className="creator-avatar">TA</div>
-          <div className="creator-info">
-            <h3>Trinno Asphalt</h3>
-            <p>Developer & Creator of ArthShastra</p>
-            <p className="creator-tagline">
-              <FaCode /> Building educational tools that actually help students learn.
-            </p>
-          </div>
-          <div className="creator-links">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-              <FaGithub />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-              <FaLinkedin />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer Message */}
-      <section className="about-footer">
-        <p>
-          Made with <FaHeart className="heart" /> for students who deserve better learning resources.
-        </p>
-      </section>
+      </footer>
     </div>
   );
 }
