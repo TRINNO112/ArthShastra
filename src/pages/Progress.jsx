@@ -350,18 +350,24 @@ const Progress = () => {
             {/* === STAT CARDS (Speech Bubbles) === */}
             <div className="cp-stats-row">
                 <motion.div className="cp-stat-bubble cp-stat-blue" variants={itemVariants}>
-                    <div className="cp-stat-icon"><FaBookOpen /></div>
-                    <div className="cp-stat-value">{completionPercentage}%</div>
-                    <div className="cp-stat-label">SYLLABUS</div>
-                    <div className="cp-progress-bar">
-                        <motion.div
-                            className="cp-progress-fill cp-fill-blue"
-                            initial={{ width: 0 }}
-                            animate={{ width: `${completionPercentage}%` }}
-                            transition={{ duration: 1.2, ease: "easeOut" }}
-                        />
+                    <div className="progress-ring-container">
+                        <svg width="140" height="140" viewBox="0 0 140 140">
+                            <circle cx="70" cy="70" r="60" className="progress-ring-bg" />
+                            <motion.circle
+                                cx="70" cy="70" r="60"
+                                className="progress-ring-fill"
+                                strokeDasharray="376.99"
+                                initial={{ strokeDashoffset: 376.99 }}
+                                animate={{ strokeDashoffset: 376.99 - (376.99 * completionPercentage) / 100 }}
+                                transition={{ duration: 1.5, ease: "easeOut" }}
+                                transform="rotate(-90 70 70)"
+                            />
+                        </svg>
+                        <div className="progress-ring-text">
+                            {completionPercentage}%
+                            <div style={{ fontSize: '0.6rem', marginTop: '-5px' }}>SYLLABUS</div>
+                        </div>
                     </div>
-                    <div className="cp-bubble-tail"></div>
                 </motion.div>
 
                 <motion.div className="cp-stat-bubble cp-stat-yellow" variants={itemVariants}>
@@ -411,74 +417,101 @@ const Progress = () => {
                 </div>
             </motion.div>
 
-            {/* === MASTERY CARDS (REPLACED GRAPH) === */}
+            {/* === VISUAL MASTERY: RADAR & TREND === */}
             <motion.div className="cp-panel" variants={itemVariants}>
-                <div className="cp-caption-box">TOPIC MASTERY!</div>
-                <p className="cp-panel-hint">
-                    Mastery is calculated based on your <strong>best performance</strong> across all attempts.
-                    Reach 100% to become a <strong>LEGEND</strong>!
-                </p>
-                <div className="cp-mastery-grid">
-                    {/* Microeconomics Mastery */}
-                    <div className="cp-mastery-card micro">
-                        <div className="cp-mastery-header">
-                            <div className="cp-mastery-icon"><FaChartBar /></div>
-                            <h3>MICROECONOMICS</h3>
-                        </div>
-                        <div className="cp-mastery-stats">
-                            <div className="cp-m-stat">
-                                <span className="cp-m-label">MAX POWER</span>
-                                <span className="cp-m-value">
-                                    {Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('micro')).map(q => q.percentage || 0))}%
-                                </span>
-                            </div>
-                            <div className="cp-m-stat">
-                                <span className="cp-m-label">RANK</span>
-                                <span className="cp-m-rank">
-                                    {(() => {
-                                        const best = Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('micro')).map(q => q.percentage || 0));
-                                        if (best === 100) return 'LEGEND';
-                                        if (best >= 80) return 'ELITE';
-                                        if (best >= 50) return 'WARRIOR';
-                                        return 'NOVICE';
-                                    })()}
-                                </span>
-                            </div>
-                        </div>
-                        <div className="cp-mastery-footer">
-                            <span>Quizzes Done: {quizHistory.filter(q => q.quizId?.includes('micro')).length}</span>
-                        </div>
+                <div className="cp-caption-box">VISUAL MASTERY!</div>
+                <div className="cp-mastery-visualizer">
+
+                    {/* Mastery Radar */}
+                    <div className="radar-chart-container">
+                        <svg viewBox="0 0 200 200">
+                            {/* Axis */}
+                            {[72, 144, 216, 288, 360].map(angle => {
+                                const rad = (angle - 90) * (Math.PI / 180);
+                                return <line key={angle} x1="100" y1="100" x2={100 + 80 * Math.cos(rad)} y2={100 + 80 * Math.sin(rad)} className="radar-axis" />;
+                            })}
+                            {/* Rings */}
+                            {[20, 40, 60, 80].map(r => <circle key={r} cx="100" cy="100" r={r} className="radar-ring" />)}
+
+                            {/* The Mastery Polygon */}
+                            {(() => {
+                                const micro = Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('micro')).map(q => q.percentage || 0)) / 100;
+                                const statsVal = Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('stats')).map(q => q.percentage || 0)) / 100;
+                                const accuracy = (stats.quizzesTaken > 0 && stats.correctAnswers) ? (stats.correctAnswers / Math.max(1, stats.totalQuestions || 1)) : 0;
+                                const diligence = Math.min(1, (stats.totalTimeSpent || 0) / 300);
+                                const consistency = Math.min(1, (stats.currentStreak || 0) / 10);
+
+                                const values = [micro, statsVal, accuracy, diligence, consistency];
+                                const points = values.map((v, i) => {
+                                    const angle = (i * 72 - 90) * (Math.PI / 180);
+                                    const r = 10 + 70 * v;
+                                    return `${100 + r * Math.cos(angle)},${100 + r * Math.sin(angle)}`;
+                                }).join(' ');
+                                return (
+                                    <motion.polygon
+                                        points={points}
+                                        className="radar-area"
+                                        initial={{ opacity: 0, scale: 0 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{ delay: 0.5, duration: 1 }}
+                                    />
+                                );
+                            })()}
+
+                            {/* Labels */}
+                            {['MICRO', 'STATS', 'ACCURACY', 'DILIGENCE', 'STREAK'].map((label, i) => {
+                                const angle = (i * 72 - 90) * (Math.PI / 180);
+                                const r = 95;
+                                return (
+                                    <text
+                                        key={label}
+                                        x={100 + r * Math.cos(angle)}
+                                        y={100 + r * Math.sin(angle)}
+                                        className="radar-label"
+                                        textAnchor="middle"
+                                        dominantBaseline="middle"
+                                    >
+                                        {label}
+                                    </text>
+                                );
+                            })}
+                        </svg>
                     </div>
 
-                    {/* Statistics Mastery */}
-                    <div className="cp-mastery-card stats">
-                        <div className="cp-mastery-header">
-                            <div className="cp-mastery-icon"><FaHistory /></div>
-                            <h3>STATISTICS</h3>
-                        </div>
-                        <div className="cp-mastery-stats">
-                            <div className="cp-m-stat">
-                                <span className="cp-m-label">MAX POWER</span>
-                                <span className="cp-m-value">
-                                    {Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('stats')).map(q => q.percentage || 0))}%
-                                </span>
-                            </div>
-                            <div className="cp-m-stat">
-                                <span className="cp-m-label">RANK</span>
-                                <span className="cp-m-rank">
-                                    {(() => {
-                                        const best = Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('stats')).map(q => q.percentage || 0));
-                                        if (best === 100) return 'LEGEND';
-                                        if (best >= 80) return 'ELITE';
-                                        if (best >= 50) return 'WARRIOR';
-                                        return 'NOVICE';
-                                    })()}
-                                </span>
-                            </div>
-                        </div>
-                        <div className="cp-mastery-footer">
-                            <span>Quizzes Done: {quizHistory.filter(q => q.quizId?.includes('stats')).length}</span>
-                        </div>
+                    <div className="cp-panel-hint" style={{ marginTop: '20px' }}>
+                        The <strong>Skill Radar</strong> maps your growth across Microeconomics, Statistics, Accuracy, Diligence, and Consistency.
+                    </div>
+
+                    {/* Score Trend Graph */}
+                    <div className="score-trend-container">
+                        <div className="cp-caption-box cp-caption-red" style={{ top: '-10px', fontSize: '0.8rem' }}>TREND LINE</div>
+                        <svg width="100%" height="100%" viewBox="0 0 400 150" preserveAspectRatio="none">
+                            {chartData.length > 1 ? (
+                                <>
+                                    <motion.polyline
+                                        points={chartData.map((d, i) => `${(i / (chartData.length - 1)) * 380 + 10},${140 - (d.score / 100) * 120}`).join(' ')}
+                                        className="trend-line"
+                                        initial={{ pathLength: 0 }}
+                                        animate={{ pathLength: 1 }}
+                                        transition={{ duration: 2, ease: "easeInOut" }}
+                                    />
+                                    {chartData.map((d, i) => (
+                                        <motion.circle
+                                            key={i}
+                                            cx={(i / (chartData.length - 1)) * 380 + 10}
+                                            cy={140 - (d.score / 100) * 120}
+                                            r="4"
+                                            className="trend-point"
+                                            initial={{ scale: 0 }}
+                                            animate={{ scale: 1 }}
+                                            transition={{ delay: 1 + i * 0.1 }}
+                                        />
+                                    ))}
+                                </>
+                            ) : (
+                                <text x="50%" y="50%" fill="var(--text-muted)" textAnchor="middle" fontStyle="italic">Take more quizzes to see your growth curve!</text>
+                            )}
+                        </svg>
                     </div>
                 </div>
             </motion.div>

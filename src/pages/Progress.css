@@ -1221,3 +1221,119 @@
     font-size: 1rem;
   }
 }
+/* ==========================================
+   VISUAL MASTERY - SVG CHARTS
+   ========================================== */
+
+.cp-mastery-visualizer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  padding: 20px 0;
+}
+
+.radar-chart-container {
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  aspect-ratio: 1;
+}
+
+.radar-axis {
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 1;
+}
+
+.radar-ring {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.05);
+  stroke-width: 1;
+}
+
+.radar-area {
+  fill: rgba(255, 220, 0, 0.2);
+  stroke: var(--comic-yellow);
+  stroke-width: 3;
+  filter: drop-shadow(0 0 10px rgba(255, 220, 0, 0.4));
+}
+
+.radar-label {
+  font-family: 'Bangers', cursive;
+  font-size: 11px;
+  fill: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.score-trend-container {
+  width: 100%;
+  height: 200px;
+  margin-top: 20px;
+  position: relative;
+}
+
+.trend-line {
+  fill: none;
+  stroke: var(--comic-blue);
+  stroke-width: 4;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 8px rgba(0, 116, 217, 0.5));
+}
+
+.trend-point {
+  fill: var(--comic-blue);
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+.trend-area {
+  fill: linear-gradient(180deg, rgba(0, 116, 217, 0.2) 0%, transparent 100%);
+}
+
+.progress-ring-container {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 15px;
+}
+
+.progress-ring-bg {
+  stroke: rgba(255, 255, 255, 0.05);
+  stroke-width: 10;
+  fill: none;
+}
+
+.progress-ring-fill {
+  stroke: var(--comic-blue);
+  stroke-width: 10;
+  stroke-linecap: round;
+  fill: none;
+  transition: stroke-dashoffset 1s ease-out;
+  filter: drop-shadow(0 0 5px var(--comic-blue));
+}
+
+.progress-ring-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Bangers', cursive;
+  font-size: 1.8rem;
+  color: var(--comic-blue);
+  text-align: center;
+}
+
+/* Tooltip for charts */
+.chart-tooltip {
+  position: absolute;
+  background: var(--comic-ink);
+  border: 2px solid var(--comic-yellow);
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  color: #fff;
+  pointer-events: none;
+  z-index: 100;
+  font-family: 'Comic Neue', cursive;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+}

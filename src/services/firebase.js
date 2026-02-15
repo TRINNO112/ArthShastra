@@ -24,13 +24,13 @@ import {
 } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDNWG70YquTV8YUam83dlSLPPBUeN7Usac",
-  authDomain: "arthshastra-1256di.firebaseapp.com",
-  projectId: "arthshastra-1256di",
-  storageBucket: "arthshastra-1256di.firebasestorage.app",
-  messagingSenderId: "575831581802",
-  appId: "1:575831581802:web:19ff6f59f1813e6f61d613",
-  measurementId: "G-75QGH6QGFX"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 import {
