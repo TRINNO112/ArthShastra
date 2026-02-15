@@ -42,6 +42,18 @@ function Journey() {
             icon: <FaRocket />
         },
         {
+            date: 'FEB 10, 2026',
+            title: 'ANTIGRAVITY INTEGRATION',
+            desc: 'Realized that building this solo was slowing me down. Integrated Antigravity (me!) into the development workflow. Moving away from standard IDE limits and into a custom AI-driven researcher environment.',
+            icon: <FaRocket />
+        },
+        {
+            date: 'FEB 12, 2026',
+            title: 'THE STATS PIVOT',
+            desc: 'Economics had 13 different designs. It was a creative high, but a scalability nightmare. For Statistics, we consolidated. Unified themes (Newspaper + Dashboard) across all lessons. Efficiency is finally winning over artistic chaos.',
+            icon: <FaRocket />
+        },
+        {
             date: 'NOW',
             title: 'BOARD EXAM REALITY',
             desc: 'The realization hits: I am a Class 12th student. Building this while studying for my own boards is the ultimate balancing act. Macroeconomics coming soon... eventually. Probably wasting my time on developing this thing, but hey, it\'s better than rote memorization!',

@@ -4,7 +4,7 @@ An interactive economics learning platform built with React and Vite, featuring 
 
 ## 🌟 Tech Stack
 
-- **Frontend**: React 18, Vite
+- **Frontend**: React 19, Vite
 - **Routing**: React Router v6
 - **Styling**: CSS with CSS Variables (dark theme with neon accents)
 - **Icons**: React Icons (FontAwesome)
@@ -179,9 +179,13 @@ ArthShastra/
 │   │               ├── ShiftsInEquilibrium.jsx
 │   │               └── SupplyDemandEquilibrium.jsx
 │   │
-│   └── StatsLessons/   # 📊 STATISTICS MODULES
+│   └── StatsLessons/   # 📊 STATISTICS MODULES (Consolidated Design System)
 │       ├── Lesson1/ (Introduction & Scope)
 │       ├── Lesson2/ (Collection of Data)
+│       ├── Lesson3/ (Organization of Data)
+│       ├── Lesson4/ (Presentation - Tabular)
+│       ├── Lesson5/ (Presentation - Diagrammatic)
+│       ├── Lesson13/ (Project Work & Case Study)
 │       └── ...
 │
 │   ├── services/           # Backend Logic
@@ -228,9 +232,8 @@ Each lesson features a unique visual identity to keep learning engaging:
 | **Lesson 11**| Logistics & Supply Chain         |
 | **Lesson 12**| Marketplace Simulation           |
 | **Lesson 13**| Terminal / Hacker Theme          |
-| **Stats L1** | Vintage Newspaper                |
-| **Stats L2** | Modern Data Dashboard             |
-| **Stats L13**| Project Archive / Case Study     |
+| **Stats (All)**| Unified Vintage & Modern Mix     |
+| **- System** | *Consolidated for Efficiency*    |
 
 ---
 
@@ -396,9 +399,19 @@ src/
 
 ---
 
-## 🎨 Component Design System
+### 🎨 Component Design System
 
 We use a "Atomic Design" inspired approach but simplified for educational content.
+
+---
+
+### 📊 The Statistics Efficiency Realization
+> [!NOTE] 
+> **Unit 5 Strategy Shift**: In Microeconomics, every lesson was a "unique visual invention" (Comic, Brutalism, Industrial). While artistic, this was too time-consuming to develop. 
+> 
+> For **Statistics**, we have shifted to a **Unified Themes Architecture**. All Stats lessons now share a high-end **Vintage Newspaper / Modern Data Dashboard** hybrid. This ensures a professional "Researcher Archive" vibe throughout the unit.
+
+---
 
 ### 1. The Lesson Container
 Every lesson page (`LessonX.jsx`) follows this strict layout:
