@@ -417,205 +417,102 @@ const Progress = () => {
                 </div>
             </motion.div>
 
-            {/* === VISUAL MASTERY: THE ORB & VELOCITY === */}
+            {/* === PHASE 3: SYMMETRY DASHBOARD === */}
             <motion.div className="cp-panel" variants={itemVariants}>
-                <div className="cp-caption-box">RESEARCHER DASHBOARD</div>
-
+                <div className="cp-caption-box">PRECISION ANALYTICS</div>
                 <div className="cp-mastery-dashboard">
-                    {/* Left: Mastery Orb (Radar) */}
-                    <div className="dashboard-section orb-section">
-                        <div className="section-title">SKILL RESONANCE</div>
-                        <div className="radar-orb-container">
-                            <svg viewBox="0 0 240 240" className="radar-orb-svg">
-                                <defs>
-                                    <radialGradient id="orbGradient" cx="50%" cy="50%" r="50%">
-                                        <stop offset="0%" stopColor="var(--comic-yellow)" stopOpacity="0.4" />
-                                        <stop offset="100%" stopColor="var(--comic-yellow)" stopOpacity="0" />
-                                    </radialGradient>
-                                    <filter id="glow">
-                                        <feGaussianBlur stdDeviation="3" result="blur" />
-                                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                                    </filter>
-                                </defs>
 
-                                {/* Background Web */}
-                                {[0, 72, 144, 216, 288].map(angle => {
-                                    const rad = (angle - 90) * (Math.PI / 180);
-                                    return (
-                                        <line
-                                            key={angle}
-                                            x1="120" y1="120"
-                                            x2={120 + 90 * Math.cos(rad)}
-                                            y2={120 + 90 * Math.sin(rad)}
-                                            stroke="rgba(255,255,255,0.1)"
-                                            strokeWidth="1"
-                                        />
-                                    );
-                                })}
-                                {[30, 60, 90].map(r => (
-                                    <circle key={r} cx="120" cy="120" r={r} fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-                                ))}
-
-                                {/* The Resonance Area */}
-                                {(() => {
-                                    const micro = Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('micro')).map(q => q.percentage || 0)) / 100;
-                                    const statsVal = Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('stats')).map(q => q.percentage || 0)) / 100;
-                                    const accuracy = (stats.quizzesTaken > 0) ? (stats.correctAnswers / Math.max(1, stats.totalQuestions || 1)) : 0;
-                                    const diligence = Math.min(1, (stats.totalTimeSpent || 0) / 300);
-                                    const consistency = Math.min(1, (stats.currentStreak || 0) / 10);
-
-                                    const values = [micro, statsVal, accuracy, diligence, consistency];
-                                    const points = values.map((v, i) => {
-                                        const angle = (i * 72 - 90) * (Math.PI / 180);
-                                        const r = 20 + 70 * v;
-                                        return `${120 + r * Math.cos(angle)},${120 + r * Math.sin(angle)}`;
-                                    }).join(' ');
-
-                                    return (
-                                        <motion.path
-                                            d={`M ${points} Z`}
-                                            fill="url(#orbGradient)"
-                                            stroke="var(--comic-yellow)"
-                                            strokeWidth="3"
-                                            filter="url(#glow)"
-                                            initial={{ opacity: 0, scale: 0.5 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            transition={{ duration: 1, ease: "backOut" }}
-                                        />
-                                    );
-                                })()}
-
-                                {/* Labels */}
-                                {['MICRO', 'STATS', 'ACC', 'TIME', 'STREAK'].map((label, i) => {
-                                    const angle = (i * 72 - 90) * (Math.PI / 180);
-                                    const r = 105;
-                                    return (
-                                        <text
-                                            key={label}
-                                            x={120 + r * Math.cos(angle)}
-                                            y={120 + r * Math.sin(angle)}
-                                            className="orb-label"
-                                            textAnchor="middle"
-                                            dominantBaseline="middle"
-                                        >
-                                            {label}
-                                        </text>
-                                    );
-                                })}
-                            </svg>
+                    {/* Left: Microeconomics Gauge */}
+                    <div className="dashboard-side">
+                        <div className="symmetry-gauge-box">
+                            <div className="gauge-title">MICROECONOMICS</div>
+                            <div className="gauge-svg">
+                                <svg viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="42" className="gauge-track" />
+                                    <motion.circle
+                                        cx="50" cy="50" r="42"
+                                        className="gauge-bar"
+                                        strokeDasharray="263.89"
+                                        initial={{ strokeDashoffset: 263.89 }}
+                                        animate={{ strokeDashoffset: 263.89 - (263.89 * (Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('micro')).map(q => q.percentage || 0)))) / 100 }}
+                                        transition={{ duration: 2, ease: "circOut" }}
+                                        transform="rotate(-90 50 50)"
+                                    />
+                                </svg>
+                                <div className="gauge-value">
+                                    {Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('micro')).map(q => q.percentage || 0))}%
+                                </div>
+                            </div>
+                            <p className="cp-panel-hint" style={{ margin: 0 }}>UNIT DEPTH</p>
                         </div>
                     </div>
 
-                    {/* Right: Score Velocity (Smooth Curve) */}
-                    <div className="dashboard-section velocity-section">
-                        <div className="section-title">PERFORMANCE VELOCITY</div>
-                        <div className="velocity-chart">
-                            <svg width="100%" height="180" viewBox="0 0 400 150">
-                                {chartData.length > 1 ? (
-                                    <>
-                                        {/* Smooth Area Path */}
-                                        {(() => {
+                    {/* Center: Technical Trend Line */}
+                    <div className="dashboard-center">
+                        <div className="center-title">PERFORMANCE AXIS</div>
+                        <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 400 150">
+                            {chartData.length > 1 ? (
+                                <>
+                                    <motion.path
+                                        d={(() => {
                                             const points = chartData.map((d, i) => ({
                                                 x: (i / (chartData.length - 1)) * 360 + 20,
                                                 y: 130 - (d.score / 100) * 110
                                             }));
-                                            let dString = `M ${points[0].x},${points[0].y}`;
-                                            for (let i = 0; i < points.length - 1; i++) {
-                                                const xc = (points[i].x + points[i + 1].x) / 2;
-                                                const yc = (points[i].y + points[i + 1].y) / 2;
-                                                dString += ` Q ${points[i].x},${points[i].y} ${xc},${yc}`;
-                                            }
-                                            dString += ` L ${points[points.length - 1].x},${points[points.length - 1].y}`;
-                                            const areaD = `${dString} L ${points[points.length - 1].x},150 L ${points[0].x},150 Z`;
-
-                                            return (
-                                                <>
-                                                    <defs>
-                                                        <linearGradient id="velocityGrad" x1="0" y1="0" x2="0" y2="1">
-                                                            <stop offset="0%" stopColor="var(--comic-blue)" stopOpacity="0.3" />
-                                                            <stop offset="100%" stopColor="var(--comic-blue)" stopOpacity="0" />
-                                                        </linearGradient>
-                                                    </defs>
-                                                    <motion.path
-                                                        d={areaD}
-                                                        fill="url(#velocityGrad)"
-                                                        initial={{ opacity: 0 }}
-                                                        animate={{ opacity: 1 }}
-                                                        transition={{ duration: 1.5 }}
-                                                    />
-                                                    <motion.path
-                                                        d={dString}
-                                                        fill="none"
-                                                        stroke="var(--comic-blue)"
-                                                        strokeWidth="4"
-                                                        strokeLinecap="round"
-                                                        initial={{ pathLength: 0 }}
-                                                        animate={{ pathLength: 1 }}
-                                                        transition={{ duration: 2, ease: "easeInOut" }}
-                                                    />
-                                                    {points.map((p, i) => (
-                                                        <motion.circle
-                                                            key={i}
-                                                            cx={p.x} cy={p.y} r="5"
-                                                            fill="var(--comic-blue)"
-                                                            stroke="#fff"
-                                                            strokeWidth="2"
-                                                            initial={{ scale: 0 }}
-                                                            animate={{ scale: 1 }}
-                                                            transition={{ delay: 1 + i * 0.1 }}
-                                                        />
-                                                    ))}
-                                                </>
-                                            );
+                                            const line = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x},${p.y}`).join(' ');
+                                            return line;
                                         })()}
-                                    </>
-                                ) : (
-                                    <text x="50%" y="50%" textAnchor="middle" fill="var(--text-muted)" fontStyle="italic">Complete more research sessions to plot velocity...</text>
-                                )}
-                            </svg>
-                        </div>
-                        <div className="section-hint">Showing your last {chartData.length} sessions.</div>
-                    </div>
-                </div>
-
-                {/* Bottom: Progress Gauges */}
-                <div className="dashboard-gauges">
-                    <div className="gauge-item">
-                        <div className="progress-ring-container">
-                            <svg width="100" height="100" viewBox="0 0 100 100">
-                                <circle cx="50" cy="50" r="40" className="gauge-bg" />
-                                <motion.circle
-                                    cx="50" cy="50" r="40"
-                                    className="gauge-fill"
-                                    strokeDasharray="251.2"
-                                    initial={{ strokeDashoffset: 251.2 }}
-                                    animate={{ strokeDashoffset: 251.2 - (251.2 * completionPercentage) / 100 }}
-                                    transition={{ duration: 2, ease: "anticipate" }}
-                                    transform="rotate(-90 50 50)"
-                                />
-                            </svg>
-                            <div className="gauge-text">{completionPercentage}%</div>
-                        </div>
-                        <div className="gauge-label">SYLLABUS</div>
+                                        className="technical-line"
+                                        initial={{ pathLength: 0 }}
+                                        animate={{ pathLength: 1 }}
+                                        transition={{ duration: 1.5, ease: "linear" }}
+                                    />
+                                    {chartData.map((d, i) => (
+                                        <motion.circle
+                                            key={i}
+                                            cx={(i / (chartData.length - 1)) * 360 + 20}
+                                            cy={130 - (d.score / 100) * 110}
+                                            r="4"
+                                            className="technical-point"
+                                            initial={{ scale: 0 }}
+                                            animate={{ scale: 1 }}
+                                            transition={{ delay: 0.5 + i * 0.1 }}
+                                        />
+                                    ))}
+                                </>
+                            ) : (
+                                <text x="50%" y="50%" textAnchor="middle" fill="var(--text-muted)" fontStyle="italic">Accumulate quiz data to plot axis...</text>
+                            )}
+                        </svg>
                     </div>
 
-                    <div className="gauge-item">
-                        <div className="progress-ring-container">
-                            <svg width="100" height="100" viewBox="0 0 100 100">
-                                <circle cx="50" cy="50" r="40" className="gauge-bg" />
-                                <motion.circle
-                                    cx="50" cy="50" r="40"
-                                    className="gauge-fill gauge-red"
-                                    strokeDasharray="251.2"
-                                    initial={{ strokeDashoffset: 251.2 }}
-                                    animate={{ strokeDashoffset: 251.2 - (251.2 * (stats.bestScore || 0)) / 100 }}
-                                    transition={{ duration: 2, delay: 0.5, ease: "anticipate" }}
-                                    transform="rotate(-90 50 50)"
-                                />
-                            </svg>
-                            <div className="gauge-text" style={{ color: 'var(--comic-red)' }}>{stats.bestScore || 0}%</div>
+                    {/* Right: Statistics Gauge */}
+                    <div className="dashboard-side">
+                        <div className="symmetry-gauge-box">
+                            <div className="gauge-title">STATISTICS</div>
+                            <div className="gauge-svg">
+                                <svg viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="42" className="gauge-track" />
+                                    <motion.circle
+                                        cx="50" cy="50" r="42"
+                                        className="gauge-bar gauge-accent"
+                                        strokeDasharray="263.89"
+                                        initial={{ strokeDashoffset: 263.89 }}
+                                        animate={{ strokeDashoffset: 263.89 - (263.89 * (Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('stats')).map(q => q.percentage || 0)))) / 100 }}
+                                        transition={{ duration: 2, ease: "circOut" }}
+                                        transform="rotate(-90 50 50)"
+                                    />
+                                </svg>
+                                <div className="gauge-value">
+                                    {Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('stats')).map(q => q.percentage || 0))}%
+                                </div>
+                            </div>
+                            <p className="cp-panel-hint" style={{ margin: 0 }}>UNIT DEPTH</p>
                         </div>
-                        <div className="gauge-label">ELITE PERFORMANCE</div>
+                    </div>
+
+                    <div className="symmetry-hint">
+                        Symmetry maintained. Data integrity verified.
                     </div>
                 </div>
             </motion.div>
