@@ -1,0 +1,521 @@
+/* ==========================================
+   KINETIC ANALYTICS - STACKED LAYOUT
+   Subject cards on top, chart below with scroll
+   ========================================== */
+
+.ka-container {
+    --ka-green: #2ECC40;
+    --ka-yellow: #FFDC00;
+    --ka-red: #FF4136;
+    --ka-blue: #0074D9;
+    --ka-purple: #B10DC9;
+    --ka-card-bg: #16161f;
+    --ka-border: rgba(255, 255, 255, 0.1);
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+/* ==========================================
+   SUBJECT CARDS ROW - Side by side on top
+   ========================================== */
+
+.ka-subjects-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.ka-subject-card {
+    background: var(--ka-card-bg);
+    border: 2px solid var(--ka-border);
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.ka-subject-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+}
+
+.ka-subject-card.ka-micro::before {
+    background: linear-gradient(90deg, var(--ka-yellow), #ffae00);
+}
+
+.ka-subject-card.ka-stats::before {
+    background: linear-gradient(90deg, var(--ka-blue), #00c6ff);
+}
+
+.ka-subject-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.ka-subject-card.ka-micro:hover {
+    box-shadow: 0 6px 20px rgba(255, 220, 0, 0.12);
+}
+
+.ka-subject-card.ka-stats:hover {
+    box-shadow: 0 6px 20px rgba(0, 116, 217, 0.12);
+}
+
+.ka-subject-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ka-subject-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    border: 2px solid;
+    flex-shrink: 0;
+    border-radius: 8px;
+}
+
+.ka-micro .ka-subject-icon {
+    color: var(--ka-yellow);
+    border-color: rgba(255, 220, 0, 0.4);
+    background: rgba(255, 220, 0, 0.08);
+}
+
+.ka-stats .ka-subject-icon {
+    color: var(--ka-blue);
+    border-color: rgba(0, 116, 217, 0.4);
+    background: rgba(0, 116, 217, 0.08);
+}
+
+.ka-subject-header h3 {
+    font-family: 'Bangers', cursive;
+    font-size: 1.15rem;
+    letter-spacing: 2px;
+    color: var(--text-primary, #fff);
+    text-transform: uppercase;
+}
+
+/* Subject Stats - horizontal layout */
+.ka-subject-stats {
+    display: flex;
+    gap: 16px;
+}
+
+.ka-stat-row {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.ka-stat-key {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-muted, #888);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ka-stat-val {
+    font-family: 'Bangers', cursive;
+    font-size: 1.25rem;
+    color: var(--text-primary, #fff);
+    letter-spacing: 1px;
+}
+
+/* Progress Track */
+.ka-progress-track {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.ka-progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    position: relative;
+}
+
+.ka-progress-fill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+    animation: ka-shimmer 2s ease-in-out infinite;
+}
+
+@keyframes ka-shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Rank Badge */
+.ka-rank {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Bangers', cursive;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    align-self: flex-start;
+    border: 2px solid;
+    text-transform: uppercase;
+    margin-top: auto;
+}
+
+.ka-rank-master {
+    color: #ffd700;
+    border-color: rgba(255, 215, 0, 0.5);
+    background: rgba(255, 215, 0, 0.1);
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
+}
+
+.ka-rank-pro {
+    color: var(--ka-green);
+    border-color: rgba(46, 204, 64, 0.4);
+    background: rgba(46, 204, 64, 0.08);
+}
+
+.ka-rank-intermediate {
+    color: var(--ka-yellow);
+    border-color: rgba(255, 220, 0, 0.4);
+    background: rgba(255, 220, 0, 0.08);
+}
+
+.ka-rank-beginner {
+    color: var(--ka-blue);
+    border-color: rgba(0, 116, 217, 0.4);
+    background: rgba(0, 116, 217, 0.08);
+}
+
+.ka-rank-unranked {
+    color: var(--text-muted, #888);
+    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* ==========================================
+   CHART SECTION
+   ========================================== */
+
+.ka-chart-section {
+    background: var(--ka-card-bg);
+    border: 2px solid var(--ka-border);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ka-chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.ka-chart-header h3 {
+    font-family: 'Bangers', cursive;
+    font-size: 1.15rem;
+    letter-spacing: 2px;
+    color: var(--text-primary, #fff);
+    text-transform: uppercase;
+}
+
+.ka-chart-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Chart Type Switcher */
+.ka-chart-switcher {
+    display: flex;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.ka-chart-type-btn {
+    background: transparent;
+    border: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted, #888);
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.ka-chart-type-btn:last-child {
+    border-right: none;
+}
+
+.ka-chart-type-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary, #fff);
+}
+
+.ka-chart-type-btn.active {
+    background: rgba(46, 204, 64, 0.12);
+    color: var(--ka-green);
+}
+
+.ka-trend {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border: 1px solid;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ka-trend-up {
+    color: var(--ka-green);
+    border-color: rgba(46, 204, 64, 0.4);
+    background: rgba(46, 204, 64, 0.08);
+}
+
+.ka-trend-down {
+    color: var(--ka-red);
+    border-color: rgba(255, 65, 54, 0.4);
+    background: rgba(255, 65, 54, 0.08);
+}
+
+.ka-trend-neutral {
+    color: var(--text-muted, #888);
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* Bar Chart Layout */
+.ka-bar-chart {
+    display: flex;
+    gap: 6px;
+    height: 180px;
+}
+
+.ka-chart-y-axis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 4px 20px 0;
+    min-width: 36px;
+    flex-shrink: 0;
+}
+
+.ka-chart-y-axis span {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--text-muted, #888);
+    text-align: right;
+    line-height: 1;
+}
+
+/* Scrollable chart area */
+.ka-chart-scroll {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(46, 204, 64, 0.3) rgba(255, 255, 255, 0.03);
+}
+
+.ka-chart-scroll::-webkit-scrollbar {
+    height: 5px;
+}
+
+.ka-chart-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.ka-chart-scroll::-webkit-scrollbar-thumb {
+    background: rgba(46, 204, 64, 0.25);
+    border-radius: 3px;
+}
+
+.ka-chart-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(46, 204, 64, 0.5);
+}
+
+.ka-chart-area {
+    position: relative;
+    height: 100%;
+    padding-bottom: 20px;
+}
+
+.ka-grid-lines {
+    position: absolute;
+    inset: 0;
+    bottom: 20px;
+    pointer-events: none;
+}
+
+.ka-grid-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.ka-grid-line-pass {
+    background: rgba(255, 220, 0, 0.15);
+}
+
+.ka-bars-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: calc(100% - 20px);
+    padding: 0 4px;
+    position: relative;
+    z-index: 1;
+}
+
+.ka-bar-wrapper {
+    flex: 0 0 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: flex-end;
+    position: relative;
+    cursor: default;
+}
+
+.ka-bar-label-top {
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: var(--text-muted, #888);
+    margin-bottom: 3px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+}
+
+.ka-bar-wrapper:hover .ka-bar-label-top {
+    opacity: 1;
+}
+
+.ka-bar {
+    width: 24px;
+    min-height: 3px;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    transition: filter 0.2s;
+}
+
+.ka-bar-wrapper:hover .ka-bar {
+    filter: brightness(1.3);
+    box-shadow: 0 0 10px currentColor;
+}
+
+.ka-bar-label {
+    font-size: 0.5rem;
+    font-weight: 700;
+    color: var(--text-muted, #888);
+    text-align: center;
+    margin-top: 4px;
+    white-space: nowrap;
+    line-height: 1.2;
+}
+
+/* SVG chart (line/area) */
+.ka-svg-chart {
+    display: block;
+}
+
+/* Legend */
+.ka-chart-legend {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    padding-top: 4px;
+}
+
+.ka-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-muted, #888);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ka-legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+/* Empty State */
+.ka-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    color: var(--text-muted, #888);
+    gap: 10px;
+    height: 180px;
+}
+
+.ka-empty-icon {
+    font-size: 2rem;
+    opacity: 0.3;
+}
+
+.ka-empty p {
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 600px) {
+    .ka-subjects-row {
+        grid-template-columns: 1fr;
+    }
+
+    .ka-bar-chart {
+        height: 160px;
+    }
+
+    .ka-chart-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .ka-bar-label {
+        font-size: 0.45rem;
+    }
+}

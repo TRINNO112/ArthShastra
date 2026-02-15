@@ -1,15 +1,17 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { db } from '../services/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     FaFire, FaBookOpen, FaClock, FaTrophy, FaCalendarAlt,
-    FaGraduationCap, FaChartBar, FaHistory, FaStar, FaBolt,
-    FaSkullCrossbones, FaRedo, FaTimes, FaLock, FaChevronLeft, FaChevronRight
+    FaGraduationCap, FaChartBar, FaStar, FaBolt,
+    FaSkullCrossbones, FaRedo, FaChevronLeft, FaChevronRight
 } from 'react-icons/fa';
 import { HiSparkles } from 'react-icons/hi';
 import resetOwl from '../assets/reset-owl.png';
+import KineticAnalytics from '../components/progress/KineticAnalytics';
+import Achievements from '../components/progress/Achievements';
 import './Progress.css';
 
 const Progress = () => {
@@ -20,7 +22,6 @@ const Progress = () => {
     const [loading, setLoading] = useState(true);
     const [resetting, setResetting] = useState(false);
     const [showResetConfirm, setShowResetConfirm] = useState(false);
-    const [selectedBadge, setSelectedBadge] = useState(null);
     const [showCalendar, setShowCalendar] = useState(false);
     const [calendarMonth, setCalendarMonth] = useState(() => {
         const now = new Date();
@@ -350,23 +351,23 @@ const Progress = () => {
             {/* === STAT CARDS (Speech Bubbles) === */}
             <div className="cp-stats-row">
                 <motion.div className="cp-stat-bubble cp-stat-blue" variants={itemVariants}>
-                    <div className="progress-ring-container">
-                        <svg width="140" height="140" viewBox="0 0 140 140">
-                            <circle cx="70" cy="70" r="60" className="progress-ring-bg" />
-                            <motion.circle
-                                cx="70" cy="70" r="60"
-                                className="progress-ring-fill"
-                                strokeDasharray="376.99"
-                                initial={{ strokeDashoffset: 376.99 }}
-                                animate={{ strokeDashoffset: 376.99 - (376.99 * completionPercentage) / 100 }}
-                                transition={{ duration: 1.5, ease: "easeOut" }}
-                                transform="rotate(-90 70 70)"
-                            />
-                        </svg>
-                        <div className="progress-ring-text">
-                            {completionPercentage}%
-                            <div style={{ fontSize: '0.6rem', marginTop: '-5px' }}>SYLLABUS</div>
+                    <div className="kinetic-power-box">
+                        <div className="power-header">SYLLABUS DEPTH</div>
+                        <div className="power-bar-container">
+                            <div className="power-bar-track">
+                                <motion.div
+                                    className="power-bar-fill"
+                                    initial={{ width: 0 }}
+                                    animate={{ width: `${completionPercentage}%` }}
+                                    transition={{ duration: 2, ease: "circOut" }}
+                                />
+                                {/* Segmented overlays for sci-fi look */}
+                                <div className="power-segments">
+                                    {[...Array(10)].map((_, i) => <div key={i} className="power-segment" />)}
+                                </div>
+                            </div>
                         </div>
+                        <div className="power-value">{completionPercentage}% LOADED</div>
                     </div>
                 </motion.div>
 
@@ -397,17 +398,35 @@ const Progress = () => {
                 <div className="cp-caption-box">LAST CHAPTERS VISITED!</div>
                 <div className="cp-chapters-grid">
                     {recentLessons.length > 0 ? (
-                        recentLessons.map((lesson, i) => (
-                            <div key={lesson.id} className="cp-chapter-card" style={{ '--card-index': i }}>
-                                <div className="cp-chapter-number">
-                                    {lesson.details?.chapter || `#${i + 1}`}
-                                </div>
-                                <div className="cp-chapter-name">
-                                    {lesson.details?.lessonName || 'Unknown Lesson'}
-                                </div>
-                                <div className="cp-chapter-date">{lesson.date}</div>
-                            </div>
-                        ))
+                        recentLessons.map((lesson, i) => {
+                            const lessonId = lesson.details?.lessonId || '';
+                            const isMicro = lessonId.includes('micro');
+                            const subjectTag = isMicro ? 'MICRO' : 'STATS';
+                            const subjectClass = isMicro ? 'micro' : 'stats';
+                            return (
+                                <motion.div
+                                    key={lesson.id}
+                                    className={`cp-chapter-card cp-chapter-${subjectClass}`}
+                                    style={{ '--card-index': i }}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: i * 0.06 }}
+                                >
+                                    <div className={`cp-chapter-accent cp-chapter-accent-${subjectClass}`} />
+                                    <div className={`cp-chapter-icon cp-chapter-icon-${subjectClass}`}>
+                                        <FaBookOpen />
+                                    </div>
+                                    <span className={`cp-chapter-tag cp-chapter-tag-${subjectClass}`}>{subjectTag}</span>
+                                    <div className="cp-chapter-name">
+                                        {lesson.details?.lessonName || 'Unknown Lesson'}
+                                    </div>
+                                    <div className="cp-chapter-number">
+                                        {lesson.details?.chapter || `Chapter ${i + 1}`}
+                                    </div>
+                                    <div className="cp-chapter-date">{lesson.date}</div>
+                                </motion.div>
+                            );
+                        })
                     ) : (
                         <div className="cp-empty-panel">
                             <FaBookOpen className="cp-empty-icon" />
@@ -417,104 +436,10 @@ const Progress = () => {
                 </div>
             </motion.div>
 
-            {/* === PHASE 3: SYMMETRY DASHBOARD === */}
+            {/* === SCORECARD ANALYTICS === */}
             <motion.div className="cp-panel" variants={itemVariants}>
-                <div className="cp-caption-box">PRECISION ANALYTICS</div>
-                <div className="cp-mastery-dashboard">
-
-                    {/* Left: Microeconomics Gauge */}
-                    <div className="dashboard-side">
-                        <div className="symmetry-gauge-box">
-                            <div className="gauge-title">MICROECONOMICS</div>
-                            <div className="gauge-svg">
-                                <svg viewBox="0 0 100 100">
-                                    <circle cx="50" cy="50" r="42" className="gauge-track" />
-                                    <motion.circle
-                                        cx="50" cy="50" r="42"
-                                        className="gauge-bar"
-                                        strokeDasharray="263.89"
-                                        initial={{ strokeDashoffset: 263.89 }}
-                                        animate={{ strokeDashoffset: 263.89 - (263.89 * (Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('micro')).map(q => q.percentage || 0)))) / 100 }}
-                                        transition={{ duration: 2, ease: "circOut" }}
-                                        transform="rotate(-90 50 50)"
-                                    />
-                                </svg>
-                                <div className="gauge-value">
-                                    {Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('micro')).map(q => q.percentage || 0))}%
-                                </div>
-                            </div>
-                            <p className="cp-panel-hint" style={{ margin: 0 }}>UNIT DEPTH</p>
-                        </div>
-                    </div>
-
-                    {/* Center: Technical Trend Line */}
-                    <div className="dashboard-center">
-                        <div className="center-title">PERFORMANCE AXIS</div>
-                        <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 400 150">
-                            {chartData.length > 1 ? (
-                                <>
-                                    <motion.path
-                                        d={(() => {
-                                            const points = chartData.map((d, i) => ({
-                                                x: (i / (chartData.length - 1)) * 360 + 20,
-                                                y: 130 - (d.score / 100) * 110
-                                            }));
-                                            const line = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x},${p.y}`).join(' ');
-                                            return line;
-                                        })()}
-                                        className="technical-line"
-                                        initial={{ pathLength: 0 }}
-                                        animate={{ pathLength: 1 }}
-                                        transition={{ duration: 1.5, ease: "linear" }}
-                                    />
-                                    {chartData.map((d, i) => (
-                                        <motion.circle
-                                            key={i}
-                                            cx={(i / (chartData.length - 1)) * 360 + 20}
-                                            cy={130 - (d.score / 100) * 110}
-                                            r="4"
-                                            className="technical-point"
-                                            initial={{ scale: 0 }}
-                                            animate={{ scale: 1 }}
-                                            transition={{ delay: 0.5 + i * 0.1 }}
-                                        />
-                                    ))}
-                                </>
-                            ) : (
-                                <text x="50%" y="50%" textAnchor="middle" fill="var(--text-muted)" fontStyle="italic">Accumulate quiz data to plot axis...</text>
-                            )}
-                        </svg>
-                    </div>
-
-                    {/* Right: Statistics Gauge */}
-                    <div className="dashboard-side">
-                        <div className="symmetry-gauge-box">
-                            <div className="gauge-title">STATISTICS</div>
-                            <div className="gauge-svg">
-                                <svg viewBox="0 0 100 100">
-                                    <circle cx="50" cy="50" r="42" className="gauge-track" />
-                                    <motion.circle
-                                        cx="50" cy="50" r="42"
-                                        className="gauge-bar gauge-accent"
-                                        strokeDasharray="263.89"
-                                        initial={{ strokeDashoffset: 263.89 }}
-                                        animate={{ strokeDashoffset: 263.89 - (263.89 * (Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('stats')).map(q => q.percentage || 0)))) / 100 }}
-                                        transition={{ duration: 2, ease: "circOut" }}
-                                        transform="rotate(-90 50 50)"
-                                    />
-                                </svg>
-                                <div className="gauge-value">
-                                    {Math.max(0, ...quizHistory.filter(q => q.quizId?.includes('stats')).map(q => q.percentage || 0))}%
-                                </div>
-                            </div>
-                            <p className="cp-panel-hint" style={{ margin: 0 }}>UNIT DEPTH</p>
-                        </div>
-                    </div>
-
-                    <div className="symmetry-hint">
-                        Symmetry maintained. Data integrity verified.
-                    </div>
-                </div>
+                <div className="cp-caption-box">YOUR SCORECARD</div>
+                <KineticAnalytics quizHistory={quizHistory} chartData={chartData} />
             </motion.div>
 
             {/* === SECONDARY GRID: ACTIVITY + ACHIEVEMENTS === */}
@@ -553,63 +478,9 @@ const Progress = () => {
                 {/* Achievements */}
                 <motion.div className="cp-panel" variants={itemVariants}>
                     <div className="cp-caption-box cp-caption-red">ACHIEVEMENTS!</div>
-                    <div className="cp-badge-grid">
-                        {badges.map((badge) => (
-                            <div
-                                key={badge.id}
-                                className={`cp-badge ${badge.unlocked ? 'unlocked' : ''}`}
-                                style={{ '--badge-color': badge.color }}
-                                onClick={() => setSelectedBadge(badge)}
-                            >
-                                <div className="cp-badge-circle">
-                                    <div className="cp-badge-icon">
-                                        {badge.unlocked ? badge.icon : <FaLock />}
-                                    </div>
-                                </div>
-                                <span className="cp-badge-name">{badge.unlocked ? badge.name : '???'}</span>
-                            </div>
-                        ))}
-                    </div>
+                    <Achievements badges={badges} stats={stats} lessonsCompleted={lessonsCompleted} />
                 </motion.div>
             </div>
-
-            {/* === BADGE DETAIL POPUP === */}
-            <AnimatePresence>
-                {selectedBadge && (
-                    <motion.div
-                        className="cp-modal-overlay"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={() => setSelectedBadge(null)}
-                    >
-                        <motion.div
-                            className="cp-badge-modal"
-                            initial={{ scale: 0.7, y: 30 }}
-                            animate={{ scale: 1, y: 0 }}
-                            exit={{ scale: 0.7, y: 30 }}
-                            onClick={e => e.stopPropagation()}
-                        >
-                            <button className="cp-badge-modal-close" onClick={() => setSelectedBadge(null)}><FaTimes /></button>
-                            <div
-                                className={`cp-badge-modal-circle ${selectedBadge.unlocked ? 'unlocked' : ''}`}
-                                style={{ '--badge-color': selectedBadge.color }}
-                            >
-                                <div className="cp-badge-modal-icon">
-                                    {selectedBadge.unlocked ? selectedBadge.icon : <FaLock />}
-                                </div>
-                            </div>
-                            <h3 className="cp-badge-modal-name" style={{ color: selectedBadge.unlocked ? selectedBadge.color : 'var(--text-muted)' }}>
-                                {selectedBadge.name}
-                            </h3>
-                            <div className={`cp-badge-modal-status ${selectedBadge.unlocked ? 'unlocked' : ''}`}>
-                                {selectedBadge.unlocked ? 'UNLOCKED!' : 'LOCKED'}
-                            </div>
-                            <p className="cp-badge-modal-desc">{selectedBadge.desc}</p>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
 
             {/* === RESET SECTION (Owl Design) === */}
             <motion.div className="cp-reset-section" variants={itemVariants}>
