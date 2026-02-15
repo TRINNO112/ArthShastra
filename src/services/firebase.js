@@ -42,7 +42,6 @@ import {
 // ... (keep imports)
 
 // Initialize Firebase
-console.log("🛠️ [DEPLOYMENT DIAGNOSIS] API Key presence:", !!import.meta.env.VITE_FIREBASE_API_KEY);
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
