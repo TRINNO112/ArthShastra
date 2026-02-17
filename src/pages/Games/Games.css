@@ -1,0 +1,540 @@
+/* ==========================================
+   GAMES HUB — "ANCIENT TRAIL MAP"
+   Winding dotted path, quest stops, parchment
+   ========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
+
+.gm-page {
+    min-height: 100vh;
+    background: #f0e6d3;
+    padding: 60px 5% 80px;
+    position: relative;
+    overflow-x: hidden;
+    color: #3a2e1f;
+}
+
+/* Parchment texture */
+.gm-parchment {
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(210, 180, 140, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(210, 180, 140, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(180, 140, 90, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Subtle map grid */
+.gm-map-lines {
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(139, 115, 85, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 115, 85, 0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ==========================================
+   HEADER
+   ========================================== */
+
+.gm-header {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto 60px;
+    background: #faf4e8;
+    border: 2px solid rgba(139, 115, 85, 0.15);
+    padding: 36px 40px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    box-shadow:
+        0 4px 20px rgba(100, 70, 30, 0.06),
+        inset 0 0 60px rgba(210, 180, 140, 0.1);
+}
+
+.gm-compass {
+    font-size: 2.5rem;
+    color: #a0845c;
+    opacity: 0.4;
+    flex-shrink: 0;
+    animation: gm-spin 20s linear infinite;
+}
+
+@keyframes gm-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.gm-header-content {
+    flex: 1;
+}
+
+.gm-header-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    color: #a0845c;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.gm-title {
+    font-family: 'Pirata One', cursive;
+    font-size: 2.6rem;
+    color: #3a2e1f;
+    margin: 0;
+    line-height: 1.1;
+}
+
+.gm-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    color: #8a7560;
+    margin: 8px 0 0;
+    line-height: 1.5;
+}
+
+.gm-header-stats {
+    display: flex;
+    gap: 20px;
+    flex-shrink: 0;
+}
+
+.gm-header-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.gm-header-stat-val {
+    font-family: 'Pirata One', cursive;
+    font-size: 1.6rem;
+    color: #3a2e1f;
+    line-height: 1;
+}
+
+.gm-header-stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: #b0996e;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ==========================================
+   TRAIL — The winding path
+   ========================================== */
+
+.gm-trail {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+/* Curvy SVG trail path — positioned behind everything */
+.gm-trail-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ==========================================
+   STOP — Each quest stop on the trail
+   ========================================== */
+
+.gm-stop {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.gm-stop:last-of-type {
+    margin-bottom: 30px;
+}
+
+/* Left stops: card on the left side */
+.gm-stop-left {
+    flex-direction: row-reverse;
+}
+
+.gm-stop-left .gm-card {
+    margin-right: 28px;
+    margin-left: auto;
+}
+
+.gm-stop-right .gm-card {
+    margin-left: 28px;
+    margin-right: auto;
+}
+
+/* ==========================================
+   NODE — Numbered circle on the path
+   ========================================== */
+
+.gm-node {
+    position: absolute;
+    left: 50%;
+    top: 16px;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    font-family: 'Pirata One', cursive;
+    font-size: 1.1rem;
+    border: 3px solid #f0e6d3;
+    box-shadow: 0 2px 8px rgba(100, 70, 30, 0.12);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.gm-stop:hover .gm-node {
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: 0 4px 14px rgba(100, 70, 30, 0.18);
+}
+
+.gm-node-active {
+    background: #3a2e1f;
+    color: #faf4e8;
+}
+
+.gm-node-locked {
+    background: #e0d4c0;
+    color: #a0916e;
+}
+
+.gm-node-end {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    background: #d4c4b0;
+    color: #8a7a68;
+    border-color: #f0e6d3;
+    font-size: 1.3rem;
+}
+
+/* ==========================================
+   CARD — Quest card
+   ========================================== */
+
+.gm-card {
+    width: calc(50% - 48px);
+    background: #faf4e8;
+    border: 2px solid rgba(139, 115, 85, 0.12);
+    padding: 24px 24px 20px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.3s, border-color 0.3s;
+    box-shadow: 0 3px 12px rgba(100, 70, 30, 0.05);
+}
+
+.gm-card:hover {
+    box-shadow: 0 8px 28px rgba(100, 70, 30, 0.1);
+    border-color: rgba(139, 115, 85, 0.22);
+}
+
+/* Aged corner fold */
+.gm-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, transparent 50%, rgba(210, 180, 140, 0.2) 50%);
+}
+
+/* Card head row */
+.gm-card-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.gm-card-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #a0845c;
+    background: rgba(160, 132, 92, 0.08);
+    border: 1.5px solid rgba(160, 132, 92, 0.15);
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.gm-card-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.gm-card-topic {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: #a0845c;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.gm-card-diff {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: #c4a87a;
+    letter-spacing: 1px;
+}
+
+/* Title */
+.gm-card-title {
+    font-family: 'Pirata One', cursive;
+    font-size: 1.4rem;
+    color: #3a2e1f;
+    margin: 0 0 8px;
+    line-height: 1.2;
+}
+
+/* Description */
+.gm-card-desc {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.9rem;
+    color: #8a7560;
+    line-height: 1.6;
+    margin: 0 0 16px;
+}
+
+/* Button */
+.gm-card-btn {
+    display: block;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 10px 16px;
+    background: #3a2e1f;
+    color: #faf4e8;
+    border: none;
+    transition: background 0.3s;
+    cursor: pointer;
+}
+
+.gm-card-btn:hover {
+    background: #5a4a35;
+}
+
+.gm-card-btn-locked {
+    background: rgba(160, 132, 92, 0.12);
+    color: #b0996e;
+    cursor: default;
+}
+
+.gm-card-btn-locked:hover {
+    background: rgba(160, 132, 92, 0.12);
+}
+
+/* Lock overlay */
+.gm-card-lock {
+    position: absolute;
+    inset: 0;
+    background: rgba(240, 230, 211, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    z-index: 5;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #a0845c;
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.gm-card-lock svg {
+    font-size: 1.2rem;
+    opacity: 0.5;
+}
+
+.gm-card-locked {
+    opacity: 0.55;
+    transition: opacity 0.3s;
+}
+
+.gm-card-locked:hover {
+    opacity: 0.8;
+}
+
+.gm-card-locked:hover .gm-card-lock {
+    opacity: 1;
+}
+
+/* ==========================================
+   TRAIL END MARKER
+   ========================================== */
+
+.gm-trail-end {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding-top: 10px;
+}
+
+.gm-trail-end p {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.9rem;
+    color: #b0996e;
+    font-style: italic;
+    margin: 0;
+}
+
+/* ==========================================
+   FOOTER
+   ========================================== */
+
+.gm-footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.gm-footer p {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    color: #a0845c;
+    margin: 0;
+    font-style: italic;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 768px) {
+    .gm-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 28px 20px;
+        gap: 16px;
+    }
+
+    .gm-compass {
+        font-size: 2rem;
+    }
+
+    .gm-title {
+        font-size: 2.2rem;
+    }
+
+    /* Single column trail */
+    .gm-trail-line {
+        left: 24px;
+    }
+
+    .gm-node {
+        left: 24px;
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+
+    .gm-stop,
+    .gm-stop-left {
+        flex-direction: row;
+    }
+
+    .gm-trail-svg {
+        display: none;
+    }
+
+    /* Simple dotted line fallback for mobile */
+    .gm-trail::before {
+        content: '';
+        position: absolute;
+        left: 24px;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: repeating-linear-gradient(
+            to bottom,
+            #c4a87a 0px,
+            #c4a87a 8px,
+            transparent 8px,
+            transparent 16px
+        );
+        opacity: 0.3;
+        z-index: 0;
+    }
+
+    .gm-card,
+    .gm-stop-left .gm-card,
+    .gm-stop-right .gm-card {
+        width: calc(100% - 80px);
+        margin-left: 72px;
+        margin-right: 0;
+    }
+
+    .gm-stop {
+        margin-bottom: 36px;
+    }
+
+    .gm-trail-end {
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .gm-page {
+        padding: 40px 3% 60px;
+    }
+
+    .gm-title {
+        font-size: 1.8rem;
+    }
+
+    .gm-card {
+        padding: 20px 18px 16px;
+    }
+
+    .gm-card-title {
+        font-size: 1.2rem;
+    }
+
+    .gm-card-desc {
+        font-size: 0.85rem;
+    }
+
+    .gm-header-stats {
+        gap: 14px;
+    }
+}

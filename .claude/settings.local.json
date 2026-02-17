@@ -55,7 +55,8 @@
       "Bash(del \"C:\\\\Users\\\\Amit Pathak\\\\Documents\\\\ArthShastra\\\\src\\\\pages\\\\Lessons\\\\Lesson6\\\\components\\\\applications-simulator.css\")",
       "Bash(npm run lint:*)",
       "Bash(npm ls:*)",
-      "Bash(npx vite build)"
+      "Bash(npx vite build)",
+      "Bash(node -e:*)"
     ]
   }
 }

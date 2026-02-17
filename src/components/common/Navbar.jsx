@@ -91,7 +91,7 @@ function Navbar() {
 
           {/* Desktop Navigation - Hidden on Mobile */}
           <nav className="nav-links">
-            {['Home', 'Lessons', 'Quiz', 'Progress', 'About'].map((item) => (
+            {['Home', 'Lessons', 'Games', 'Progress', 'About'].map((item) => (
               <NavLink
                 key={item}
                 to={`/${item === 'Home' ? '' : item.toLowerCase()}`}
@@ -167,7 +167,7 @@ function Navbar() {
               <FaTimes />
             </button>
 
-            {['Home', 'Lessons', 'Quiz', 'Progress', 'About'].map((item) => (
+            {['Home', 'Lessons', 'Games', 'Progress', 'About'].map((item) => (
               <NavLink
                 key={item}
                 to={`/${item === 'Home' ? '' : item.toLowerCase()}`}
