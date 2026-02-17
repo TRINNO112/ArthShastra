@@ -65,14 +65,14 @@ const KineticAnalytics = ({ quizHistory, chartData }) => {
     const maxScore = 100;
 
     // SVG dimensions for line/area chart
-    const svgH = 180;
+    const svgH = 260;
     const padX = 45;
     const padTop = 20;
-    const padBot = 25;
+    const padBot = 30;
 
     const buildPoints = () => {
         if (chartData.length === 0) return [];
-        const usableW = Math.max(chartData.length * 52, 300) - padX * 2;
+        const usableW = Math.max(chartData.length * 72, 300) - padX * 2;
         return chartData.map((d, i) => ({
             x: padX + (chartData.length === 1 ? usableW / 2 : (i / (chartData.length - 1)) * usableW),
             y: padTop + ((maxScore - d.score) / maxScore) * (svgH - padTop - padBot),
@@ -82,7 +82,7 @@ const KineticAnalytics = ({ quizHistory, chartData }) => {
     };
 
     const points = buildPoints();
-    const svgW = Math.max(chartData.length * 52, 300);
+    const svgW = Math.max(chartData.length * 72, 300);
     const linePath = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x},${p.y}`).join(' ');
     const chartBottom = svgH - padBot;
     const areaPath = linePath
@@ -110,28 +110,31 @@ const KineticAnalytics = ({ quizHistory, chartData }) => {
                         <span>0%</span>
                     </div>
                     <div className="ka-chart-scroll">
-                        <div className="ka-chart-area" style={{ minWidth: `${Math.max(chartData.length * 48, 200)}px` }}>
+                        <div className="ka-chart-area" style={{ minWidth: `${Math.max(chartData.length * 72, 200)}px` }}>
                             <div className="ka-grid-lines">
                                 <div className="ka-grid-line" style={{ bottom: '100%' }} />
                                 <div className="ka-grid-line" style={{ bottom: '75%' }} />
                                 <div className="ka-grid-line ka-grid-line-pass" style={{ bottom: '50%' }} />
                                 <div className="ka-grid-line" style={{ bottom: '25%' }} />
-                                <div className="ka-grid-line" style={{ bottom: '0%' }} />
+                                <div className="ka-grid-line ka-grid-line-zero" style={{ bottom: '0%' }} />
                             </div>
                             <div className="ka-bars-container">
-                                {chartData.map((d, i) => (
-                                    <div key={i} className="ka-bar-wrapper" title={`${d.name}: ${d.score}%`}>
-                                        <div className="ka-bar-label-top">{d.score}%</div>
-                                        <motion.div
-                                            className="ka-bar"
-                                            initial={{ height: 0 }}
-                                            animate={{ height: `${(d.score / maxScore) * 100}%` }}
-                                            transition={{ duration: 0.8, delay: 0.1 + i * 0.04, ease: 'circOut' }}
-                                            style={{ background: getBarColor(d.score) }}
-                                        />
-                                        <div className="ka-bar-label">{d.quizLabel}</div>
-                                    </div>
-                                ))}
+                                {chartData.map((d, i) => {
+                                    const barPct = (d.score / maxScore) * 100;
+                                    return (
+                                        <div key={i} className="ka-bar-wrapper" title={`${d.name}: ${d.score}%`}>
+                                            <div className="ka-bar-label-top" style={{ bottom: `calc(${barPct}% + 4px)` }}>{d.score}%</div>
+                                            <motion.div
+                                                className="ka-bar"
+                                                initial={{ height: 0 }}
+                                                animate={{ height: `${barPct}%` }}
+                                                transition={{ duration: 0.8, delay: 0.1 + i * 0.04, ease: 'circOut' }}
+                                                style={{ background: getBarColor(d.score) }}
+                                            />
+                                            <div className="ka-bar-label">{d.quizLabel}</div>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
                     </div>
@@ -143,13 +146,6 @@ const KineticAnalytics = ({ quizHistory, chartData }) => {
         const showLine = chartType === 'line' || chartType === 'area';
         return (
             <div className="ka-bar-chart">
-                <div className="ka-chart-y-axis">
-                    <span>100%</span>
-                    <span>75%</span>
-                    <span>50%</span>
-                    <span>25%</span>
-                    <span>0%</span>
-                </div>
                 <div className="ka-chart-scroll">
                     <svg
                         width={svgW}
@@ -161,12 +157,40 @@ const KineticAnalytics = ({ quizHistory, chartData }) => {
                         {[0, 25, 50, 75, 100].map(pct => (
                             <line
                                 key={pct}
-                                x1={0} x2={svgW}
+                                x1={padX} x2={svgW}
                                 y1={padTop + ((100 - pct) / 100) * (svgH - padTop - padBot)}
                                 y2={padTop + ((100 - pct) / 100) * (svgH - padTop - padBot)}
-                                stroke={pct === 50 ? 'rgba(255,220,0,0.15)' : 'rgba(255,255,255,0.06)'}
+                                stroke={pct === 50 ? 'rgba(255,220,0,0.15)' : pct === 0 ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.06)'}
                                 strokeWidth="1"
                             />
+                        ))}
+                        {/* Y-axis vertical line */}
+                        <line
+                            x1={padX} x2={padX}
+                            y1={padTop}
+                            y2={svgH - padBot}
+                            stroke="rgba(255,255,255,0.12)"
+                            strokeWidth="1"
+                        />
+                        {/* X-axis horizontal line */}
+                        <line
+                            x1={padX} x2={svgW}
+                            y1={svgH - padBot}
+                            y2={svgH - padBot}
+                            stroke="rgba(255,255,255,0.12)"
+                            strokeWidth="1"
+                        />
+                        {/* Y-axis labels */}
+                        {[0, 25, 50, 75, 100].map(pct => (
+                            <text
+                                key={`y-${pct}`}
+                                x={padX - 6}
+                                y={padTop + ((100 - pct) / 100) * (svgH - padTop - padBot) + 3}
+                                textAnchor="end"
+                                fill="var(--text-muted, #888)"
+                                fontSize="8"
+                                fontWeight="700"
+                            >{pct}%</text>
                         ))}
                         {/* Area fill */}
                         {chartType === 'area' && areaPath && (
