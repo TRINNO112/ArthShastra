@@ -1,163 +1,495 @@
-.journey-analog {
-  min-height: 100vh;
-  background-color: #f4f1ea;
-  padding: 80px 5%;
-  position: relative;
-  overflow-x: hidden;
-  font-family: 'Special Elite', serif;
+/* ==========================================
+   JOURNEY / CHRONICLES — "VINTAGE NOTEBOOK"
+   Warm cream, torn pages, tape, ink dots
+   Matches the About page's analog researcher vibe
+   ========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap');
+
+.jrn-page {
+    min-height: 100vh;
+    background: #f5f2eb;
+    padding: 60px 5% 80px;
+    position: relative;
+    overflow-x: hidden;
+    color: #2d2a26;
 }
 
-.journey-hero {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 80px;
-  position: relative;
+/* Paper grain overlay */
+.jrn-paper-grain {
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
 }
 
-.back-to-archives {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  text-decoration: none;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  color: #c9ada7;
-  font-size: 0.9rem;
-  transition: color 0.3s;
+/* ==========================================
+   HEADER
+   ========================================== */
+
+.jrn-header {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto 70px;
+    text-align: center;
 }
 
-.back-to-archives:hover {
-  color: #222;
+.jrn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: #c9ada7;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+    transition: color 0.3s;
 }
 
-.vertical-tape {
-  position: absolute;
-  left: -20px;
-  top: 50px;
-  background: rgba(180, 0, 0, 0.7);
-  color: white;
-  padding: 5px 20px;
-  transform: rotate(-90deg);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 2px;
+.jrn-back:hover {
+    color: #5e5954;
 }
 
-.hero-box h1 {
-  font-size: 4rem;
-  color: #222;
-  margin: 0;
-  line-height: 1;
+.jrn-title-block {
+    position: relative;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 40px 40px 30px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
 }
 
-.highlight-ink {
-  color: #d4a373;
-  position: relative;
+/* Notebook holes on top */
+.jrn-notebook-holes {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 40px;
 }
 
-.highlight-ink::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 8px;
-  background: rgba(212, 163, 115, 0.2);
-  z-index: -1;
+.jrn-notebook-holes span {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #f5f2eb;
+    border: 2px solid rgba(0, 0, 0, 0.08);
 }
 
-.meta-info {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-  color: rgba(0,0,0,0.4);
-  margin-top: 10px;
-  text-align: center;
+/* "FIELD NOTES" tape strip */
+.jrn-title-tape {
+    display: inline-block;
+    background: rgba(220, 200, 160, 0.5);
+    padding: 4px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #8a7a6a;
+    transform: rotate(-1.5deg);
+    margin-bottom: 16px;
 }
 
-.chronicle-line {
-  max-width: 1100px;
-  margin: 0 auto;
-  position: relative;
-  padding: 60px 0;
+.jrn-title {
+    font-family: 'Caveat', cursive;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #2d2a26;
+    margin: 0;
+    line-height: 1.1;
 }
 
-.chronicle-line::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: rgba(0,0,0,0.08);
-  transform: translateX(-50%);
+.jrn-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    color: #8a7a6a;
+    margin: 12px 0 0;
+    line-height: 1.5;
 }
 
-.lore-card {
-  width: 46%;
-  margin-bottom: 80px;
-  position: relative;
+.jrn-title-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #b8a898;
+    letter-spacing: 0.5px;
+    margin-top: 16px;
 }
 
-.lore-card:nth-child(even) {
-  margin-left: auto;
+.jrn-meta-sep {
+    color: #d4c8b8;
 }
 
-.lore-date {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 700;
-  background: #222;
-  color: #fff;
-  padding: 4px 12px;
-  display: inline-block;
-  margin-bottom: 10px;
+/* ==========================================
+   TIMELINE
+   ========================================== */
+
+.jrn-timeline {
+    position: relative;
+    z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px 0;
 }
 
-.lore-content-box {
-  background: white;
-  padding: 25px;
-  box-shadow: 10px 10px 0 rgba(0,0,0,0.02);
-  border: 1px solid rgba(0,0,0,0.05);
-  display: flex;
-  gap: 20px;
+/* Central hand-drawn-style vertical line */
+.jrn-timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: repeating-linear-gradient(
+        to bottom,
+        #d4c4b0 0px,
+        #d4c4b0 8px,
+        transparent 8px,
+        transparent 12px
+    );
+    transform: translateX(-50%);
 }
 
-.lore-icon {
-  font-size: 1.5rem;
-  color: #d4a373;
+/* Each entry row */
+.jrn-entry {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    margin-bottom: 50px;
+    padding: 0 20px;
 }
 
-.lore-text h3 {
-  margin: 0 0 10px 0;
-  font-size: 1.3rem;
-  color: #222;
+.jrn-entry:last-child {
+    margin-bottom: 0;
 }
 
-.lore-text p {
-  margin: 0;
-  font-size: 1rem;
-  color: #666;
-  line-height: 1.6;
+/* Left-side entries */
+.jrn-entry-left {
+    flex-direction: row-reverse;
 }
 
-.chronicle-footer {
-  text-align: center;
-  margin-top: 50px;
-  font-size: 0.8rem;
-  color: rgba(0,0,0,0.3);
-  letter-spacing: 3px;
+.jrn-entry-left .jrn-card {
+    margin-right: 36px;
+    margin-left: auto;
 }
+
+.jrn-entry-right .jrn-card {
+    margin-left: 36px;
+    margin-right: auto;
+}
+
+/* Connector line from dot to card */
+.jrn-connector {
+    position: absolute;
+    top: 22px;
+    height: 1px;
+    width: 36px;
+    background: #d4c4b0;
+    z-index: 1;
+}
+
+.jrn-entry-left .jrn-connector {
+    right: 50%;
+    margin-right: -1px;
+}
+
+.jrn-entry-right .jrn-connector {
+    left: 50%;
+    margin-left: -1px;
+}
+
+/* ==========================================
+   INK DOT (timeline node)
+   ========================================== */
+
+.jrn-ink-dot {
+    position: absolute;
+    left: 50%;
+    top: 16px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #5e5954;
+    border: 3px solid #f5f2eb;
+    transform: translateX(-50%);
+    z-index: 2;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================================
+   CARD — Notebook page style
+   ========================================== */
+
+.jrn-card {
+    width: calc(50% - 56px);
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 28px 28px 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.jrn-card:hover {
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+/* Tape strip across top */
+.jrn-tape {
+    position: absolute;
+    top: -4px;
+    left: 20px;
+    width: 70px;
+    height: 22px;
+    opacity: 0.7;
+    transform: rotate(-2deg);
+    z-index: 3;
+}
+
+/* Left margin red line (notebook feel) */
+.jrn-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 42px;
+    width: 1px;
+    background: rgba(220, 80, 80, 0.12);
+}
+
+/* Ruled lines behind card text */
+.jrn-ruled-lines {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding: 0 20px;
+}
+
+.jrn-ruled-line {
+    height: 1px;
+    background: rgba(0, 120, 200, 0.04);
+    width: 100%;
+}
+
+/* Card top row: icon + tag + number */
+.jrn-card-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.jrn-card-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    color: #8a7a6a;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.jrn-card-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #b8a898;
+    text-transform: uppercase;
+    background: rgba(0, 0, 0, 0.03);
+    padding: 3px 10px;
+    border-radius: 3px;
+}
+
+.jrn-card-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.1);
+    margin-left: auto;
+}
+
+/* Date */
+.jrn-card-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #b8a898;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+}
+
+.jrn-card-time {
+    color: #d0c4b4;
+}
+
+/* Title — handwritten feel */
+.jrn-card-title {
+    font-family: 'Caveat', cursive;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #2d2a26;
+    margin: 0 0 8px;
+    line-height: 1.2;
+    position: relative;
+    z-index: 1;
+}
+
+/* Description */
+.jrn-card-desc {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    color: #6b6560;
+    line-height: 1.7;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* ==========================================
+   FOOTER
+   ========================================== */
+
+.jrn-footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.jrn-footer-doodle {
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    color: #d4c4b0;
+    margin-bottom: 4px;
+}
+
+.jrn-footer p {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #b8a898;
+    margin: 0;
+}
+
+.jrn-footer span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: #d0c4b4;
+    letter-spacing: 1px;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
 
 @media (max-width: 768px) {
-  .chronicle-line::before {
-    left: 20px;
-  }
-  .lore-card {
-    width: calc(100% - 40px);
-    margin-left: 40px !important;
-  }
-  .hero-box h1 {
-    font-size: 2.5rem;
-  }
+    .jrn-page {
+        padding: 40px 4% 60px;
+    }
+
+    .jrn-title {
+        font-size: 2.5rem;
+    }
+
+    .jrn-title-block {
+        padding: 30px 24px 24px;
+    }
+
+    .jrn-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .jrn-title-meta {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* Single column on mobile */
+    .jrn-timeline-line {
+        left: 20px;
+    }
+
+    .jrn-ink-dot {
+        left: 20px;
+    }
+
+    .jrn-entry,
+    .jrn-entry-left {
+        flex-direction: row;
+        padding: 0 0 0 8px;
+    }
+
+    .jrn-connector {
+        display: none;
+    }
+
+    .jrn-card,
+    .jrn-entry-left .jrn-card,
+    .jrn-entry-right .jrn-card {
+        width: calc(100% - 56px);
+        margin-left: 48px;
+        margin-right: 0;
+    }
+
+    .jrn-entry {
+        margin-bottom: 36px;
+    }
+
+    .jrn-header {
+        margin-bottom: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .jrn-title {
+        font-size: 2rem;
+    }
+
+    .jrn-card {
+        padding: 22px 18px 18px;
+    }
+
+    .jrn-card-title {
+        font-size: 1.35rem;
+    }
+
+    .jrn-card-desc {
+        font-size: 0.88rem;
+    }
+
+    .jrn-card::before {
+        left: 32px;
+    }
+
+    .jrn-notebook-holes {
+        gap: 24px;
+    }
 }
