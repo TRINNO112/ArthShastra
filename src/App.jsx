@@ -47,6 +47,12 @@ import './App.css';
 // Base path for GitHub Pages deployment
 const basename = import.meta.env.BASE_URL;
 
+// Redirect component for static 404
+const NotFoundRedirect = () => {
+  window.location.replace('/404.html');
+  return null;
+};
+
 function App() {
   return (
     <AuthProvider>
@@ -91,6 +97,9 @@ function App() {
               <Route path="/lesson/stats-11" element={<StatsLesson11 />} />
               <Route path="/lesson/stats-12" element={<StatsLesson12 />} />
               <Route path="/lesson/stats-13" element={<StatsLesson13 />} />
+
+              {/* 404 Catch-All Route */}
+              <Route path="*" element={<NotFoundRedirect />} />
             </Routes>
           </main>
         </div>
