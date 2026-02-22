@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import {
   FaHeart, FaPenNib, FaSearch, FaHistory,
-  FaStickyNote, FaThumbtack, FaExternalLinkAlt, FaGithub, FaLinkedin, FaCode
+  FaStickyNote, FaThumbtack, FaExternalLinkAlt, FaGithub, FaLinkedin, FaCode, FaEnvelope
 } from 'react-icons/fa';
 import {
   SiReact, SiVite, SiFirebase, SiFramer, SiD3Dotjs, SiJavascript
@@ -203,6 +203,21 @@ function About() {
           <Link to="/journey" className="archive-btn">
             ACCESS JOURNEY ARCHIVES <FaExternalLinkAlt />
           </Link>
+        </div>
+      </section>
+
+      {/* NEW: Contact Call to Action */}
+      <section className="journal-section contact-redirect">
+        <div className="section-tab priority">06. SEEKING FELLOW EXPLORERS</div>
+        <div className="journal-entry">
+          <p>
+            If you have any problems, anything regarding this platform, or if any information is wrong,
+            please contact me and tell me! I will be really eagerly waiting for you to mail me
+            because there is no one using this application right now. You know, something like that. 😅
+          </p>
+          <a href="mailto:amit@example.com" className="archive-btn" style={{ marginTop: '15px' }}>
+            <FaEnvelope /> MESSAGE THE DEVELOPER
+          </a>
         </div>
       </section>
 

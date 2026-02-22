@@ -221,8 +221,6 @@
     --hex-shadow-glow: rgba(74, 201, 227, 0.1);
     
     position: relative;
-    width: 320px;
-    height: 360px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -276,6 +274,10 @@
     --hex-shadow-glow: rgba(157, 78, 221, 0.15);
 }
 
+.gm-hex-node-size-small { width: 320px; height: 360px; }
+.gm-hex-node-size-medium { width: 340px; height: 382px; }
+.gm-hex-node-size-large { width: 360px; height: 405px; }
+
 .gm-hex-node:hover {
     transform: translateY(-10px) scale(1.05);
 }
@@ -296,7 +298,7 @@
     overflow: hidden; /* Contains the spinning gradient */
 }
 
-/* Animated light tracing effect for the border */
+/* ===== SLEEK NEON TRACE (No messy blur bugs) ===== */
 .gm-hex-border::before {
     content: '';
     position: absolute;
@@ -305,26 +307,25 @@
     width: 200%;
     height: 200%;
     background: conic-gradient(
-        transparent 0deg, 
-        transparent 90deg, 
-        var(--hex-color-main) 140deg, 
-        var(--hex-color-glow) 180deg, 
-        transparent 220deg
+        transparent 0deg,
+        transparent 280deg,
+        var(--hex-color-glow) 340deg,
+        #fff 360deg
     );
     animation: gm-spin 4s linear infinite;
+    mix-blend-mode: screen;
     opacity: 0.8;
+    transition: opacity 0.4s ease;
 }
 
 .gm-hex-inner {
     position: absolute;
-    inset: 4px; /* Creates the border thickness */
-    background: linear-gradient(180deg, #0a1828 0%, #030b14 100%);
+    inset: 1.5px; /* Extremely thin, elegant border */
+    background: radial-gradient(circle at top left, #0a1828, #030b14 80%);
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
     z-index: 1;
-    box-shadow: 
-        inset 0 20px 40px var(--hex-shadow-glow),
-        inset 0 -20px 40px rgba(0,0,0,0.8);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: inset 0 0 20px var(--hex-shadow-glow);
+    transition: all 0.5s ease;
     overflow: hidden; /* Hide particles outside the hex */
 }
 
@@ -439,21 +440,31 @@
 /* Hover effects for the Hexagon */
 .gm-hex-node:hover .gm-hex-border::before {
     background: conic-gradient(
-        transparent 0deg, 
-        var(--hex-color-main) 90deg, 
-        var(--hex-color-glow) 180deg, 
-        var(--hex-color-main) 270deg,
-        transparent 360deg
+        transparent 0deg,
+        transparent 200deg,
+        var(--hex-color-main) 280deg,
+        var(--hex-color-glow) 340deg,
+        #fff 360deg
     );
-    animation-duration: 2s;
+    animation: gm-spin 1.5s linear infinite;
     opacity: 1;
 }
 
 .gm-hex-node:hover .gm-hex-inner {
-    background: linear-gradient(180deg, #0d2238 0%, #05101a 100%);
+    background: radial-gradient(circle at top left, #122840, #030b14 80%);
     box-shadow: 
-        inset 0 0 60px var(--hex-shadow-glow),
-        inset 0 -20px 40px rgba(0,0,0,0.8);
+        inset 0 0 50px var(--hex-shadow-glow),
+        inset 0 -10px 40px rgba(0,0,0,0.9);
+}
+
+.gm-hex-node:active {
+    transform: translateY(-5px) scale(0.98);
+}
+
+.gm-hex-node:active .gm-hex-inner {
+    background: radial-gradient(circle at top left, var(--hex-shadow-glow), #030b14 80%);
+    box-shadow: inset 0 0 80px var(--hex-color-main);
+    transition: all 0.1s ease;
 }
 
 /* ==========================================
@@ -530,6 +541,7 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--hex-color-glow);
+    text-shadow: 0 0 8px rgba(255,255,255,0.2);
 }
 
 .gm-island-diff {
@@ -542,23 +554,24 @@
 }
 
 .gm-island-title {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.4rem;
-    font-weight: 700;
+    font-family: 'Pirata One', cursive; /* Premium display font */
+    font-size: 2rem;
+    font-weight: 400;
     color: #fff;
-    margin: 0 0 12px;
-    line-height: 1.2;
-    text-transform: uppercase;
+    margin: 0 0 10px;
+    line-height: 1.1;
     letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4), 0 0 20px var(--hex-shadow-glow);
 }
 
 .gm-island-desc {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.6);
-    line-height: 1.6;
+    font-family: 'Crimson Pro', serif; /* Elegant readable font */
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
     margin: 0 0 25px;
     max-width: 90%;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
 /* ==========================================
@@ -594,17 +607,48 @@
 }
 
 .gm-island-btn-locked {
-    background: rgba(0, 0, 0, 0.4);
-    color: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.1);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, rgba(20, 25, 35, 0.95), rgba(40, 50, 65, 0.95));
+    color: #a0b4c8;
+    border: 1px solid rgba(160, 180, 200, 0.2);
     cursor: default;
-    box-shadow: none;
+    border-radius: 50px; /* Capsule shape */
+    box-shadow: 
+        inset 0 1px 3px rgba(255, 255, 255, 0.05),
+        0 8px 15px rgba(0, 0, 0, 0.3), /* Premium shadow */
+        0 0 10px rgba(0, 0, 0, 0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 20px 8px 10px; /* Asymmetric padding to fit icon */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s;
 }
 
 .gm-island-btn-locked:hover {
-    background: rgba(0, 0, 0, 0.4);
-    color: rgba(255, 255, 255, 0.3);
-    box-shadow: none;
+    background: linear-gradient(135deg, rgba(25, 30, 40, 0.95), rgba(45, 55, 75, 0.95));
+    color: #c0d4e8;
+    border-color: rgba(160, 180, 200, 0.3);
+}
+
+.gm-locked-capsule-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, rgba(28, 42, 58, 1) 0%, rgba(18, 28, 40, 1) 100%);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    color: #ff7254;
+    font-size: 0.7rem;
+    box-shadow: 
+        inset 0 2px 4px rgba(0,0,0,0.8),
+        inset 0 0 0 1px rgba(255, 114, 84, 0.1),
+        0 0 8px rgba(255, 114, 84, 0.3); /* Reddish glow */
 }
 
 /* ==========================================
@@ -694,6 +738,64 @@
 }
 
 /* ==========================================
+   CONTACT SECTION
+   ========================================== */
+.gm-contact-section {
+    position: relative;
+    z-index: 10;
+    margin: 80px auto 40px;
+    max-width: 800px;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(10, 25, 45, 0.8), rgba(5, 15, 30, 0.95));
+    border: 1px solid rgba(74, 201, 227, 0.3);
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(74, 201, 227, 0.05);
+    backdrop-filter: blur(15px);
+}
+
+.gm-contact-title {
+    font-family: 'Pirata One', cursive;
+    font-size: 2.2rem;
+    color: #4ac9e3;
+    margin: 0 0 15px;
+    text-shadow: 0 0 15px rgba(74, 201, 227, 0.4);
+}
+
+.gm-contact-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.1rem;
+    color: #a0b4c8;
+    line-height: 1.6;
+    margin: 0 auto 25px;
+    max-width: 90%;
+}
+
+.gm-contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: none;
+    padding: 14px 32px;
+    background: #4ac9e3;
+    color: #020d1a;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(74, 201, 227, 0.4);
+    transition: all 0.3s;
+}
+
+.gm-contact-btn:hover {
+    background: #7ee8fa;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 30px rgba(74, 201, 227, 0.6);
+}
+
+/* ==========================================
    RESPONSIVE
    ========================================== */
 
@@ -723,9 +825,11 @@
         margin-bottom: 60px;
     }
 
-    .gm-hex-node {
+    .gm-hex-node-size-small, .gm-hex-node-size-medium, .gm-hex-node-size-large {
         width: 90%;
         max-width: 400px;
+        height: auto;
+        min-height: 380px;
         padding: 30px 20px;
     }
 

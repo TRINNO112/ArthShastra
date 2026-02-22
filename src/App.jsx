@@ -12,6 +12,7 @@ import About from './pages/About';
 import Journey from './pages/Journey';
 import Progress from './pages/Progress';
 import Games from './pages/Games/Games';
+import MarketMaker from './pages/Games/MarketMaker/MarketMaker';
 import Lesson1 from './pages/Lessons/Lesson1';
 import Lesson2 from './pages/Lessons/Lesson2';
 import Lesson3 from './pages/Lessons/Lesson3/Lesson3';
@@ -67,6 +68,7 @@ function App() {
               <Route path="/journey" element={<Journey />} />
               <Route path="/progress" element={<Progress />} />
               <Route path="/games" element={<Games />} />
+              <Route path="/games/market-maker" element={<MarketMaker />} />
 
               {/* Microeconomics Class 11 Lessons */}
               <Route path="/lesson/micro11-1" element={<Lesson1 />} />

@@ -17,9 +17,10 @@ const GAMES = [
         icon: <FaBalanceScale />,
         topic: 'Supply & Demand',
         difficulty: 'Medium',
-        status: 'coming-soon',
+        status: 'available',
         biome: 'jungle',
-        offset: { x: -25, y: 0 } // Percentage off-center
+        offset: { x: -25, y: 0 }, // Percentage off-center
+        size: 'large'
     },
     {
         id: 'price-hunter',
@@ -28,9 +29,10 @@ const GAMES = [
         icon: <FaShoppingCart />,
         topic: 'Elasticity',
         difficulty: 'Easy',
-        status: 'coming-soon',
+        status: 'available',
         biome: 'atoll',
-        offset: { x: 30, y: 0 }
+        offset: { x: 25, y: 0 },
+        size: 'medium'
     },
     {
         id: 'budget-boss',
@@ -39,9 +41,10 @@ const GAMES = [
         icon: <FaCoins />,
         topic: 'Government Budget',
         difficulty: 'Hard',
-        status: 'coming-soon',
+        status: 'available',
         biome: 'volcano',
-        offset: { x: -15, y: 0 }
+        offset: { x: -15, y: 0 },
+        size: 'large'
     },
     {
         id: 'trade-tycoon',
@@ -50,9 +53,10 @@ const GAMES = [
         icon: <FaGlobeAmericas />,
         topic: 'International Trade',
         difficulty: 'Hard',
-        status: 'coming-soon',
+        status: 'available',
         biome: 'harbor',
-        offset: { x: 20, y: 0 }
+        offset: { x: 20, y: 0 },
+        size: 'medium'
     },
     {
         id: 'graph-guesser',
@@ -61,12 +65,19 @@ const GAMES = [
         icon: <FaChartLine />,
         topic: 'All Topics',
         difficulty: 'Medium',
-        status: 'coming-soon',
+        status: 'available',
         biome: 'crystal',
-        offset: { x: -35, y: 0 }
+        offset: { x: -18, y: 0 },
+        size: 'medium'
     }
     // Reduced to 5 games per request
 ];
+
+const hexSizes = {
+    small: 'gm-hex-node-size-small',
+    medium: 'gm-hex-node-size-medium',
+    large: 'gm-hex-node-size-large'
+};
 
 const difficultyStars = (d) => {
     if (d === 'Easy') return '★';
@@ -162,7 +173,7 @@ function Games() {
                     <div className="gm-header-tag"><FaScroll /> EXPEDITION MAP</div>
                     <h1 className="gm-title">The Economics Archipelago</h1>
                     <p className="gm-subtitle">
-                        Chart your course through the islands of knowledge. Each territory holds a unique trial.
+                        Chart your course through the economic challenges. Each territory holds a unique trial.
                     </p>
                 </div>
                 <div className="gm-header-stats">
@@ -217,7 +228,7 @@ function Games() {
                             }}
                         >
                             <motion.div
-                                className={`gm-hex-node gm-biome-${game.biome} ${isLocked ? 'gm-node-locked' : 'gm-node-unlocked'}`}
+                                className={`gm-hex-node gm-biome-${game.biome} ${isLocked ? 'gm-node-locked' : 'gm-node-unlocked'} ${hexSizes[game.size]}`}
                                 variants={islandVariants}
                                 initial="hidden"
                                 whileInView="visible"
@@ -268,8 +279,9 @@ function Games() {
                                             DOCK HERE
                                         </Link>
                                     ) : (
-                                        <div className="gm-island-btn gm-island-btn-locked">
-                                            LOCKED
+                                        <div className="gm-island-btn-locked">
+                                            <div className="gm-locked-capsule-icon"><FaLock /></div>
+                                            <span>AREA LOCKED</span>
                                         </div>
                                     )}
                                 </div>
