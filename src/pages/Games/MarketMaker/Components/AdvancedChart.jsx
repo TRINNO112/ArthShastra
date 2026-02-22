@@ -52,6 +52,16 @@ export default function AdvancedChart({ market, currentMarketPrice }) {
     return (
         <div className="mm-chart-wrapper">
             <svg viewBox={`0 0 ${SVG_W} ${SVG_H}`} className="mm-advanced-svg">
+                <defs>
+                    <clipPath id="chartClip">
+                        <rect
+                            x={PADDING.left}
+                            y={PADDING.top}
+                            width={PLOT_W}
+                            height={PLOT_H}
+                        />
+                    </clipPath>
+                </defs>
 
                 {/* Axes and Grid */}
                 <g className="mm-grid-group">
@@ -67,26 +77,28 @@ export default function AdvancedChart({ market, currentMarketPrice }) {
                 <line x1={scaleX(0)} y1={scaleY(0)} x2={scaleX(0)} y2={scaleY(MAX_P)} className="mm-axis-stroke" />
                 <line x1={scaleX(0)} y1={scaleY(0)} x2={scaleX(MAX_Q)} y2={scaleY(0)} className="mm-axis-stroke" />
 
-                {/* Dynamic Curves with Smooth Transitions */}
-                {demandPoints && (
-                    <motion.path
-                        d={demandPoints}
-                        className="mm-curve-demand"
-                        initial={false}
-                        animate={{ d: demandPoints }}
-                        transition={{ type: 'spring', stiffness: 40, damping: 15 }}
-                    />
-                )}
+                {/* Dynamic Curves with Smooth Transitions and Clipping */}
+                <g clipPath="url(#chartClip)">
+                    {demandPoints && (
+                        <motion.path
+                            d={demandPoints}
+                            className="mm-curve-demand"
+                            initial={false}
+                            animate={{ d: demandPoints }}
+                            transition={{ type: 'spring', stiffness: 40, damping: 15 }}
+                        />
+                    )}
 
-                {supplyPoints && (
-                    <motion.path
-                        d={supplyPoints}
-                        className="mm-curve-supply"
-                        initial={false}
-                        animate={{ d: supplyPoints }}
-                        transition={{ type: 'spring', stiffness: 40, damping: 15 }}
-                    />
-                )}
+                    {supplyPoints && (
+                        <motion.path
+                            d={supplyPoints}
+                            className="mm-curve-supply"
+                            initial={false}
+                            animate={{ d: supplyPoints }}
+                            transition={{ type: 'spring', stiffness: 40, damping: 15 }}
+                        />
+                    )}
+                </g>
 
                 {/* Floating Equilibrium Point Target (Math eq) */}
                 <motion.circle

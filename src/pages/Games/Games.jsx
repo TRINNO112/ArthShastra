@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     FaBalanceScale, FaChartLine, FaCoins, FaShoppingCart,
     FaGlobeAmericas, FaChartBar, FaLock, FaCompass, FaScroll, FaGem, FaMapMarkerAlt,
@@ -99,6 +99,17 @@ function Games() {
     const trailRef = useRef(null);
     const [svgPath, setSvgPath] = useState('');
     const [trailSize, setTrailSize] = useState({ w: 0, h: 0 });
+    const [isEntering, setIsEntering] = useState(false);
+    const navigate = useNavigate();
+
+    const handleEntry = (gameId) => {
+        // Play swoosh sound / trigger transition
+        setIsEntering(true);
+        // Wait for bubble animation to mask the screen before navigating
+        setTimeout(() => {
+            navigate(`/games/${gameId}`);
+        }, 1500);
+    };
 
     // Build curvy SVG path connecting all nodes organically
     useEffect(() => {
@@ -158,6 +169,32 @@ function Games() {
 
     return (
         <div className="gm-page">
+            <AnimatePresence>
+                {isEntering && (
+                    <motion.div
+                        className="gm-anime-overlay"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <div className="gm-anime-bubbles">
+                            {/* Generating multiple bubbles for the anime effect */}
+                            {[...Array(30)].map((_, i) => (
+                                <div key={i} className="gm-anime-bubble" style={{
+                                    left: `${Math.random() * 100}%`,
+                                    animationDuration: `${1 + Math.random() * 1.5}s`,
+                                    animationDelay: `${Math.random() * 0.5}s`,
+                                    width: `${20 + Math.random() * 100}px`,
+                                    height: `${20 + Math.random() * 100}px`
+                                }} />
+                            ))}
+                        </div>
+                        <h2 className="gm-anime-text">ENTERING SIMULATION...</h2>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             <div className="gm-ocean-bg" />
             <div className="gm-ocean-particles" />
 
@@ -275,9 +312,9 @@ function Games() {
                                     <p className="gm-island-desc">{game.desc}</p>
 
                                     {!isLocked ? (
-                                        <Link to={`/games/${game.id}`} className="gm-island-btn">
+                                        <button onClick={() => handleEntry(game.id)} className="gm-island-btn">
                                             DOCK HERE
-                                        </Link>
+                                        </button>
                                     ) : (
                                         <div className="gm-island-btn-locked">
                                             <div className="gm-locked-capsule-icon"><FaLock /></div>

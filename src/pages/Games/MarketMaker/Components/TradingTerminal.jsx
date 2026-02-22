@@ -6,6 +6,13 @@ export default function TradingTerminal({ state, dispatch }) {
     // Local input states
     const [localBid, setLocalBid] = useState(state.orders.bidPrice);
     const [localAsk, setLocalAsk] = useState(state.orders.askPrice);
+    const [localQty, setLocalQty] = useState(5); // Default trade size
+
+    // Sync local state when global state is updated (e.g. game init or event)
+    React.useEffect(() => {
+        setLocalBid(state.orders.bidPrice);
+        setLocalAsk(state.orders.askPrice);
+    }, [state.orders.bidPrice, state.orders.askPrice]);
 
     const handleUpdate = (type, val) => {
         const num = parseFloat(val);
@@ -45,16 +52,31 @@ export default function TradingTerminal({ state, dispatch }) {
                         <span className="mm-ob-desc">Max price you'll pay</span>
                     </div>
                     <div className="mm-ob-input-row">
-                        <span>₹</span>
-                        <input
-                            type="number"
-                            className="mm-ob-input"
-                            value={localBid}
-                            onChange={(e) => setLocalBid(e.target.value)}
-                            onBlur={() => handleUpdate('bidPrice', localBid)}
-                            disabled={!state.isSimulationRunning}
-                        />
-                        <button className="mm-ob-submit bid-btn" onClick={() => handleUpdate('bidPrice', localBid)} disabled={!state.isSimulationRunning}>SET</button>
+                        <div className="mm-input-group">
+                            <span className="mm-label-inline">PRICE</span>
+                            <input
+                                type="number"
+                                className="mm-ob-input"
+                                value={localBid}
+                                onChange={(e) => setLocalBid(e.target.value)}
+                                onBlur={() => handleUpdate('bidPrice', localBid)}
+                            />
+                        </div>
+                        <div className="mm-input-group qty-group">
+                            <span className="mm-label-inline">QTY</span>
+                            <input
+                                type="number"
+                                className="mm-ob-input qty-input"
+                                value={localQty}
+                                onChange={(e) => setLocalQty(e.target.value)}
+                            />
+                        </div>
+                        <button
+                            className="mm-ob-submit bid-btn"
+                            onClick={() => handleUpdate('bidPrice', localBid)}
+                        >
+                            SET BID
+                        </button>
                     </div>
                 </div>
 
@@ -65,16 +87,31 @@ export default function TradingTerminal({ state, dispatch }) {
                         <span className="mm-ob-desc">Min price you'll accept</span>
                     </div>
                     <div className="mm-ob-input-row">
-                        <span>₹</span>
-                        <input
-                            type="number"
-                            className="mm-ob-input"
-                            value={localAsk}
-                            onChange={(e) => setLocalAsk(e.target.value)}
-                            onBlur={() => handleUpdate('askPrice', localAsk)}
-                            disabled={!state.isSimulationRunning}
-                        />
-                        <button className="mm-ob-submit ask-btn" onClick={() => handleUpdate('askPrice', localAsk)} disabled={!state.isSimulationRunning}>SET</button>
+                        <div className="mm-input-group">
+                            <span className="mm-label-inline">PRICE</span>
+                            <input
+                                type="number"
+                                className="mm-ob-input"
+                                value={localAsk}
+                                onChange={(e) => setLocalAsk(e.target.value)}
+                                onBlur={() => handleUpdate('askPrice', localAsk)}
+                            />
+                        </div>
+                        <div className="mm-input-group qty-group">
+                            <span className="mm-label-inline">QTY</span>
+                            <input
+                                type="number"
+                                className="mm-ob-input qty-input"
+                                value={localQty}
+                                onChange={(e) => setLocalQty(e.target.value)}
+                            />
+                        </div>
+                        <button
+                            className="mm-ob-submit ask-btn"
+                            onClick={() => handleUpdate('askPrice', localAsk)}
+                        >
+                            SET ASK
+                        </button>
                     </div>
                 </div>
             </div>

@@ -24,6 +24,7 @@ export const INITIAL_STATE = {
     orders: {
         bidPrice: 20, // Max price willing to buy
         askPrice: 35, // Min price willing to sell
+        tradeQty: 5,  // Amount to trade per tick
     },
 
     // UI & History State
@@ -156,29 +157,33 @@ export function gameReducer(state, action) {
             // 1. Can we buy? (Is market price <= our Bid)
             if (newState.currentMarketPrice <= state.orders.bidPrice && newState.cash >= newState.currentMarketPrice && newState.inventory < maxInv) {
                 // AI Sellers are hitting our Bid
-                const qtyToBuy = Math.min(Math.floor(newState.cash / newState.currentMarketPrice), 5); // Buy chunks of 5
+                const qtyToBuy = Math.min(Math.floor(newState.cash / newState.currentMarketPrice), state.orders.tradeQty);
 
                 newState.cash -= (qtyToBuy * newState.currentMarketPrice);
                 newState.inventory += qtyToBuy;
 
-                newState.tradeHistory = [
-                    { type: 'BUY', qty: qtyToBuy, price: newState.currentMarketPrice, time: new Date().toLocaleTimeString() },
-                    ...newState.tradeHistory.slice(0, 49) // Keep last 50
-                ];
+                if (qtyToBuy > 0) {
+                    newState.tradeHistory = [
+                        { type: 'BUY', qty: qtyToBuy, price: newState.currentMarketPrice, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) },
+                        ...newState.tradeHistory.slice(0, 49)
+                    ];
+                }
             }
 
             // 2. Can we sell? (Is market price >= our Ask)
             if (newState.currentMarketPrice >= state.orders.askPrice && newState.inventory > 0) {
                 // AI Buyers are lifting our Ask
-                const qtyToSell = Math.min(newState.inventory, 5); // Sell chunks of 5
+                const qtyToSell = Math.min(newState.inventory, state.orders.tradeQty);
 
                 newState.cash += (qtyToSell * newState.currentMarketPrice);
                 newState.inventory -= qtyToSell;
 
-                newState.tradeHistory = [
-                    { type: 'SELL', qty: qtyToSell, price: newState.currentMarketPrice, time: new Date().toLocaleTimeString() },
-                    ...newState.tradeHistory.slice(0, 49)
-                ];
+                if (qtyToSell > 0) {
+                    newState.tradeHistory = [
+                        { type: 'SELL', qty: qtyToSell, price: newState.currentMarketPrice, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) },
+                        ...newState.tradeHistory.slice(0, 49)
+                    ];
+                }
             }
 
             return newState;
