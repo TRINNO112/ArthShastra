@@ -3,22 +3,12 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
     FaBalanceScale, FaChartLine, FaCoins, FaShoppingCart,
-    FaGlobeAmericas, FaChartBar, FaLock,
-    FaCompass, FaScroll, FaGem, FaMapMarkerAlt
+    FaGlobeAmericas, FaChartBar, FaLock, FaCompass, FaScroll, FaGem, FaMapMarkerAlt,
+    FaRegCircle
 } from 'react-icons/fa';
 import './Games.css';
 
-// Import AI Generated Maps
-import bgOcean from '../../assets/bg.png';
-import imgJungle from '../../assets/jungle.png';
-import imgAtoll from '../../assets/atoll.png';
-import imgVolcano from '../../assets/volcano.png';
-import imgHarbor from '../../assets/harbor.png';
-import imgCrystal from '../../assets/crystal.png';
-import imgSnow from '../../assets/snow.png';
-import imgWhirlpool from '../../assets/whirlpool.png'; // We'll use this for the end node!
-
-// Added specific x/y offsets to make the layout asymmetric and island-like
+// Specific x/y offsets to make the layout asymmetric and island-like
 const GAMES = [
     {
         id: 'market-maker',
@@ -29,7 +19,6 @@ const GAMES = [
         difficulty: 'Medium',
         status: 'coming-soon',
         biome: 'jungle',
-        image: imgJungle,
         offset: { x: -25, y: 0 } // Percentage off-center
     },
     {
@@ -41,7 +30,6 @@ const GAMES = [
         difficulty: 'Easy',
         status: 'coming-soon',
         biome: 'atoll',
-        image: imgAtoll,
         offset: { x: 30, y: 0 }
     },
     {
@@ -53,7 +41,6 @@ const GAMES = [
         difficulty: 'Hard',
         status: 'coming-soon',
         biome: 'volcano',
-        image: imgVolcano,
         offset: { x: -15, y: 0 }
     },
     {
@@ -65,7 +52,6 @@ const GAMES = [
         difficulty: 'Hard',
         status: 'coming-soon',
         biome: 'harbor',
-        image: imgHarbor,
         offset: { x: 20, y: 0 }
     },
     {
@@ -77,21 +63,9 @@ const GAMES = [
         difficulty: 'Medium',
         status: 'coming-soon',
         biome: 'crystal',
-        image: imgCrystal,
         offset: { x: -35, y: 0 }
-    },
-    {
-        id: 'stat-sorter',
-        title: 'Stat Sorter',
-        desc: 'Match data types to the correct chart or statistical measure.',
-        icon: <FaChartBar />,
-        topic: 'Statistics',
-        difficulty: 'Easy',
-        status: 'coming-soon',
-        biome: 'snow',
-        image: imgSnow,
-        offset: { x: 15, y: 0 }
-    },
+    }
+    // Reduced to 5 games per request
 ];
 
 const difficultyStars = (d) => {
@@ -173,7 +147,7 @@ function Games() {
 
     return (
         <div className="gm-page">
-            <div className="gm-ocean-bg" style={{ backgroundImage: `url(${bgOcean})` }} />
+            <div className="gm-ocean-bg" />
             <div className="gm-ocean-particles" />
 
             {/* Header */}
@@ -243,22 +217,32 @@ function Games() {
                             }}
                         >
                             <motion.div
-                                className={`gm-island gm-biome-${game.biome} ${isLocked ? 'gm-island-locked' : ''}`}
+                                className={`gm-hex-node gm-biome-${game.biome} ${isLocked ? 'gm-node-locked' : 'gm-node-unlocked'}`}
                                 variants={islandVariants}
                                 initial="hidden"
                                 whileInView="visible"
                                 viewport={{ once: true, margin: '-100px' }}
-                                style={{
-                                    backgroundImage: `url(${game.image})`
-                                }}
                             >
-                                {/* The node point that the SVG path connects to */}
-                                <div className="gm-island-node">
-                                    <FaMapMarkerAlt />
+                                {/* Hexagon Base */}
+                                <div className="gm-hex-border"></div>
+                                <div className="gm-hex-inner"></div>
+
+                                {/* Custom Biome Particles */}
+                                <div className="gm-particles">
+                                    <span className="gm-p"></span>
+                                    <span className="gm-p"></span>
+                                    <span className="gm-p"></span>
+                                    <span className="gm-p"></span>
+                                    <span className="gm-p"></span>
                                 </div>
 
-                                {/* Island Content overlay (Darkens the image slightly) */}
-                                <div className="gm-island-content">
+                                {/* The node point that the SVG path connects to */}
+                                <div className="gm-island-node">
+                                    <FaRegCircle />
+                                </div>
+
+                                {/* Island Content overlay */}
+                                <div className="gm-hex-content">
                                     {isLocked && (
                                         <div className="gm-island-fog">
                                             <FaLock />
@@ -294,19 +278,10 @@ function Games() {
                     );
                 })}
 
-                {/* End marker (Whirlpool) */}
+                {/* End marker */}
                 <div className="gm-island-container" style={{ transform: 'translateX(0%)', marginTop: '60px' }}>
-                    <div
-                        className="gm-island-node gm-node-end"
-                        style={{
-                            backgroundImage: `url(${imgWhirlpool})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            borderRadius: '50%',
-                            border: '2px solid rgba(74, 201, 227, 0.4)',
-                            boxShadow: '0 0 30px rgba(74, 201, 227, 0.5)'
-                        }}
-                    >
+                    <div className="gm-island-node gm-node-end">
+                        <FaCompass />
                         <span className="gm-end-label">More Expeditions Coming Soon!</span>
                     </div>
                 </div>

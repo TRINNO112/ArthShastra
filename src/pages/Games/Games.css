@@ -34,6 +34,7 @@
         linear-gradient(rgba(74, 201, 227, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(74, 201, 227, 0.03) 1px, transparent 1px);
     background-size: 100% 100%, 100% 100%, 100px 100px, 100px 100px;
+    background-color: transparent;
     pointer-events: none;
     z-index: 0;
 }
@@ -210,45 +211,250 @@
 }
 
 /* ==========================================
-   ISLAND CARDS (Image Based)
+   STRATEGIC BOARD GAME NODES (Hexagons)
    ========================================== */
 
-.gm-island {
+.gm-hex-node {
+    --hex-color-main: #4ac9e3;
+    --hex-color-glow: #7ee8fa;
+    --hex-icon-color: #4ac9e3;
+    --hex-shadow-glow: rgba(74, 201, 227, 0.1);
+    
     position: relative;
-    width: 280px;  /* Slightly smaller since images are detailed */
-    height: 280px;
-    background-color: #1a2f40;
-    
-    /* Safest way to hide a solid square background: crop it into a circle */
-    border-radius: 50%;
-    
-    /* Background properties to be filled by JSX inline styles */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    
-    box-shadow:
-        0 20px 40px rgba(0, 0, 0, 0.6),
-        0 0 0 4px rgba(74, 201, 227, 0.2), /* Subtle rim */
-        inset 0 0 40px rgba(0,0,0,0.8); /* Inner shadow to blend edges */
-        
+    width: 320px;
+    height: 360px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 2;
 }
 
-.gm-island:hover {
+/* ==========================================
+   BIOME THEMES (Nature + Machinery)
+   ========================================== */
+
+/* 1. Jungle (Market Maker) - Bioluminescent Nature */
+.gm-biome-jungle {
+    --hex-color-main: #52b788;
+    --hex-color-glow: #95d5b2;
+    --hex-icon-color: #52b788;
+    --hex-shadow-glow: rgba(82, 183, 136, 0.15);
+}
+
+/* 2. Atoll (Price Hunter) - Glowing Sand / Desert */
+.gm-biome-atoll {
+    --hex-color-main: #f4a261;
+    --hex-color-glow: #e9c46a;
+    --hex-icon-color: #f4a261;
+    --hex-shadow-glow: rgba(244, 162, 97, 0.15);
+}
+
+/* 3. Volcano (Budget Boss) - Neon Magma / Fire */
+.gm-biome-volcano {
+    --hex-color-main: #dc2f02;
+    --hex-color-glow: #ffba08;
+    --hex-icon-color: #ffba08;
+    --hex-shadow-glow: rgba(220, 47, 2, 0.15);
+}
+
+/* 4. Harbor (Trade Tycoon) - Deep Sea Ports */
+.gm-biome-harbor {
+    --hex-color-main: #219ebc;
+    --hex-color-glow: #8ecae6;
+    --hex-icon-color: #ffb703;
+    --hex-shadow-glow: rgba(33, 158, 188, 0.15);
+}
+
+/* 5. Crystal (Graph Guesser) - Sub-zero / Ice / Geode */
+.gm-biome-crystal {
+    --hex-color-main: #9d4edd;
+    --hex-color-glow: #e0b1cb;
+    --hex-icon-color: #c77dff;
+    --hex-shadow-glow: rgba(157, 78, 221, 0.15);
+}
+
+.gm-hex-node:hover {
     transform: translateY(-10px) scale(1.05);
-    box-shadow: 
-        0 30px 60px rgba(0,0,0,0.8),
-        0 0 0 6px rgba(74, 201, 227, 0.4),
-        inset 0 0 20px rgba(0,0,0,0.4);
 }
 
-/* Optional: if the image background is perfectly white, we can try mix-blend-mode */
-/* .gm-island.white-bg-mode { mix-blend-mode: multiply; } */
+/* 
+   We use clip-path to create perfect hexagons for both 
+   the border layer and the inner content layer.
+*/
+
+.gm-hex-border {
+    position: absolute;
+    inset: 0;
+    /* Dark base for border */
+    background: #020d1a;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    z-index: 0;
+    transition: all 0.4s;
+    overflow: hidden; /* Contains the spinning gradient */
+}
+
+/* Animated light tracing effect for the border */
+.gm-hex-border::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        transparent 0deg, 
+        transparent 90deg, 
+        var(--hex-color-main) 140deg, 
+        var(--hex-color-glow) 180deg, 
+        transparent 220deg
+    );
+    animation: gm-spin 4s linear infinite;
+    opacity: 0.8;
+}
+
+.gm-hex-inner {
+    position: absolute;
+    inset: 4px; /* Creates the border thickness */
+    background: linear-gradient(180deg, #0a1828 0%, #030b14 100%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    z-index: 1;
+    box-shadow: 
+        inset 0 20px 40px var(--hex-shadow-glow),
+        inset 0 -20px 40px rgba(0,0,0,0.8);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden; /* Hide particles outside the hex */
+}
+
+/* ==========================================
+   BIOME PARTICLES (Pure CSS)
+   ========================================== */
+.gm-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1; /* Below content, above background */
+    opacity: 0.4;
+    transition: opacity 0.3s;
+}
+
+.gm-hex-node:hover .gm-particles {
+    opacity: 1;
+}
+
+.gm-p {
+    position: absolute;
+    border-radius: 50%;
+    /* Default base for particles */
+    background: var(--hex-color-glow);
+    filter: drop-shadow(0 0 5px var(--hex-color-main));
+}
+
+/* Particle Positions & Animations */
+.gm-p:nth-child(1) { width: 4px; height: 4px; left: 20%; bottom: -10px; animation: p-rise 4s infinite ease-in; }
+.gm-p:nth-child(2) { width: 6px; height: 6px; left: 50%; bottom: -20px; animation: p-rise 3s infinite ease-in 1s; }
+.gm-p:nth-child(3) { width: 3px; height: 3px; left: 80%; bottom: -5px; animation: p-rise 5s infinite ease-in 2s; }
+.gm-p:nth-child(4) { width: 5px; height: 5px; left: 35%; bottom: -15px; animation: p-rise 4.5s infinite ease-in 0.5s; }
+.gm-p:nth-child(5) { width: 7px; height: 7px; left: 65%; bottom: -10px; animation: p-rise 3.5s infinite ease-in 1.5s; }
+
+/* 1. Fire Particles (Volcano - Budget Boss) */
+.gm-biome-volcano .gm-p {
+    background: #ffba08;
+    filter: drop-shadow(0 0 8px #dc2f02);
+    animation-name: p-fire;
+}
+
+/* 2. Snow Particles (Crystal - Graph Guesser) */
+.gm-biome-crystal .gm-p {
+    background: #fff;
+    filter: drop-shadow(0 0 8px #c77dff);
+    animation-name: p-snow;
+    top: -10px; bottom: auto; /* Fall from top */
+}
+
+/* 3. Water Bubbles (Harbor - Trade Tycoon) */
+.gm-biome-harbor .gm-p {
+    background: transparent;
+    border: 1px solid #8ecae6;
+    animation-name: p-bubble;
+}
+
+/* 4. Falling Leaves (Jungle - Market Maker) */
+.gm-biome-jungle .gm-p {
+    background: #52b788;
+    border-radius: 0 50% 0 50%; /* Leaf shape */
+    animation-name: p-leaf;
+    top: -10px; bottom: auto;
+}
+
+/* 5. Glowing Sand Dust (Atoll - Price Hunter) */
+.gm-biome-atoll .gm-p {
+    background: #e9c46a;
+    width: 2px !important; height: 2px !important;
+    animation-name: p-dust;
+}
+
+/* Particle Keyframes */
+@keyframes p-rise {
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(-200px) scale(0); opacity: 0; }
+}
+
+@keyframes p-fire {
+    0% { transform: translate(0, 0) scale(1); opacity: 0; }
+    20% { opacity: 1; }
+    50% { transform: translate(15px, -100px) scale(1.5); }
+    100% { transform: translate(-10px, -200px) scale(0); opacity: 0; }
+}
+
+@keyframes p-snow {
+    0% { transform: translate(0, 0); opacity: 0; }
+    20% { opacity: 1; }
+    50% { transform: translate(-20px, 100px); }
+    100% { transform: translate(15px, 200px); opacity: 0; }
+}
+
+@keyframes p-bubble {
+    0% { transform: translateY(0) scale(0.5); opacity: 0; }
+    30% { opacity: 1; transform: translateY(-50px) scale(1.2); }
+    100% { transform: translateY(-250px) scale(1.8); opacity: 0; }
+}
+
+@keyframes p-leaf {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+    20% { opacity: 1; }
+    50% { transform: translate(30px, 100px) rotate(180deg); }
+    100% { transform: translate(-10px, 200px) rotate(360deg); opacity: 0; }
+}
+
+@keyframes p-dust {
+    0% { transform: translate(0, 0); opacity: 0; }
+    50% { transform: translate(40px, -50px); opacity: 1; }
+    100% { transform: translate(80px, -100px); opacity: 0; }
+}
+
+/* Hover effects for the Hexagon */
+.gm-hex-node:hover .gm-hex-border::before {
+    background: conic-gradient(
+        transparent 0deg, 
+        var(--hex-color-main) 90deg, 
+        var(--hex-color-glow) 180deg, 
+        var(--hex-color-main) 270deg,
+        transparent 360deg
+    );
+    animation-duration: 2s;
+    opacity: 1;
+}
+
+.gm-hex-node:hover .gm-hex-inner {
+    background: linear-gradient(180deg, #0d2238 0%, #05101a 100%);
+    box-shadow: 
+        inset 0 0 60px var(--hex-shadow-glow),
+        inset 0 -20px 40px rgba(0,0,0,0.8);
+}
 
 /* ==========================================
    NODE CONNECTOR (Map Marker)
@@ -284,56 +490,17 @@
 }
 
 /* ==========================================
-   BIOMES — Distinct Island Colors
+   NODE CONTENT
    ========================================== */
 
-/* 1. Jungle */
-.gm-biome-jungle { background: #1b4532; }
-.gm-biome-jungle .gm-island-topo.layer-1 { border-color: rgba(61, 186, 122, 0.4); }
-.gm-biome-jungle .gm-island-icon { color: #3dba7a; }
-.gm-biome-jungle .gm-island-topic { color: #95d5b2; }
-
-/* 2. Atoll (Sand) */
-.gm-biome-atoll { background: #8a6c1c; }
-.gm-biome-atoll .gm-island-topo.layer-1 { border-color: rgba(232, 184, 75, 0.5); }
-.gm-biome-atoll .gm-island-icon { color: #f9dc5c; }
-.gm-biome-atoll .gm-island-topic { color: #ffeba1; }
-
-/* 3. Volcano (Lava Rock) */
-.gm-biome-volcano { background: #4a1c17; }
-.gm-biome-volcano .gm-island-topo.layer-1 { border-color: rgba(224, 90, 58, 0.5); }
-.gm-biome-volcano .gm-island-icon { color: #e05a3a; }
-.gm-biome-volcano .gm-island-topic { color: #ffa691; }
-
-/* 4. Harbor (Navy Port) */
-.gm-biome-harbor { background: #102a4a; }
-.gm-biome-harbor .gm-island-topo.layer-1 { border-color: rgba(74, 143, 232, 0.5); }
-.gm-biome-harbor .gm-island-icon { color: #4a8fe8; }
-.gm-biome-harbor .gm-island-topic { color: #a1c6ff; }
-
-/* 5. Crystal (Purple Geode) */
-.gm-biome-crystal { background: #3c1e59; }
-.gm-biome-crystal .gm-island-topo.layer-1 { border-color: rgba(160, 96, 224, 0.5); }
-.gm-biome-crystal .gm-island-icon { color: #c48dfc; }
-.gm-biome-crystal .gm-island-topic { color: #e2c4ff; }
-
-/* 6. Snow (Ice Cap) */
-.gm-biome-snow { background: #264b52; }
-.gm-biome-snow .gm-island-topo.layer-1 { border-color: rgba(184, 242, 250, 0.5); }
-.gm-biome-snow .gm-island-icon { color: #b8f2fa; }
-.gm-biome-snow .gm-island-topic { color: #def7fa; }
-
-/* ==========================================
-   ISLAND CONTENT
-   ========================================== */
-
-.gm-island-content {
+.gm-hex-content {
     position: relative;
     z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    padding: 0 30px;
 }
 
 .gm-island-head {
@@ -341,12 +508,13 @@
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
 }
 
 .gm-island-icon {
-    font-size: 2rem;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    font-size: 2.5rem;
+    color: var(--hex-icon-color);
+    filter: drop-shadow(0 2px 10px var(--hex-shadow-glow));
 }
 
 .gm-island-meta {
@@ -361,34 +529,36 @@
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
+    color: var(--hex-color-glow);
 }
 
 .gm-island-diff {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.55rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.6);
+    color: #ffb703;
     letter-spacing: 1px;
-    margin-top: 2px;
+    margin-top: 4px;
 }
 
 .gm-island-title {
-    font-family: 'Pirata One', cursive;
-    font-size: 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
     color: #fff;
-    margin: 0 0 10px;
-    line-height: 1;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    margin: 0 0 12px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .gm-island-desc {
-    font-family: 'Crimson Pro', serif;
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.85);
-    line-height: 1.5;
-    margin: 0 0 20px;
-    max-width: 85%;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+    margin: 0 0 25px;
+    max-width: 90%;
 }
 
 /* ==========================================
@@ -397,29 +567,35 @@
 
 .gm-island-btn {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 12px 24px;
-    background: #020d1a;
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
+    padding: 12px 28px;
+    background: transparent;
+    color: #4ac9e3;
+    border: 1px solid #4ac9e3;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
     transition: all 0.3s;
     box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    
+    /* Prevent Button Overflow */
+    max-width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .gm-island-btn:hover {
-    background: #fff;
+    background: #4ac9e3;
     color: #020d1a;
-    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(74, 201, 227, 0.4);
 }
 
 .gm-island-btn-locked {
     background: rgba(0, 0, 0, 0.4);
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.3);
     border-color: rgba(255, 255, 255, 0.1);
     cursor: default;
     box-shadow: none;
@@ -427,27 +603,27 @@
 
 .gm-island-btn-locked:hover {
     background: rgba(0, 0, 0, 0.4);
-    color: rgba(255, 255, 255, 0.4);
-    transform: none;
+    color: rgba(255, 255, 255, 0.3);
+    box-shadow: none;
 }
 
 /* ==========================================
-   LOCKED / UNCHARTED STATE (Fog/Dimming)
+   LOCKED / UNCHARTED STATE (Hex Nodes)
    ========================================== */
 
-.gm-island-locked {
-    /* Less extreme dimming so you can actually see the island images! */
-    filter: grayscale(60%) brightness(0.7) saturate(0.8);
-    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.4), 0 20px 40px rgba(0, 0, 0, 0.6);
+.gm-node-locked .gm-hex-border {
+    background: #1a2f40;
 }
 
-.gm-island-locked:hover {
-    filter: grayscale(10%) brightness(1) saturate(1.1);
-    transform: translateY(-5px) scale(1.05); /* Same scale as unlocked */
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2), 0 30px 60px rgba(0, 0, 0, 0.8);
+.gm-node-locked .gm-hex-inner {
+    background: #020d1a;
 }
 
-/* The "UNCHARTED TIDE" overlay that sits INSIDE the island content container */
+.gm-node-locked .gm-island-icon {
+    color: #5a8fa0;
+    filter: grayscale(100%) opacity(0.5);
+}
+
 .gm-island-fog {
     position: absolute;
     top: 50%;
@@ -462,26 +638,28 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.85rem;
     font-weight: 700;
-    color: #aed3e3;
+    color: #5a8fa0;
     letter-spacing: 3px;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 15px rgba(2, 13, 26, 0.9);
     opacity: 0;
     transition: opacity 0.4s;
     pointer-events: none;
+    width: 80%; /* Limit width to avoid hexagon border overlap */
+    text-align: center;
+    word-break: break-word; /* Allow text to wrap beautifully */
 }
 
 .gm-island-fog svg {
     font-size: 2.2rem;
     color: #ff7254;
-    filter: drop-shadow(0 0 15px rgba(255, 114, 84, 0.6));
+    filter: drop-shadow(0 0 15px rgba(255, 114, 84, 0.2));
 }
 
-.gm-island-locked:hover .gm-island-content > * {
+.gm-node-locked:hover .gm-hex-content > * {
     opacity: 0.1;
     transition: opacity 0.3s;
 }
 
-.gm-island-locked:hover .gm-island-fog {
+.gm-node-locked:hover .gm-island-fog {
     opacity: 1;
 }
 
@@ -496,11 +674,11 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.75rem;
     font-weight: 700;
-    color: #fff;
-    background: rgba(2, 13, 26, 0.8);
-    padding: 8px 16px;
-    border-radius: 20px;
+    color: #4ac9e3;
+    background: rgba(2, 13, 26, 0.9);
+    padding: 10px 20px;
     border: 1px solid rgba(74, 201, 227, 0.4);
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
     letter-spacing: 2px;
     white-space: nowrap;
@@ -545,7 +723,7 @@
         margin-bottom: 60px;
     }
 
-    .gm-island {
+    .gm-hex-node {
         width: 90%;
         max-width: 400px;
         padding: 30px 20px;
@@ -578,5 +756,5 @@
     
     .gm-island-title { font-size: 1.6rem; }
     .gm-island-desc { font-size: 0.85rem; max-width: 95%; }
-    .gm-island { padding: 24px 16px; }
+    .gm-hex-node { padding: 24px 16px; height: auto; min-height: 380px; }
 }
