@@ -1,10 +1,10 @@
-import React, { useReducer, useEffect, useRef, useState } from 'react';
+import React, { useReducer, useEffect, useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    FaArrowLeft, FaChartLine, FaBalanceScale, FaPlay, FaPause,
-    FaStepForward, FaStore, FaBolt, FaQuestionCircle, FaTimes,
-    FaExclamationTriangle, FaCoins, FaBoxOpen
+    FaArrowLeft, FaPlay, FaPause,
+    FaStore, FaBolt, FaQuestionCircle, FaTimes,
+    FaCoins, FaClock, FaPencilAlt, FaCheck, FaTrophy
 } from 'react-icons/fa';
 
 import './MarketMaker.css';
@@ -18,43 +18,64 @@ const SEVERITY_CONFIG = {
     low: { color: '#3b82f6', bg: 'rgba(59,130,246,0.1)', border: 'rgba(59,130,246,0.4)', label: 'SMALL' },
 };
 
+const GAME_DURATION = 5 * 60; // 5 minutes in seconds
+
 export default function MarketMaker() {
 
     const [gameState, dispatch] = useReducer(gameReducer, INITIAL_STATE);
-    const [showRules, setShowRules] = React.useState(false);
+    const [showRules, setShowRules] = useState(false);
     const [floatingText, setFloatingText] = useState(null);
+    const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
+    const [gameOver, setGameOver] = useState(false);
+    const [shopName, setShopName] = useState('YOUR SHOP');
+    const [editingName, setEditingName] = useState(false);
+    const [nameInput, setNameInput] = useState('YOUR SHOP');
+
     const tickerInterval = useRef(null);
-    const prevCash = useRef(INITIAL_STATE.cash);
+    const timerInterval = useRef(null);
     const prevLastTradeType = useRef(null);
+    const nameInputRef = useRef(null);
 
     useEffect(() => {
         dispatch({ type: 'INIT_MARKET' });
     }, []);
 
-    // Core Game Tick Loop
+    // Market tick every second
     useEffect(() => {
-        if (gameState.isSimulationRunning) {
+        if (gameState.isSimulationRunning && !gameOver) {
             tickerInterval.current = setInterval(() => {
                 dispatch({ type: 'MARKET_TICK' });
-
-                if (Math.random() < 0.05) {
+                if (Math.random() < 0.06) {
                     dispatch({ type: 'TRIGGER_EVENT' });
                 }
             }, 1000);
         } else {
             clearInterval(tickerInterval.current);
         }
-
         return () => clearInterval(tickerInterval.current);
-    }, [gameState.isSimulationRunning]);
+    }, [gameState.isSimulationRunning, gameOver]);
 
+    // Countdown timer — only ticks when shop is open
     useEffect(() => {
-        if (gameState.day > gameState.maxDays) {
-            dispatch({ type: 'TOGGLE_SIMULATION', payload: false });
+        if (gameState.isSimulationRunning && !gameOver) {
+            timerInterval.current = setInterval(() => {
+                setTimeLeft(prev => {
+                    if (prev <= 1) {
+                        clearInterval(timerInterval.current);
+                        dispatch({ type: 'TOGGLE_SIMULATION', payload: false });
+                        setGameOver(true);
+                        return 0;
+                    }
+                    return prev - 1;
+                });
+            }, 1000);
+        } else {
+            clearInterval(timerInterval.current);
         }
-    }, [gameState.day, gameState.maxDays]);
+        return () => clearInterval(timerInterval.current);
+    }, [gameState.isSimulationRunning, gameOver]);
 
-    // Show floating cash delta on trade
+    // Floating cash popup on trade
     useEffect(() => {
         if (
             gameState.lastTradeType &&
@@ -70,32 +91,59 @@ export default function MarketMaker() {
     }, [gameState.lastTradeType, gameState.lastTradeDelta]);
 
     const toggleSimulation = () => {
+        if (gameOver) return;
         dispatch({ type: 'TOGGLE_SIMULATION', payload: !gameState.isSimulationRunning });
     };
 
-    const nextDay = () => {
-        dispatch({ type: 'END_DAY' });
+    const handleRestartGame = () => {
+        setTimeLeft(GAME_DURATION);
+        setGameOver(false);
+        dispatch({ type: 'INIT_MARKET' });
     };
+
+    // Shop name easter egg
+    const handleNameClick = () => {
+        setNameInput(shopName);
+        setEditingName(true);
+        setTimeout(() => nameInputRef.current?.focus(), 50);
+    };
+
+    const handleNameSave = () => {
+        const trimmed = nameInput.trim();
+        if (trimmed.length > 0) setShopName(trimmed.toUpperCase());
+        setEditingName(false);
+    };
+
+    const handleNameKeyDown = (e) => {
+        if (e.key === 'Enter') handleNameSave();
+        if (e.key === 'Escape') setEditingName(false);
+    };
+
+    // Timer display
+    const mins = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+    const secs = String(timeLeft % 60).padStart(2, '0');
+    const timerFraction = timeLeft / GAME_DURATION;
+    const timerUrgent = timeLeft <= 60;
 
     const priceDelta = gameState.currentMarketPrice - gameState.dayStartPrice;
     const isPositive = priceDelta >= 0;
-
     const currentNews = gameState.newsTicker;
     const severityStyle = currentNews ? SEVERITY_CONFIG[currentNews.severity] || SEVERITY_CONFIG.low : SEVERITY_CONFIG.low;
-
-    // Market indicators
-    const spread = gameState.orders.askPrice - gameState.orders.bidPrice;
     const qd = Math.max(0, gameState.market.maxDemand - gameState.market.demandSlope * gameState.currentMarketPrice);
     const qs = Math.max(0, gameState.market.minSupply + gameState.market.supplySlope * gameState.currentMarketPrice);
     const excessDemand = qd - qs;
 
-    const isSpreadPositive = spread > 0;
+    // Score calculation
+    const startingWealth = INITIAL_STATE.cash;
+    const finalWealth = gameState.portfolioValue;
+    const profit = finalWealth - startingWealth;
+    const grade = profit >= 5000 ? 'A+' : profit >= 2000 ? 'A' : profit >= 0 ? 'B' : 'C';
 
     return (
         <div className="mm-game-container">
             <div className="mm-bg-grid" />
 
-            {/* Floating cash delta popup */}
+            {/* Floating cash popup */}
             <AnimatePresence>
                 {floatingText && (
                     <motion.div
@@ -112,7 +160,7 @@ export default function MarketMaker() {
                 )}
             </AnimatePresence>
 
-            {/* Top Navigation */}
+            {/* Header */}
             <header className="mm-header">
                 <Link to="/games" className="mm-back-btn">
                     <FaArrowLeft /> BACK
@@ -121,7 +169,32 @@ export default function MarketMaker() {
                 <div className="mm-title-wrapper">
                     <FaStore className="mm-title-icon" />
                     <div>
-                        <h1>YOUR <span className="mm-title-accent">SHOP</span></h1>
+                        {/* Easter egg: click to rename */}
+                        {editingName ? (
+                            <div className="mm-name-edit-row">
+                                <input
+                                    ref={nameInputRef}
+                                    className="mm-name-input"
+                                    value={nameInput}
+                                    onChange={e => setNameInput(e.target.value)}
+                                    onKeyDown={handleNameKeyDown}
+                                    maxLength={24}
+                                />
+                                <button className="mm-name-save-btn" onClick={handleNameSave}><FaCheck /></button>
+                            </div>
+                        ) : (
+                            <h1 className="mm-shop-name-btn" onClick={handleNameClick} title="Click to rename your shop">
+                                {shopName.includes(' ') ? (
+                                    <>
+                                        {shopName.split(' ').slice(0, -1).join(' ')}{' '}
+                                        <span className="mm-title-accent">{shopName.split(' ').slice(-1)}</span>
+                                    </>
+                                ) : (
+                                    <span className="mm-title-accent">{shopName}</span>
+                                )}
+                                <FaPencilAlt className="mm-name-pencil" />
+                            </h1>
+                        )}
                         <span className="mm-title-sub">Supply & Demand Simulator</span>
                     </div>
                 </div>
@@ -130,23 +203,30 @@ export default function MarketMaker() {
                     <button className="mm-rules-trigger" onClick={() => setShowRules(true)}>
                         <FaQuestionCircle /> HOW TO PLAY
                     </button>
-                    <div className="mm-day-counter">
-                        DAY <span className="highlight">{gameState.day}</span> / {gameState.maxDays}
-                        {gameState.isSimulationRunning ? (
-                            <span className="live-badge pulse"><FaBolt /> OPEN</span>
-                        ) : (
-                            <span className="live-badge paused">CLOSED</span>
-                        )}
+
+                    {/* Timer */}
+                    <div className={`mm-timer-display ${timerUrgent ? 'urgent' : ''}`}>
+                        <FaClock />
+                        <span className="mm-timer-digits">{mins}:{secs}</span>
+                        <div className="mm-timer-bar">
+                            <div className="mm-timer-fill" style={{ width: `${timerFraction * 100}%`, background: timerUrgent ? '#ef4444' : '#4cc9f0' }} />
+                        </div>
+                        {gameState.isSimulationRunning
+                            ? <span className="live-badge pulse"><FaBolt /> OPEN</span>
+                            : gameOver
+                            ? <span className="live-badge ended">ENDED</span>
+                            : <span className="live-badge paused">CLOSED</span>
+                        }
                     </div>
                 </div>
             </header>
 
             <main className="mm-main-grid">
 
-                {/* LEFT COL: CHART & OVERVIEW */}
+                {/* LEFT COL */}
                 <section className="mm-chart-section">
 
-                    {/* Market Status Dashboard */}
+                    {/* Market Status */}
                     <div className="mm-market-status-row">
                         <div className="mm-market-price-box">
                             <span className="mm-box-label">Current Market Price</span>
@@ -157,7 +237,7 @@ export default function MarketMaker() {
                                 </span>
                             </div>
                             <span className="mm-price-hint">
-                                Equilibrium: <strong>₹{gameState.market.currentEquilibriumPrice.toFixed(2)}</strong>
+                                Fair price (equilibrium): <strong>₹{gameState.market.currentEquilibriumPrice.toFixed(2)}</strong>
                             </span>
                         </div>
 
@@ -165,32 +245,21 @@ export default function MarketMaker() {
                             <button
                                 className={`mm-btn-sim ${gameState.isSimulationRunning ? 'active' : ''}`}
                                 onClick={toggleSimulation}
+                                disabled={gameOver}
                             >
                                 {gameState.isSimulationRunning
                                     ? <><FaPause /> CLOSE SHOP</>
                                     : <><FaPlay /> OPEN SHOP</>}
                             </button>
-                            <button className="mm-btn-day" onClick={nextDay} disabled={gameState.isSimulationRunning}>
-                                <FaStepForward /> NEXT DAY
-                            </button>
                         </div>
                     </div>
 
-                    {/* Profit Margin Banner */}
-                    <div className={`mm-margin-banner ${isSpreadPositive ? 'positive' : 'warning'}`}>
-                        {isSpreadPositive ? (
-                            <>
-                                <FaCoins /> Your profit margin per unit: <strong>₹{spread.toFixed(2)}</strong>
-                                &nbsp;(Buy @ ₹{gameState.orders.bidPrice} → Sell @ ₹{gameState.orders.askPrice})
-                            </>
-                        ) : (
-                            <>
-                                <FaExclamationTriangle /> WARNING: Your sell price is lower than your buy price! You will lose money on every sale.
-                            </>
-                        )}
+                    {/* Strategy Banner */}
+                    <div className="mm-margin-banner positive">
+                        <FaCoins /> Strategy: <strong>Buy</strong> when price is <strong>low</strong>, <strong>Sell</strong> when it is <strong>high</strong>. React to news events to stay ahead!
                     </div>
 
-                    {/* Market Indicators Row */}
+                    {/* Indicators */}
                     <div className="mm-indicators-row">
                         <div className="mm-indicator-card">
                             <span className="mm-indicator-label">Customer Demand</span>
@@ -212,7 +281,7 @@ export default function MarketMaker() {
                         </div>
                     </div>
 
-                    {/* NEWS CARD */}
+                    {/* News Card */}
                     <AnimatePresence mode="wait">
                         {currentNews && (
                             <motion.div
@@ -245,7 +314,7 @@ export default function MarketMaker() {
                         )}
                     </AnimatePresence>
 
-                    {/* SUPPLY/DEMAND CHART */}
+                    {/* Chart */}
                     <div className="mm-chart-container">
                         <AdvancedChart
                             market={gameState.market}
@@ -255,12 +324,78 @@ export default function MarketMaker() {
                     </div>
                 </section>
 
-                {/* RIGHT COL: SHOP COUNTER */}
+                {/* RIGHT COL */}
                 <aside className="mm-terminal-section">
-                    <TradingTerminal state={gameState} dispatch={dispatch} />
+                    <TradingTerminal state={gameState} dispatch={dispatch} gameOver={gameOver} />
                 </aside>
 
             </main>
+
+            {/* GAME OVER SCREEN */}
+            <AnimatePresence>
+                {gameOver && (
+                    <motion.div
+                        className="mm-modal-overlay"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    >
+                        <motion.div
+                            className="mm-gameover-modal"
+                            initial={{ scale: 0.8, y: 40 }}
+                            animate={{ scale: 1, y: 0 }}
+                            transition={{ type: 'spring', stiffness: 180 }}
+                        >
+                            <div className="mm-go-icon"><FaTrophy /></div>
+                            <h2 className="mm-go-title">TIME'S UP!</h2>
+                            <p className="mm-go-shop">{shopName} has closed for the day.</p>
+
+                            <div className="mm-go-stats">
+                                <div className="mm-go-stat">
+                                    <span className="mm-go-stat-label">Starting Cash</span>
+                                    <span className="mm-go-stat-value">₹{startingWealth.toLocaleString('en-IN')}</span>
+                                </div>
+                                <div className="mm-go-stat">
+                                    <span className="mm-go-stat-label">Final Wealth</span>
+                                    <span className="mm-go-stat-value highlight">₹{finalWealth.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</span>
+                                </div>
+                                <div className="mm-go-stat">
+                                    <span className="mm-go-stat-label">Net Profit / Loss</span>
+                                    <span className={`mm-go-stat-value ${profit >= 0 ? 'green' : 'red'}`}>
+                                        {profit >= 0 ? '+' : ''}₹{profit.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
+                                    </span>
+                                </div>
+                                <div className="mm-go-stat">
+                                    <span className="mm-go-stat-label">Units Bought</span>
+                                    <span className="mm-go-stat-value">{gameState.totalBought}</span>
+                                </div>
+                                <div className="mm-go-stat">
+                                    <span className="mm-go-stat-label">Units Sold</span>
+                                    <span className="mm-go-stat-value">{gameState.totalSold}</span>
+                                </div>
+                                <div className="mm-go-grade">
+                                    <span>Grade</span>
+                                    <span className={`mm-go-grade-value grade-${grade.replace('+', 'plus')}`}>{grade}</span>
+                                </div>
+                            </div>
+
+                            <div className="mm-go-grade-guide">
+                                <span>A+: profit ≥ ₹5,000</span>
+                                <span>A: ≥ ₹2,000</span>
+                                <span>B: ≥ ₹0</span>
+                                <span>C: loss</span>
+                            </div>
+
+                            <div className="mm-go-actions">
+                                <button className="mm-modal-start-btn" onClick={handleRestartGame}>
+                                    PLAY AGAIN
+                                </button>
+                                <Link to="/games" className="mm-go-back-link">← Back to Games</Link>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* HOW TO PLAY MODAL */}
             <AnimatePresence>
@@ -279,44 +414,42 @@ export default function MarketMaker() {
                             <button className="mm-modal-close" onClick={() => setShowRules(false)}>
                                 <FaTimes />
                             </button>
-
                             <div className="mm-rules-scroll-area">
                                 <h2><FaStore /> HOW YOUR SHOP WORKS</h2>
                                 <div className="mm-rules-content">
                                     <section>
                                         <h4>🏪 Your Role</h4>
-                                        <p>You own a shop. You buy goods from suppliers at a low price, store them, and sell them to customers at a higher price. Your profit is the difference!</p>
+                                        <p>You own a shop. You buy goods from suppliers at a low price and sell them to customers at a higher price. Your profit is the difference!</p>
                                     </section>
                                     <section>
-                                        <h4>📦 Buying from Suppliers</h4>
-                                        <p>Set your <strong>Supplier Buy Price</strong> — the maximum you'll pay per unit. When the market price drops to your buy price, your supplier automatically delivers goods and your <strong>cash goes down</strong> (you paid them) but your <strong>stock goes up</strong>.</p>
+                                        <h4>⏱️ Time Limit</h4>
+                                        <p>You have <strong>5 minutes</strong>. Press <strong>OPEN SHOP</strong> to start the timer. The market price will keep moving — buy and sell as many times as you can!</p>
                                     </section>
                                     <section>
-                                        <h4>🛒 Selling to Customers</h4>
-                                        <p>Set your <strong>Customer Sell Price</strong> — the minimum price you'll charge. When customers want to pay that price, they buy from you automatically — your <strong>cash goes up</strong> but your <strong>stock goes down</strong>.</p>
+                                        <h4>📦 How to Buy</h4>
+                                        <p>Set a quantity, then press <strong>BUY FROM SUPPLIER</strong>. Your cash goes DOWN and your stock goes UP. The cost shown on the button is the exact amount you'll pay.</p>
                                     </section>
                                     <section>
-                                        <h4>💡 The Key Rule</h4>
-                                        <p>Your <strong>Sell Price must always be HIGHER than your Buy Price</strong> to make profit. If you buy at ₹28 and sell at ₹35, you earn ₹7 per unit. That's your profit margin!</p>
+                                        <h4>🛒 How to Sell</h4>
+                                        <p>When price is higher than what you paid, press <strong>SELL TO CUSTOMERS</strong>. Your cash goes UP and your stock goes DOWN.</p>
                                     </section>
                                     <section>
-                                        <h4>📰 Watch the News</h4>
-                                        <p>Real-world events shift how much customers want to buy and how much suppliers can provide. A <strong>festival</strong> means more customers (raise your sell price!). A <strong>factory shutdown</strong> means fewer goods (suppliers may charge more).</p>
+                                        <h4>📊 The Chart</h4>
+                                        <p>The <span style={{ color: '#ef4444' }}>red line</span> is customer demand — it slopes down (higher price = fewer buyers). The <span style={{ color: '#10b981' }}>green line</span> is supplier supply — it slopes up (higher price = more sellers). Where they cross is the <strong>fair equilibrium price</strong>.</p>
                                     </section>
                                     <section>
-                                        <h4>📊 The Supply-Demand Chart</h4>
-                                        <p>The <span style={{ color: '#ef4444' }}>red line</span> shows how much customers want to buy at each price. The <span style={{ color: '#10b981' }}>green line</span> shows how much suppliers will provide. Where they cross is the <strong>fair market price</strong>.</p>
+                                        <h4>📰 News Events</h4>
+                                        <p>Events shift the curves — a festival raises demand, a factory shutdown reduces supply. Read each event and adjust your strategy!</p>
                                     </section>
                                     <section>
-                                        <h4>🏆 How to Win</h4>
-                                        <p>Maximize your total wealth (Cash + Stock Value) over 30 days. Set smart prices, react to news, and keep your shop profitable!</p>
+                                        <h4>🏆 Grading</h4>
+                                        <p>A+: profit ≥ ₹5,000 &nbsp;|&nbsp; A: ≥ ₹2,000 &nbsp;|&nbsp; B: break-even &nbsp;|&nbsp; C: made a loss</p>
                                     </section>
                                 </div>
                             </div>
-
                             <div className="mm-modal-sticky-cta">
                                 <button className="mm-modal-start-btn" onClick={() => setShowRules(false)}>
-                                    GOT IT — LET'S OPEN THE SHOP!
+                                    GOT IT — OPEN THE SHOP!
                                 </button>
                             </div>
                         </motion.div>

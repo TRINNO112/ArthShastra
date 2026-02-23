@@ -109,7 +109,7 @@ function Games() {
         setIsEntering(true);
         setTimeout(() => {
             navigate(`/games/${gameId}`);
-        }, 1800);
+        }, 3200);
     };
 
     // Build curvy SVG path connecting all nodes organically
@@ -184,7 +184,7 @@ function Games() {
                             className="gm-anime-flash"
                             initial={{ scale: 0, opacity: 1 }}
                             animate={{ scale: 4, opacity: 0 }}
-                            transition={{ duration: 0.6, ease: 'easeOut' }}
+                            transition={{ duration: 1.0, ease: 'easeOut' }}
                         />
 
                         {/* Phase 2: Speed lines radiating outward */}
@@ -197,8 +197,8 @@ function Games() {
                                     initial={{ scaleX: 0, opacity: 0 }}
                                     animate={{ scaleX: [0, 1, 0], opacity: [0, 0.9, 0] }}
                                     transition={{
-                                        duration: 0.5,
-                                        delay: 0.15 + i * 0.01,
+                                        duration: 0.9,
+                                        delay: 0.2 + i * 0.015,
                                         ease: 'easeOut'
                                     }}
                                 />
@@ -221,9 +221,9 @@ function Games() {
                                         opacity: [0, 1, 0.5, 0],
                                     }}
                                     transition={{
-                                        duration: 0.25 + Math.random() * 0.35,
+                                        duration: 0.5 + Math.random() * 0.5,
                                         repeat: Infinity,
-                                        delay: Math.random() * 0.5,
+                                        delay: Math.random() * 0.8,
                                         ease: 'circIn'
                                     }}
                                     style={{
@@ -242,7 +242,7 @@ function Games() {
                                 className="gm-anime-game-icon"
                                 initial={{ scale: 0, rotate: -20 }}
                                 animate={{ scale: 1, rotate: 0 }}
-                                transition={{ delay: 0.3, duration: 0.5, type: 'spring', stiffness: 200 }}
+                                transition={{ delay: 0.5, duration: 0.7, type: 'spring', stiffness: 160 }}
                             >
                                 {enteringGame?.icon}
                             </motion.div>
@@ -250,7 +250,7 @@ function Games() {
                                 className="gm-anime-text"
                                 initial={{ opacity: 0, y: 30, letterSpacing: '40px' }}
                                 animate={{ opacity: 1, y: 0, letterSpacing: '8px' }}
-                                transition={{ delay: 0.5, duration: 0.6, ease: 'easeOut' }}
+                                transition={{ delay: 0.85, duration: 0.9, ease: 'easeOut' }}
                             >
                                 {enteringGame?.title?.toUpperCase() || 'ENTERING...'}
                             </motion.h2>
@@ -258,7 +258,7 @@ function Games() {
                                 className="gm-anime-subtext"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                transition={{ delay: 0.9, duration: 0.4 }}
+                                transition={{ delay: 1.5, duration: 0.5 }}
                             >
                                 LOADING SIMULATION...
                             </motion.p>
@@ -269,7 +269,7 @@ function Games() {
                             className="gm-anime-wipe"
                             initial={{ scale: 0, opacity: 0 }}
                             animate={{ scale: 6, opacity: [0, 0, 1] }}
-                            transition={{ delay: 1.4, duration: 0.4, ease: 'easeIn' }}
+                            transition={{ delay: 2.5, duration: 0.7, ease: 'easeIn' }}
                         />
                     </motion.div>
                 )}

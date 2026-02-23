@@ -18,8 +18,23 @@ export default function AdvancedChart({ market, currentMarketPrice, lastTradeTim
         }
     }, [lastTradeTime]);
 
-    const MAX_P = 100;
+    // Dynamic Y-axis: always includes current price + equilibrium with 20% padding
     const MAX_Q = 300;
+    const MAX_P = useMemo(() => {
+        const highest = Math.max(currentMarketPrice, market.currentEquilibriumPrice, 50);
+        // Round up to next clean multiple of 10, with 25% headroom
+        return Math.ceil((highest * 1.35) / 10) * 10;
+    }, [currentMarketPrice, market.currentEquilibriumPrice]);
+
+    // Y-axis ticks: dynamic, always 6–8 nice steps
+    const yTicks = useMemo(() => {
+        const step = Math.ceil(MAX_P / 8 / 5) * 5;
+        const ticks = [];
+        for (let p = 0; p <= MAX_P; p += step) ticks.push(p);
+        return ticks;
+    }, [MAX_P]);
+
+    const xTicks = [0, 50, 100, 150, 200, 250, 300];
 
     const scaleX = (q) => PADDING.left + (q / MAX_Q) * PLOT_W;
     const scaleY = (p) => SVG_H - PADDING.bottom - (p / MAX_P) * PLOT_H;
@@ -28,23 +43,23 @@ export default function AdvancedChart({ market, currentMarketPrice, lastTradeTim
         let pts = [];
         for (let q = 0; q <= market.maxDemand; q += 5) {
             const p = (market.maxDemand - q) / market.demandSlope;
-            if (p >= 0 && p <= MAX_P) {
+            if (p >= 0 && p <= MAX_P * 1.1) {
                 pts.push(`${scaleX(q)},${scaleY(p)}`);
             }
         }
         return pts.length > 0 ? `M ${pts.join(' L ')}` : '';
-    }, [market.maxDemand, market.demandSlope]);
+    }, [market.maxDemand, market.demandSlope, MAX_P]);
 
     const supplyPoints = useMemo(() => {
         let pts = [];
         for (let q = market.minSupply; q <= MAX_Q; q += 5) {
             const p = (q - market.minSupply) / market.supplySlope;
-            if (p >= 0 && p <= MAX_P) {
+            if (p >= 0 && p <= MAX_P * 1.1) {
                 pts.push(`${scaleX(q)},${scaleY(p)}`);
             }
         }
         return pts.length > 0 ? `M ${pts.join(' L ')}` : '';
-    }, [market.minSupply, market.supplySlope]);
+    }, [market.minSupply, market.supplySlope, MAX_P]);
 
     const currentQd = Math.max(0, market.maxDemand - market.demandSlope * currentMarketPrice);
     const currentQs = Math.max(0, market.minSupply + market.supplySlope * currentMarketPrice);
@@ -53,13 +68,11 @@ export default function AdvancedChart({ market, currentMarketPrice, lastTradeTim
     const demandX = scaleX(currentQd);
     const supplyX = scaleX(currentQs);
 
-    // Equilibrium point
     const eqX = scaleX(market.currentEquilibriumQty);
     const eqY = scaleY(market.currentEquilibriumPrice);
 
-    // Y-axis ticks
-    const yTicks = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
-    const xTicks = [0, 50, 100, 150, 200, 250, 300];
+    // Clamp the price label Y to stay inside the chart area
+    const labelY = Math.max(PADDING.top + 16, Math.min(SVG_H - PADDING.bottom - 16, priceY));
 
     return (
         <div className="mm-chart-wrapper">
@@ -68,17 +81,14 @@ export default function AdvancedChart({ market, currentMarketPrice, lastTradeTim
                     <clipPath id="chartClip">
                         <rect x={PADDING.left} y={PADDING.top} width={PLOT_W} height={PLOT_H} />
                     </clipPath>
-
                     <linearGradient id="demandGrad" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stopColor="#ef4444" stopOpacity="0.15" />
                         <stop offset="100%" stopColor="#ef4444" stopOpacity="0.02" />
                     </linearGradient>
-
                     <linearGradient id="supplyGrad" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stopColor="#10b981" stopOpacity="0.15" />
                         <stop offset="100%" stopColor="#10b981" stopOpacity="0.02" />
                     </linearGradient>
-
                     <filter id="glowDemand">
                         <feGaussianBlur stdDeviation="4" result="blur" />
                         <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
@@ -121,7 +131,7 @@ export default function AdvancedChart({ market, currentMarketPrice, lastTradeTim
                     </text>
                 ))}
 
-                {/* Curves - clipped */}
+                {/* Curves — clipped to chart area */}
                 <g clipPath="url(#chartClip)">
                     {demandPoints && (
                         <>
@@ -151,50 +161,50 @@ export default function AdvancedChart({ market, currentMarketPrice, lastTradeTim
                     {/* Equilibrium crosshair */}
                     <line x1={eqX} y1={scaleY(0)} x2={eqX} y2={eqY} stroke="rgba(255,255,255,0.15)" strokeWidth="1" strokeDasharray="4 4" />
                     <line x1={scaleX(0)} y1={eqY} x2={eqX} y2={eqY} stroke="rgba(255,255,255,0.15)" strokeWidth="1" strokeDasharray="4 4" />
+
+                    {/* Live price horizontal line — clipped inside chart */}
+                    <line className="mm-live-price-line" x1={PADDING.left} y1={priceY} x2={PADDING.left + PLOT_W} y2={priceY} />
+
+                    {/* Trade pulse effect */}
+                    {pulse && (
+                        <motion.circle
+                            cx={demandX} cy={priceY} r={30}
+                            fill="rgba(255,255,255,0.3)"
+                            initial={{ scale: 0, opacity: 1 }}
+                            animate={{ scale: 2, opacity: 0 }}
+                            transition={{ duration: 0.6 }}
+                        />
+                    )}
+
+                    {/* Intersection dots */}
+                    <circle className="mm-live-intersect-demand" cx={demandX} cy={priceY} r={7} style={{ fill: '#ef4444' }} />
+                    <circle className="mm-live-intersect-supply" cx={supplyX} cy={priceY} r={7} style={{ fill: '#10b981' }} />
                 </g>
 
-                {/* Equilibrium dot */}
+                {/* Equilibrium dot — outside clip so it's always visible */}
                 <circle cx={eqX} cy={eqY} r={8} fill="#fff" filter="url(#glowWhite)" opacity={0.9} />
                 <circle cx={eqX} cy={eqY} r={4} fill="#fbbf24" />
                 <text x={eqX + 14} y={eqY - 12} fill="#fbbf24" fontFamily="'JetBrains Mono', monospace" fontSize="12" fontWeight="700">
                     EQ ₹{market.currentEquilibriumPrice.toFixed(1)}
                 </text>
 
-                {/* Live Price Cursor Line */}
-                <line className="mm-live-price-line" x1={PADDING.left} y1={priceY} x2={PADDING.left + PLOT_W} y2={priceY} />
-
-                {/* Trade pulse effect */}
-                {pulse && (
-                    <motion.circle
-                        cx={demandX} cy={priceY} r={30}
-                        fill="rgba(255,255,255,0.3)"
-                        initial={{ scale: 0, opacity: 1 }}
-                        animate={{ scale: 2, opacity: 0 }}
-                        transition={{ duration: 0.6 }}
-                    />
-                )}
-
-                {/* Intersection dots */}
-                <circle className="mm-live-intersect-demand" cx={demandX} cy={priceY} r={7} style={{ fill: '#ef4444' }} />
-                <circle className="mm-live-intersect-supply" cx={supplyX} cy={priceY} r={7} style={{ fill: '#10b981' }} />
-
-                {/* Price label on Y-axis */}
-                <rect x={PADDING.left - 108} y={priceY - 14} width={95} height={28} rx={6} fill="rgba(255,255,255,0.1)" />
-                <text x={PADDING.left - 62} y={priceY + 5} className="mm-live-price-label" textAnchor="middle" style={{ fontSize: '14px' }}>
+                {/* Price label on Y-axis — clamped so it never goes off screen */}
+                <rect x={PADDING.left - 108} y={labelY - 14} width={95} height={28} rx={6} fill="rgba(0,180,255,0.15)" stroke="rgba(76,201,240,0.4)" strokeWidth="1" />
+                <text x={PADDING.left - 62} y={labelY + 5} className="mm-live-price-label" textAnchor="middle" style={{ fontSize: '14px' }}>
                     ₹{currentMarketPrice.toFixed(2)}
                 </text>
 
                 {/* Axis Labels */}
                 <text x={25} y={25} className="mm-axis-root-label" style={{ fontSize: '14px', fontWeight: 800 }}>PRICE (₹)</text>
-                <text x={SVG_W - 120} y={SVG_H - 15} className="mm-axis-root-label" style={{ fontSize: '14px', fontWeight: 800 }}>QUANTITY (Units)</text>
+                <text x={SVG_W - 140} y={SVG_H - 15} className="mm-axis-root-label" style={{ fontSize: '14px', fontWeight: 800 }}>QUANTITY</text>
 
                 {/* Legend */}
                 <g transform={`translate(${PADDING.left + 20}, ${PADDING.top + 15})`}>
-                    <rect x={-10} y={-15} width={200} height={55} rx={8} fill="rgba(0,0,0,0.5)" />
+                    <rect x={-10} y={-15} width={200} height={55} rx={8} fill="rgba(0,0,0,0.6)" />
                     <line x1={0} y1={0} x2={30} y2={0} stroke="#ef4444" strokeWidth={4} />
-                    <text x={38} y={5} fill="#ef4444" fontFamily="'JetBrains Mono', monospace" fontSize="12" fontWeight="700">DEMAND</text>
+                    <text x={38} y={5} fill="#ef4444" fontFamily="'JetBrains Mono', monospace" fontSize="12" fontWeight="700">CUSTOMER DEMAND</text>
                     <line x1={0} y1={25} x2={30} y2={25} stroke="#10b981" strokeWidth={4} />
-                    <text x={38} y={30} fill="#10b981" fontFamily="'JetBrains Mono', monospace" fontSize="12" fontWeight="700">SUPPLY</text>
+                    <text x={38} y={30} fill="#10b981" fontFamily="'JetBrains Mono', monospace" fontSize="12" fontWeight="700">SUPPLIER SUPPLY</text>
                 </g>
             </svg>
         </div>
