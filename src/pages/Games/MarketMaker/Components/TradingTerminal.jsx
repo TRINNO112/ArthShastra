@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     FaMoneyBillWave, FaWarehouse, FaChartBar,
-    FaStore, FaTruck, FaUsers, FaExclamationCircle
+    FaStore, FaTruck, FaUsers, FaExclamationCircle,
+    FaArrowUp, FaBrain
 } from 'react-icons/fa';
 
 export default function TradingTerminal({ state, dispatch, gameOver }) {
@@ -42,6 +43,14 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
         dispatch({ type: 'MANUAL_SELL' });
     };
 
+    const handleUpgrade = (upgradeType, cost) => {
+        dispatch({ type: 'BUY_UPGRADE', payload: { type: upgradeType, cost } });
+    };
+
+    const WAREHOUSE_COST = 2000 * state.upgrades.warehouseLvl;
+    const INTEL_COST = 1500 * state.upgrades.marketIntelLvl;
+    const MAX_UPGRADE_LVL = 5;
+
     const maxInv = state.upgrades.warehouseLvl * 100;
     const stockPercent = Math.min(100, (state.inventory / maxInv) * 100);
     const costPreview = parseFloat((state.tradeQty * state.currentMarketPrice).toFixed(2));
@@ -57,7 +66,7 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
                 <div className="mm-terminal-title-row">
                     <h3><FaStore /> SHOP DASHBOARD</h3>
                     <div className="mm-day-wealth-badge">
-                        Day {state.day} / {state.maxDays}
+                        TRADING SESSION
                     </div>
                 </div>
                 <div className="mm-portfolio-value">
@@ -141,8 +150,8 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
                 <div className="mm-qty-row">
                     <span className="mm-qty-label">Quantity per trade:</span>
                     <div className="mm-qty-controls">
+                        <button className="mm-qty-btn" onClick={() => handleQtyChange(Math.max(1, state.tradeQty - 10))}>−10</button>
                         <button className="mm-qty-btn" onClick={() => handleQtyChange(Math.max(1, state.tradeQty - 5))}>−5</button>
-                        <button className="mm-qty-btn" onClick={() => handleQtyChange(Math.max(1, state.tradeQty - 1))}>−1</button>
                         <input
                             type="number"
                             className="mm-qty-input"
@@ -150,8 +159,8 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
                             min={1}
                             onChange={(e) => handleQtyChange(e.target.value)}
                         />
-                        <button className="mm-qty-btn" onClick={() => handleQtyChange(state.tradeQty + 1)}>+1</button>
                         <button className="mm-qty-btn" onClick={() => handleQtyChange(state.tradeQty + 5)}>+5</button>
+                        <button className="mm-qty-btn" onClick={() => handleQtyChange(state.tradeQty + 10)}>+10</button>
                     </div>
                 </div>
 
@@ -186,6 +195,76 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
                         {!hasStockToSell && <span className="mm-btn-warning"> (no stock)</span>}
                     </div>
                 </button>
+            </div>
+
+            {/* Upgrades */}
+            <div className="mm-upgrades-section">
+                <h4><FaArrowUp /> SHOP UPGRADES</h4>
+                <div className="mm-upgrade-list">
+
+                    {/* Warehouse Upgrade */}
+                    <div className="mm-upgrade-card">
+                        <div className="mm-upgrade-info">
+                            <span className="mm-upgrade-icon"><FaWarehouse /></span>
+                            <div>
+                                <span className="mm-upgrade-name">Warehouse</span>
+                                <span className="mm-upgrade-desc">+100 max stock per level</span>
+                            </div>
+                        </div>
+                        <div className="mm-upgrade-right">
+                            <div className="mm-upgrade-lvl-dots">
+                                {Array.from({ length: MAX_UPGRADE_LVL }).map((_, i) => (
+                                    <span key={i} className={`mm-lvl-dot ${i < state.upgrades.warehouseLvl ? 'filled' : ''}`} />
+                                ))}
+                            </div>
+                            <span className="mm-upgrade-lvl-label">Lv {state.upgrades.warehouseLvl}</span>
+                            {state.upgrades.warehouseLvl < MAX_UPGRADE_LVL ? (
+                                <button
+                                    className={`mm-upgrade-btn ${state.cash < WAREHOUSE_COST || gameOver ? 'disabled' : ''}`}
+                                    onClick={() => handleUpgrade('warehouseLvl', WAREHOUSE_COST)}
+                                    disabled={state.cash < WAREHOUSE_COST || gameOver}
+                                    title={`Upgrade to Lv ${state.upgrades.warehouseLvl + 1}`}
+                                >
+                                    ₹{WAREHOUSE_COST.toLocaleString('en-IN')}
+                                </button>
+                            ) : (
+                                <span className="mm-upgrade-max">MAX</span>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Market Intel Upgrade */}
+                    <div className="mm-upgrade-card">
+                        <div className="mm-upgrade-info">
+                            <span className="mm-upgrade-icon"><FaBrain /></span>
+                            <div>
+                                <span className="mm-upgrade-name">Market Intel</span>
+                                <span className="mm-upgrade-desc">Reduces price volatility</span>
+                            </div>
+                        </div>
+                        <div className="mm-upgrade-right">
+                            <div className="mm-upgrade-lvl-dots">
+                                {Array.from({ length: MAX_UPGRADE_LVL }).map((_, i) => (
+                                    <span key={i} className={`mm-lvl-dot intel ${i < state.upgrades.marketIntelLvl ? 'filled' : ''}`} />
+                                ))}
+                            </div>
+                            <span className="mm-upgrade-lvl-label">Lv {state.upgrades.marketIntelLvl}</span>
+                            {state.upgrades.marketIntelLvl < MAX_UPGRADE_LVL ? (
+                                <button
+                                    className={`mm-upgrade-btn ${state.cash < INTEL_COST || gameOver ? 'disabled' : ''}`}
+                                    onClick={() => handleUpgrade('marketIntelLvl', INTEL_COST)}
+                                    disabled={state.cash < INTEL_COST || gameOver}
+                                    title={`Upgrade to Lv ${state.upgrades.marketIntelLvl + 1}`}
+                                >
+                                    ₹{INTEL_COST.toLocaleString('en-IN')}
+                                </button>
+                            ) : (
+                                <span className="mm-upgrade-max">MAX</span>
+                            )}
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
             {/* Transaction Log */}

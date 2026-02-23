@@ -32,11 +32,13 @@ export const INITIAL_STATE = {
     // Per-day Tracking
     dayStartPrice: 0,
     currentMarketPrice: 30,
+    tickCount: 0,   // total ticks elapsed — used for gradual market growth
 
     // Stats tracking
     totalBought: 0,
     totalSold: 0,
     totalPnL: 0,
+    maxStreak: 0,   // best sell streak achieved this session
 
     // For floating popup animation
     lastTradeType: null,
@@ -47,7 +49,40 @@ export const INITIAL_STATE = {
 
     upgrades: {
         warehouseLvl: 1,
-    }
+        marketIntelLvl: 1,
+    },
+
+    // --- HIDDEN FEATURES ---
+
+    // Loan system
+    loan: {
+        active: false,    // has player taken a loan?
+        amount: 5000,     // fixed loan amount
+        repaid: false,    // has it been repaid?
+    },
+
+    // Rival shopkeeper AI
+    rival: {
+        inventory: 20,        // rival starts with some stock
+        lastAction: null,     // 'BUY' | 'SELL' | null
+        lastActionTime: 0,    // tickCount when rival last acted
+    },
+
+    // Sell streak (sell above equilibrium = streak)
+    streak: {
+        count: 0,          // consecutive sells above equilibrium
+        multiplier: 1.0,   // bonus multiplier applied to sell revenue
+        active: false,     // true when count >= 3
+    },
+
+    // Black market — secret timed discount button
+    blackMarket: {
+        available: false,   // is the button showing?
+        expiresAt: 0,       // tickCount when it disappears
+    },
+
+    // Market crash tracking — prevents back-to-back crashes
+    lastCrashTick: -100,
 };
 
 // Calculate Equilibrium based on Qd = Qs
@@ -176,13 +211,26 @@ export function gameReducer(state, action) {
     switch (action.type) {
 
         case 'INIT_MARKET': {
-            const eq = calculateEquilibrium(state.market);
+            // Always reset market curves to initial values so a restart starts fresh
+            const freshMarket = {
+                maxDemand: INITIAL_STATE.market.maxDemand,
+                demandSlope: INITIAL_STATE.market.demandSlope,
+                minSupply: INITIAL_STATE.market.minSupply,
+                supplySlope: INITIAL_STATE.market.supplySlope,
+                volatility: INITIAL_STATE.market.volatility,
+                currentEquilibriumPrice: 0,
+                currentEquilibriumQty: 0,
+            };
+            const eq = calculateEquilibrium(freshMarket);
+            freshMarket.currentEquilibriumPrice = eq.price;
+            freshMarket.currentEquilibriumQty = eq.qty;
             return {
-                ...state,
-                market: { ...state.market, currentEquilibriumPrice: eq.price, currentEquilibriumQty: eq.qty },
+                ...INITIAL_STATE,
+                market: freshMarket,
                 currentMarketPrice: eq.price,
                 dayStartPrice: eq.price,
-                portfolioValue: state.cash + (state.inventory * eq.price),
+                portfolioValue: INITIAL_STATE.cash,
+                tickCount: 0,
                 newsTicker: {
                     title: "Welcome to Your Shop!",
                     desc: "The market price moves on its own based on Supply & Demand. Press BUY to buy from supplier, SELL to sell to customers. Watch your cash change!",
@@ -209,7 +257,6 @@ export function gameReducer(state, action) {
             const maxInv = state.upgrades.warehouseLvl * 100;
             const totalCost = parseFloat((qty * price).toFixed(2));
 
-            // Not enough cash
             if (state.cash < totalCost) {
                 return {
                     ...state,
@@ -218,7 +265,6 @@ export function gameReducer(state, action) {
                 };
             }
 
-            // Warehouse full
             if (state.inventory >= maxInv) {
                 return {
                     ...state,
@@ -227,7 +273,6 @@ export function gameReducer(state, action) {
                 };
             }
 
-            // Clamp qty to available warehouse space
             const actualQty = Math.min(qty, maxInv - state.inventory);
             const actualCost = parseFloat((actualQty * price).toFixed(2));
             const newCash = parseFloat((state.cash - actualCost).toFixed(2));
@@ -255,12 +300,11 @@ export function gameReducer(state, action) {
             };
         }
 
-        // Player manually sells stock to customers at current market price
+        // Player manually sells stock — streak bonus applies if selling above equilibrium
         case 'MANUAL_SELL': {
             const qty = state.tradeQty;
             const price = state.currentMarketPrice;
 
-            // No stock
             if (state.inventory <= 0) {
                 return {
                     ...state,
@@ -270,15 +314,27 @@ export function gameReducer(state, action) {
             }
 
             const actualQty = Math.min(qty, state.inventory);
-            const revenue = parseFloat((actualQty * price).toFixed(2));
+
+            // Streak logic: selling above equilibrium builds the streak
+            const sellAboveEq = price > state.market.currentEquilibriumPrice;
+            const newStreakCount = sellAboveEq ? state.streak.count + 1 : 0;
+            const streakActive = newStreakCount >= 3;
+            const multiplier = streakActive
+                ? Math.min(1.5, 1.0 + (newStreakCount - 2) * 0.1)
+                : 1.0;
+
+            const baseRevenue = actualQty * price;
+            const revenue = parseFloat((baseRevenue * multiplier).toFixed(2));
             const newCash = parseFloat((state.cash + revenue).toFixed(2));
             const newInventory = state.inventory - actualQty;
+            const newMaxStreak = Math.max(state.maxStreak, newStreakCount);
 
             const tradeEntry = {
                 type: 'SELL',
                 qty: actualQty,
                 price,
                 total: revenue,
+                bonus: multiplier > 1.0 ? parseFloat(((multiplier - 1) * 100).toFixed(0)) : 0,
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
             };
 
@@ -293,6 +349,12 @@ export function gameReducer(state, action) {
                 lastTradeType: 'SELL',
                 lastTradeDelta: revenue,
                 tradeError: null,
+                maxStreak: newMaxStreak,
+                streak: {
+                    count: newStreakCount,
+                    multiplier,
+                    active: streakActive,
+                },
             };
         }
 
@@ -301,10 +363,8 @@ export function gameReducer(state, action) {
         }
 
         case 'TRIGGER_EVENT': {
-            // Alternate: if last event raised equilibrium, prefer one that lowers it
             const lastEq = state.market.currentEquilibriumPrice;
             const INITIAL_EQ = 30;
-            // If price drifted >15% above initial eq, bias toward negative demand events
             let pool = EVENT_DECK;
             if (lastEq > INITIAL_EQ * 1.15) {
                 pool = EVENT_DECK.filter(e => (e.impact.maxDemand || 0) < 0 || (e.impact.minSupply || 0) > 0);
@@ -320,7 +380,6 @@ export function gameReducer(state, action) {
             if (event.impact.minSupply) newMarket.minSupply += event.impact.minSupply;
             if (event.impact.supplySlope) newMarket.supplySlope += event.impact.supplySlope;
 
-            // Failsafes — prevent broken values
             newMarket.maxDemand = Math.max(50, newMarket.maxDemand);
             newMarket.minSupply = Math.max(0, newMarket.minSupply);
             newMarket.demandSlope = Math.max(0.5, newMarket.demandSlope);
@@ -351,22 +410,32 @@ export function gameReducer(state, action) {
         case 'MARKET_TICK': {
             if (!state.isSimulationRunning) return state;
 
-            // Mean reversion toward equilibrium (stronger pull = less runaway drift)
-            const eq = state.market.currentEquilibriumPrice;
-            const diff = eq - state.currentMarketPrice;
-            // Random noise: oscillates around equilibrium, does not drift in one direction
-            const noise = (Math.random() - 0.5) * state.market.volatility * 8;
-            // Strong mean reversion: 20% pull per tick keeps price near equilibrium
-            const newPrice = Math.max(1, state.currentMarketPrice + (diff * 0.2) + noise);
-            const roundedPrice = parseFloat(newPrice.toFixed(2));
+            const newTickCount = state.tickCount + 1;
 
+            // Gradual market growth every 15 ticks — equilibrium drifts upward
+            let growingMarket = state.market;
+            if (newTickCount % 15 === 0) {
+                const updatedMaxDemand = state.market.maxDemand + 1.5;
+                growingMarket = { ...state.market, maxDemand: updatedMaxDemand };
+                const eq = calculateEquilibrium(growingMarket);
+                growingMarket.currentEquilibriumPrice = eq.price;
+                growingMarket.currentEquilibriumQty = eq.qty;
+            }
+
+            const eq = growingMarket.currentEquilibriumPrice;
+            const diff = eq - state.currentMarketPrice;
+            const noiseReduction = 1 - (state.upgrades.marketIntelLvl - 1) * 0.15;
+            const noise = (Math.random() - 0.5) * state.market.volatility * 6 * Math.max(0.1, noiseReduction);
+            const newPrice = Math.max(1, state.currentMarketPrice + (diff * 0.15) + noise);
+            const roundedPrice = parseFloat(newPrice.toFixed(2));
             const portfolioValue = parseFloat((state.cash + state.inventory * roundedPrice).toFixed(2));
 
             return {
                 ...state,
+                market: growingMarket,
                 currentMarketPrice: roundedPrice,
                 portfolioValue,
-                // Reset trade signals so floating text doesn't re-trigger
+                tickCount: newTickCount,
                 lastTradeType: null,
                 lastTradeDelta: 0,
             };
@@ -415,6 +484,187 @@ export function gameReducer(state, action) {
                 };
             }
             return state;
+        }
+
+        // ========== HIDDEN FEATURE ACTIONS ==========
+
+        case 'TAKE_LOAN': {
+            if (state.loan.active) return state;
+            const newCash = parseFloat((state.cash + 5000).toFixed(2));
+            return {
+                ...state,
+                cash: newCash,
+                loan: { active: true, amount: 5000, repaid: false },
+                portfolioValue: parseFloat((newCash + state.inventory * state.currentMarketPrice).toFixed(2)),
+                newsTicker: {
+                    title: "💰 Bank Loan Approved!",
+                    desc: "₹5,000 has been credited to your account. You must repay ₹5,000 before the session ends, or face a ₹6,500 penalty (30% interest)!",
+                    shopEffect: "⚠️ Repay using the REPAY button before time runs out.",
+                    severity: "medium",
+                    category: "Finance",
+                    icon: "🏦"
+                }
+            };
+        }
+
+        case 'REPAY_LOAN': {
+            if (!state.loan.active || state.loan.repaid || state.cash < 5000) return state;
+            const newCash = parseFloat((state.cash - 5000).toFixed(2));
+            return {
+                ...state,
+                cash: newCash,
+                loan: { ...state.loan, repaid: true },
+                portfolioValue: parseFloat((newCash + state.inventory * state.currentMarketPrice).toFixed(2)),
+                newsTicker: {
+                    title: "✅ Loan Repaid!",
+                    desc: "₹5,000 loan fully repaid. Smart financial management! No penalty will apply.",
+                    shopEffect: null,
+                    severity: "low",
+                    category: "Finance",
+                    icon: "✅"
+                }
+            };
+        }
+
+        case 'LOAN_PENALTY': {
+            // Applied at game end if loan was not repaid — ₹6,500 (loan + 30% interest)
+            const penalty = 6500;
+            const newCash = parseFloat(Math.max(0, state.cash - penalty).toFixed(2));
+            return {
+                ...state,
+                cash: newCash,
+                portfolioValue: parseFloat((newCash + state.inventory * state.currentMarketPrice).toFixed(2)),
+            };
+        }
+
+        case 'MARKET_CRASH': {
+            // Price crashes 45% — brutal but recovers via mean reversion
+            const crashedPrice = parseFloat((state.currentMarketPrice * 0.55).toFixed(2));
+            return {
+                ...state,
+                currentMarketPrice: Math.max(1, crashedPrice),
+                portfolioValue: parseFloat((state.cash + state.inventory * Math.max(1, crashedPrice)).toFixed(2)),
+                lastCrashTick: state.tickCount,
+                newsTicker: {
+                    title: "📉 MARKET CRASH!",
+                    desc: "A sudden shock has caused the market price to collapse! Panic selling everywhere.",
+                    shopEffect: "🚨 Hold your stock — the price will recover. Do NOT sell at a loss right now!",
+                    severity: "high",
+                    category: "Market Crash",
+                    icon: "📉"
+                }
+            };
+        }
+
+        case 'RIVAL_TICK': {
+            const eqPrice = state.market.currentEquilibriumPrice;
+            const rivalInv = state.rival.inventory;
+            const marketPrice = state.currentMarketPrice;
+
+            let newRivalInv = rivalInv;
+            let rivalAction = null;
+            let priceNudge = 0;
+
+            // Rival buys when price is below equilibrium and they're low on stock
+            if (rivalInv < 10 && marketPrice < eqPrice * 0.98) {
+                newRivalInv = rivalInv + 5;
+                rivalAction = 'BUY';
+                priceNudge = 0.3; // rival buying pushes price up slightly
+            }
+            // Rival sells when price is above equilibrium and they have lots of stock
+            else if (rivalInv > 30 && marketPrice > eqPrice * 1.02) {
+                newRivalInv = rivalInv - 10;
+                rivalAction = 'SELL';
+                priceNudge = -0.3; // rival selling pushes price down slightly
+            }
+
+            const newPrice = Math.max(1, parseFloat((state.currentMarketPrice + priceNudge).toFixed(2)));
+            return {
+                ...state,
+                currentMarketPrice: newPrice,
+                portfolioValue: parseFloat((state.cash + state.inventory * newPrice).toFixed(2)),
+                rival: {
+                    inventory: newRivalInv,
+                    lastAction: rivalAction,
+                    lastActionTime: state.tickCount,
+                },
+            };
+        }
+
+        case 'SPAWN_BLACK_MARKET': {
+            return {
+                ...state,
+                blackMarket: {
+                    available: true,
+                    expiresAt: state.tickCount + 5,
+                },
+            };
+        }
+
+        case 'EXPIRE_BLACK_MARKET': {
+            return {
+                ...state,
+                blackMarket: { ...state.blackMarket, available: false },
+            };
+        }
+
+        case 'BLACK_MARKET_BUY': {
+            const qty = state.tradeQty;
+            const discountPrice = parseFloat((state.currentMarketPrice * 0.80).toFixed(2));
+            const maxInv = state.upgrades.warehouseLvl * 100;
+            const totalCost = parseFloat((qty * discountPrice).toFixed(2));
+
+            if (state.cash < totalCost) {
+                return {
+                    ...state,
+                    blackMarket: { ...state.blackMarket, available: false },
+                    tradeError: `Not enough cash for black market deal! Need ₹${totalCost.toFixed(0)}.`,
+                };
+            }
+
+            if (state.inventory >= maxInv) {
+                return {
+                    ...state,
+                    blackMarket: { ...state.blackMarket, available: false },
+                    tradeError: `Warehouse full! Can't take the black market deal.`,
+                };
+            }
+
+            const actualQty = Math.min(qty, maxInv - state.inventory);
+            const actualCost = parseFloat((actualQty * discountPrice).toFixed(2));
+            const newCash = parseFloat((state.cash - actualCost).toFixed(2));
+            const newInventory = state.inventory + actualQty;
+
+            const tradeEntry = {
+                type: 'BUY',
+                qty: actualQty,
+                price: discountPrice,
+                total: actualCost,
+                blackMarket: true,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+            };
+
+            return {
+                ...state,
+                cash: newCash,
+                inventory: newInventory,
+                totalBought: state.totalBought + actualQty,
+                totalPnL: parseFloat((state.totalPnL - actualCost).toFixed(2)),
+                tradeHistory: [tradeEntry, ...state.tradeHistory.slice(0, 49)],
+                portfolioValue: parseFloat((newCash + newInventory * state.currentMarketPrice).toFixed(2)),
+                lastTradeType: 'BUY',
+                lastTradeDelta: -actualCost,
+                tradeError: null,
+                blackMarket: { ...state.blackMarket, available: false },
+                newsTicker: {
+                    title: "🕵️ Black Market Deal!",
+                    desc: `Scored ${actualQty} units at 20% below market price. Don't tell anyone...`,
+                    shopEffect: "💡 Sell these units when price rises for maximum profit!",
+                    severity: "low",
+                    category: "Black Market",
+                    icon: "🕵️"
+                }
+            };
         }
 
         default:

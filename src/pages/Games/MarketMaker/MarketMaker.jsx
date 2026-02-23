@@ -18,7 +18,7 @@ const SEVERITY_CONFIG = {
     low: { color: '#3b82f6', bg: 'rgba(59,130,246,0.1)', border: 'rgba(59,130,246,0.4)', label: 'SMALL' },
 };
 
-const GAME_DURATION = 5 * 60; // 5 minutes in seconds
+const GAME_DURATION = 8 * 60; // 8 minutes in seconds
 
 export default function MarketMaker() {
 
@@ -45,15 +45,43 @@ export default function MarketMaker() {
         if (gameState.isSimulationRunning && !gameOver) {
             tickerInterval.current = setInterval(() => {
                 dispatch({ type: 'MARKET_TICK' });
+
+                // News event ~6% chance per tick
                 if (Math.random() < 0.06) {
                     dispatch({ type: 'TRIGGER_EVENT' });
+                }
+
+                // Rival shopkeeper acts ~12% chance per tick
+                if (Math.random() < 0.12) {
+                    dispatch({ type: 'RIVAL_TICK' });
+                }
+
+                // Market crash: ~0.8% per tick, but only if 60+ ticks since last crash
+                if (
+                    Math.random() < 0.008 &&
+                    gameState.tickCount - gameState.lastCrashTick > 60
+                ) {
+                    dispatch({ type: 'MARKET_CRASH' });
+                }
+
+                // Black market: ~1.5% per tick to spawn (when not already up)
+                if (!gameState.blackMarket.available && Math.random() < 0.015) {
+                    dispatch({ type: 'SPAWN_BLACK_MARKET' });
+                }
+
+                // Expire black market if past its tick window
+                if (
+                    gameState.blackMarket.available &&
+                    gameState.tickCount >= gameState.blackMarket.expiresAt
+                ) {
+                    dispatch({ type: 'EXPIRE_BLACK_MARKET' });
                 }
             }, 1000);
         } else {
             clearInterval(tickerInterval.current);
         }
         return () => clearInterval(tickerInterval.current);
-    }, [gameState.isSimulationRunning, gameOver]);
+    }, [gameState.isSimulationRunning, gameOver, gameState.tickCount, gameState.lastCrashTick, gameState.blackMarket.available, gameState.blackMarket.expiresAt]);
 
     // Countdown timer — only ticks when shop is open
     useEffect(() => {
@@ -346,47 +374,49 @@ export default function MarketMaker() {
                             animate={{ scale: 1, y: 0 }}
                             transition={{ type: 'spring', stiffness: 180 }}
                         >
-                            <div className="mm-go-icon"><FaTrophy /></div>
-                            <h2 className="mm-go-title">TIME'S UP!</h2>
-                            <p className="mm-go-shop">{shopName} has closed for the day.</p>
+                            <div className="mm-go-scroll-area">
+                                <div className="mm-go-icon"><FaTrophy /></div>
+                                <h2 className="mm-go-title">TIME'S UP!</h2>
+                                <p className="mm-go-shop">{shopName} has closed for the day.</p>
 
-                            <div className="mm-go-stats">
-                                <div className="mm-go-stat">
-                                    <span className="mm-go-stat-label">Starting Cash</span>
-                                    <span className="mm-go-stat-value">₹{startingWealth.toLocaleString('en-IN')}</span>
+                                <div className="mm-go-stats">
+                                    <div className="mm-go-stat">
+                                        <span className="mm-go-stat-label">Starting Cash</span>
+                                        <span className="mm-go-stat-value">₹{startingWealth.toLocaleString('en-IN')}</span>
+                                    </div>
+                                    <div className="mm-go-stat">
+                                        <span className="mm-go-stat-label">Final Wealth</span>
+                                        <span className="mm-go-stat-value highlight">₹{finalWealth.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</span>
+                                    </div>
+                                    <div className="mm-go-stat">
+                                        <span className="mm-go-stat-label">Net Profit / Loss</span>
+                                        <span className={`mm-go-stat-value ${profit >= 0 ? 'green' : 'red'}`}>
+                                            {profit >= 0 ? '+' : ''}₹{profit.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
+                                        </span>
+                                    </div>
+                                    <div className="mm-go-stat">
+                                        <span className="mm-go-stat-label">Units Bought</span>
+                                        <span className="mm-go-stat-value">{gameState.totalBought}</span>
+                                    </div>
+                                    <div className="mm-go-stat">
+                                        <span className="mm-go-stat-label">Units Sold</span>
+                                        <span className="mm-go-stat-value">{gameState.totalSold}</span>
+                                    </div>
+                                    <div className="mm-go-grade">
+                                        <span>Grade</span>
+                                        <span className={`mm-go-grade-value grade-${grade.replace('+', 'plus')}`}>{grade}</span>
+                                    </div>
                                 </div>
-                                <div className="mm-go-stat">
-                                    <span className="mm-go-stat-label">Final Wealth</span>
-                                    <span className="mm-go-stat-value highlight">₹{finalWealth.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</span>
-                                </div>
-                                <div className="mm-go-stat">
-                                    <span className="mm-go-stat-label">Net Profit / Loss</span>
-                                    <span className={`mm-go-stat-value ${profit >= 0 ? 'green' : 'red'}`}>
-                                        {profit >= 0 ? '+' : ''}₹{profit.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
-                                    </span>
-                                </div>
-                                <div className="mm-go-stat">
-                                    <span className="mm-go-stat-label">Units Bought</span>
-                                    <span className="mm-go-stat-value">{gameState.totalBought}</span>
-                                </div>
-                                <div className="mm-go-stat">
-                                    <span className="mm-go-stat-label">Units Sold</span>
-                                    <span className="mm-go-stat-value">{gameState.totalSold}</span>
-                                </div>
-                                <div className="mm-go-grade">
-                                    <span>Grade</span>
-                                    <span className={`mm-go-grade-value grade-${grade.replace('+', 'plus')}`}>{grade}</span>
+
+                                <div className="mm-go-grade-guide">
+                                    <span>A+: profit ≥ ₹5,000</span>
+                                    <span>A: ≥ ₹2,000</span>
+                                    <span>B: ≥ ₹0</span>
+                                    <span>C: loss</span>
                                 </div>
                             </div>
 
-                            <div className="mm-go-grade-guide">
-                                <span>A+: profit ≥ ₹5,000</span>
-                                <span>A: ≥ ₹2,000</span>
-                                <span>B: ≥ ₹0</span>
-                                <span>C: loss</span>
-                            </div>
-
-                            <div className="mm-go-actions">
+                            <div className="mm-go-actions mm-go-sticky-actions">
                                 <button className="mm-modal-start-btn" onClick={handleRestartGame}>
                                     PLAY AGAIN
                                 </button>

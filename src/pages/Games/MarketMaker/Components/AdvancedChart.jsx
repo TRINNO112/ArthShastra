@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
 const SVG_W = 1000;
@@ -9,6 +9,8 @@ const PLOT_H = SVG_H - PADDING.top - PADDING.bottom;
 
 export default function AdvancedChart({ market, currentMarketPrice, lastTradeTime }) {
     const [pulse, setPulse] = useState(false);
+    const [hover, setHover] = useState(null); // { svgX, svgY, price, qd, qs }
+    const svgRef = useRef(null);
 
     useEffect(() => {
         if (lastTradeTime) {
@@ -17,6 +19,25 @@ export default function AdvancedChart({ market, currentMarketPrice, lastTradeTim
             return () => clearTimeout(timer);
         }
     }, [lastTradeTime]);
+
+    const handleMouseMove = useCallback((e) => {
+        const svgEl = svgRef.current;
+        if (!svgEl) return;
+        const rect = svgEl.getBoundingClientRect();
+        // Map screen coords to SVG coords
+        const scaleFactorX = SVG_W / rect.width;
+        const scaleFactorY = SVG_H / rect.height;
+        const rawX = (e.clientX - rect.left) * scaleFactorX;
+        const rawY = (e.clientY - rect.top) * scaleFactorY;
+        // Only show tooltip inside plot area
+        if (rawX < PADDING.left || rawX > PADDING.left + PLOT_W || rawY < PADDING.top || rawY > PADDING.top + PLOT_H) {
+            setHover(null);
+            return;
+        }
+        setHover({ svgX: rawX, svgY: rawY });
+    }, []);
+
+    const handleMouseLeave = useCallback(() => setHover(null), []);
 
     // Dynamic Y-axis: always includes current price + equilibrium with 20% padding
     const MAX_Q = 300;
@@ -64,6 +85,11 @@ export default function AdvancedChart({ market, currentMarketPrice, lastTradeTim
     const currentQd = Math.max(0, market.maxDemand - market.demandSlope * currentMarketPrice);
     const currentQs = Math.max(0, market.minSupply + market.supplySlope * currentMarketPrice);
 
+    // Hover derived values
+    const hoverPrice = hover ? parseFloat((MAX_P * (1 - (hover.svgY - PADDING.top) / PLOT_H)).toFixed(2)) : null;
+    const hoverQd = hoverPrice !== null ? Math.max(0, market.maxDemand - market.demandSlope * hoverPrice) : null;
+    const hoverQs = hoverPrice !== null ? Math.max(0, market.minSupply + market.supplySlope * hoverPrice) : null;
+
     const priceY = scaleY(currentMarketPrice);
     const demandX = scaleX(currentQd);
     const supplyX = scaleX(currentQs);
@@ -76,7 +102,13 @@ export default function AdvancedChart({ market, currentMarketPrice, lastTradeTim
 
     return (
         <div className="mm-chart-wrapper">
-            <svg viewBox={`0 0 ${SVG_W} ${SVG_H}`} className="mm-advanced-svg">
+            <svg
+            ref={svgRef}
+            viewBox={`0 0 ${SVG_W} ${SVG_H}`}
+            className="mm-advanced-svg"
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+        >
                 <defs>
                     <clipPath id="chartClip">
                         <rect x={PADDING.left} y={PADDING.top} width={PLOT_W} height={PLOT_H} />
@@ -206,6 +238,60 @@ export default function AdvancedChart({ market, currentMarketPrice, lastTradeTim
                     <line x1={0} y1={25} x2={30} y2={25} stroke="#10b981" strokeWidth={4} />
                     <text x={38} y={30} fill="#10b981" fontFamily="'JetBrains Mono', monospace" fontSize="12" fontWeight="700">SUPPLIER SUPPLY</text>
                 </g>
+
+                {/* Hover crosshair + tooltip */}
+                {hover && hoverPrice !== null && hoverPrice >= 0 && (
+                    <g>
+                        {/* Vertical crosshair */}
+                        <line
+                            x1={hover.svgX} y1={PADDING.top}
+                            x2={hover.svgX} y2={PADDING.top + PLOT_H}
+                            stroke="rgba(255,255,255,0.2)" strokeWidth="1" strokeDasharray="4 3"
+                        />
+                        {/* Horizontal crosshair */}
+                        <line
+                            x1={PADDING.left} y1={hover.svgY}
+                            x2={PADDING.left + PLOT_W} y2={hover.svgY}
+                            stroke="rgba(255,255,255,0.2)" strokeWidth="1" strokeDasharray="4 3"
+                        />
+                        {/* Tooltip box — flip to left side if near right edge */}
+                        {(() => {
+                            const tipW = 210;
+                            const tipH = 88;
+                            const pad = 12;
+                            const flipX = hover.svgX + pad + tipW > PADDING.left + PLOT_W;
+                            const tx = flipX ? hover.svgX - pad - tipW : hover.svgX + pad;
+                            const ty = Math.max(PADDING.top, Math.min(hover.svgY - tipH / 2, PADDING.top + PLOT_H - tipH));
+                            const exDemand = hoverQd - hoverQs;
+                            return (
+                                <g>
+                                    <rect x={tx} y={ty} width={tipW} height={tipH} rx={8}
+                                        fill="rgba(5,15,30,0.95)" stroke="rgba(76,201,240,0.35)" strokeWidth="1.5" />
+                                    <text x={tx + 12} y={ty + 18} fill="rgba(255,255,255,0.5)"
+                                        fontFamily="'JetBrains Mono', monospace" fontSize="10" fontWeight="600">HOVER PRICE</text>
+                                    <text x={tx + 12} y={ty + 34} fill="#4cc9f0"
+                                        fontFamily="'JetBrains Mono', monospace" fontSize="13" fontWeight="800">₹{hoverPrice.toFixed(2)}</text>
+                                    <line x1={tx + 10} y1={ty + 40} x2={tx + tipW - 10} y2={ty + 40}
+                                        stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+                                    <text x={tx + 12} y={ty + 56} fill="#ef4444"
+                                        fontFamily="'JetBrains Mono', monospace" fontSize="11" fontWeight="700">
+                                        {`Demand: ${hoverQd.toFixed(0)} units`}
+                                    </text>
+                                    <text x={tx + 12} y={ty + 72} fill="#10b981"
+                                        fontFamily="'JetBrains Mono', monospace" fontSize="11" fontWeight="700">
+                                        {`Supply: ${hoverQs.toFixed(0)} units`}
+                                    </text>
+                                    <text x={tx + tipW - 10} y={ty + 64}
+                                        fill={exDemand > 0 ? '#ef4444' : '#10b981'}
+                                        fontFamily="'JetBrains Mono', monospace" fontSize="10" fontWeight="700"
+                                        textAnchor="end">
+                                        {exDemand > 0 ? `▲${exDemand.toFixed(0)}` : `▼${Math.abs(exDemand).toFixed(0)}`}
+                                    </text>
+                                </g>
+                            );
+                        })()}
+                    </g>
+                )}
             </svg>
         </div>
     );

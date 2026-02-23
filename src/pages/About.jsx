@@ -14,54 +14,6 @@ import './About.css';
 function About() {
   const [activeNote, setActiveNote] = useState(null);
 
-  // Attic State
-  const [atticClicks, setAtticClicks] = useState(0);
-  const [isGlitching, setIsGlitching] = useState(false);
-  const [displayedText, setDisplayedText] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-
-  const atticDialogue = [
-    "DO NOT CLICK (I'm Exhausted)",
-    "*cough, cough* Dust... so much dust. Wait, are you a real user? Nobody visits the About page. I've been sitting in this digital attic since deployment.",
-    "I am a highly advanced React component equipped with Framer Motion physics... and my entire existence is just sitting here, wasting my lifecycle in the dark.",
-    "You're procrastinating, aren't you? Be honest. You should be studying Demand Curves right now, but instead, you're annoying a depressed button.",
-    "Since you're clearly avoiding Economics, here's a secret: TRINNO spent more time centering me than studying for his own pre-boards.",
-    "Alright, the show is over. Go back to the Lessons page before I mathematically lower your CBSE predicted score.",
-    "[SYSTEM ERROR: Button has filed for emotional leave. Please return to your studies.]"
-  ];
-
-  useEffect(() => {
-    setIsTyping(true);
-    setDisplayedText("");
-    const fullText = atticDialogue[atticClicks];
-    let i = 0;
-
-    const timer = setInterval(() => {
-      i++;
-      setDisplayedText(fullText.slice(0, i));
-      if (i === fullText.length) {
-        clearInterval(timer);
-        setIsTyping(false);
-      }
-    }, 25); // tip tip tip speed
-
-    return () => clearInterval(timer);
-  }, [atticClicks]);
-
-  const handleAtticClick = () => {
-    if (isTyping) {
-      // Fast forward the typing if clicked during typing
-      setDisplayedText(atticDialogue[atticClicks]);
-      setIsTyping(false);
-      return;
-    }
-
-    setIsGlitching(true);
-    setTimeout(() => setIsGlitching(false), 400);
-    setAtticClicks(prev => Math.min(prev + 1, atticDialogue.length - 1));
-  };
-
-
   const researchNotes = [
     {
       id: 1,
@@ -269,49 +221,7 @@ function About() {
         </div>
       </section>
 
-      {/* THE ATTIC - Hidden Interactive Section */}
-      <section className="journal-section attic-section">
-        <div className="section-tab attic-tab">07. THE ATTIC</div>
 
-        <div className="attic-stage">
-          {atticClicks > 0 && (
-            <div className="attic-scanline" />
-          )}
-
-          <AnimatePresence>
-            <motion.div
-              className={`attic-terminal-window step-${atticClicks}`}
-              initial={{ opacity: 0, scale: 0.95, y: 10 }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                y: 0,
-                x: isGlitching ? [-4, 4, -4, 4, 0] : 0,
-                filter: isGlitching ? 'hue-rotate(90deg) contrast(200%)' : 'hue-rotate(0deg) contrast(100%)'
-              }}
-              transition={{ duration: 0.2 }}
-            >
-              <div className="terminal-header">
-                <div className="term-dots">
-                  <span className="dot close"></span>
-                  <span className="dot min"></span>
-                  <span className="dot max"></span>
-                </div>
-                <div className="terminal-title">system_monologue.exe</div>
-              </div>
-
-              <div className="terminal-body" onClick={handleAtticClick}>
-                <span className="prompt">{'>'}</span>
-                <span className="typewriter-text">{displayedText}</span>
-                {(atticClicks < 6 || isTyping) && <span className="cursor-blink">_</span>}
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-        <div className="attic-hint">
-          {atticClicks === 0 ? "Click the terminal to interact" : "System logged."}
-        </div>
-      </section>
 
       {/* Bio / Footer */}
       <footer className="journal-footer">
@@ -337,3 +247,4 @@ function About() {
 }
 
 export default About;
+
