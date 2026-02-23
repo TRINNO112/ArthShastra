@@ -864,7 +864,7 @@
 }
 
 /* ==========================================
-   ANIME ENTRY OVERLAY
+   ANIME ENTRY OVERLAY — CINEMATIC WARP
    ========================================== */
 
 .gm-anime-overlay {
@@ -873,50 +873,123 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: radial-gradient(circle at center, rgba(5, 15, 30, 0.95), #01060d);
+    background: #01060d;
     z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    backdrop-filter: blur(20px);
 }
 
-.gm-anime-bubbles {
+/* Radial flash burst from center */
+.gm-anime-flash {
     position: absolute;
-    inset: 0;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(76, 201, 240, 0.9) 0%, rgba(67, 97, 238, 0.6) 40%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
     pointer-events: none;
 }
 
-.gm-anime-bubble {
+/* Speed lines — radiate from center */
+.gm-anime-speed-lines {
     position: absolute;
-    bottom: -100px;
-    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(74, 201, 227, 0.2));
-    border-radius: 50%;
-    box-shadow: inset 0 0 20px rgba(255,255,255,0.5), 0 0 20px rgba(74, 201, 227, 0.4);
-    animation: gm-bubble-rise linear forwards;
-    opacity: 0;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    pointer-events: none;
 }
 
-@keyframes gm-bubble-rise {
-    0% { transform: translateY(0) scale(0.5); opacity: 0; }
-    20% { opacity: 1; }
-    100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+.gm-anime-speed-line {
+    position: absolute;
+    width: 80vw;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(76, 201, 240, 0.8) 50%, transparent 100%);
+    transform-origin: left center;
+    left: 50%;
+    top: 50%;
+    rotate: var(--angle);
+    transform: translateY(-50%);
+    box-shadow: 0 0 8px rgba(76, 201, 240, 0.5);
+}
+
+/* Vertical warp streaks container */
+.gm-anime-warps {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.gm-anime-streak {
+    position: absolute;
+    border-radius: 2px;
+    filter: blur(0.5px);
+}
+
+/* Centered game title area */
+.gm-anime-center {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+}
+
+.gm-anime-game-icon {
+    font-size: 4rem;
+    color: #4cc9f0;
+    filter: drop-shadow(0 0 30px rgba(76, 201, 240, 0.9));
+    line-height: 1;
 }
 
 .gm-anime-text {
-    position: relative;
-    z-index: 2;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 3rem;
+    font-size: 2.8rem;
     color: #fff;
-    font-weight: 800;
-    letter-spacing: 15px;
-    text-shadow: 0 0 30px var(--accent-blue), 0 0 60px var(--hex-color-glow);
-    animation: gm-pulse-text 0.5s infinite alternate;
+    font-weight: 900;
+    letter-spacing: 8px;
+    text-shadow:
+        0 0 20px rgba(76, 201, 240, 0.8),
+        0 0 60px rgba(76, 201, 240, 0.4),
+        0 4px 20px rgba(0,0,0,0.8);
+    margin: 0;
 }
 
-@keyframes gm-pulse-text {
-    from { transform: scale(1); filter: brightness(1); }
-    to { transform: scale(1.05); filter: brightness(1.5); }
+.gm-anime-subtext {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: rgba(76, 201, 240, 0.7);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin: 0;
+    animation: gm-blink 0.8s step-end infinite;
+}
+
+@keyframes gm-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+}
+
+/* Final full-screen white wipe */
+.gm-anime-wipe {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff 30%, rgba(76, 201, 240, 0.8) 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    pointer-events: none;
 }

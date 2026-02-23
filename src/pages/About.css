@@ -400,3 +400,33 @@
     text-align: center;
   }
 }
+
+/* Archive & Action Buttons */
+.archive-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--ink-primary);
+  color: var(--paper-bg);
+  text-decoration: none;
+  padding: 12px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.archive-btn:hover {
+  background: transparent;
+  color: var(--ink-primary);
+  border-color: var(--ink-primary);
+}
+
+.archive-btn svg {
+  font-size: 1.1em;
+}

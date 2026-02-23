@@ -3,13 +3,13 @@
 export const INITIAL_STATE = {
     day: 1,
     maxDays: 30,
-    cash: 50000,
-    inventory: 50,
+    cash: 5000,       // Starting cash in ₹ (shopkeeper's capital)
+    inventory: 20,    // Units of goods in stock
     portfolioValue: 0,
 
     // Core Market Conditions (Base Curves)
-    // Qd = maxDemand - demandSlope * P
-    // Qs = minSupply + supplySlope * P
+    // Customer demand: Qd = maxDemand - demandSlope * P
+    // Supplier supply: Qs = minSupply + supplySlope * P
     market: {
         maxDemand: 200,
         demandSlope: 2,
@@ -17,35 +17,41 @@ export const INITIAL_STATE = {
         supplySlope: 4,
         currentEquilibriumPrice: 0,
         currentEquilibriumQty: 0,
-        volatility: 0.15, // How crazy the price swings can be
+        volatility: 0.15,
     },
 
-    // Player's Active Orders
+    // Player's Active Prices
+    // buyFromSupplier: max price you'll pay your supplier per unit
+    // sellToCustomer: min price you'll charge your customers per unit
     orders: {
-        bidPrice: 20, // Max price willing to buy
-        askPrice: 35, // Min price willing to sell
-        tradeQty: 5,  // Amount to trade per tick
+        bidPrice: 28,    // Buy from supplier at ₹28 (close to equilibrium ~₹30)
+        askPrice: 33,    // Sell to customers at ₹33 (small margin above)
+        tradeQty: 5,
     },
 
     // UI & History State
-    newsTicker: "Market opens steady. Traders await economic indicators.",
-    tradeHistory: [], // Array of completed trades
+    newsTicker: null,
+    newsHistory: [],
+    tradeHistory: [],
     isSimulationRunning: false,
 
     // Per-day Tracking
     dayStartPrice: 0,
     currentMarketPrice: 30,
 
+    // Stats tracking
+    totalBought: 0,
+    totalSold: 0,
+    totalPnL: 0,
+
     upgrades: {
-        warehouseLvl: 1, // Max Inventory = lvl * 100
-        analyticsLvl: 0, // Reveals upcoming event indicators
+        warehouseLvl: 1,
+        analyticsLvl: 0,
     }
 };
 
 // Calculate Equilibrium based on Qd = Qs
 export function calculateEquilibrium(market) {
-    // maxDemand - demandSlope * P = minSupply + supplySlope * P
-    // maxDemand - minSupply = P(supplySlope + demandSlope)
     const price = (market.maxDemand - market.minSupply) / (market.supplySlope + market.demandSlope);
     const qty = market.maxDemand - (market.demandSlope * price);
 
@@ -57,35 +63,113 @@ export function calculateEquilibrium(market) {
 
 export const EVENT_DECK = [
     {
-        title: "Pandemic Scare",
-        type: "demand_shock_neg",
-        desc: "Fear grips the market. Buyers are fleeing.",
-        impact: { maxDemand: -50, demandSlope: 0 } // Shifts curve left
+        title: "Health Scare",
+        desc: "People are scared to go out. Fewer customers are visiting shops.",
+        shopEffect: "🛒 Fewer customers → lower demand. Consider lowering your sell price to attract buyers.",
+        severity: "high",
+        category: "Health Crisis",
+        icon: "🦠",
+        impact: { maxDemand: -50, demandSlope: 0 }
     },
     {
-        title: "Viral TikTok Trend",
-        type: "demand_shock_pos",
-        desc: "Influencers are hyping the product! Demand explodes.",
-        impact: { maxDemand: +80, demandSlope: -0.5 } // Steeper curve + shift right
+        title: "Viral Social Media Trend",
+        desc: "Everyone is talking about this product online. Customers are rushing to buy!",
+        shopEffect: "🔥 High demand → raise your sell price and earn more per unit!",
+        severity: "high",
+        category: "Social Media",
+        icon: "📱",
+        impact: { maxDemand: +80, demandSlope: -0.5 }
     },
     {
-        title: "Supply Chain Disruptions",
-        type: "supply_shock_neg",
-        desc: "Shipping containers are stuck. Goods are scarce.",
-        impact: { minSupply: -40, supplySlope: -1 } // Shifts supply left
+        title: "Supply Chain Disruption",
+        desc: "Deliveries are delayed. Suppliers have less stock to sell you.",
+        shopEffect: "📦 Less supply → your buy price may need to go higher to get stock.",
+        severity: "high",
+        category: "Logistics",
+        icon: "🚢",
+        impact: { minSupply: -40, supplySlope: -1 }
     },
     {
-        title: "Tech Breakthrough",
-        type: "supply_shock_pos",
-        desc: "New automated factories open up.",
-        impact: { minSupply: +60, supplySlope: +2 } // Shifts supply right
+        title: "New Factory Opened",
+        desc: "A large factory opened nearby. Suppliers now have more goods to offer.",
+        shopEffect: "✅ More supply → prices drop. Lower your buy price to stay profitable!",
+        severity: "medium",
+        category: "Technology",
+        icon: "🏭",
+        impact: { minSupply: +60, supplySlope: +2 }
     },
     {
-        title: "Stimulus Checks",
-        type: "demand_shift_pos",
-        desc: "Government hands out cash. Everyone is buying.",
+        title: "Government Cash Handout",
+        desc: "Citizens received money from the government. Everyone wants to spend!",
+        shopEffect: "💸 More spending → more customers. Raise your sell price to profit!",
+        severity: "high",
+        category: "Govt Policy",
+        icon: "🏛️",
         impact: { maxDemand: +40, demandSlope: 0 }
-    }
+    },
+    {
+        title: "Import Tariffs Raised",
+        desc: "The government taxed imported goods. Your suppliers are charging more.",
+        shopEffect: "💰 Higher supplier costs → raise your sell price to protect profit margin.",
+        severity: "high",
+        category: "Geopolitics",
+        icon: "⚔️",
+        impact: { minSupply: -30, supplySlope: -0.5 }
+    },
+    {
+        title: "Customer Confidence Falls",
+        desc: "People are worried about the economy. They are buying less.",
+        shopEffect: "📉 Lower demand → lower your sell price to move stock.",
+        severity: "low",
+        category: "Sentiment",
+        icon: "😟",
+        impact: { maxDemand: -25, demandSlope: 0.3 }
+    },
+    {
+        title: "Festival Season!",
+        desc: "It's celebration time! Everyone is in the mood to shop and spend.",
+        shopEffect: "🎉 Big demand → raise your sell price and maximize profits this season!",
+        severity: "medium",
+        category: "Seasonal",
+        icon: "🎉",
+        impact: { maxDemand: +35, demandSlope: -0.2 }
+    },
+    {
+        title: "Raw Material Shortage",
+        desc: "Suppliers can't get enough raw materials. They're producing less.",
+        shopEffect: "⛏️ Less stock available → you may face empty shelves. Lower your buy price expectations.",
+        severity: "medium",
+        category: "Commodities",
+        icon: "⛏️",
+        impact: { minSupply: -20, supplySlope: -0.8 }
+    },
+    {
+        title: "Loans Get Cheaper",
+        desc: "Bank interest rates dropped. People can borrow easily and spend more.",
+        shopEffect: "🏦 More buyers in market → raise your sell price slightly to earn more!",
+        severity: "medium",
+        category: "Finance",
+        icon: "🏦",
+        impact: { maxDemand: +30, demandSlope: 0 }
+    },
+    {
+        title: "Green Laws Passed",
+        desc: "New environmental rules shut down some old factories.",
+        shopEffect: "🌿 Less supply → goods become slightly scarce. Watch your stock levels.",
+        severity: "low",
+        category: "Regulation",
+        icon: "🌿",
+        impact: { minSupply: -15, supplySlope: -0.3 }
+    },
+    {
+        title: "Exports Boom",
+        desc: "Factories are sending goods abroad. Less left for local shopkeepers like you.",
+        shopEffect: "🌐 Local supply down → consider raising sell price as goods get harder to source.",
+        severity: "medium",
+        category: "Trade",
+        icon: "🌐",
+        impact: { minSupply: -25, supplySlope: -0.5 }
+    },
 ];
 
 export function gameReducer(state, action) {
@@ -97,7 +181,15 @@ export function gameReducer(state, action) {
                 market: { ...state.market, currentEquilibriumPrice: eq.price, currentEquilibriumQty: eq.qty },
                 currentMarketPrice: eq.price,
                 dayStartPrice: eq.price,
-                portfolioValue: state.cash + (state.inventory * eq.price)
+                portfolioValue: state.cash + (state.inventory * eq.price),
+                newsTicker: {
+                    title: "Shop is Ready!",
+                    desc: "Set your buy price (from supplier) and sell price (to customers), then press OPEN SHOP. Your profit is the difference!",
+                    shopEffect: "💡 Tip: Set Buy Price below market price and Sell Price above it.",
+                    severity: "low",
+                    category: "Welcome",
+                    icon: "🏪"
+                }
             };
         }
 
@@ -112,7 +204,6 @@ export function gameReducer(state, action) {
         }
 
         case 'TRIGGER_EVENT': {
-            // Pick a random event
             const event = EVENT_DECK[Math.floor(Math.random() * EVENT_DECK.length)];
 
             const newMarket = { ...state.market };
@@ -129,64 +220,105 @@ export function gameReducer(state, action) {
             newMarket.currentEquilibriumPrice = eq.price;
             newMarket.currentEquilibriumQty = eq.qty;
 
+            const newsItem = {
+                title: event.title,
+                desc: event.desc,
+                shopEffect: event.shopEffect || null,
+                severity: event.severity,
+                category: event.category,
+                icon: event.icon,
+                timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            };
+
             return {
                 ...state,
                 market: newMarket,
-                newsTicker: `BREAKING: ${event.title} - ${event.desc}`,
+                newsTicker: newsItem,
+                newsHistory: [newsItem, ...state.newsHistory.slice(0, 9)],
             };
         }
 
         case 'MARKET_TICK': {
-            // One logical "tick" of trading matching AI against the player's orders
             if (!state.isSimulationRunning) return state;
 
-            let newState = { ...state };
+            let newCash = state.cash;
+            let newInventory = state.inventory;
+            let newTradeHistory = [...state.tradeHistory];
+            let newTotalBought = state.totalBought;
+            let newTotalSold = state.totalSold;
+            let newTotalPnL = state.totalPnL;
+            let lastTradeType = null;
+            let lastTradeDelta = 0;
 
-            // The active market price 'hunts' towards the mathematical equilibrium 
-            // but with noise (volatility)
+            // Price movement towards equilibrium with noise
             const diff = state.market.currentEquilibriumPrice - state.currentMarketPrice;
             const noise = (Math.random() * state.market.volatility * 10) - (state.market.volatility * 5);
             const newPrice = Math.max(1, state.currentMarketPrice + (diff * 0.1) + noise);
+            const roundedPrice = parseFloat(newPrice.toFixed(2));
 
-            newState.currentMarketPrice = parseFloat(newPrice.toFixed(2));
-            newState.portfolioValue = newState.cash + (newState.inventory * newState.currentMarketPrice);
-
-            // TRADING LOGIC
             const maxInv = state.upgrades.warehouseLvl * 100;
 
-            // 1. Can we buy? (Is market price <= our Bid)
-            if (newState.currentMarketPrice <= state.orders.bidPrice && newState.cash >= newState.currentMarketPrice && newState.inventory < maxInv) {
-                // AI Sellers are hitting our Bid
-                const qtyToBuy = Math.min(Math.floor(newState.cash / newState.currentMarketPrice), state.orders.tradeQty);
-
-                newState.cash -= (qtyToBuy * newState.currentMarketPrice);
-                newState.inventory += qtyToBuy;
+            // 1. BUY FROM SUPPLIER — market price <= your supplier buy price
+            // Supplier offers goods when price is low enough for you
+            if (roundedPrice <= state.orders.bidPrice && newCash >= roundedPrice && newInventory < maxInv) {
+                const qtyToBuy = Math.min(
+                    Math.floor(newCash / roundedPrice),
+                    state.orders.tradeQty,
+                    maxInv - newInventory
+                );
 
                 if (qtyToBuy > 0) {
-                    newState.tradeHistory = [
-                        { type: 'BUY', qty: qtyToBuy, price: newState.currentMarketPrice, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) },
-                        ...newState.tradeHistory.slice(0, 49)
+                    const cost = qtyToBuy * roundedPrice;
+                    newCash -= cost;       // Cash goes DOWN — you paid the supplier
+                    newInventory += qtyToBuy;
+                    newTotalBought += qtyToBuy;
+                    newTotalPnL -= cost;
+                    lastTradeType = 'BUY';
+                    lastTradeDelta = -cost;
+
+                    newTradeHistory = [
+                        { type: 'BUY', qty: qtyToBuy, price: roundedPrice, total: cost, delta: -cost, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) },
+                        ...newTradeHistory.slice(0, 49)
                     ];
                 }
             }
 
-            // 2. Can we sell? (Is market price >= our Ask)
-            if (newState.currentMarketPrice >= state.orders.askPrice && newState.inventory > 0) {
-                // AI Buyers are lifting our Ask
-                const qtyToSell = Math.min(newState.inventory, state.orders.tradeQty);
-
-                newState.cash += (qtyToSell * newState.currentMarketPrice);
-                newState.inventory -= qtyToSell;
+            // 2. SELL TO CUSTOMER — market price >= your customer sell price
+            // Customers buy when the price is right
+            if (roundedPrice >= state.orders.askPrice && newInventory > 0) {
+                const qtyToSell = Math.min(newInventory, state.orders.tradeQty);
 
                 if (qtyToSell > 0) {
-                    newState.tradeHistory = [
-                        { type: 'SELL', qty: qtyToSell, price: newState.currentMarketPrice, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) },
-                        ...newState.tradeHistory.slice(0, 49)
+                    const revenue = qtyToSell * roundedPrice;
+                    newCash += revenue;    // Cash goes UP — customers paid you
+                    newInventory -= qtyToSell;
+                    newTotalSold += qtyToSell;
+                    newTotalPnL += revenue;
+                    lastTradeType = 'SELL';
+                    lastTradeDelta = revenue;
+
+                    newTradeHistory = [
+                        { type: 'SELL', qty: qtyToSell, price: roundedPrice, total: revenue, delta: revenue, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) },
+                        ...newTradeHistory.slice(0, 49)
                     ];
                 }
             }
 
-            return newState;
+            const portfolioValue = newCash + (newInventory * roundedPrice);
+
+            return {
+                ...state,
+                currentMarketPrice: roundedPrice,
+                cash: newCash,
+                inventory: newInventory,
+                tradeHistory: newTradeHistory,
+                portfolioValue,
+                totalBought: newTotalBought,
+                totalSold: newTotalSold,
+                totalPnL: newTotalPnL,
+                lastTradeType,
+                lastTradeDelta,
+            };
         }
 
         case 'TOGGLE_SIMULATION': {
@@ -201,7 +333,14 @@ export function gameReducer(state, action) {
                 ...state,
                 day: state.day + 1,
                 dayStartPrice: state.currentMarketPrice,
-                newsTicker: `Day ${state.day + 1} begins. Market adjusting.`
+                newsTicker: {
+                    title: `Day ${state.day + 1} — Shop Opens`,
+                    desc: "New day, new customers. Review your prices and adjust based on yesterday's market movements.",
+                    shopEffect: "💡 Check if prices shifted. Update your buy/sell prices to stay profitable!",
+                    severity: "low",
+                    category: "Daily Update",
+                    icon: "🌅"
+                }
             };
         }
 
@@ -215,7 +354,13 @@ export function gameReducer(state, action) {
                         ...state.upgrades,
                         [type]: state.upgrades[type] + 1
                     },
-                    newsTicker: `SYSTEM: Upgraded ${type} to Level ${state.upgrades[type] + 1}`
+                    newsTicker: {
+                        title: "Shop Upgraded!",
+                        desc: `${type} upgraded to Level ${state.upgrades[type] + 1}. Your shop can now handle more!`,
+                        severity: "low",
+                        category: "Upgrade",
+                        icon: "⬆️"
+                    }
                 };
             }
             return state;

@@ -215,8 +215,8 @@ function About() {
             please contact me and tell me! I will be really eagerly waiting for you to mail me
             because there is no one using this application right now. You know, something like that. 😅
           </p>
-          <a href="mailto:amit@example.com" className="archive-btn" style={{ marginTop: '15px' }}>
-            <FaEnvelope /> MESSAGE THE DEVELOPER
+          <a href="mailto:kaushtubh457@gmail.com" className="archive-btn" style={{ marginTop: '15px' }}>
+            <FaEnvelope style={{ transform: 'translateY(-1px)' }} /> MESSAGE THE DEVELOPER
           </a>
         </div>
       </section>
@@ -231,8 +231,8 @@ function About() {
             <h3>DEVELOPER: TRINNO ASPHALT</h3>
             <p>Still in Class 12th. Obsessed with high-end UI. Probably wasting my time on developing this thing!</p>
             <div className="bio-links">
-              <a href="https://github.com" title="The Source"><FaGithub /></a>
-              <a href="https://linkedin.com" title="The Professional Side"><FaLinkedin /></a>
+              <a href="https://github.com/TRINNO112" title="The Source" target="_blank" rel="noopener noreferrer"><FaGithub /></a>
+              <a href="https://linkedin.com" title="The Professional Side" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
             </div>
           </div>
         </div>

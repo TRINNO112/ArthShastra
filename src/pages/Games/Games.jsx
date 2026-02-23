@@ -13,7 +13,7 @@ const GAMES = [
     {
         id: 'market-maker',
         title: 'Market Maker',
-        desc: 'Set prices for goods and watch supply-demand curves react in real time.',
+        desc: 'Run your own shop. Buy from suppliers, sell to customers. Watch Supply & Demand in action!',
         icon: <FaBalanceScale />,
         topic: 'Supply & Demand',
         difficulty: 'Medium',
@@ -100,15 +100,16 @@ function Games() {
     const [svgPath, setSvgPath] = useState('');
     const [trailSize, setTrailSize] = useState({ w: 0, h: 0 });
     const [isEntering, setIsEntering] = useState(false);
+    const [enteringGame, setEnteringGame] = useState(null);
     const navigate = useNavigate();
 
     const handleEntry = (gameId) => {
-        // Play swoosh sound / trigger transition
+        const game = GAMES.find(g => g.id === gameId);
+        setEnteringGame(game);
         setIsEntering(true);
-        // Wait for bubble animation to mask the screen before navigating
         setTimeout(() => {
             navigate(`/games/${gameId}`);
-        }, 1500);
+        }, 1800);
     };
 
     // Build curvy SVG path connecting all nodes organically
@@ -176,21 +177,100 @@ function Games() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.5 }}
+                        transition={{ duration: 0.3 }}
                     >
-                        <div className="gm-anime-bubbles">
-                            {/* Generating multiple bubbles for the anime effect */}
-                            {[...Array(30)].map((_, i) => (
-                                <div key={i} className="gm-anime-bubble" style={{
-                                    left: `${Math.random() * 100}%`,
-                                    animationDuration: `${1 + Math.random() * 1.5}s`,
-                                    animationDelay: `${Math.random() * 0.5}s`,
-                                    width: `${20 + Math.random() * 100}px`,
-                                    height: `${20 + Math.random() * 100}px`
-                                }} />
+                        {/* Phase 1: Radial flash from center */}
+                        <motion.div
+                            className="gm-anime-flash"
+                            initial={{ scale: 0, opacity: 1 }}
+                            animate={{ scale: 4, opacity: 0 }}
+                            transition={{ duration: 0.6, ease: 'easeOut' }}
+                        />
+
+                        {/* Phase 2: Speed lines radiating outward */}
+                        <div className="gm-anime-speed-lines">
+                            {[...Array(24)].map((_, i) => (
+                                <motion.div
+                                    key={i}
+                                    className="gm-anime-speed-line"
+                                    style={{ '--angle': `${i * 15}deg` }}
+                                    initial={{ scaleX: 0, opacity: 0 }}
+                                    animate={{ scaleX: [0, 1, 0], opacity: [0, 0.9, 0] }}
+                                    transition={{
+                                        duration: 0.5,
+                                        delay: 0.15 + i * 0.01,
+                                        ease: 'easeOut'
+                                    }}
+                                />
                             ))}
                         </div>
-                        <h2 className="gm-anime-text">ENTERING SIMULATION...</h2>
+
+                        {/* Phase 3: Vertical warp streaks (hyper-speed) */}
+                        <div className="gm-anime-warps">
+                            {[...Array(50)].map((_, i) => (
+                                <motion.div
+                                    key={i}
+                                    className="gm-anime-streak"
+                                    initial={{
+                                        x: `${Math.random() * 100}vw`,
+                                        y: '110vh',
+                                        opacity: 0,
+                                    }}
+                                    animate={{
+                                        y: '-20vh',
+                                        opacity: [0, 1, 0.5, 0],
+                                    }}
+                                    transition={{
+                                        duration: 0.25 + Math.random() * 0.35,
+                                        repeat: Infinity,
+                                        delay: Math.random() * 0.5,
+                                        ease: 'circIn'
+                                    }}
+                                    style={{
+                                        height: `${Math.random() * 300 + 150}px`,
+                                        width: `${Math.random() * 2.5 + 0.5}px`,
+                                        background: `linear-gradient(to top, transparent, ${i % 4 === 0 ? '#4cc9f0' : i % 4 === 1 ? '#4361ee' : i % 4 === 2 ? '#52b788' : '#fff'})`,
+                                        boxShadow: `0 0 12px ${i % 2 === 0 ? '#4cc9f0' : '#4361ee'}`,
+                                    }}
+                                />
+                            ))}
+                        </div>
+
+                        {/* Phase 4: Game title zoom-in */}
+                        <div className="gm-anime-center">
+                            <motion.div
+                                className="gm-anime-game-icon"
+                                initial={{ scale: 0, rotate: -20 }}
+                                animate={{ scale: 1, rotate: 0 }}
+                                transition={{ delay: 0.3, duration: 0.5, type: 'spring', stiffness: 200 }}
+                            >
+                                {enteringGame?.icon}
+                            </motion.div>
+                            <motion.h2
+                                className="gm-anime-text"
+                                initial={{ opacity: 0, y: 30, letterSpacing: '40px' }}
+                                animate={{ opacity: 1, y: 0, letterSpacing: '8px' }}
+                                transition={{ delay: 0.5, duration: 0.6, ease: 'easeOut' }}
+                            >
+                                {enteringGame?.title?.toUpperCase() || 'ENTERING...'}
+                            </motion.h2>
+                            <motion.p
+                                className="gm-anime-subtext"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.9, duration: 0.4 }}
+                            >
+                                LOADING SIMULATION...
+                            </motion.p>
+                        </div>
+
+                        {/* Phase 5: Final white wipe from center */}
+                        <motion.div
+                            className="gm-anime-wipe"
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 6, opacity: [0, 0, 1] }}
+                            transition={{ delay: 1.4, duration: 0.4, ease: 'easeIn' }}
+                        />
                     </motion.div>
                 )}
             </AnimatePresence>
