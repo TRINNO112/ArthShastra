@@ -1,7 +1,7 @@
 // Authentication Context for ArthShastra
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect } from 'react';
 import {
-  auth,
   db,
   onAuthChange,
   signInWithGoogle,
@@ -10,7 +10,7 @@ import {
   logUserActivity,
   updateUserStats
 } from '../services/firebase';
-import { doc, getDoc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 const AuthContext = createContext(null);
 
@@ -28,12 +28,12 @@ export function AuthProvider({ children }) {
         const userRef = doc(db, 'users', firebaseUser.uid);
 
         // This subscription will start immediately
-        const unsubStore = onSnapshot(userRef, (docSnap) => {
+        onSnapshot(userRef, (docSnap) => {
           const userData = docSnap.exists() ? docSnap.data() : {};
           const profile = userData.profile || {};
           const stats = userData.stats || {};
 
-          setUser(prevUser => ({
+          setUser(() => ({
             // Retain prev auth info if needed, but here we rebuild usually
             uid: firebaseUser.uid,
             isAnonymous: false,

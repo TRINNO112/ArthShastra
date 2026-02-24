@@ -56,7 +56,8 @@
       "Bash(npm run lint:*)",
       "Bash(npm ls:*)",
       "Bash(npx vite build)",
-      "Bash(node -e:*)"
+      "Bash(node -e:*)",
+      "Bash(tail:*)"
     ]
   }
 }

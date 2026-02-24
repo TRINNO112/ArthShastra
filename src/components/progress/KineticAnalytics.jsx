@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+/* eslint-disable-next-line no-unused-vars */
 import { motion } from 'framer-motion';
 import { FaChartLine, FaChartBar, FaChartArea, FaBolt, FaArrowUp, FaArrowDown, FaMinus, FaBraille } from 'react-icons/fa';
 import './KineticAnalytics.css';

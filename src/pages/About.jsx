@@ -8,6 +8,7 @@ import {
 import {
   SiReact, SiVite, SiFirebase, SiFramer, SiD3Dotjs, SiJavascript
 } from 'react-icons/si';
+/* eslint-disable-next-line no-unused-vars */
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import './About.css';

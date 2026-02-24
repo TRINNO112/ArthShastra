@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+/* eslint-disable-next-line no-unused-vars */
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     FaTimes, FaUser, FaEnvelope, FaChartLine, FaEdit, FaSave, FaSignOutAlt,

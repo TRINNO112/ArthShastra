@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+/* eslint-disable-next-line no-unused-vars */
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaLock, FaTimes } from 'react-icons/fa';
 import './Achievements.css';
