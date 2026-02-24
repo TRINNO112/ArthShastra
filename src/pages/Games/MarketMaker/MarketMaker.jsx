@@ -90,6 +90,10 @@ export default function MarketMaker() {
                 setTimeLeft(prev => {
                     if (prev <= 1) {
                         clearInterval(timerInterval.current);
+                        // Apply loan penalty if player didn't repay
+                        if (gameState.loan.active && !gameState.loan.repaid) {
+                            dispatch({ type: 'LOAN_PENALTY' });
+                        }
                         dispatch({ type: 'TOGGLE_SIMULATION', payload: false });
                         setGameOver(true);
                         return 0;
@@ -101,7 +105,7 @@ export default function MarketMaker() {
             clearInterval(timerInterval.current);
         }
         return () => clearInterval(timerInterval.current);
-    }, [gameState.isSimulationRunning, gameOver]);
+    }, [gameState.isSimulationRunning, gameOver, gameState.loan.active, gameState.loan.repaid]);
 
     // Floating cash popup on trade
     useEffect(() => {
@@ -402,6 +406,20 @@ export default function MarketMaker() {
                                         <span className="mm-go-stat-label">Units Sold</span>
                                         <span className="mm-go-stat-value">{gameState.totalSold}</span>
                                     </div>
+                                    <div className="mm-go-stat">
+                                        <span className="mm-go-stat-label">Best Sell Streak</span>
+                                        <span className="mm-go-stat-value" style={{ color: gameState.maxStreak >= 3 ? '#f59e0b' : undefined }}>
+                                            {gameState.maxStreak >= 3 ? `🔥 ${gameState.maxStreak}x` : gameState.maxStreak > 0 ? `${gameState.maxStreak}x` : '—'}
+                                        </span>
+                                    </div>
+                                    {gameState.loan.active && (
+                                        <div className="mm-go-stat">
+                                            <span className="mm-go-stat-label">Bank Loan</span>
+                                            <span className={`mm-go-stat-value ${gameState.loan.repaid ? 'green' : 'red'}`}>
+                                                {gameState.loan.repaid ? '✅ Repaid' : '⚠️ −₹6,500 penalty'}
+                                            </span>
+                                        </div>
+                                    )}
                                     <div className="mm-go-grade">
                                         <span>Grade</span>
                                         <span className={`mm-go-grade-value grade-${grade.replace('+', 'plus')}`}>{grade}</span>
@@ -453,7 +471,7 @@ export default function MarketMaker() {
                                     </section>
                                     <section>
                                         <h4>⏱️ Time Limit</h4>
-                                        <p>You have <strong>5 minutes</strong>. Press <strong>OPEN SHOP</strong> to start the timer. The market price will keep moving — buy and sell as many times as you can!</p>
+                                        <p>You have <strong>8 minutes</strong>. Press <strong>OPEN SHOP</strong> to start the timer. The market price will keep moving — buy and sell as many times as you can!</p>
                                     </section>
                                     <section>
                                         <h4>📦 How to Buy</h4>
@@ -465,11 +483,31 @@ export default function MarketMaker() {
                                     </section>
                                     <section>
                                         <h4>📊 The Chart</h4>
-                                        <p>The <span style={{ color: '#ef4444' }}>red line</span> is customer demand — it slopes down (higher price = fewer buyers). The <span style={{ color: '#10b981' }}>green line</span> is supplier supply — it slopes up (higher price = more sellers). Where they cross is the <strong>fair equilibrium price</strong>.</p>
+                                        <p>The <span style={{ color: '#ef4444' }}>red line</span> is customer demand — it slopes down (higher price = fewer buyers). The <span style={{ color: '#10b981' }}>green line</span> is supplier supply — it slopes up (higher price = more sellers). Where they cross is the <strong>fair equilibrium price</strong>. Hover over the chart to inspect demand &amp; supply at any price point!</p>
                                     </section>
                                     <section>
                                         <h4>📰 News Events</h4>
                                         <p>Events shift the curves — a festival raises demand, a factory shutdown reduces supply. Read each event and adjust your strategy!</p>
+                                    </section>
+                                    <section>
+                                        <h4>💰 Bank Loan</h4>
+                                        <p>Need more cash? Borrow <strong>₹5,000</strong> from the bank. But you must repay it before time runs out — or face a <strong>₹6,500 penalty</strong> (30% interest). Use it wisely to buy stock at the right moment!</p>
+                                    </section>
+                                    <section>
+                                        <h4>🏪 Rival Shopkeeper</h4>
+                                        <p>There's another shop in town! Watch for <strong>"Rival restocking"</strong> or <strong>"Rival undercutting"</strong> alerts. When the rival buys, prices nudge up. When they sell, prices dip. Use this as a signal!</p>
+                                    </section>
+                                    <section>
+                                        <h4>🔥 Sell Streak</h4>
+                                        <p>Sell when the price is <strong>above the equilibrium</strong> multiple times in a row to build a streak. At <strong>3+ streak</strong>, you earn a bonus multiplier on every sell — up to <strong>+50% revenue</strong>! Break the streak by selling below equilibrium.</p>
+                                    </section>
+                                    <section>
+                                        <h4>🕵️ Black Market</h4>
+                                        <p>Occasionally, a secret <strong>Black Market</strong> deal appears — buy stock at <strong>20% below market price</strong>. It only lasts <strong>5 seconds</strong>, so act fast! Then sell those units when the price rises for maximum profit.</p>
+                                    </section>
+                                    <section>
+                                        <h4>📉 Market Crash</h4>
+                                        <p>A sudden crash can drop the price by <strong>45%</strong> without warning. Don't panic-sell! The price will recover toward equilibrium. If you have cash ready, a crash is the best time to buy cheap stock.</p>
                                     </section>
                                     <section>
                                         <h4>🏆 Grading</h4>

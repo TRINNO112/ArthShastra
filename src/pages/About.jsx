@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import {
   FaHeart, FaPenNib, FaSearch, FaHistory,
-  FaStickyNote, FaThumbtack, FaExternalLinkAlt, FaGithub, FaLinkedin, FaCode, FaEnvelope
+  FaStickyNote, FaThumbtack, FaExternalLinkAlt, FaGithub, FaLinkedin, FaCode, FaEnvelope, FaGhost
 } from 'react-icons/fa';
 import {
   SiReact, SiVite, SiFirebase, SiFramer, SiD3Dotjs, SiJavascript
@@ -11,8 +11,59 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import './About.css';
 
+const dialogueTree = {
+  intro: {
+    message: "Hello my friend, I was lying here for a very long period of time... How are you? Are you fine?",
+    options: [
+      { text: "I'm fine, thanks for asking!", next: 'polite' },
+      { text: "Who are you and why are you hiding in the footer?", next: 'curious' },
+      { text: "Are you paying rent to be down here?", next: 'rent' }
+    ]
+  },
+  polite: {
+    message: "That's wonderful. It gets quite cold and lonely beneath the viewport. Anyway, carry on with your research!",
+    options: [
+      { text: "Goodbye, little ghost!", next: 'close' }
+    ]
+  },
+  curious: {
+    message: "I'm the spirit of abandoned console.logs and unresolved promises. TRINNO simply forgot about me when shipping.",
+    options: [
+      { text: "That's sad. I'll let him know.", next: 'close' },
+      { text: "Sounds like a skill issue.", next: 'curious_sarcastic' }
+    ]
+  },
+  curious_sarcastic: {
+    message: "...Wow. The audacity. Just close the modal, kid. Keep scrolling.",
+    options: [
+      { text: "[Close without apologizing]", next: 'close' },
+      { text: "Sorry, just kidding! Bye!", next: 'close' }
+    ]
+  },
+  rent: {
+    message: "Rent? In this economy? I'm safely squatting in your DOM tree right now. It's rent-free and quite cozy.",
+    options: [
+      { text: "Fair enough. Keep the noise down.", next: 'close' },
+      { text: "I'm calling the Garbage Collector.", next: 'collector' }
+    ]
+  },
+  collector: {
+    message: "Jokes on you, React doesn't know how to unmount me properly. I AM ETERNAL.",
+    options: [
+      { text: "Terrifying. Bye.", next: 'close' }
+    ]
+  }
+};
+
 function About() {
   const [activeNote, setActiveNote] = useState(null);
+  const [showEasterEgg, setShowEasterEgg] = useState(false);
+  const [ghostState, setGhostState] = useState('intro');
+
+  const closeEasterEgg = () => {
+    setShowEasterEgg(false);
+    setTimeout(() => setGhostState('intro'), 300);
+  };
 
   const researchNotes = [
     {
@@ -242,6 +293,57 @@ function About() {
           &copy; 2026 PROJECT ARTHSHASTRA | MADE WITH <FaHeart /> FOR THE REBELS.
         </p>
       </footer>
+
+      {/* EASTER EGG */}
+      <div className="easter-egg-container">
+        <button className="easter-egg-btn" onClick={() => setShowEasterEgg(true)} title="???">
+          <FaGhost />
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {showEasterEgg && (
+          <motion.div
+            className="easter-egg-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeEasterEgg}
+          >
+            <motion.div
+              className="easter-egg-modal-content secret-dark-mode"
+              initial={{ scale: 0.8, y: 50, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.8, y: 50, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="easter-egg-header">
+                <FaGhost className="easter-egg-icon-large" />
+                <h3>The Lost Node</h3>
+              </div>
+
+              <div className="easter-egg-dialogue">
+                <p>{dialogueTree[ghostState].message}</p>
+              </div>
+
+              <div className="easter-egg-options">
+                {dialogueTree[ghostState].options.map((opt, i) => (
+                  <button
+                    key={i}
+                    className="easter-egg-option-btn"
+                    onClick={() => {
+                      if (opt.next === 'close') closeEasterEgg();
+                      else setGhostState(opt.next);
+                    }}
+                  >
+                    <span className="option-arrow">›</span> {opt.text}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

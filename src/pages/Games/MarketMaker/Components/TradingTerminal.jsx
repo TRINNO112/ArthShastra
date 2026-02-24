@@ -3,13 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
     FaMoneyBillWave, FaWarehouse, FaChartBar,
     FaStore, FaTruck, FaUsers, FaExclamationCircle,
-    FaArrowUp, FaBrain
+    FaArrowUp, FaBrain, FaUniversity, FaCheckCircle
 } from 'react-icons/fa';
 
 export default function TradingTerminal({ state, dispatch, gameOver }) {
 
     const [localQty, setLocalQty] = useState(state.tradeQty);
     const [flashCash, setFlashCash] = useState(null); // 'up' | 'down' | null
+    const [bmTimer, setBmTimer] = useState(0);
     const prevCash = React.useRef(state.cash);
 
     // Sync qty input if state changes externally
@@ -27,6 +28,13 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
         }
     }, [state.cash]);
 
+    // Live countdown for black market button
+    useEffect(() => {
+        if (!state.blackMarket.available) return;
+        const remaining = Math.max(0, state.blackMarket.expiresAt - state.tickCount);
+        setBmTimer(remaining);
+    }, [state.blackMarket.available, state.blackMarket.expiresAt, state.tickCount]);
+
     const handleQtyChange = (val) => {
         const n = parseInt(val);
         setLocalQty(val);
@@ -35,17 +43,12 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
         }
     };
 
-    const handleBuy = () => {
-        dispatch({ type: 'MANUAL_BUY' });
-    };
-
-    const handleSell = () => {
-        dispatch({ type: 'MANUAL_SELL' });
-    };
-
-    const handleUpgrade = (upgradeType, cost) => {
-        dispatch({ type: 'BUY_UPGRADE', payload: { type: upgradeType, cost } });
-    };
+    const handleBuy = () => dispatch({ type: 'MANUAL_BUY' });
+    const handleSell = () => dispatch({ type: 'MANUAL_SELL' });
+    const handleUpgrade = (upgradeType, cost) => dispatch({ type: 'BUY_UPGRADE', payload: { type: upgradeType, cost } });
+    const handleTakeLoan = () => dispatch({ type: 'TAKE_LOAN' });
+    const handleRepayLoan = () => dispatch({ type: 'REPAY_LOAN' });
+    const handleBlackMarket = () => dispatch({ type: 'BLACK_MARKET_BUY' });
 
     const WAREHOUSE_COST = 2000 * state.upgrades.warehouseLvl;
     const INTEL_COST = 1500 * state.upgrades.marketIntelLvl;
@@ -54,9 +57,15 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
     const maxInv = state.upgrades.warehouseLvl * 100;
     const stockPercent = Math.min(100, (state.inventory / maxInv) * 100);
     const costPreview = parseFloat((state.tradeQty * state.currentMarketPrice).toFixed(2));
+    const bmDiscountPrice = parseFloat((state.currentMarketPrice * 0.80).toFixed(2));
+    const bmCostPreview = parseFloat((state.tradeQty * bmDiscountPrice).toFixed(2));
     const revenuePreview = parseFloat((Math.min(state.tradeQty, state.inventory) * state.currentMarketPrice).toFixed(2));
+    const streakMultiplierPreview = state.streak.active
+        ? parseFloat((Math.min(state.tradeQty, state.inventory) * state.currentMarketPrice * state.streak.multiplier).toFixed(2))
+        : revenuePreview;
     const canAffordBuy = !gameOver && state.cash >= costPreview;
     const hasStockToSell = !gameOver && state.inventory > 0;
+    const canAffordBM = !gameOver && state.cash >= bmCostPreview;
 
     return (
         <div className="mm-trading-terminal">
@@ -65,9 +74,7 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
             <div className="mm-terminal-header">
                 <div className="mm-terminal-title-row">
                     <h3><FaStore /> SHOP DASHBOARD</h3>
-                    <div className="mm-day-wealth-badge">
-                        TRADING SESSION
-                    </div>
+                    <div className="mm-day-wealth-badge">TRADING SESSION</div>
                 </div>
                 <div className="mm-portfolio-value">
                     <span>Total Wealth (Cash + Stock)</span>
@@ -111,7 +118,24 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
                 </div>
             </div>
 
-            {/* P&L Stats */}
+            {/* Rival badge — shows when rival just acted */}
+            <AnimatePresence>
+                {state.rival.lastAction && (
+                    <motion.div
+                        className={`mm-rival-badge ${state.rival.lastAction === 'BUY' ? 'buying' : 'selling'}`}
+                        initial={{ opacity: 0, y: -6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        {state.rival.lastAction === 'BUY'
+                            ? '🏪 Rival is restocking — price nudging up!'
+                            : '🏪 Rival undercutting — price nudging down!'}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* P&L Stats + Streak chip */}
             <div className="mm-stats-mini-row">
                 <div className="mm-stat-chip">
                     <span className="mm-stat-chip-label">Bought</span>
@@ -127,6 +151,19 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
                         {state.totalPnL >= 0 ? '+' : ''}₹{Math.round(state.totalPnL)}
                     </span>
                 </div>
+                {state.streak.count > 0 && (
+                    <motion.div
+                        className={`mm-stat-chip mm-streak-chip ${state.streak.active ? 'active' : ''}`}
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                    >
+                        <span className="mm-stat-chip-label">Streak</span>
+                        <span className="mm-streak-fire">🔥 {state.streak.count}x</span>
+                        {state.streak.active && (
+                            <span className="mm-streak-bonus">+{((state.streak.multiplier - 1) * 100).toFixed(0)}%</span>
+                        )}
+                    </motion.div>
+                )}
             </div>
 
             {/* Error Message */}
@@ -148,7 +185,7 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
 
                 {/* Quantity selector */}
                 <div className="mm-qty-row">
-                    <span className="mm-qty-label">Quantity per trade:</span>
+                    <span className="mm-qty-label">Qty per trade:</span>
                     <div className="mm-qty-controls">
                         <button className="mm-qty-btn" onClick={() => handleQtyChange(Math.max(1, state.tradeQty - 10))}>−10</button>
                         <button className="mm-qty-btn" onClick={() => handleQtyChange(Math.max(1, state.tradeQty - 5))}>−5</button>
@@ -163,6 +200,30 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
                         <button className="mm-qty-btn" onClick={() => handleQtyChange(state.tradeQty + 10)}>+10</button>
                     </div>
                 </div>
+
+                {/* BLACK MARKET button — secret, only when available */}
+                <AnimatePresence>
+                    {state.blackMarket.available && (
+                        <motion.button
+                            className={`mm-black-market-btn ${!canAffordBM ? 'disabled' : ''}`}
+                            onClick={handleBlackMarket}
+                            disabled={!canAffordBM || gameOver}
+                            initial={{ opacity: 0, scale: 0.85, y: -8 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.85, y: -8 }}
+                            transition={{ type: 'spring', stiffness: 300 }}
+                        >
+                            <div className="mm-bm-top">
+                                <span>🕵️ BLACK MARKET DEAL</span>
+                                <span className="mm-bm-countdown">{bmTimer}s</span>
+                            </div>
+                            <div className="mm-bm-detail">
+                                {state.tradeQty} units @ ₹{bmDiscountPrice.toFixed(2)} <span className="mm-bm-discount">(20% OFF)</span>
+                                {' '}= <strong>₹{bmCostPreview.toLocaleString('en-IN')}</strong>
+                            </div>
+                        </motion.button>
+                    )}
+                </AnimatePresence>
 
                 {/* BUY Button */}
                 <button
@@ -182,16 +243,20 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
 
                 {/* SELL Button */}
                 <button
-                    className={`mm-big-trade-btn sell-btn ${!hasStockToSell ? 'disabled' : ''}`}
+                    className={`mm-big-trade-btn sell-btn ${!hasStockToSell ? 'disabled' : ''} ${state.streak.active ? 'streak-glow' : ''}`}
                     onClick={handleSell}
                     disabled={!hasStockToSell}
                 >
                     <div className="mm-trade-btn-top">
                         <FaUsers /> SELL TO CUSTOMERS
+                        {state.streak.active && <span className="mm-sell-streak-tag">🔥 +{((state.streak.multiplier - 1) * 100).toFixed(0)}%</span>}
                     </div>
                     <div className="mm-trade-btn-detail">
-                        {Math.min(state.tradeQty, state.inventory)} units × ₹{state.currentMarketPrice.toFixed(2)} =
-                        <strong> +₹{revenuePreview.toLocaleString('en-IN')}</strong>
+                        {Math.min(state.tradeQty, state.inventory)} units × ₹{state.currentMarketPrice.toFixed(2)}
+                        {state.streak.active
+                            ? <> = <strong> +₹{streakMultiplierPreview.toLocaleString('en-IN')}</strong> <span className="mm-streak-bonus-inline">(streak bonus!)</span></>
+                            : <> = <strong> +₹{revenuePreview.toLocaleString('en-IN')}</strong></>
+                        }
                         {!hasStockToSell && <span className="mm-btn-warning"> (no stock)</span>}
                     </div>
                 </button>
@@ -202,7 +267,6 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
                 <h4><FaArrowUp /> SHOP UPGRADES</h4>
                 <div className="mm-upgrade-list">
 
-                    {/* Warehouse Upgrade */}
                     <div className="mm-upgrade-card">
                         <div className="mm-upgrade-info">
                             <span className="mm-upgrade-icon"><FaWarehouse /></span>
@@ -223,7 +287,6 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
                                     className={`mm-upgrade-btn ${state.cash < WAREHOUSE_COST || gameOver ? 'disabled' : ''}`}
                                     onClick={() => handleUpgrade('warehouseLvl', WAREHOUSE_COST)}
                                     disabled={state.cash < WAREHOUSE_COST || gameOver}
-                                    title={`Upgrade to Lv ${state.upgrades.warehouseLvl + 1}`}
                                 >
                                     ₹{WAREHOUSE_COST.toLocaleString('en-IN')}
                                 </button>
@@ -233,7 +296,6 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
                         </div>
                     </div>
 
-                    {/* Market Intel Upgrade */}
                     <div className="mm-upgrade-card">
                         <div className="mm-upgrade-info">
                             <span className="mm-upgrade-icon"><FaBrain /></span>
@@ -254,7 +316,6 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
                                     className={`mm-upgrade-btn ${state.cash < INTEL_COST || gameOver ? 'disabled' : ''}`}
                                     onClick={() => handleUpgrade('marketIntelLvl', INTEL_COST)}
                                     disabled={state.cash < INTEL_COST || gameOver}
-                                    title={`Upgrade to Lv ${state.upgrades.marketIntelLvl + 1}`}
                                 >
                                     ₹{INTEL_COST.toLocaleString('en-IN')}
                                 </button>
@@ -265,6 +326,44 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
                     </div>
 
                 </div>
+            </div>
+
+            {/* Bank Loan Panel */}
+            <div className="mm-loan-section">
+                <h4><FaUniversity /> BANK LOAN</h4>
+                {!state.loan.active ? (
+                    <div className="mm-loan-offer">
+                        <div className="mm-loan-offer-text">
+                            <span className="mm-loan-amount">₹5,000</span>
+                            <span className="mm-loan-terms">30% penalty if not repaid by end</span>
+                        </div>
+                        <button
+                            className={`mm-loan-btn borrow ${gameOver ? 'disabled' : ''}`}
+                            onClick={handleTakeLoan}
+                            disabled={gameOver}
+                        >
+                            BORROW
+                        </button>
+                    </div>
+                ) : state.loan.repaid ? (
+                    <div className="mm-loan-status repaid">
+                        <FaCheckCircle /> Loan repaid — no penalty!
+                    </div>
+                ) : (
+                    <div className="mm-loan-active-row">
+                        <div className="mm-loan-warning">
+                            ⚠️ Loan active — repay ₹5,000 before time runs out!
+                        </div>
+                        <button
+                            className={`mm-loan-btn repay ${state.cash < 5000 || gameOver ? 'disabled' : ''}`}
+                            onClick={handleRepayLoan}
+                            disabled={state.cash < 5000 || gameOver}
+                        >
+                            REPAY ₹5,000
+                            {state.cash < 5000 && <span className="mm-loan-cant"> (need ₹5,000)</span>}
+                        </button>
+                    </div>
+                )}
             </div>
 
             {/* Transaction Log */}
@@ -280,22 +379,25 @@ export default function TradingTerminal({ state, dispatch, gameOver }) {
                         state.tradeHistory.map((trade, i) => (
                             <motion.div
                                 key={`${trade.time}-${i}`}
-                                className={`mm-trade-item ${trade.type.toLowerCase()}`}
+                                className={`mm-trade-item ${trade.type.toLowerCase()}${trade.blackMarket ? ' bm' : ''}`}
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.25 }}
                             >
                                 <span className="mm-trade-time">{trade.time}</span>
                                 <span className="mm-trade-action">
-                                    {trade.type === 'BUY'
-                                        ? <><FaTruck /> Bought</>
-                                        : <><FaUsers /> Sold</>}
+                                    {trade.blackMarket
+                                        ? <>🕵️ BM Buy</>
+                                        : trade.type === 'BUY'
+                                            ? <><FaTruck /> Bought</>
+                                            : <><FaUsers /> Sold</>}
                                 </span>
                                 <span className="mm-trade-details">
                                     {trade.qty}× @ ₹{trade.price.toFixed(2)}
                                     <span className={`mm-trade-total ${trade.type === 'BUY' ? 'red' : 'green'}`}>
                                         {trade.type === 'BUY' ? ' −₹' : ' +₹'}{trade.total.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                                     </span>
+                                    {trade.bonus > 0 && <span className="mm-trade-bonus"> 🔥+{trade.bonus}%</span>}
                                 </span>
                             </motion.div>
                         ))
