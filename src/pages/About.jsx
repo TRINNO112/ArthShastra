@@ -116,31 +116,12 @@ const dialogueTree = {
 const TypewriterText = ({ text }) => {
   const [displayedText, setDisplayedText] = useState("");
 
-  // Use a ref for audio to prevent re-renders
-  const typeSoundRef = React.useRef(null);
-
-  useEffect(() => {
-    // Initialize audio if not present
-    if (!typeSoundRef.current) {
-      typeSoundRef.current = new Audio('/sounds/typewriter.ogg');
-      typeSoundRef.current.volume = 0.2;
-    }
-  }, []);
-
   useEffect(() => {
     setDisplayedText("");
     let i = 0;
 
     const interval = setInterval(() => {
       setDisplayedText(text.slice(0, i + 1));
-
-      // Play sound effect randomly on some keystrokes to prevent ear fatigue
-      if (typeSoundRef.current && Math.random() > 0.5) {
-        // Reset time to allow rapid overlapping plays
-        typeSoundRef.current.currentTime = 0;
-        typeSoundRef.current.play().catch(e => console.log('Audio play failed:', e));
-      }
-
       i++;
       if (i >= text.length) clearInterval(interval);
     }, 25); // typing speed
@@ -158,21 +139,8 @@ function About() {
   const [showEasterEgg, setShowEasterEgg] = useState(false);
   const [ghostState, setGhostState] = useState('intro');
 
-  const stampSoundRef = React.useRef(null);
-
-  useEffect(() => {
-    stampSoundRef.current = new Audio('/sounds/stamp.ogg');
-    stampSoundRef.current.volume = 0.4;
-  }, []);
-
   const toggleDeclassify = (id) => {
     setDeclassified(prev => ({ ...prev, [id]: !prev[id] }));
-
-    // Play stamp sound effect
-    if (stampSoundRef.current) {
-      stampSoundRef.current.currentTime = 0;
-      stampSoundRef.current.play().catch(e => console.log('Audio play failed:', e));
-    }
   };
 
   const closeEasterEgg = () => {
