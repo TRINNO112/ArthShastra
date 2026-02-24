@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
     FaBalanceScale, FaChartLine, FaCoins, FaShoppingCart,
     FaGlobeAmericas, FaChartBar, FaLock, FaCompass, FaScroll, FaGem, FaMapMarkerAlt,
-    FaRegCircle
+    FaRegCircle, FaCoffee
 } from 'react-icons/fa';
 import './Games.css';
 
@@ -69,8 +69,19 @@ const GAMES = [
         biome: 'crystal',
         offset: { x: -18, y: 0 },
         size: 'medium'
+    },
+    {
+        id: 'tapri-tycoon',
+        title: 'Tapri Tycoon',
+        desc: 'Run a chai stall for 7 days. Survive Sharma Uncle. Learn Fixed vs Variable Cost.',
+        icon: <FaCoffee />,
+        topic: 'Production & Costs',
+        difficulty: 'Easy',
+        status: 'available',
+        biome: 'desert',
+        offset: { x: 10, y: 0 },
+        size: 'medium'
     }
-    // Reduced to 5 games per request
 ];
 
 const hexSizes = {

@@ -13,6 +13,7 @@ import Journey from './pages/Journey';
 import Progress from './pages/Progress';
 import Games from './pages/Games/Games';
 import MarketMaker from './pages/Games/MarketMaker/MarketMaker';
+import TapriTycoon from './pages/Games/TapriTycoon/TapriTycoon';
 import Lesson1 from './pages/Lessons/Lesson1';
 import Lesson2 from './pages/Lessons/Lesson2';
 import Lesson3 from './pages/Lessons/Lesson3/Lesson3';
@@ -69,6 +70,7 @@ function App() {
               <Route path="/progress" element={<Progress />} />
               <Route path="/games" element={<Games />} />
               <Route path="/games/market-maker" element={<MarketMaker />} />
+              <Route path="/games/tapri-tycoon" element={<TapriTycoon />} />
 
               {/* Microeconomics Class 11 Lessons */}
               <Route path="/lesson/micro11-1" element={<Lesson1 />} />
