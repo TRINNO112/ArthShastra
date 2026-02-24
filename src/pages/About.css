@@ -155,89 +155,261 @@
   display: inline-flex;
 }
 
-.research-board {
-  display: flex;
-  gap: 40px;
-  margin-top: 30px;
-  min-height: 250px;
-}
+/* ========== CLASSIFIED DOSSIER BOARD ========== */
 
-.pins-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
+/* ========== CLASSIFIED DOSSIER BOARD ========== */
 
-.board-pin {
-  width: 140px;
-  padding: 15px;
-  position: relative;
-  cursor: pointer;
-  box-shadow: 2px 5px 10px rgba(0,0,0,0.05);
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  transition: all 0.3s;
-}
-
-.board-pin.active {
-  transform: scale(1.1) rotate(0deg);
-  border: 1.5px solid #222;
-}
-
-.pin-head {
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #b00;
-}
-
-.board-pin.yellow { background: #fffde7; transform: rotate(2deg); }
-.board-pin.blue { background: #e3f2fd; transform: rotate(-3deg); }
-.board-pin.pink { background: #fce4ec; transform: rotate(1.5deg); }
-
-.note-viewer {
-  flex: 1;
-  background: white;
-  padding: 40px;
-  border: 1px solid rgba(0,0,0,0.05);
-  box-shadow: 15px 15px 0 rgba(0,0,0,0.02);
-  position: relative;
-}
-
-.note-tape {
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0,0,0,0.1);
-  padding: 5px 20px;
-  font-size: 0.7rem;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-.note-viewer.yellow { border-left: 10px solid #fffde7; }
-.note-viewer.blue { border-left: 10px solid #e3f2fd; }
-.note-viewer.pink { border-left: 10px solid #fce4ec; }
-
-.note-viewer h3 {
-  font-family: 'Satisfy', cursive;
-  font-size: 2.2rem;
-  margin-bottom: 15px;
-}
-
-/* Notes Viewer Placeholder */
-.note-viewer-placeholder {
-  flex: 1;
-  background: white;
-  padding: 40px;
-  border: 1px dashed rgba(0,0,0,0.1);
+.dossier-folder-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: rgba(0,0,0,0.2);
+  gap: 10px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.9rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #5a4a3a;
+  background: #e8dcc8;
+  border: 1px solid #c4b49a;
+  padding: 10px 18px;
+  margin-top: 30px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.dossier-folder-header.folder-closed {
+  border-bottom: 1px solid #c4b49a;
+}
+
+.dossier-folder-header.folder-open {
+  border-bottom: none;
+}
+
+.dossier-folder-icon {
+  color: #b07d40;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.dossier-clearance {
+  margin-left: auto;
+  color: #c00;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+}
+
+.dossier-chevron {
+  margin-left: 10px;
+  font-size: 1rem;
+  color: #6b5840;
+  display: inline-block;
+}
+
+/* Grid with gaps */
+.dossier-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  border: 1px solid #c4b49a;
+  background: #ddd0b8;
+  padding: 12px;
+}
+
+@media (max-width: 700px) {
+  .dossier-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Individual file */
+.dossier-file {
+  position: relative;
+  padding: 20px 22px 38px;
+  border: 1px solid #c4b49a;
+  cursor: pointer;
+  overflow: hidden;
+  background: #faf4eb;
+  transition: background 0.2s, box-shadow 0.2s;
+  min-height: 200px;
+}
+
+.dossier-file:hover {
+  background: #fff9f0;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+/* Redact bar hover tease — bars shrink on file hover */
+.dossier-file:hover .redact-bar {
+  height: 6px;
+  opacity: 0.5;
+}
+
+.dossier-file.open {
+  background: #fffdf7;
+}
+
+.dossier-file.yellow { border-left: 4px solid #d4a017; }
+.dossier-file.blue   { border-left: 4px solid #4a7bb5; }
+.dossier-file.pink   { border-left: 4px solid #b54a7b; }
+
+/* Paper fold corner (bottom-right) */
+.dossier-fold-corner {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 28px 28px;
+  border-color: transparent transparent #ddd0b8 transparent;
+  pointer-events: none;
+}
+
+/* File header */
+.dossier-file-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #6b5840;
+  border-bottom: 1px dashed #c4b49a;
+  padding-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.dossier-ref {
+  background: #e8dcc8;
+  padding: 2px 8px;
+  border-radius: 2px;
+  border: 1px solid #c4b49a;
+  flex-shrink: 0;
+}
+
+.dossier-case-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.6rem;
+  opacity: 0.75;
+  flex: 1;
+}
+
+.dossier-case-no {
+  letter-spacing: 0.5px;
+}
+
+.dossier-date {
+  letter-spacing: 0.5px;
+}
+
+.dossier-lock-icon {
+  font-size: 0.8rem;
+  color: #c00;
+  opacity: 0.7;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.dossier-file.open .dossier-lock-icon {
+  color: #2a7a3b;
+}
+
+/* Stamps */
+.dossier-stamp {
+  position: absolute;
+  top: 48px;
+  right: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 900;
+  letter-spacing: 2px;
+  padding: 4px 8px;
+  pointer-events: none;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.dossier-stamp.classified {
+  font-size: 0.85rem;
+  color: #c00;
+  border: 3px solid #c00;
+  opacity: 0.5;
+  transform: rotate(-12deg);
+}
+
+.dossier-stamp.declassified {
+  font-size: 0.72rem;
+  color: #2a7a3b;
+  border: 3px solid #2a7a3b;
+  opacity: 0.55;
+  transform: rotate(8deg);
+}
+
+/* Title */
+.dossier-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #3a2e1e;
+  margin-bottom: 12px;
+  transition: filter 0.3s, opacity 0.3s;
+}
+
+.dossier-title.redacted-title {
+  filter: blur(3px);
+  user-select: none;
+  opacity: 0.4;
+}
+
+/* Redact bars */
+.dossier-redacted-body {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 8px;
+}
+
+.redact-bar {
+  display: block;
+  height: 11px;
+  background: #2a1a0a;
+  border-radius: 1px;
+  opacity: 0.75;
+  transition: height 0.3s ease, opacity 0.3s ease;
+}
+
+.redact-bar.long   { width: 90%; }
+.redact-bar.medium { width: 65%; }
+.redact-bar.short  { width: 40%; }
+
+/* Declassified content */
+.dossier-content {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: #3a2e1e;
+}
+
+/* Click hints */
+.dossier-click-hint {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 1.5px;
+  color: #c00;
+  opacity: 0.45;
+}
+
+.dossier-click-hint.open {
+  color: #2a7a3b;
+  opacity: 0.4;
 }
 
 /* Philosophy Section */

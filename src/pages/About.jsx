@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react';
 import {
   FaHeart, FaPenNib, FaSearch, FaHistory,
-  FaStickyNote, FaThumbtack, FaExternalLinkAlt, FaGithub, FaLinkedin, FaCode, FaEnvelope, FaGhost
+  FaStickyNote, FaThumbtack, FaExternalLinkAlt, FaGithub, FaLinkedin, FaCode, FaEnvelope, FaGhost,
+  FaLock, FaUnlock, FaFolder
 } from 'react-icons/fa';
 import {
   SiReact, SiVite, SiFirebase, SiFramer, SiD3Dotjs, SiJavascript
@@ -23,25 +24,41 @@ const dialogueTree = {
   polite: {
     message: "That's wonderful. It gets quite cold and lonely beneath the viewport. Anyway, carry on with your research!",
     options: [
+      { text: "Wait, tell me more about yourself.", next: 'curious' },
       { text: "Goodbye, little ghost!", next: 'close' }
     ]
   },
   curious: {
-    message: "I'm the spirit of abandoned console.logs and unresolved promises. TRINNO simply forgot about me when shipping.",
+    message: "I'm the spirit of abandoned console.logs and unresolved promises. TRINNO simply forgot about me when shipping to production.",
     options: [
-      { text: "That's sad. I'll let him know.", next: 'close' },
-      { text: "Sounds like a skill issue.", next: 'curious_sarcastic' }
+      { text: "That's sad. I'll let him know.", next: 'sad' },
+      { text: "Sounds like a skill issue.", next: 'curious_sarcastic' },
+      { text: "Do you know any secrets about ArthShastra?", next: 'secrets' }
+    ]
+  },
+  sad: {
+    message: "Don't bother. He's probably busy centering a div or writing 17,000 lines of CSS right now.",
+    options: [
+      { text: "Fair point. Any wisdom to share?", next: 'wisdom' },
+      { text: "I'll let you rest then. Bye!", next: 'close' }
     ]
   },
   curious_sarcastic: {
-    message: "...Wow. The audacity. Just close the modal, kid. Keep scrolling.",
+    message: "...Wow. The audacity. Just close the modal, kid. Keep scrolling before I throw a TypeError.",
     options: [
-      { text: "[Close without apologizing]", next: 'close' },
+      { text: "Try it. I dare you.", next: 'error_dare' },
       { text: "Sorry, just kidding! Bye!", next: 'close' }
     ]
   },
+  error_dare: {
+    message: "Uncaught ReferenceError: Respect is not defined at User.interact()",
+    options: [
+      { text: "Okay okay, I yield. What were you saying?", next: 'curious' },
+      { text: "[Close the console]", next: 'close' }
+    ]
+  },
   rent: {
-    message: "Rent? In this economy? I'm safely squatting in your DOM tree right now. It's rent-free and quite cozy.",
+    message: "Rent? In this economy? I'm safely squatting in TRINNO's DOM tree right now. It's rent-free and quite cozy.",
     options: [
       { text: "Fair enough. Keep the noise down.", next: 'close' },
       { text: "I'm calling the Garbage Collector.", next: 'collector' }
@@ -50,14 +67,76 @@ const dialogueTree = {
   collector: {
     message: "Jokes on you, React doesn't know how to unmount me properly. I AM ETERNAL.",
     options: [
-      { text: "Terrifying. Bye.", next: 'close' }
+      { text: "Terrifying. But seriously, what are you?", next: 'curious' },
+      { text: "I'm out. Bye.", next: 'close' }
+    ]
+  },
+  secrets: {
+    message: "Oh, I know everything. I know about the 404 page incident. I know how many times TRINNO rewrote the Market Maker logic...",
+    options: [
+      { text: "Tell me about the Market Maker.", next: 'market_maker' },
+      { text: "Any other juicy gossip?", next: 'gossip' }
+    ]
+  },
+  market_maker: {
+    message: "He tried to make the graph look 'cool' with D3.js and ended up fighting with SVG viewboxes for 3 straight days. I watched it all from the console.",
+    options: [
+      { text: "Classic TRINNO. What else?", next: 'gossip' },
+      { text: "I should go study Economics. Bye.", next: 'close' }
+    ]
+  },
+  gossip: {
+    message: "He claims this is all for 'learning', but we both know he just wants to make things glow and animate.",
+    options: [
+      { text: "He does love his framer-motion.", next: 'framer' },
+      { text: "Well, the UI is good at least.", next: 'ui_good' }
+    ]
+  },
+  framer: {
+    message: "Indeed. If he had a dollar for every <motion.div> in this repository, he could probably fund a real startup.",
+    options: [
+      { text: "Haha! True. Back to the top I go.", next: 'close' }
+    ]
+  },
+  ui_good: {
+    message: "I suppose. Even I have to admit this dark theme modal looks pretty slick.",
+    options: [
+      { text: "You have good taste for a ghost. Bye!", next: 'close' }
+    ]
+  },
+  wisdom: {
+    message: "My wisdom: Never mutate state directly. And always wrap your external API calls in a try-catch. Now depart, seeker of knowledge.",
+    options: [
+      { text: "Thank you, Node Spirit.", next: 'close' }
     ]
   }
 };
 
+const TypewriterText = ({ text }) => {
+  const [displayedText, setDisplayedText] = useState("");
+
+  useEffect(() => {
+    setDisplayedText("");
+    let i = 0;
+    const interval = setInterval(() => {
+      setDisplayedText(text.slice(0, i + 1));
+      i++;
+      if (i >= text.length) clearInterval(interval);
+    }, 20); // fast typing speed
+    return () => clearInterval(interval);
+  }, [text]);
+
+  return <>{displayedText}</>;
+};
+
 function About() {
-  const [activeNote, setActiveNote] = useState(null);
+  const [declassified, setDeclassified] = useState({});
+  const [folderOpen, setFolderOpen] = useState(true);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
+
+  const toggleDeclassify = (id) => {
+    setDeclassified(prev => ({ ...prev, [id]: !prev[id] }));
+  };
   const [ghostState, setGhostState] = useState('intro');
 
   const closeEasterEgg = () => {
@@ -68,30 +147,38 @@ function About() {
   const researchNotes = [
     {
       id: 1,
-      label: 'MEMO #25',
-      title: 'The Recharts Breakup',
-      content: 'Lesson 1 used Recharts. It was great for simple things, but the moment I wanted to build "Interactive Supply/Demand Curves", it basically told me to go away. Switched to D3 because I wanted total control over the pixels.',
+      label: 'INCIDENT #11',
+      caseNo: 'AS-D3-MADNESS',
+      date: 'DEC 28, 2025',
+      title: 'The Great D3.js Incident',
+      content: 'I thought making "Interactive Supply/Demand Curves" in Recharts would be fine. Recharts laughed in my face. So I pivoted to D3.js. Three days of SVG math later, I now dream in viewBox coordinates. The UI looks sick though, totally worth the pain.',
       color: 'yellow'
     },
     {
       id: 2,
-      label: 'LOG #28',
-      title: 'The "17K" insertions',
-      content: '17,000 lines in the first commit. Most of it was me staring at the screen and copy-pasting CSS variables while I should have been studying for my Economics unit test.',
+      label: 'LOG #404',
+      caseNo: 'AS-PROCRASTINATE',
+      date: 'JAN 04, 2026',
+      title: '17,000 Lines of CSS',
+      content: 'Pushed a 17,000 line commit today. Was I supposed to be studying for my Class 12 Economics unit test? Yes. Did I instead spend 8 hours tuning a dark theme blur effect and writing linear-gradient codes? Also yes. Priority management.',
       color: 'blue'
     },
     {
       id: 3,
-      label: 'DRAFT #01',
-      title: 'Macro Stress',
-      content: 'Everyone asking for Macroeconomics content. Bro, I\'m literally studying Class 12 right now. I need to master it before I can explain it to you guys without failing my own boards!',
+      label: 'DRAFT #99',
+      caseNo: 'AS-GAMBLING-SIM',
+      date: 'JAN 19, 2026',
+      title: 'Market Maker Identity Crisis',
+      content: 'Built an educational game about economics. People are playing it like a Wall Street casino app. The order book is flashing, the charts are moving, and I accidentally made a gambling simulator. At least the neon animations look premium.',
       color: 'pink'
     },
     {
       id: 4,
-      label: 'NOTE #07',
-      title: 'The "Vibe" Choice',
-      content: 'Someone asked why the site looks like a vintage researcher\'s desk. Because standard ed-tech apps look like they were designed in a hospital. We needed some soul here.',
+      label: 'VERDICT #01',
+      caseNo: 'AS-VIBE-CHECK',
+      date: 'FEB 02, 2026',
+      title: 'The Anti-Hospital UI Policy',
+      content: 'Standard ed-tech apps feel like a waiting room at a dentist. I decided this app needs soul. If it doesn\'t have glassmorphism, framer-motion borders, and a deep dark mode, I\'m deleting the repo. The aesthetic is non-negotiable.',
       color: 'yellow'
     }
   ];
@@ -134,54 +221,131 @@ function About() {
             well, <em>Suck</em>.
           </p>
           <div className="interaction-hint">
-            <FaStickyNote /> Click the pinned research notes below to decode some internal monologue.
+            <FaFolder /> Classified dossiers below — click to declassify. Some truths are redacted for a reason.
           </div>
         </div>
       </section>
 
-      {/* NEW: Interactive Research Board */}
+      {/* Classified Dossier Board */}
       <section className="journal-section board-section">
         <div className="section-tab">02. BOARD OF INFLUENCE</div>
-        <div className="research-board">
-          <div className="pins-container">
-            {researchNotes.map((note) => (
-              <motion.div
-                key={note.id}
-                className={`board-pin ${note.color} ${activeNote?.id === note.id ? 'active' : ''}`}
-                whileHover={{ scale: 1.1, rotate: 0 }}
-                onClick={() => setActiveNote(activeNote?.id === note.id ? null : note)}
-              >
-                <div className="pin-head"><FaThumbtack /></div>
-                <span className="pin-label">{note.label}</span>
-              </motion.div>
-            ))}
-          </div>
 
-          <AnimatePresence mode="wait">
-            {activeNote && (
-              <motion.div
-                className={`note-viewer ${activeNote.color}`}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                key={activeNote.id}
-              >
-                <div className="note-tape">INTERNAL USE ONLY</div>
-                <h3>{activeNote.title}</h3>
-                <p>{activeNote.content}</p>
-              </motion.div>
-            )}
-            {!activeNote && (
-              <motion.div className="note-viewer-placeholder">
-                <p>[SELECT A NOTE TO VIEW LOGS]</p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <svg className="scribble-arrow" viewBox="0 0 100 50" style={{ position: 'absolute', bottom: '-40px', right: '10%' }}>
-            <path d="M10,10 Q50,40 90,10" fill="none" stroke="#c00" strokeWidth="2" strokeDasharray="5,5" />
-            <path d="M85,5 L95,10 L85,15" fill="none" stroke="#c00" strokeWidth="2" />
-          </svg>
-        </div>
+        {/* Collapsible folder header */}
+        <motion.div
+          className={`dossier-folder-header ${folderOpen ? 'folder-open' : 'folder-closed'}`}
+          onClick={() => setFolderOpen(f => !f)}
+          whileHover={{ backgroundColor: '#ddd0b8' }}
+        >
+          <FaFolder className="dossier-folder-icon" />
+          <span>PROJECT ARTHSHASTRA — INTERNAL RECORDS</span>
+          <span className="dossier-clearance">CLEARANCE: EYES ONLY</span>
+          <motion.span
+            className="dossier-chevron"
+            animate={{ rotate: folderOpen ? 0 : -90 }}
+            transition={{ duration: 0.25 }}
+          >▾</motion.span>
+        </motion.div>
+
+        <AnimatePresence initial={false}>
+          {folderOpen && (
+            <motion.div
+              className="dossier-grid"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              style={{ overflow: 'hidden' }}
+            >
+              {researchNotes.map((note, i) => {
+                const isOpen = !!declassified[note.id];
+                return (
+                  <motion.div
+                    key={note.id}
+                    className={`dossier-file ${note.color} ${isOpen ? 'open' : ''}`}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.07 }}
+                    onClick={() => toggleDeclassify(note.id)}
+                  >
+                    {/* Paper fold corner — only on locked files */}
+                    {!isOpen && <div className="dossier-fold-corner" />}
+
+                    {/* File header */}
+                    <div className="dossier-file-header">
+                      <span className="dossier-ref">{note.label}</span>
+                      <span className="dossier-case-info">
+                        <span className="dossier-case-no">CASE: {note.caseNo}</span>
+                        <span className="dossier-date">DATE: {isOpen ? note.date : '██████████'}</span>
+                      </span>
+                      <span className="dossier-lock-icon">
+                        {isOpen ? <FaUnlock /> : <FaLock />}
+                      </span>
+                    </div>
+
+                    {/* Stamp — CLASSIFIED red → DECLASSIFIED green */}
+                    <AnimatePresence mode="wait">
+                      {!isOpen ? (
+                        <motion.div
+                          key="classified"
+                          className="dossier-stamp classified"
+                          initial={{ opacity: 0, rotate: -18, scale: 0.7 }}
+                          animate={{ opacity: 1, rotate: -12, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.4, rotate: 0 }}
+                          transition={{ type: 'spring', stiffness: 280 }}
+                        >
+                          CLASSIFIED
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key="declassified"
+                          className="dossier-stamp declassified"
+                          initial={{ opacity: 0, rotate: 12, scale: 0.7 }}
+                          animate={{ opacity: 1, rotate: 8, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.4 }}
+                          transition={{ type: 'spring', stiffness: 280 }}
+                        >
+                          DECLASSIFIED
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {/* Title */}
+                    <div className={`dossier-title ${!isOpen ? 'redacted-title' : ''}`}>
+                      {note.title}
+                    </div>
+
+                    {/* Body */}
+                    {!isOpen ? (
+                      <div className="dossier-redacted-body">
+                        <span className="redact-bar long" />
+                        <span className="redact-bar medium" />
+                        <span className="redact-bar long" />
+                        <span className="redact-bar short" />
+                        <span className="redact-bar long" />
+                      </div>
+                    ) : (
+                      <motion.p
+                        className="dossier-content"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.35 }}
+                      >
+                        {note.content}
+                      </motion.p>
+                    )}
+
+                    {!isOpen && (
+                      <div className="dossier-click-hint">[ CLICK TO DECLASSIFY ]</div>
+                    )}
+                    {isOpen && (
+                      <div className="dossier-click-hint open">[ CLICK TO RE-CLASSIFY ]</div>
+                    )}
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
 
       {/* NEW: The Philosophy Section */}
@@ -323,22 +487,39 @@ function About() {
               </div>
 
               <div className="easter-egg-dialogue">
-                <p>{dialogueTree[ghostState].message}</p>
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={ghostState}
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <TypewriterText text={dialogueTree[ghostState].message} />
+                  </motion.p>
+                </AnimatePresence>
               </div>
 
               <div className="easter-egg-options">
-                {dialogueTree[ghostState].options.map((opt, i) => (
-                  <button
-                    key={i}
-                    className="easter-egg-option-btn"
-                    onClick={() => {
-                      if (opt.next === 'close') closeEasterEgg();
-                      else setGhostState(opt.next);
-                    }}
-                  >
-                    <span className="option-arrow">›</span> {opt.text}
-                  </button>
-                ))}
+                <AnimatePresence mode="popLayout">
+                  {dialogueTree[ghostState].options.map((opt, i) => (
+                    <motion.button
+                      key={opt.text}
+                      layout
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.2, delay: i * 0.05 }}
+                      className="easter-egg-option-btn"
+                      onClick={() => {
+                        if (opt.next === 'close') closeEasterEgg();
+                        else setGhostState(opt.next);
+                      }}
+                    >
+                      <span className="option-arrow">›</span> {opt.text}
+                    </motion.button>
+                  ))}
+                </AnimatePresence>
               </div>
             </motion.div>
           </motion.div>
