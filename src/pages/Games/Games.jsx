@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -23,11 +23,11 @@ const GAMES = [
         size: 'large'
     },
     {
-        id: 'price-hunter',
-        title: 'Price Hunter',
-        desc: 'Sort goods into elastic vs inelastic categories. Drag and drop items!',
-        icon: <FaShoppingCart />,
-        topic: 'Elasticity',
+        id: 'tapri-tycoon',
+        title: 'Tapri Tycoon',
+        desc: 'Run a chai stall for 7 days. Survive Sharma Uncle. Learn Fixed vs Variable Cost.',
+        icon: <FaCoffee />,
+        topic: 'Production & Costs',
         difficulty: 'Easy',
         status: 'available',
         biome: 'atoll',
@@ -68,18 +68,6 @@ const GAMES = [
         status: 'available',
         biome: 'crystal',
         offset: { x: -18, y: 0 },
-        size: 'medium'
-    },
-    {
-        id: 'tapri-tycoon',
-        title: 'Tapri Tycoon',
-        desc: 'Run a chai stall for 7 days. Survive Sharma Uncle. Learn Fixed vs Variable Cost.',
-        icon: <FaCoffee />,
-        topic: 'Production & Costs',
-        difficulty: 'Easy',
-        status: 'available',
-        biome: 'desert',
-        offset: { x: 10, y: 0 },
         size: 'medium'
     }
 ];
@@ -218,33 +206,44 @@ function Games() {
 
                         {/* Phase 3: Vertical warp streaks (hyper-speed) */}
                         <div className="gm-anime-warps">
-                            {[...Array(50)].map((_, i) => (
-                                <motion.div
-                                    key={i}
-                                    className="gm-anime-streak"
-                                    initial={{
-                                        x: `${Math.random() * 100}vw`,
-                                        y: '110vh',
-                                        opacity: 0,
-                                    }}
-                                    animate={{
-                                        y: '-20vh',
-                                        opacity: [0, 1, 0.5, 0],
-                                    }}
-                                    transition={{
-                                        duration: 0.5 + Math.random() * 0.5,
-                                        repeat: Infinity,
-                                        delay: Math.random() * 0.8,
-                                        ease: 'circIn'
-                                    }}
-                                    style={{
-                                        height: `${Math.random() * 300 + 150}px`,
-                                        width: `${Math.random() * 2.5 + 0.5}px`,
-                                        background: `linear-gradient(to top, transparent, ${i % 4 === 0 ? '#4cc9f0' : i % 4 === 1 ? '#4361ee' : i % 4 === 2 ? '#52b788' : '#fff'})`,
-                                        boxShadow: `0 0 12px ${i % 2 === 0 ? '#4cc9f0' : '#4361ee'}`,
-                                    }}
-                                />
-                            ))}
+                            {[...Array(50)].map((_, i) => {
+                                // useMemo prevents calling Math.random during render phase unpredictably
+                                const randomVals = useMemo(() => ({
+                                    x: `${Math.random() * 100}vw`,
+                                    dur: 0.5 + Math.random() * 0.5,
+                                    del: Math.random() * 0.8,
+                                    h: `${Math.random() * 300 + 150}px`,
+                                    w: `${Math.random() * 2.5 + 0.5}px`
+                                }), []);
+
+                                return (
+                                    <motion.div
+                                        key={i}
+                                        className="gm-anime-streak"
+                                        initial={{
+                                            x: randomVals.x,
+                                            y: '110vh',
+                                            opacity: 0,
+                                        }}
+                                        animate={{
+                                            y: '-20vh',
+                                            opacity: [0, 1, 0.5, 0],
+                                        }}
+                                        transition={{
+                                            duration: randomVals.dur,
+                                            repeat: Infinity,
+                                            delay: randomVals.del,
+                                            ease: 'circIn'
+                                        }}
+                                        style={{
+                                            height: randomVals.h,
+                                            width: randomVals.w,
+                                            background: `linear-gradient(to top, transparent, ${i % 4 === 0 ? '#4cc9f0' : i % 4 === 1 ? '#4361ee' : i % 4 === 2 ? '#52b788' : '#fff'})`,
+                                            boxShadow: `0 0 12px ${i % 2 === 0 ? '#4cc9f0' : '#4361ee'}`,
+                                        }}
+                                    />
+                                );
+                            })}
                         </div>
 
                         {/* Phase 4: Game title zoom-in */}
@@ -343,7 +342,7 @@ function Games() {
                     </svg>
                 )}
 
-                {GAMES.map((game, index) => {
+                {GAMES.map((game) => {
                     const isLocked = game.status === 'coming-soon';
 
                     return (
