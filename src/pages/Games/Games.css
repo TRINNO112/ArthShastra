@@ -274,9 +274,9 @@
     --hex-shadow-glow: rgba(157, 78, 221, 0.15);
 }
 
-.gm-hex-node-size-small { width: 320px; height: 360px; }
-.gm-hex-node-size-medium { width: 340px; height: 382px; }
-.gm-hex-node-size-large { width: 360px; height: 405px; }
+.gm-hex-node-size-small { width: 340px; height: 400px; }
+.gm-hex-node-size-medium { width: 360px; height: 420px; }
+.gm-hex-node-size-large { width: 380px; height: 440px; }
 
 .gm-hex-node:hover {
     transform: translateY(-10px) scale(1.05);
@@ -473,9 +473,10 @@
 
 .gm-island-node {
     position: absolute;
-    top: -20px;
+    /* Centered inside the hex so the SVG path (which connects container centers) lands on it */
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     width: 32px;
     height: 32px;
     background: #020d1a;
@@ -488,6 +489,9 @@
     font-size: 0.9rem;
     z-index: 10;
     box-shadow: 0 0 15px rgba(74, 201, 227, 0.6);
+    /* Keep it visually subtle so it doesn't cover the content */
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 .gm-island-node.gm-node-end {
@@ -511,7 +515,11 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 0 30px;
+    /* Horizontal padding accounts for hex clip-path narrowing at top/bottom corners */
+    padding: 0 38px;
+    /* Ensure content stays within the hexagon's widest mid-section */
+    max-height: 100%;
+    overflow: hidden;
 }
 
 .gm-island-head {

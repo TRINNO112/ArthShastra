@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useMemo } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -32,7 +32,7 @@ const GAMES = [
         status: 'available',
         biome: 'atoll',
         offset: { x: 25, y: 0 },
-        size: 'medium'
+        size: 'large'
     },
     {
         id: 'budget-boss',
@@ -71,6 +71,15 @@ const GAMES = [
         size: 'medium'
     }
 ];
+
+// Pre-computed outside component so they never change and no hooks are needed inside map()
+const WARP_STREAKS = Array.from({ length: 50 }, () => ({
+    x: `${Math.random() * 100}vw`,
+    dur: 0.5 + Math.random() * 0.5,
+    del: Math.random() * 0.8,
+    h: `${Math.random() * 300 + 150}px`,
+    w: `${Math.random() * 2.5 + 0.5}px`
+}));
 
 const hexSizes = {
     small: 'gm-hex-node-size-small',
@@ -111,19 +120,20 @@ function Games() {
         }, 3200);
     };
 
-    // Build curvy SVG path connecting all nodes organically
+    // Build curvy SVG path connecting the center of each hex card
     useEffect(() => {
         const buildPath = () => {
             if (!trailRef.current) return;
             const trail = trailRef.current;
-            const nodes = trail.querySelectorAll('.gm-island-node');
-            if (nodes.length < 2) return;
+            // Query the actual hex card elements — their getBoundingClientRect reflects
+            // the translateX offset, so we get the true on-screen center of each card
+            const hexNodes = trail.querySelectorAll('.gm-hex-node');
+            if (hexNodes.length < 2) return;
 
             const trailRect = trail.getBoundingClientRect();
             setTrailSize({ w: trailRect.width, h: trailRect.height });
 
-            // Get center of each node relative to the trail container
-            const points = Array.from(nodes).map(node => {
+            const points = Array.from(hexNodes).map(node => {
                 const r = node.getBoundingClientRect();
                 return {
                     x: r.left - trailRect.left + r.width / 2,
@@ -131,35 +141,27 @@ function Games() {
                 };
             });
 
-            // Build a smooth curve passing exactly through all points
             let d = `M ${points[0].x} ${points[0].y}`;
 
             for (let i = 0; i < points.length - 1; i++) {
                 const curr = points[i];
                 const next = points[i + 1];
-
-                // Simple tension-based bezier control points
-                // Forces the curve to go exactly from curr.x,curr.y to next.x,next.y
                 const dx = next.x - curr.x;
                 const dy = next.y - curr.y;
-
-                // Swing direction alternating left and right
                 const direction = i % 2 === 0 ? 1 : -1;
-                // Scale swing based on distance and randomize slightly
                 const swing = Math.min(Math.abs(dx) * 0.5 + 40, 120) * direction;
-
-                const cp1x = curr.x + (dx * 0.2) + swing;
-                const cp1y = curr.y + (dy * 0.2);
-                const cp2x = next.x - (dx * 0.2) + swing;
-                const cp2y = next.y - (dy * 0.2);
-
+                const cp1x = curr.x + dx * 0.2 + swing;
+                const cp1y = curr.y + dy * 0.2;
+                const cp2x = next.x - dx * 0.2 + swing;
+                const cp2y = next.y - dy * 0.2;
                 d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${next.x} ${next.y}`;
             }
 
             setSvgPath(d);
         };
 
-        const timer = setTimeout(buildPath, 800); // Wait slightly longer for framer motion to finish settling
+        buildPath();
+        const timer = setTimeout(buildPath, 800);
         window.addEventListener('resize', buildPath);
         return () => {
             clearTimeout(timer);
@@ -206,44 +208,33 @@ function Games() {
 
                         {/* Phase 3: Vertical warp streaks (hyper-speed) */}
                         <div className="gm-anime-warps">
-                            {[...Array(50)].map((_, i) => {
-                                // useMemo prevents calling Math.random during render phase unpredictably
-                                const randomVals = useMemo(() => ({
-                                    x: `${Math.random() * 100}vw`,
-                                    dur: 0.5 + Math.random() * 0.5,
-                                    del: Math.random() * 0.8,
-                                    h: `${Math.random() * 300 + 150}px`,
-                                    w: `${Math.random() * 2.5 + 0.5}px`
-                                }), []);
-
-                                return (
-                                    <motion.div
-                                        key={i}
-                                        className="gm-anime-streak"
-                                        initial={{
-                                            x: randomVals.x,
-                                            y: '110vh',
-                                            opacity: 0,
-                                        }}
-                                        animate={{
-                                            y: '-20vh',
-                                            opacity: [0, 1, 0.5, 0],
-                                        }}
-                                        transition={{
-                                            duration: randomVals.dur,
-                                            repeat: Infinity,
-                                            delay: randomVals.del,
-                                            ease: 'circIn'
-                                        }}
-                                        style={{
-                                            height: randomVals.h,
-                                            width: randomVals.w,
-                                            background: `linear-gradient(to top, transparent, ${i % 4 === 0 ? '#4cc9f0' : i % 4 === 1 ? '#4361ee' : i % 4 === 2 ? '#52b788' : '#fff'})`,
-                                            boxShadow: `0 0 12px ${i % 2 === 0 ? '#4cc9f0' : '#4361ee'}`,
-                                        }}
-                                    />
-                                );
-                            })}
+                            {WARP_STREAKS.map((randomVals, i) => (
+                                <motion.div
+                                    key={i}
+                                    className="gm-anime-streak"
+                                    initial={{
+                                        x: randomVals.x,
+                                        y: '110vh',
+                                        opacity: 0,
+                                    }}
+                                    animate={{
+                                        y: '-20vh',
+                                        opacity: [0, 1, 0.5, 0],
+                                    }}
+                                    transition={{
+                                        duration: randomVals.dur,
+                                        repeat: Infinity,
+                                        delay: randomVals.del,
+                                        ease: 'circIn'
+                                    }}
+                                    style={{
+                                        height: randomVals.h,
+                                        width: randomVals.w,
+                                        background: `linear-gradient(to top, transparent, ${i % 4 === 0 ? '#4cc9f0' : i % 4 === 1 ? '#4361ee' : i % 4 === 2 ? '#52b788' : '#fff'})`,
+                                        boxShadow: `0 0 12px ${i % 2 === 0 ? '#4cc9f0' : '#4361ee'}`,
+                                    }}
+                                />
+                            ))}
                         </div>
 
                         {/* Phase 4: Game title zoom-in */}
