@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
     FaBalanceScale, FaChartLine, FaCoins, FaShoppingCart,
     FaGlobeAmericas, FaChartBar, FaLock, FaCompass, FaScroll, FaGem, FaMapMarkerAlt,
-    FaRegCircle, FaCoffee
+    FaCoffee
 } from 'react-icons/fa';
 import './Games.css';
 
@@ -363,11 +363,6 @@ function Games() {
                                     <span className="gm-p"></span>
                                     <span className="gm-p"></span>
                                     <span className="gm-p"></span>
-                                </div>
-
-                                {/* The node point that the SVG path connects to */}
-                                <div className="gm-island-node">
-                                    <FaRegCircle />
                                 </div>
 
                                 {/* Island Content overlay */}
