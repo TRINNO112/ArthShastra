@@ -167,9 +167,10 @@
 .gm-metro {
     position: relative;
     z-index: 1;
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 40px 0 60px;
+    padding: 40px 0 0;
+    overflow: hidden; /* Clip the metro line at the container boundary */
 }
 
 /* The central glowing metro line */
@@ -255,8 +256,8 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    width: 64px;
-    height: 64px;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
     background: radial-gradient(circle at 35% 35%, #0f2538, #061018);
     border: 3px solid var(--node-color);
@@ -271,6 +272,40 @@
         0 0 40px rgba(0, 0, 0, 0.5),
         inset 0 0 15px rgba(0, 0, 0, 0.6);
     outline: none;
+}
+
+/* Decorative outer spinning ring */
+.gm-node-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1.5px dashed var(--node-color);
+    opacity: 0.3;
+    animation: gm-spin 12s linear infinite;
+    pointer-events: none;
+}
+
+.gm-station-node:hover .gm-node-ring {
+    opacity: 0.7;
+    animation-duration: 4s;
+}
+
+.gm-station-node.gm-node-active .gm-node-ring {
+    opacity: 1;
+    animation-duration: 3s;
+    border-style: solid;
+    border-width: 2px;
+}
+
+/* Inner hexagonal highlight */
+.gm-station-node::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: radial-gradient(circle at center, rgba(255,255,255,0.03), transparent 70%);
+    pointer-events: none;
 }
 
 .gm-station-node:hover {
@@ -399,11 +434,11 @@
 }
 
 .gm-label-right {
-    left: calc(50% + 48px);
+    left: calc(50% + 54px);
 }
 
 .gm-label-left {
-    right: calc(50% + 48px);
+    right: calc(50% + 54px);
     text-align: right;
 }
 
@@ -456,11 +491,11 @@
 }
 
 .gm-popup-right {
-    left: calc(50% + 48px);
+    left: calc(50% + 54px);
 }
 
 .gm-popup-left {
-    right: calc(50% + 48px);
+    right: calc(50% + 54px);
 }
 
 /* Biome popup accents */
@@ -587,6 +622,42 @@
 }
 
 /* ==========================================
+   MILESTONE DOTS (between stations)
+   ========================================== */
+
+.gm-milestones {
+    position: absolute;
+    bottom: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    z-index: 1;
+}
+
+.gm-milestone-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(74, 201, 227, 0.35);
+    box-shadow: 0 0 6px rgba(74, 201, 227, 0.2);
+}
+
+.gm-milestone-dot:nth-child(2) {
+    width: 5px;
+    height: 5px;
+    opacity: 0.7;
+}
+
+.gm-milestone-dot:nth-child(3) {
+    width: 4px;
+    height: 4px;
+    opacity: 0.5;
+}
+
+/* ==========================================
    END / TERMINUS STATION
    ========================================== */
 
@@ -596,6 +667,20 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 0;
+    padding-bottom: 40px;
+}
+
+/* Mask the metro line below the compass center so it stops at the terminus */
+.gm-station-end::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: calc(50%);
+    bottom: 0;
+    width: 12px;
+    background: #020d1a;
+    z-index: 3;
 }
 
 .gm-node-terminus {

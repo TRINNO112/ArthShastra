@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -85,6 +85,19 @@ function Games() {
     const handleNodeClick = (gameId) => {
         setExpandedId(prev => prev === gameId ? null : gameId);
     };
+
+    // Close popup when clicking outside
+    const metroRef = useRef(null);
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (!expandedId) return;
+            // If click is on a station node or popup, ignore
+            if (e.target.closest('.gm-station-node') || e.target.closest('.gm-popup')) return;
+            setExpandedId(null);
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [expandedId]);
 
     const handleEntry = (gameId) => {
         const game = GAMES.find(g => g.id === gameId);
@@ -199,7 +212,7 @@ function Games() {
                 <div className="gm-header-stats">
                     <div className="gm-header-stat">
                         <span className="gm-header-stat-val">{GAMES.length}</span>
-                        <span className="gm-header-stat-label">Islands</span>
+                        <span className="gm-header-stat-label">Stations</span>
                     </div>
                     <div className="gm-header-stat">
                         <span className="gm-header-stat-val">0</span>
@@ -213,7 +226,7 @@ function Games() {
             </motion.header>
 
             {/* ==================== METRO TRAIL ==================== */}
-            <div className="gm-metro">
+            <div className="gm-metro" ref={metroRef}>
                 {/* The glowing metro line (CSS-drawn) */}
                 <div className="gm-metro-line" />
 
@@ -241,6 +254,9 @@ function Games() {
                                 onClick={() => !isLocked && handleNodeClick(game.id)}
                                 aria-label={`${game.title} station`}
                             >
+                                {/* Decorative outer ring */}
+                                <span className="gm-node-ring" />
+                                {/* Inner content */}
                                 <div className="gm-node-icon">{game.icon}</div>
                                 {isLocked && <div className="gm-node-lock"><FaLock /></div>}
                                 {/* Pulse ring */}
@@ -296,6 +312,14 @@ function Games() {
                                     </motion.div>
                                 )}
                             </AnimatePresence>
+                            {/* Milestone markers between stations */}
+                            {index < GAMES.length - 1 && (
+                                <div className="gm-milestones">
+                                    <span className="gm-milestone-dot" />
+                                    <span className="gm-milestone-dot" />
+                                    <span className="gm-milestone-dot" />
+                                </div>
+                            )}
                         </motion.div>
                     );
                 })}
