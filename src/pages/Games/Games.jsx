@@ -125,9 +125,9 @@ function Games() {
         const buildPath = () => {
             if (!trailRef.current) return;
             const trail = trailRef.current;
-            // Query the actual hex card elements — their getBoundingClientRect reflects
-            // the translateX offset, so we get the true on-screen center of each card
-            const hexNodes = trail.querySelectorAll('.gm-hex-node');
+            // Query all elements that the path should connect.
+            // Using a specific class "gm-path-center" on the exact element we want to target for the center coordinate.
+            const hexNodes = trail.querySelectorAll('.gm-path-node');
             if (hexNodes.length < 2) return;
 
             const trailRect = trail.getBoundingClientRect();
@@ -346,7 +346,7 @@ function Games() {
                             }}
                         >
                             <motion.div
-                                className={`gm-hex-node gm-biome-${game.biome} ${isLocked ? 'gm-node-locked' : 'gm-node-unlocked'} ${hexSizes[game.size]}`}
+                                className={`gm-hex-node gm-path-node gm-biome-${game.biome} ${isLocked ? 'gm-node-locked' : 'gm-node-unlocked'} ${hexSizes[game.size]}`}
                                 variants={islandVariants}
                                 initial="hidden"
                                 whileInView="visible"
@@ -405,7 +405,7 @@ function Games() {
 
                 {/* End marker */}
                 <div className="gm-island-container" style={{ transform: 'translateX(0%)', marginTop: '60px' }}>
-                    <div className="gm-island-node gm-node-end">
+                    <div className="gm-island-node gm-node-end gm-path-node">
                         <FaCompass />
                         <span className="gm-end-label">More Expeditions Coming Soon!</span>
                     </div>
