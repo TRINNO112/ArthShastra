@@ -1,7 +1,8 @@
 /* ==========================================
-   GAMES HUB — "OCEAN ARCHIPELAGO"
-   Organic island shapes, topographical layers,
-   asymmetric scattered layout, sea routes
+   GAMES HUB — "METRO × DUOLINGO TRAIL"
+   Station nodes on a glowing metro line,
+   click-to-expand detail popups,
+   angled connectors between stations
    ========================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Pirata+One&display=swap');
@@ -23,14 +24,12 @@
    OCEAN ATMOSPHERE LAYERS
    ========================================== */
 
-/* Deep ocean gradient */
 .gm-ocean-bg {
     position: fixed;
     inset: 0;
     background:
         radial-gradient(ellipse at 50% 0%, rgba(10, 60, 100, 0.4) 0%, transparent 60%),
         radial-gradient(ellipse at 100% 100%, rgba(10, 60, 100, 0.4) 0%, transparent 60%),
-        /* Grid for latitude/longitude feel */
         linear-gradient(rgba(74, 201, 227, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(74, 201, 227, 0.03) 1px, transparent 1px);
     background-size: 100% 100%, 100% 100%, 100px 100px, 100px 100px;
@@ -39,7 +38,6 @@
     z-index: 0;
 }
 
-/* Floating sea currents/particles */
 .gm-ocean-particles {
     position: fixed;
     inset: 0;
@@ -95,9 +93,7 @@
     to   { transform: rotate(360deg); }
 }
 
-.gm-header-content {
-    flex: 1;
-}
+.gm-header-content { flex: 1; }
 
 .gm-header-tag {
     display: inline-flex;
@@ -165,646 +161,474 @@
 }
 
 /* ==========================================
-   TRAIL & CONTAINERS
+   METRO TRAIL CONTAINER
    ========================================== */
 
-.gm-trail {
+.gm-metro {
     position: relative;
     z-index: 1;
-    max-width: 1000px;
+    max-width: 800px;
     margin: 0 auto;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center the containers base position */
+    padding: 40px 0 60px;
 }
 
-.gm-trail-svg {
+/* The central glowing metro line */
+.gm-metro-line {
     position: absolute;
     top: 0;
-    left: 0;
-    pointer-events: none;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(74, 201, 227, 0.6) 5%,
+        rgba(74, 201, 227, 0.6) 95%,
+        transparent 100%
+    );
+    border-radius: 4px;
     z-index: 0;
+    box-shadow:
+        0 0 10px rgba(74, 201, 227, 0.3),
+        0 0 30px rgba(74, 201, 227, 0.1);
 }
 
-/* Ship route animation */
-.gm-ship-route {
-    animation: gm-dash-flow 3s linear infinite;
+/* Animated flowing particles on the metro line */
+.gm-metro-line::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(74, 201, 227, 0.9) 0px,
+        rgba(74, 201, 227, 0.9) 8px,
+        transparent 8px,
+        transparent 24px
+    );
+    border-radius: 4px;
+    animation: gm-line-flow 2s linear infinite;
 }
 
-@keyframes gm-dash-flow {
-    from { stroke-dashoffset: 20; }
-    to   { stroke-dashoffset: 0; }
+@keyframes gm-line-flow {
+    from { transform: translateY(-24px); }
+    to   { transform: translateY(0); }
 }
 
-.gm-island-container {
+/* ==========================================
+   STATION (Each game stop)
+   ========================================== */
+
+.gm-station {
     position: relative;
     display: flex;
-    justify-content: center;
-    width: 100%; /* Take full width of trail so transform X is relative to center */
-    margin-bottom: 80px; /* Space between islands vertically */
+    align-items: center;
+    margin-bottom: 100px;
+    min-height: 80px;
     z-index: 2;
 }
 
-.gm-island-container:last-child {
+.gm-station:last-child {
     margin-bottom: 0;
 }
 
-/* ==========================================
-   STRATEGIC BOARD GAME NODES (Hexagons)
-   ========================================== */
-
-.gm-hex-node {
-    --hex-color-main: #4ac9e3;
-    --hex-color-glow: #7ee8fa;
-    --hex-icon-color: #4ac9e3;
-    --hex-shadow-glow: rgba(74, 201, 227, 0.1);
-    
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* Right-side layout: node at center, popup floats right */
+.gm-station-right {
+    flex-direction: row;
     justify-content: center;
-    text-align: center;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 2;
+}
+
+/* Left-side layout: node at center, popup floats left */
+.gm-station-left {
+    flex-direction: row;
+    justify-content: center;
 }
 
 /* ==========================================
-   BIOME THEMES (Nature + Machinery)
+   STATION NODE (Circular, on the line)
    ========================================== */
 
-/* 1. Jungle (Market Maker) - Bioluminescent Nature */
-.gm-biome-jungle {
-    --hex-color-main: #52b788;
-    --hex-color-glow: #95d5b2;
-    --hex-icon-color: #52b788;
-    --hex-shadow-glow: rgba(82, 183, 136, 0.15);
-}
+.gm-station-node {
+    --node-color: #4ac9e3;
+    --node-glow: rgba(74, 201, 227, 0.4);
 
-/* 2. Atoll (Price Hunter) - Glowing Sand / Desert */
-.gm-biome-atoll {
-    --hex-color-main: #f4a261;
-    --hex-color-glow: #e9c46a;
-    --hex-icon-color: #f4a261;
-    --hex-shadow-glow: rgba(244, 162, 97, 0.15);
-}
-
-/* 3. Volcano (Budget Boss) - Neon Magma / Fire */
-.gm-biome-volcano {
-    --hex-color-main: #dc2f02;
-    --hex-color-glow: #ffba08;
-    --hex-icon-color: #ffba08;
-    --hex-shadow-glow: rgba(220, 47, 2, 0.15);
-}
-
-/* 4. Harbor (Trade Tycoon) - Deep Sea Ports */
-.gm-biome-harbor {
-    --hex-color-main: #219ebc;
-    --hex-color-glow: #8ecae6;
-    --hex-icon-color: #ffb703;
-    --hex-shadow-glow: rgba(33, 158, 188, 0.15);
-}
-
-/* 5. Crystal (Graph Guesser) - Sub-zero / Ice / Geode */
-.gm-biome-crystal {
-    --hex-color-main: #9d4edd;
-    --hex-color-glow: #e0b1cb;
-    --hex-icon-color: #c77dff;
-    --hex-shadow-glow: rgba(157, 78, 221, 0.15);
-}
-
-.gm-hex-node-size-small { width: 320px; min-height: 380px; }
-.gm-hex-node-size-medium { width: 340px; min-height: 400px; }
-.gm-hex-node-size-large { width: 360px; min-height: 420px; }
-
-.gm-hex-node:hover {
-    transform: translateY(-10px) scale(1.05);
-}
-
-/* 
-   We use clip-path to create perfect hexagons for both 
-   the border layer and the inner content layer.
-*/
-
-.gm-hex-border {
     position: absolute;
-    inset: 0;
-    /* Dark base for border */
-    background: #020d1a;
-    /* Sleek cyber-card shape */
-    clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);
-    z-index: 0;
-    transition: all 0.4s;
-    overflow: hidden; /* Contains the spinning gradient */
-}
-
-/* ===== SLEEK NEON TRACE (No messy blur bugs) ===== */
-.gm-hex-border::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(
-        transparent 0deg,
-        transparent 280deg,
-        var(--hex-color-glow) 340deg,
-        #fff 360deg
-    );
-    animation: gm-spin 4s linear infinite;
-    mix-blend-mode: screen;
-    opacity: 0.8;
-    transition: opacity 0.4s ease;
-}
-
-.gm-hex-inner {
-    position: absolute;
-    inset: 1.5px; /* Extremely thin, elegant border */
-    background: radial-gradient(circle at top left, #0a1828, #030b14 80%);
-    clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);
-    z-index: 1;
-    box-shadow: inset 0 0 20px var(--hex-shadow-glow);
-    transition: all 0.5s ease;
-    overflow: hidden; /* Hide particles outside the hex */
-    backdrop-filter: blur(10px);
-}
-
-/* ==========================================
-   BIOME PARTICLES (Pure CSS)
-   ========================================== */
-.gm-particles {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1; /* Below content, above background */
-    opacity: 0.4;
-    transition: opacity 0.3s;
-}
-
-.gm-hex-node:hover .gm-particles {
-    opacity: 1;
-}
-
-.gm-p {
-    position: absolute;
-    border-radius: 50%;
-    /* Default base for particles */
-    background: var(--hex-color-glow);
-    filter: drop-shadow(0 0 5px var(--hex-color-main));
-}
-
-/* Particle Positions & Animations */
-.gm-p:nth-child(1) { width: 4px; height: 4px; left: 20%; bottom: -10px; animation: p-rise 4s infinite ease-in; }
-.gm-p:nth-child(2) { width: 6px; height: 6px; left: 50%; bottom: -20px; animation: p-rise 3s infinite ease-in 1s; }
-.gm-p:nth-child(3) { width: 3px; height: 3px; left: 80%; bottom: -5px; animation: p-rise 5s infinite ease-in 2s; }
-.gm-p:nth-child(4) { width: 5px; height: 5px; left: 35%; bottom: -15px; animation: p-rise 4.5s infinite ease-in 0.5s; }
-.gm-p:nth-child(5) { width: 7px; height: 7px; left: 65%; bottom: -10px; animation: p-rise 3.5s infinite ease-in 1.5s; }
-
-/* 1. Fire Particles (Volcano - Budget Boss) */
-.gm-biome-volcano .gm-p {
-    background: #ffba08;
-    filter: drop-shadow(0 0 8px #dc2f02);
-    animation-name: p-fire;
-}
-
-/* 2. Snow Particles (Crystal - Graph Guesser) */
-.gm-biome-crystal .gm-p {
-    background: #fff;
-    filter: drop-shadow(0 0 8px #c77dff);
-    animation-name: p-snow;
-    top: -10px; bottom: auto; /* Fall from top */
-}
-
-/* 3. Water Bubbles (Harbor - Trade Tycoon) */
-.gm-biome-harbor .gm-p {
-    background: transparent;
-    border: 1px solid #8ecae6;
-    animation-name: p-bubble;
-}
-
-/* 4. Falling Leaves (Jungle - Market Maker) */
-.gm-biome-jungle .gm-p {
-    background: #52b788;
-    border-radius: 0 50% 0 50%; /* Leaf shape */
-    animation-name: p-leaf;
-    top: -10px; bottom: auto;
-}
-
-/* 5. Glowing Sand Dust (Atoll - Price Hunter) */
-.gm-biome-atoll .gm-p {
-    background: #e9c46a;
-    width: 2px !important; height: 2px !important;
-    animation-name: p-dust;
-}
-
-/* Particle Keyframes */
-@keyframes p-rise {
-    0% { transform: translateY(0) scale(1); opacity: 0; }
-    20% { opacity: 1; }
-    100% { transform: translateY(-200px) scale(0); opacity: 0; }
-}
-
-@keyframes p-fire {
-    0% { transform: translate(0, 0) scale(1); opacity: 0; }
-    20% { opacity: 1; }
-    50% { transform: translate(15px, -100px) scale(1.5); }
-    100% { transform: translate(-10px, -200px) scale(0); opacity: 0; }
-}
-
-@keyframes p-snow {
-    0% { transform: translate(0, 0); opacity: 0; }
-    20% { opacity: 1; }
-    50% { transform: translate(-20px, 100px); }
-    100% { transform: translate(15px, 200px); opacity: 0; }
-}
-
-@keyframes p-bubble {
-    0% { transform: translateY(0) scale(0.5); opacity: 0; }
-    30% { opacity: 1; transform: translateY(-50px) scale(1.2); }
-    100% { transform: translateY(-250px) scale(1.8); opacity: 0; }
-}
-
-@keyframes p-leaf {
-    0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
-    20% { opacity: 1; }
-    50% { transform: translate(30px, 100px) rotate(180deg); }
-    100% { transform: translate(-10px, 200px) rotate(360deg); opacity: 0; }
-}
-
-@keyframes p-dust {
-    0% { transform: translate(0, 0); opacity: 0; }
-    50% { transform: translate(40px, -50px); opacity: 1; }
-    100% { transform: translate(80px, -100px); opacity: 0; }
-}
-
-/* Hover effects for the Hexagon */
-.gm-hex-node:hover .gm-hex-border::before {
-    background: conic-gradient(
-        transparent 0deg,
-        transparent 200deg,
-        var(--hex-color-main) 280deg,
-        var(--hex-color-glow) 340deg,
-        #fff 360deg
-    );
-    animation: gm-spin 1.5s linear infinite;
-    opacity: 1;
-}
-
-.gm-hex-node:hover .gm-hex-inner {
-    background: radial-gradient(circle at top left, #122840, #030b14 80%);
-    box-shadow: 
-        inset 0 0 50px var(--hex-shadow-glow),
-        inset 0 -10px 40px rgba(0,0,0,0.9);
-}
-
-.gm-hex-node:active {
-    transform: translateY(-5px) scale(0.98);
-}
-
-.gm-hex-node:active .gm-hex-inner {
-    background: radial-gradient(circle at top left, var(--hex-shadow-glow), #030b14 80%);
-    box-shadow: inset 0 0 80px var(--hex-color-main);
-    transition: all 0.1s ease;
-}
-
-/* ==========================================
-   NODE CONNECTOR (Map Marker)
-   ========================================== */
-
-.gm-island-node {
-    position: absolute;
-    /* Centered inside the hex so the SVG path (which connects container centers) lands on it */
-    top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 32px;
-    height: 32px;
-    background: #020d1a;
-    border: 2px solid #4ac9e3;
+    transform: translateX(-50%);
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #0f2538, #061018);
+    border: 3px solid var(--node-color);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #4ac9e3;
-    font-size: 0.9rem;
-    z-index: 10;
-    box-shadow: 0 0 15px rgba(74, 201, 227, 0.6);
-    /* Keep it visually subtle so it doesn't cover the content */
-    opacity: 0.5;
+    cursor: pointer;
+    z-index: 5;
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow:
+        0 0 15px var(--node-glow),
+        0 0 40px rgba(0, 0, 0, 0.5),
+        inset 0 0 15px rgba(0, 0, 0, 0.6);
+    outline: none;
+}
+
+.gm-station-node:hover {
+    transform: translateX(-50%) scale(1.15);
+    box-shadow:
+        0 0 25px var(--node-glow),
+        0 0 60px var(--node-glow),
+        inset 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.gm-station-node.gm-node-active {
+    transform: translateX(-50%) scale(1.2);
+    border-width: 4px;
+    box-shadow:
+        0 0 30px var(--node-glow),
+        0 0 80px var(--node-glow),
+        inset 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.gm-node-icon {
+    font-size: 1.6rem;
+    color: var(--node-color);
+    filter: drop-shadow(0 0 8px var(--node-glow));
+    line-height: 1;
+    z-index: 2;
+}
+
+/* Lock overlay on locked nodes */
+.gm-node-lock {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: rgba(2, 13, 26, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: #ff7254;
+    z-index: 3;
+}
+
+.gm-station-node.gm-node-locked {
+    cursor: default;
+    border-color: #3a5060;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.gm-station-node.gm-node-locked .gm-node-icon {
+    filter: grayscale(1) opacity(0.3);
+}
+
+/* Pulse ring animation */
+.gm-node-pulse {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid var(--node-color);
+    opacity: 0;
+    animation: gm-pulse 2.5s ease-out infinite;
     pointer-events: none;
 }
 
-.gm-island-node.gm-node-end {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    width: 60px;
-    height: 60px;
-    font-size: 2rem;
-    background: rgba(5, 20, 40, 0.8);
-    border: 1px dashed #4ac9e3;
-    z-index: 10;
+@keyframes gm-pulse {
+    0%   { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.6); opacity: 0; }
 }
 
 /* ==========================================
-   NODE CONTENT
+   BIOME COLORS FOR NODES
    ========================================== */
 
-.gm-hex-content {
-    position: relative;
-    z-index: 2;
+.gm-station-node.gm-biome-jungle {
+    --node-color: #52b788;
+    --node-glow: rgba(82, 183, 136, 0.4);
+}
+
+.gm-station-node.gm-biome-atoll {
+    --node-color: #f4a261;
+    --node-glow: rgba(244, 162, 97, 0.4);
+}
+
+.gm-station-node.gm-biome-volcano {
+    --node-color: #dc2f02;
+    --node-glow: rgba(220, 47, 2, 0.4);
+}
+
+.gm-station-node.gm-biome-harbor {
+    --node-color: #219ebc;
+    --node-glow: rgba(33, 158, 188, 0.4);
+}
+
+.gm-station-node.gm-biome-crystal {
+    --node-color: #9d4edd;
+    --node-glow: rgba(157, 78, 221, 0.4);
+}
+
+/* ==========================================
+   ANGLED CONNECTOR (metro line to popup)
+   ========================================== */
+
+.gm-connector {
+    position: absolute;
+    top: 50%;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        var(--node-color, #4ac9e3) 0%,
+        rgba(74, 201, 227, 0.15) 100%
+    );
+    z-index: 1;
+    display: none; /* shown when popup is active */
+}
+
+/* ==========================================
+   STATION LABEL (always visible, beside the node)
+   ========================================== */
+
+.gm-station-label {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 100%;
-    /* Generous padding for the new layout */
-    padding: 30px 25px;
-    min-height: 100%; /* Important for the new glass card to hold everything beautifully */
-    justify-content: center;
+    gap: 2px;
+    z-index: 4;
 }
 
-.gm-island-head {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 20px;
+.gm-label-right {
+    left: calc(50% + 48px);
 }
 
-.gm-island-icon {
-    font-size: 2.5rem;
-    color: var(--hex-icon-color);
-    filter: drop-shadow(0 2px 10px var(--hex-shadow-glow));
+.gm-label-left {
+    right: calc(50% + 48px);
+    text-align: right;
 }
 
-.gm-island-meta {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.gm-label-title {
+    font-family: 'Pirata One', cursive;
+    font-size: 1.3rem;
+    color: #fff;
+    line-height: 1.2;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
-.gm-island-topic {
+.gm-label-topic {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.6rem;
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--hex-color-glow);
-    text-shadow: 0 0 8px rgba(255,255,255,0.2);
+    color: rgba(74, 201, 227, 0.7);
 }
 
-.gm-island-diff {
+/* Biome-specific label colors */
+.gm-station:has(.gm-biome-jungle) .gm-label-topic { color: rgba(82, 183, 136, 0.7); }
+.gm-station:has(.gm-biome-atoll) .gm-label-topic { color: rgba(244, 162, 97, 0.7); }
+.gm-station:has(.gm-biome-volcano) .gm-label-topic { color: rgba(220, 47, 2, 0.7); }
+.gm-station:has(.gm-biome-harbor) .gm-label-topic { color: rgba(33, 158, 188, 0.7); }
+.gm-station:has(.gm-biome-crystal) .gm-label-topic { color: rgba(157, 78, 221, 0.7); }
+
+/* ==========================================
+   DETAIL POPUP (appears on click)
+   ========================================== */
+
+.gm-popup {
+    --popup-accent: #4ac9e3;
+
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 310px;
+    background: rgba(5, 18, 35, 0.92);
+    border: 1px solid rgba(74, 201, 227, 0.25);
+    border-radius: 16px;
+    padding: 22px 20px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+        0 8px 40px rgba(0, 0, 0, 0.6),
+        0 0 30px rgba(74, 201, 227, 0.08),
+        inset 0 0 40px rgba(74, 201, 227, 0.03);
+    z-index: 10;
+}
+
+.gm-popup-right {
+    left: calc(50% + 48px);
+}
+
+.gm-popup-left {
+    right: calc(50% + 48px);
+}
+
+/* Biome popup accents */
+.gm-popup.gm-biome-jungle { --popup-accent: #52b788; border-color: rgba(82, 183, 136, 0.25); }
+.gm-popup.gm-biome-atoll { --popup-accent: #f4a261; border-color: rgba(244, 162, 97, 0.25); }
+.gm-popup.gm-biome-volcano { --popup-accent: #dc2f02; border-color: rgba(220, 47, 2, 0.25); }
+.gm-popup.gm-biome-harbor { --popup-accent: #219ebc; border-color: rgba(33, 158, 188, 0.25); }
+.gm-popup.gm-biome-crystal { --popup-accent: #9d4edd; border-color: rgba(157, 78, 221, 0.25); }
+
+/* Arrow pointer from popup to node */
+.gm-popup-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+}
+
+.gm-popup-arrow-right {
+    left: -16px;
+    border-right-color: rgba(5, 18, 35, 0.92);
+}
+
+.gm-popup-arrow-left {
+    right: -16px;
+    border-left-color: rgba(5, 18, 35, 0.92);
+}
+
+/* Popup content */
+.gm-popup-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.gm-popup-icon {
+    font-size: 2rem;
+    color: var(--popup-accent);
+    filter: drop-shadow(0 0 10px var(--popup-accent));
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.gm-popup-title {
+    font-family: 'Pirata One', cursive;
+    font-size: 1.6rem;
+    color: #fff;
+    margin: 0;
+    line-height: 1.15;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.gm-popup-meta {
+    display: flex;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.gm-popup-topic {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--popup-accent);
+}
+
+.gm-popup-diff {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.55rem;
     font-weight: 600;
     color: #ffb703;
     letter-spacing: 1px;
-    margin-top: 4px;
 }
 
-.gm-island-title {
-    font-family: 'Pirata One', cursive; /* Premium display font */
-    font-size: 2rem;
-    font-weight: 400;
-    color: #fff;
-    margin: 0 0 10px;
-    line-height: 1.1;
-    letter-spacing: 1px;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4), 0 0 20px var(--hex-shadow-glow);
+.gm-popup-desc {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.55;
+    margin: 0 0 18px;
 }
 
-.gm-island-desc {
-    font-family: 'Crimson Pro', serif; /* Elegant readable font */
-    font-size: 1.05rem;
-    color: rgba(255, 255, 255, 0.85);
-    line-height: 1.5;
-    margin: 0 0 25px;
-    max-width: 90%;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-
-/* ==========================================
-   BUTTON
-   ========================================== */
-
-.gm-island-btn {
+/* Popup CTA button */
+.gm-popup-btn {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
-    text-decoration: none;
-    padding: 12px 28px;
+    padding: 11px 24px;
     background: transparent;
-    color: #4ac9e3;
-    border: 1px solid #4ac9e3;
-    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-    transition: all 0.3s;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    
-    /* Prevent Button Overflow */
-    max-width: 90%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    color: var(--popup-accent);
+    border: 1.5px solid var(--popup-accent);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-.gm-island-btn:hover {
-    background: #4ac9e3;
+.gm-popup-btn:hover {
+    background: var(--popup-accent);
     color: #020d1a;
-    box-shadow: 0 0 20px rgba(74, 201, 227, 0.4);
+    box-shadow: 0 0 25px rgba(74, 201, 227, 0.4);
 }
 
-.gm-island-btn-locked {
+.gm-popup-locked {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 1px;
-    background: linear-gradient(135deg, rgba(20, 25, 35, 0.95), rgba(40, 50, 65, 0.95));
-    color: #a0b4c8;
-    border: 1px solid rgba(160, 180, 200, 0.2);
-    cursor: default;
-    border-radius: 50px; /* Capsule shape */
-    box-shadow: 
-        inset 0 1px 3px rgba(255, 255, 255, 0.05),
-        0 8px 15px rgba(0, 0, 0, 0.3), /* Premium shadow */
-        0 0 10px rgba(0, 0, 0, 0.2);
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 20px 8px 10px; /* Asymmetric padding to fit icon */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    transition: all 0.3s;
-}
-
-.gm-island-btn-locked:hover {
-    background: linear-gradient(135deg, rgba(25, 30, 40, 0.95), rgba(45, 55, 75, 0.95));
-    color: #c0d4e8;
-    border-color: rgba(160, 180, 200, 0.3);
-}
-
-.gm-locked-capsule-icon {
+    color: #5a8fa0;
+    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: radial-gradient(circle, rgba(28, 42, 58, 1) 0%, rgba(18, 28, 40, 1) 100%);
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    color: #ff7254;
-    font-size: 0.7rem;
-    box-shadow: 
-        inset 0 2px 4px rgba(0,0,0,0.8),
-        inset 0 0 0 1px rgba(255, 114, 84, 0.1),
-        0 0 8px rgba(255, 114, 84, 0.3); /* Reddish glow */
+    gap: 8px;
+    padding: 11px;
+    border: 1px dashed #3a5060;
+    border-radius: 8px;
 }
 
 /* ==========================================
-   LOCKED / UNCHARTED STATE (Hex Nodes)
+   END / TERMINUS STATION
    ========================================== */
 
-.gm-node-locked .gm-hex-border {
-    background: #1a2f40;
-}
-
-.gm-node-locked .gm-hex-inner {
-    background: #020d1a;
-}
-
-.gm-node-locked .gm-island-icon {
-    color: #5a8fa0;
-    filter: grayscale(100%) opacity(0.5);
-}
-
-.gm-island-fog {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.gm-station-end {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    z-index: 10;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #5a8fa0;
-    letter-spacing: 3px;
-    opacity: 0;
-    transition: opacity 0.4s;
-    pointer-events: none;
-    width: 80%; /* Limit width to avoid hexagon border overlap */
-    text-align: center;
-    word-break: break-word; /* Allow text to wrap beautifully */
+    margin-bottom: 0;
 }
 
-.gm-island-fog svg {
-    font-size: 2.2rem;
-    color: #ff7254;
-    filter: drop-shadow(0 0 15px rgba(255, 114, 84, 0.2));
-}
-
-.gm-node-locked:hover .gm-hex-content > * {
-    opacity: 0.1;
-    transition: opacity 0.3s;
-}
-
-.gm-node-locked:hover .gm-island-fog {
-    opacity: 1;
-}
-
-/* ==========================================
-   WHIRLPOOL END NODE LABEL
-   ========================================== */
-.gm-end-label {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #4ac9e3;
-    background: rgba(2, 13, 26, 0.9);
-    padding: 10px 20px;
-    border: 1px solid rgba(74, 201, 227, 0.4);
-    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-    letter-spacing: 2px;
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity 0.3s, transform 0.3s;
-    pointer-events: none;
-    z-index: 20;
-}
-
-.gm-node-end:hover .gm-end-label {
-    opacity: 1;
-    transform: translate(-50%, -150%);
-}
-
-/* ==========================================
-   CONTACT SECTION
-   ========================================== */
-.gm-contact-section {
+.gm-node-terminus {
     position: relative;
-    z-index: 10;
-    margin: 80px auto 40px;
-    max-width: 800px;
-    padding: 40px;
-    background: linear-gradient(135deg, rgba(10, 25, 45, 0.8), rgba(5, 15, 30, 0.95));
-    border: 1px solid rgba(74, 201, 227, 0.3);
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(74, 201, 227, 0.05);
-    backdrop-filter: blur(15px);
-}
-
-.gm-contact-title {
-    font-family: 'Pirata One', cursive;
-    font-size: 2.2rem;
-    color: #4ac9e3;
-    margin: 0 0 15px;
-    text-shadow: 0 0 15px rgba(74, 201, 227, 0.4);
-}
-
-.gm-contact-text {
-    font-family: 'Crimson Pro', serif;
-    font-size: 1.1rem;
-    color: #a0b4c8;
-    line-height: 1.6;
-    margin: 0 auto 25px;
-    max-width: 90%;
-}
-
-.gm-contact-btn {
-    display: inline-flex;
+    left: auto;
+    transform: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(5, 20, 40, 0.8);
+    border: 2px dashed #4ac9e3;
+    display: flex;
     align-items: center;
-    gap: 10px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.9rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-decoration: none;
-    padding: 14px 32px;
-    background: #4ac9e3;
-    color: #020d1a;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(74, 201, 227, 0.4);
-    transition: all 0.3s;
+    justify-content: center;
+    font-size: 1.6rem;
+    color: #4ac9e3;
+    cursor: default;
+    z-index: 5;
+    box-shadow: 0 0 20px rgba(74, 201, 227, 0.3);
+    animation: gm-spin 40s linear infinite;
 }
 
-.gm-contact-btn:hover {
-    background: #7ee8fa;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 30px rgba(74, 201, 227, 0.6);
+.gm-terminus-label {
+    margin-top: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #4ac9e3;
+    text-transform: uppercase;
+    text-align: center;
+    opacity: 0.6;
+    text-shadow: 0 0 10px rgba(74, 201, 227, 0.3);
 }
 
 /* ==========================================
@@ -829,50 +653,67 @@
     .gm-compass { font-size: 2.5rem; }
     .gm-title { font-size: 2.2rem; }
 
-    .gm-trail-svg { display: none; }
+    .gm-metro { padding: 20px 0 40px; }
 
-    /* Remove asymmetric translation on mobile, stack strictly vertically */
-    .gm-island-container {
-        transform: translateX(0) !important;
-        margin-bottom: 60px;
+    .gm-station {
+        margin-bottom: 80px;
     }
 
-    .gm-hex-node-size-small, .gm-hex-node-size-medium, .gm-hex-node-size-large {
-        width: 90%;
-        max-width: 400px;
-        height: auto;
-        min-height: 380px;
-        padding: 30px 20px;
-    }
-
-    /* Fallback dashed line connecting straight down */
-    .gm-trail::before {
-        content: '';
+    /* On mobile: labels always below node */
+    .gm-station-label {
         position: absolute;
-        top: 0;
-        bottom: 0px;
         left: 50%;
-        width: 3px;
-        margin-left: -1.5px;
-        background: repeating-linear-gradient(
-            to bottom,
-            rgba(255, 255, 255, 0.4) 0px,
-            rgba(255, 255, 255, 0.4) 10px,
-            transparent 10px,
-            transparent 20px
-        );
-        z-index: 0;
+        top: calc(50% + 44px);
+        transform: translateX(-50%);
+        text-align: center;
+        right: auto;
     }
+
+    .gm-label-left {
+        right: auto;
+        text-align: center;
+    }
+
+    /* On mobile: popups below the label */
+    .gm-popup {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        transform: none;
+        width: calc(100% - 40px);
+        max-width: 340px;
+        margin: 60px auto 0;
+    }
+
+    .gm-popup-right,
+    .gm-popup-left {
+        left: auto;
+        right: auto;
+    }
+
+    .gm-popup-arrow { display: none; }
+
+    .gm-station-node {
+        width: 54px;
+        height: 54px;
+    }
+
+    .gm-node-icon { font-size: 1.3rem; }
 }
 
 @media (max-width: 480px) {
     .gm-page { padding: 40px 3% 80px; }
     .gm-title { font-size: 1.8rem; }
     .gm-header-stat-val { font-size: 1.4rem; }
-    
-    .gm-island-title { font-size: 1.6rem; }
-    .gm-island-desc { font-size: 0.85rem; max-width: 95%; }
-    .gm-hex-node { padding: 24px 16px; height: auto; min-height: 380px; }
+
+    .gm-station-node {
+        width: 48px;
+        height: 48px;
+    }
+
+    .gm-label-title { font-size: 1.1rem; }
+    .gm-popup { width: calc(100% - 20px); }
 }
 
 /* ==========================================
@@ -893,7 +734,6 @@
     overflow: hidden;
 }
 
-/* Radial flash burst from center */
 .gm-anime-flash {
     position: absolute;
     width: 300px;
@@ -907,7 +747,6 @@
     pointer-events: none;
 }
 
-/* Speed lines — radiate from center */
 .gm-anime-speed-lines {
     position: absolute;
     inset: 0;
@@ -931,7 +770,6 @@
     box-shadow: 0 0 8px rgba(76, 201, 240, 0.5);
 }
 
-/* Vertical warp streaks container */
 .gm-anime-warps {
     position: absolute;
     inset: 0;
@@ -946,7 +784,6 @@
     filter: blur(0.5px);
 }
 
-/* Centered game title area */
 .gm-anime-center {
     position: relative;
     z-index: 5;
@@ -992,7 +829,6 @@
     50% { opacity: 0.2; }
 }
 
-/* Final full-screen white wipe */
 .gm-anime-wipe {
     position: absolute;
     width: 300px;

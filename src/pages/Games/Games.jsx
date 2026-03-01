@@ -8,7 +8,6 @@ import {
 } from 'react-icons/fa';
 import './Games.css';
 
-// Specific x/y offsets to make the layout asymmetric and island-like
 const GAMES = [
     {
         id: 'market-maker',
@@ -19,8 +18,6 @@ const GAMES = [
         difficulty: 'Medium',
         status: 'available',
         biome: 'jungle',
-        offset: { x: -25, y: 0 }, // Percentage off-center
-        size: 'large'
     },
     {
         id: 'tapri-tycoon',
@@ -31,8 +28,6 @@ const GAMES = [
         difficulty: 'Easy',
         status: 'available',
         biome: 'atoll',
-        offset: { x: 25, y: 0 },
-        size: 'large'
     },
     {
         id: 'budget-boss',
@@ -43,8 +38,6 @@ const GAMES = [
         difficulty: 'Hard',
         status: 'available',
         biome: 'volcano',
-        offset: { x: -15, y: 0 },
-        size: 'large'
     },
     {
         id: 'trade-tycoon',
@@ -55,8 +48,6 @@ const GAMES = [
         difficulty: 'Hard',
         status: 'available',
         biome: 'harbor',
-        offset: { x: 20, y: 0 },
-        size: 'medium'
     },
     {
         id: 'graph-guesser',
@@ -67,12 +58,10 @@ const GAMES = [
         difficulty: 'Medium',
         status: 'available',
         biome: 'crystal',
-        offset: { x: -18, y: 0 },
-        size: 'medium'
     }
 ];
 
-// Pre-computed outside component so they never change and no hooks are needed inside map()
+// Pre-computed warp streaks (for entry animation)
 const WARP_STREAKS = Array.from({ length: 50 }, () => ({
     x: `${Math.random() * 100}vw`,
     dur: 0.5 + Math.random() * 0.5,
@@ -81,35 +70,21 @@ const WARP_STREAKS = Array.from({ length: 50 }, () => ({
     w: `${Math.random() * 2.5 + 0.5}px`
 }));
 
-const hexSizes = {
-    small: 'gm-hex-node-size-small',
-    medium: 'gm-hex-node-size-medium',
-    large: 'gm-hex-node-size-large'
-};
-
 const difficultyStars = (d) => {
     if (d === 'Easy') return '★';
     if (d === 'Medium') return '★★';
     return '★★★';
 };
 
-const islandVariants = {
-    hidden: { opacity: 0, scale: 0.8, y: 40 },
-    visible: {
-        opacity: 1,
-        scale: 1,
-        y: 0,
-        transition: { type: 'spring', stiffness: 60, damping: 12 }
-    }
-};
-
 function Games() {
-    const trailRef = useRef(null);
-    const [svgPath, setSvgPath] = useState('');
-    const [trailSize, setTrailSize] = useState({ w: 0, h: 0 });
+    const [expandedId, setExpandedId] = useState(null);
     const [isEntering, setIsEntering] = useState(false);
     const [enteringGame, setEnteringGame] = useState(null);
     const navigate = useNavigate();
+
+    const handleNodeClick = (gameId) => {
+        setExpandedId(prev => prev === gameId ? null : gameId);
+    };
 
     const handleEntry = (gameId) => {
         const game = GAMES.find(g => g.id === gameId);
@@ -120,57 +95,9 @@ function Games() {
         }, 3200);
     };
 
-    // Build curvy SVG path connecting the center of each hex card
-    useEffect(() => {
-        const buildPath = () => {
-            if (!trailRef.current) return;
-            const trail = trailRef.current;
-            // Query all elements that the path should connect.
-            // Using a specific class "gm-path-center" on the exact element we want to target for the center coordinate.
-            const hexNodes = trail.querySelectorAll('.gm-path-node');
-            if (hexNodes.length < 2) return;
-
-            const trailRect = trail.getBoundingClientRect();
-            setTrailSize({ w: trailRect.width, h: trailRect.height });
-
-            const points = Array.from(hexNodes).map(node => {
-                const r = node.getBoundingClientRect();
-                return {
-                    x: r.left - trailRect.left + r.width / 2,
-                    y: r.top - trailRect.top + r.height / 2,
-                };
-            });
-
-            let d = `M ${points[0].x} ${points[0].y}`;
-
-            for (let i = 0; i < points.length - 1; i++) {
-                const curr = points[i];
-                const next = points[i + 1];
-                const dx = next.x - curr.x;
-                const dy = next.y - curr.y;
-                const direction = i % 2 === 0 ? 1 : -1;
-                const swing = Math.min(Math.abs(dx) * 0.5 + 40, 120) * direction;
-                const cp1x = curr.x + dx * 0.2 + swing;
-                const cp1y = curr.y + dy * 0.2;
-                const cp2x = next.x - dx * 0.2 + swing;
-                const cp2y = next.y - dy * 0.2;
-                d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${next.x} ${next.y}`;
-            }
-
-            setSvgPath(d);
-        };
-
-        buildPath();
-        const timer = setTimeout(buildPath, 800);
-        window.addEventListener('resize', buildPath);
-        return () => {
-            clearTimeout(timer);
-            window.removeEventListener('resize', buildPath);
-        };
-    }, []);
-
     return (
         <div className="gm-page">
+            {/* ==================== ANIME ENTRY OVERLAY ==================== */}
             <AnimatePresence>
                 {isEntering && (
                     <motion.div
@@ -180,15 +107,12 @@ function Games() {
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
                     >
-                        {/* Phase 1: Radial flash from center */}
                         <motion.div
                             className="gm-anime-flash"
                             initial={{ scale: 0, opacity: 1 }}
                             animate={{ scale: 4, opacity: 0 }}
                             transition={{ duration: 1.0, ease: 'easeOut' }}
                         />
-
-                        {/* Phase 2: Speed lines radiating outward */}
                         <div className="gm-anime-speed-lines">
                             {[...Array(24)].map((_, i) => (
                                 <motion.div
@@ -197,47 +121,26 @@ function Games() {
                                     style={{ '--angle': `${i * 15}deg` }}
                                     initial={{ scaleX: 0, opacity: 0 }}
                                     animate={{ scaleX: [0, 1, 0], opacity: [0, 0.9, 0] }}
-                                    transition={{
-                                        duration: 0.9,
-                                        delay: 0.2 + i * 0.015,
-                                        ease: 'easeOut'
-                                    }}
+                                    transition={{ duration: 0.9, delay: 0.2 + i * 0.015, ease: 'easeOut' }}
                                 />
                             ))}
                         </div>
-
-                        {/* Phase 3: Vertical warp streaks (hyper-speed) */}
                         <div className="gm-anime-warps">
-                            {WARP_STREAKS.map((randomVals, i) => (
+                            {WARP_STREAKS.map((rv, i) => (
                                 <motion.div
                                     key={i}
                                     className="gm-anime-streak"
-                                    initial={{
-                                        x: randomVals.x,
-                                        y: '110vh',
-                                        opacity: 0,
-                                    }}
-                                    animate={{
-                                        y: '-20vh',
-                                        opacity: [0, 1, 0.5, 0],
-                                    }}
-                                    transition={{
-                                        duration: randomVals.dur,
-                                        repeat: Infinity,
-                                        delay: randomVals.del,
-                                        ease: 'circIn'
-                                    }}
+                                    initial={{ x: rv.x, y: '110vh', opacity: 0 }}
+                                    animate={{ y: '-20vh', opacity: [0, 1, 0.5, 0] }}
+                                    transition={{ duration: rv.dur, repeat: Infinity, delay: rv.del, ease: 'circIn' }}
                                     style={{
-                                        height: randomVals.h,
-                                        width: randomVals.w,
+                                        height: rv.h, width: rv.w,
                                         background: `linear-gradient(to top, transparent, ${i % 4 === 0 ? '#4cc9f0' : i % 4 === 1 ? '#4361ee' : i % 4 === 2 ? '#52b788' : '#fff'})`,
                                         boxShadow: `0 0 12px ${i % 2 === 0 ? '#4cc9f0' : '#4361ee'}`,
                                     }}
                                 />
                             ))}
                         </div>
-
-                        {/* Phase 4: Game title zoom-in */}
                         <div className="gm-anime-center">
                             <motion.div
                                 className="gm-anime-game-icon"
@@ -264,8 +167,6 @@ function Games() {
                                 LOADING SIMULATION...
                             </motion.p>
                         </div>
-
-                        {/* Phase 5: Final white wipe from center */}
                         <motion.div
                             className="gm-anime-wipe"
                             initial={{ scale: 0, opacity: 0 }}
@@ -276,10 +177,11 @@ function Games() {
                 )}
             </AnimatePresence>
 
+            {/* ==================== OCEAN BACKGROUND ==================== */}
             <div className="gm-ocean-bg" />
             <div className="gm-ocean-particles" />
 
-            {/* Header */}
+            {/* ==================== HEADER ==================== */}
             <motion.header
                 className="gm-header"
                 initial={{ opacity: 0, y: -20 }}
@@ -310,106 +212,107 @@ function Games() {
                 </div>
             </motion.header>
 
-            {/* Ocean Archipelago Map */}
-            <div className="gm-trail" ref={trailRef}>
-                {/* Ship route SVG path */}
-                {svgPath && (
-                    <svg
-                        className="gm-trail-svg"
-                        width={trailSize.w}
-                        height={trailSize.h}
-                        viewBox={`0 0 ${trailSize.w} ${trailSize.h}`}
-                        preserveAspectRatio="none"
-                    >
-                        <path
-                            d={svgPath}
-                            fill="none"
-                            stroke="rgba(255, 255, 255, 0.4)"
-                            strokeWidth="3"
-                            strokeDasharray="8 12"
-                            strokeLinecap="round"
-                            className="gm-ship-route"
-                        />
-                    </svg>
-                )}
+            {/* ==================== METRO TRAIL ==================== */}
+            <div className="gm-metro">
+                {/* The glowing metro line (CSS-drawn) */}
+                <div className="gm-metro-line" />
 
-                {GAMES.map((game) => {
+                {GAMES.map((game, index) => {
                     const isLocked = game.status === 'coming-soon';
+                    const isExpanded = expandedId === game.id;
+                    // Alternate popup side: even = right, odd = left
+                    const side = index % 2 === 0 ? 'right' : 'left';
 
                     return (
-                        <div
+                        <motion.div
                             key={game.id}
-                            className="gm-island-container"
-                            style={{
-                                // Apply the asymmetric offset to the container
-                                transform: `translateX(${game.offset.x}%)`
-                            }}
+                            className={`gm-station gm-station-${side}`}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-60px' }}
+                            transition={{ duration: 0.5, delay: index * 0.08 }}
                         >
-                            <motion.div
-                                className={`gm-hex-node gm-path-node gm-biome-${game.biome} ${isLocked ? 'gm-node-locked' : 'gm-node-unlocked'} ${hexSizes[game.size]}`}
-                                variants={islandVariants}
-                                initial="hidden"
-                                whileInView="visible"
-                                viewport={{ once: true, margin: '-100px' }}
+                            {/* Angled connector from line to node */}
+                            <div className={`gm-connector gm-connector-${side}`} />
+
+                            {/* Station Node (circular, on the line) */}
+                            <button
+                                className={`gm-station-node gm-biome-${game.biome} ${isLocked ? 'gm-node-locked' : ''} ${isExpanded ? 'gm-node-active' : ''}`}
+                                onClick={() => !isLocked && handleNodeClick(game.id)}
+                                aria-label={`${game.title} station`}
                             >
-                                {/* Hexagon Base */}
-                                <div className="gm-hex-border"></div>
-                                <div className="gm-hex-inner"></div>
+                                <div className="gm-node-icon">{game.icon}</div>
+                                {isLocked && <div className="gm-node-lock"><FaLock /></div>}
+                                {/* Pulse ring */}
+                                {!isLocked && <span className="gm-node-pulse" />}
+                            </button>
 
-                                {/* Custom Biome Particles */}
-                                <div className="gm-particles">
-                                    <span className="gm-p"></span>
-                                    <span className="gm-p"></span>
-                                    <span className="gm-p"></span>
-                                    <span className="gm-p"></span>
-                                    <span className="gm-p"></span>
-                                </div>
+                            {/* Station label (always visible) */}
+                            <div className={`gm-station-label gm-label-${side}`}>
+                                <span className="gm-label-title">{game.title}</span>
+                                <span className="gm-label-topic">{game.topic}</span>
+                            </div>
 
-                                {/* Island Content overlay */}
-                                <div className="gm-hex-content">
-                                    {isLocked && (
-                                        <div className="gm-island-fog">
-                                            <FaLock />
-                                            <span>UNCHARTED TIDE</span>
+                            {/* Expanded detail popup */}
+                            <AnimatePresence>
+                                {isExpanded && (
+                                    <motion.div
+                                        className={`gm-popup gm-popup-${side} gm-biome-${game.biome}`}
+                                        initial={{ opacity: 0, scale: 0.85, y: 10 }}
+                                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.85, y: 10 }}
+                                        transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                                    >
+                                        {/* Arrow pointing to node */}
+                                        <div className={`gm-popup-arrow gm-popup-arrow-${side}`} />
+
+                                        <div className="gm-popup-header">
+                                            <div className="gm-popup-icon">{game.icon}</div>
+                                            <div>
+                                                <h3 className="gm-popup-title">{game.title}</h3>
+                                                <div className="gm-popup-meta">
+                                                    <span className="gm-popup-topic">{game.topic}</span>
+                                                    <span className="gm-popup-diff">
+                                                        {difficultyStars(game.difficulty)} {game.difficulty}
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    )}
 
-                                    <div className="gm-island-head">
-                                        <div className="gm-island-icon">{game.icon}</div>
-                                        <div className="gm-island-meta">
-                                            <span className="gm-island-topic">{game.topic}</span>
-                                            <span className="gm-island-diff" title={game.difficulty}>
-                                                {difficultyStars(game.difficulty)} {game.difficulty}
-                                            </span>
-                                        </div>
-                                    </div>
+                                        <p className="gm-popup-desc">{game.desc}</p>
 
-                                    <h3 className="gm-island-title">{game.title}</h3>
-                                    <p className="gm-island-desc">{game.desc}</p>
-
-                                    {!isLocked ? (
-                                        <button onClick={() => handleEntry(game.id)} className="gm-island-btn">
-                                            DOCK HERE
-                                        </button>
-                                    ) : (
-                                        <div className="gm-island-btn-locked">
-                                            <div className="gm-locked-capsule-icon"><FaLock /></div>
-                                            <span>AREA LOCKED</span>
-                                        </div>
-                                    )}
-                                </div>
-                            </motion.div>
-                        </div>
+                                        {!isLocked ? (
+                                            <button
+                                                onClick={(e) => { e.stopPropagation(); handleEntry(game.id); }}
+                                                className="gm-popup-btn"
+                                            >
+                                                DOCK HERE
+                                            </button>
+                                        ) : (
+                                            <div className="gm-popup-locked">
+                                                <FaLock /> AREA LOCKED
+                                            </div>
+                                        )}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </motion.div>
                     );
                 })}
 
-                {/* End marker */}
-                <div className="gm-island-container" style={{ transform: 'translateX(0%)', marginTop: '60px' }}>
-                    <div className="gm-island-node gm-node-end gm-path-node">
+                {/* ==================== END STATION ==================== */}
+                <motion.div
+                    className="gm-station gm-station-end"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                    <div className="gm-station-node gm-node-terminus">
                         <FaCompass />
-                        <span className="gm-end-label">More Expeditions Coming Soon!</span>
                     </div>
-                </div>
+                    <span className="gm-terminus-label">More Expeditions Coming Soon!</span>
+                </motion.div>
             </div>
         </div>
     );
