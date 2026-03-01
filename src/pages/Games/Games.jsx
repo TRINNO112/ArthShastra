@@ -225,6 +225,44 @@ function Games() {
                 </div>
             </motion.header>
 
+            {/* ==================== MAP DECORATIONS ==================== */}
+            <div className="gm-map-decorations" aria-hidden="true">
+                {/* Coordinate labels scattered across the page */}
+                <span className="gm-coord gm-coord-1">N 28° 35' 12"</span>
+                <span className="gm-coord gm-coord-2">E 77° 12' 45"</span>
+                <span className="gm-coord gm-coord-3">DEPTH: 200m</span>
+                <span className="gm-coord gm-coord-4">N 19° 04' 56"</span>
+                <span className="gm-coord gm-coord-5">E 72° 52' 33"</span>
+                <span className="gm-coord gm-coord-6">ALT: SEA LVL</span>
+
+                {/* Sector labels */}
+                <span className="gm-sector gm-sector-1">// SECTOR 01</span>
+                <span className="gm-sector gm-sector-2">// SECTOR 02</span>
+                <span className="gm-sector gm-sector-3">// SECTOR 03</span>
+
+                {/* Contour circles */}
+                <div className="gm-contour gm-contour-1" />
+                <div className="gm-contour gm-contour-2" />
+                <div className="gm-contour gm-contour-3" />
+                <div className="gm-contour gm-contour-4" />
+
+                {/* Crosshair markers */}
+                <div className="gm-crosshair gm-crosshair-1">+</div>
+                <div className="gm-crosshair gm-crosshair-2">+</div>
+                <div className="gm-crosshair gm-crosshair-3">+</div>
+
+                {/* Dotted boundary lines */}
+                <div className="gm-boundary gm-boundary-h1" />
+                <div className="gm-boundary gm-boundary-h2" />
+                <div className="gm-boundary gm-boundary-v1" />
+                <div className="gm-boundary gm-boundary-v2" />
+
+                {/* Faded compass rose (large, background) */}
+                <div className="gm-compass-rose">
+                    <FaCompass />
+                </div>
+            </div>
+
             {/* ==================== METRO TRAIL ==================== */}
             <div className="gm-metro" ref={metroRef}>
                 {/* The glowing metro line (CSS-drawn) */}

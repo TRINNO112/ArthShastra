@@ -161,6 +161,158 @@
 }
 
 /* ==========================================
+   MAP DECORATIONS (ambient background elements)
+   ========================================== */
+
+.gm-map-decorations {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+/* Coordinate labels */
+.gm-coord {
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: rgba(74, 201, 227, 0.12);
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.gm-coord-1 { top: 18%; left: 5%; }
+.gm-coord-2 { top: 18%; right: 6%; }
+.gm-coord-3 { top: 45%; left: 3%; transform: rotate(-90deg); }
+.gm-coord-4 { top: 55%; right: 4%; }
+.gm-coord-5 { top: 75%; left: 6%; }
+.gm-coord-6 { top: 80%; right: 3%; transform: rotate(90deg); }
+
+/* Sector labels */
+.gm-sector {
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: rgba(74, 201, 227, 0.08);
+}
+
+.gm-sector-1 { top: 25%; left: 8%; }
+.gm-sector-2 { top: 50%; right: 7%; }
+.gm-sector-3 { top: 72%; left: 7%; }
+
+/* Contour circles (faded topographic rings) */
+.gm-contour {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(74, 201, 227, 0.05);
+}
+
+.gm-contour-1 {
+    width: 300px; height: 300px;
+    top: 15%; left: -5%;
+    animation: gm-contour-pulse 8s ease-in-out infinite;
+}
+
+.gm-contour-2 {
+    width: 220px; height: 220px;
+    top: 40%; right: -3%;
+    animation: gm-contour-pulse 10s ease-in-out infinite 2s;
+}
+
+.gm-contour-3 {
+    width: 180px; height: 180px;
+    top: 65%; left: 2%;
+    animation: gm-contour-pulse 7s ease-in-out infinite 4s;
+}
+
+.gm-contour-4 {
+    width: 260px; height: 260px;
+    top: 80%; right: 0%;
+    animation: gm-contour-pulse 9s ease-in-out infinite 1s;
+}
+
+@keyframes gm-contour-pulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50%      { opacity: 0.8; transform: scale(1.05); }
+}
+
+/* Crosshair markers (+) */
+.gm-crosshair {
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: rgba(74, 201, 227, 0.1);
+    line-height: 1;
+}
+
+.gm-crosshair-1 { top: 30%; left: 12%; }
+.gm-crosshair-2 { top: 60%; right: 10%; }
+.gm-crosshair-3 { top: 85%; left: 15%; }
+
+/* Dotted boundary lines */
+.gm-boundary {
+    position: absolute;
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(74, 201, 227, 0.06) 0px,
+        rgba(74, 201, 227, 0.06) 4px,
+        transparent 4px,
+        transparent 12px
+    );
+}
+
+.gm-boundary-h1 {
+    top: 22%; left: 0; right: 0;
+    height: 1px;
+}
+
+.gm-boundary-h2 {
+    top: 70%; left: 0; right: 0;
+    height: 1px;
+}
+
+.gm-boundary-v1 {
+    left: 10%; top: 0; bottom: 0;
+    width: 1px;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(74, 201, 227, 0.06) 0px,
+        rgba(74, 201, 227, 0.06) 4px,
+        transparent 4px,
+        transparent 12px
+    );
+}
+
+.gm-boundary-v2 {
+    right: 10%; top: 0; bottom: 0;
+    width: 1px;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(74, 201, 227, 0.06) 0px,
+        rgba(74, 201, 227, 0.06) 4px,
+        transparent 4px,
+        transparent 12px
+    );
+}
+
+/* Large faded compass rose */
+.gm-compass-rose {
+    position: absolute;
+    top: 40%;
+    right: 8%;
+    font-size: 10rem;
+    color: rgba(74, 201, 227, 0.03);
+    transform: rotate(15deg);
+    animation: gm-spin 120s linear infinite;
+}
+
+/* ==========================================
    METRO TRAIL CONTAINER
    ========================================== */
 
