@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react-swc'
 // Using SWC instead of Babel to avoid CSP eval() issues on GitHub Pages
 export default defineConfig({
   plugins: [react()],
-  base: '/',
+  base: '/ArthShastra/',
   build: {
     outDir: 'dist',
     sourcemap: false,
