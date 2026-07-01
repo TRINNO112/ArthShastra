@@ -29,7 +29,8 @@ import {
   FaClock,
   FaLayerGroup,
   FaCompass,
-  FaMedal
+  FaMedal,
+  FaLock
 } from 'react-icons/fa';
 import {
   HiSparkles,
@@ -111,7 +112,7 @@ function Home() {
             <div className="hero-badge-wrapper">
               <span className="hero-badge">
                 <HiSparkles className="badge-icon" />
-                Class 11 & 12 Economics
+                Class 11 Economics
                 <span className="badge-new">2026-27</span>
               </span>
             </div>
@@ -122,8 +123,8 @@ function Home() {
             </h1>
 
             <p className="hero-description">
-              India's most interactive learning platform for CBSE Class 11 & 12 Economics.
-              Learn <span className="highlight">Micro</span> & <span className="highlight-green">Macro</span> economics
+              India's most interactive learning platform for CBSE Class 11 Economics.
+              Learn <span className="highlight">Microeconomics</span> & <span className="highlight-green">Statistics</span>
               with comprehensive lessons, visual explanations, and progress tracking.
             </p>
 
@@ -193,14 +194,14 @@ function Home() {
       <section className="brand-bar">
         <div className="brand-scroll">
           <div className="brand-item"><BsGraphUp className="brand-icon" /> Microeconomics</div>
-          <div className="brand-item"><RiGovernmentLine className="brand-icon" /> Macroeconomics</div>
+          <div className="brand-item"><IoStatsChart className="brand-icon" /> Statistics</div>
           <div className="brand-item"><IoTrendingUp className="brand-icon" /> Demand & Supply</div>
-          <div className="brand-item"><BsBank className="brand-icon" /> Money & Banking</div>
+          <div className="brand-item"><FaChartPie className="brand-icon" /> Central Tendency</div>
           <div className="brand-item"><FaClipboardCheck className="brand-icon" /> Practice Quizzes</div>
           <div className="brand-item"><BsGraphUp className="brand-icon" /> Microeconomics</div>
-          <div className="brand-item"><RiGovernmentLine className="brand-icon" /> Macroeconomics</div>
+          <div className="brand-item"><IoStatsChart className="brand-icon" /> Statistics</div>
           <div className="brand-item"><IoTrendingUp className="brand-icon" /> Demand & Supply</div>
-          <div className="brand-item"><BsBank className="brand-icon" /> Money & Banking</div>
+          <div className="brand-item"><FaChartPie className="brand-icon" /> Central Tendency</div>
           <div className="brand-item"><FaClipboardCheck className="brand-icon" /> Practice Quizzes</div>
         </div>
       </section>
@@ -233,7 +234,7 @@ function Home() {
                   <FaCompass />
                 </div>
                 <h3>Choose Topic</h3>
-                <p>Select your module. Micro or Macro, targeted for CBSE syllabus.</p>
+                <p>Select your module. Statistics or Microeconomics, targeted for CBSE syllabus.</p>
               </div>
             </div>
 
@@ -277,7 +278,7 @@ function Home() {
           <div className="section-header">
             <span className="section-badge">Why Choose Us</span>
             <h2 className="section-title">Everything You Need to Excel</h2>
-            <p className="section-subtitle">Built specifically for Class 11 & 12 students preparing for boards</p>
+            <p className="section-subtitle">Built specifically for Class 11 students preparing for exams</p>
           </div>
 
           <div className="bento-grid">
@@ -288,11 +289,11 @@ function Home() {
                 <HiBookOpen />
               </div>
               <h3>Complete CBSE Syllabus</h3>
-              <p>Every single topic from Class 11 & 12 Economics covered in detail. From Consumer Equilibrium to Government Budget - we've got it all.</p>
+              <p>Every single topic from Class 11 Economics covered in detail. From Consumer Equilibrium to Measures of Central Tendency - we've got it all.</p>
               <div className="bento-tags">
                 <span className="bento-tag">Class 11</span>
-                <span className="bento-tag">Class 12</span>
-                <span className="bento-tag">2024-25</span>
+                <span className="bento-tag">Statistics</span>
+                <span className="bento-tag">Microeconomics</span>
               </div>
               <div className="bento-pattern"></div>
             </div>
@@ -387,30 +388,30 @@ function Home() {
           <div className="section-header">
             <span className="section-badge">Start Learning</span>
             <h2 className="section-title">Choose Your Subject</h2>
-            <p className="section-subtitle">Both subjects are essential for your board exam success</p>
+            <p className="section-subtitle">Both subjects are essential for your Class 11 Economics foundation</p>
           </div>
 
           <div className="subjects-grid">
-            <Link to="/lessons?subject=micro" className="subject-card-premium micro">
+            <Link to="/lessons?grade=11&subject=statistics" className="subject-card-premium micro">
               <div className="subject-bg"></div>
               <div className="subject-content">
                 <div className="subject-badge">Part A</div>
-                <div className="subject-icon-wrapper">
-                  <BsGraphUp />
+                <div className="subject-icon-wrapper" style={{ color: 'var(--color-blue)', borderColor: 'var(--color-blue)' }}>
+                  <IoStatsChart />
                 </div>
-                <h3>Microeconomics</h3>
-                <p>Study of individual economic units - consumers, firms, and markets</p>
+                <h3>Statistics for Economics</h3>
+                <p>Learn to collect, organize, present and analyze economic data</p>
 
                 <ul className="subject-topics">
-                  <li><HiCheckCircle /> Consumer Behavior</li>
-                  <li><HiCheckCircle /> Demand & Supply</li>
-                  <li><HiCheckCircle /> Market Forms</li>
-                  <li><HiCheckCircle /> Price Determination</li>
+                  <li><HiCheckCircle /> Data Collection & Organisation</li>
+                  <li><HiCheckCircle /> Tabular & Diagrammatic Presentation</li>
+                  <li><HiCheckCircle /> Measures of Central Tendency</li>
+                  <li><HiCheckCircle /> Correlation & Index Numbers</li>
                 </ul>
 
                 <div className="subject-footer">
                   <span className="chapter-count">
-                    <RiStackLine /> 10 Chapters
+                    <RiStackLine /> 13 Chapters
                   </span>
                   <span className="start-btn">
                     Start Learning <FaArrowRight />
@@ -420,10 +421,39 @@ function Home() {
               <div className="card-shine"></div>
             </Link>
 
-            <Link to="/lessons?subject=macro" className="subject-card-premium macro">
+            <Link to="/lessons?grade=11&subject=micro11" className="subject-card-premium micro">
               <div className="subject-bg"></div>
               <div className="subject-content">
                 <div className="subject-badge">Part B</div>
+                <div className="subject-icon-wrapper">
+                  <BsGraphUp />
+                </div>
+                <h3>Microeconomics</h3>
+                <p>Study of individual economic units - consumers, firms, and markets</p>
+
+                <ul className="subject-topics">
+                  <li><HiCheckCircle /> Consumer Behavior</li>
+                  <li><HiCheckCircle /> Demand & Supply</li>
+                  <li><HiCheckCircle /> Producer Behavior & Cost</li>
+                  <li><HiCheckCircle /> Price Determination & Markets</li>
+                </ul>
+
+                <div className="subject-footer">
+                  <span className="chapter-count">
+                    <RiStackLine /> 13 Chapters
+                  </span>
+                  <span className="start-btn">
+                    Start Learning <FaArrowRight />
+                  </span>
+                </div>
+              </div>
+              <div className="card-shine"></div>
+            </Link>
+
+            <div className="subject-card-premium macro disabled-coming-soon">
+              <div className="subject-bg"></div>
+              <div className="subject-content">
+                <div className="subject-badge">Class 12</div>
                 <div className="subject-icon-wrapper">
                   <RiGovernmentLine />
                 </div>
@@ -439,15 +469,16 @@ function Home() {
 
                 <div className="subject-footer">
                   <span className="chapter-count">
-                    <RiStackLine /> 10 Chapters
-                  </span>
-                  <span className="start-btn">
-                    Start Learning <FaArrowRight />
+                    Coming Soon
                   </span>
                 </div>
               </div>
-              <div className="card-shine"></div>
-            </Link>
+              <div className="coming-soon-overlay">
+                <FaLock className="coming-soon-lock" />
+                <span className="coming-soon-text">Coming Soon</span>
+                <span className="coming-soon-subtext">Class 12 Course</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -465,13 +496,13 @@ function Home() {
             <div className="testimonial-card">
               <FaQuoteLeft className="quote-icon" />
               <p className="testimonial-text">
-                "Economics seemed so difficult before, but ArthShastra's clear explanations made everything click! Scored 95 in boards."
+                "Economics seemed so difficult before, but ArthShastra's clear explanations made everything click! Scored 95 in exams."
               </p>
               <div className="testimonial-author">
                 <div className="author-avatar">R</div>
                 <div className="author-info">
                   <span className="author-name">Rahul Sharma</span>
-                  <span className="author-school">DPS, Delhi • Class 12</span>
+                  <span className="author-school">DPS, Delhi • Class 11</span>
                 </div>
                 <div className="rating">
                   <FaStar /><FaStar /><FaStar /><FaStar /><FaStar />
@@ -482,7 +513,7 @@ function Home() {
             <div className="testimonial-card featured">
               <FaQuoteLeft className="quote-icon" />
               <p className="testimonial-text">
-                "The quizzes are amazing! They helped me identify my weak areas. Macroeconomics is no longer scary thanks to ArthShastra."
+                "The quizzes are amazing! They helped me identify my weak areas. Microeconomics is no longer scary thanks to ArthShastra."
               </p>
               <div className="testimonial-author">
                 <div className="author-avatar">P</div>
@@ -505,7 +536,7 @@ function Home() {
                 <div className="author-avatar">V</div>
                 <div className="author-info">
                   <span className="author-name">Vikram Singh</span>
-                  <span className="author-school">JNV, Bihar • Class 12</span>
+                  <span className="author-school">JNV, Bihar • Class 11</span>
                 </div>
                 <div className="rating">
                   <FaStar /><FaStar /><FaStar /><FaStar /><FaStar />
@@ -537,7 +568,7 @@ function Home() {
               <div className="faq-icon"><HiAcademicCap /></div>
               <div className="faq-content">
                 <h4>Which syllabus does it cover?</h4>
-                <p>We cover the complete CBSE Class 11 & 12 Economics syllabus (2024-25) including both Microeconomics and Macroeconomics.</p>
+                <p>We currently cover the complete CBSE Class 11 Economics syllabus including both Statistics for Economics and Introductory Microeconomics. Class 12 content is coming soon!</p>
               </div>
             </div>
             <div className="faq-item">
@@ -574,7 +605,7 @@ function Home() {
             <p>
               {isAuthenticated
                 ? `Welcome back, ${user?.name}! Continue your learning journey and ace your exams.`
-                : 'Join thousands of Class 11 & 12 students who are already learning smarter with ArthShastra.'
+                : 'Join thousands of Class 11 students who are already learning smarter with ArthShastra.'
               }
             </p>
             <div className="cta-buttons">

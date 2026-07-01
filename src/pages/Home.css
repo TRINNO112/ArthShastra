@@ -398,10 +398,29 @@
    ============================================= */
 
 .subjects { padding: 80px 0; background: var(--bg-dark); }
-.subjects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1000px; margin: 0 auto; }
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+@media (max-width: 1100px) {
+  .subjects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 800px;
+  }
+}
+@media (max-width: 768px) {
+  .subjects-grid {
+    grid-template-columns: 1fr;
+    max-width: 450px;
+  }
+}
 
 .subject-card-premium {
-  display: block;
+  display: flex;
+  flex-direction: column;
   text-decoration: none;
   background: #000;
   /* CHANGED: Removed border-top, using full border color */
@@ -411,6 +430,75 @@
   position: relative;
   transition: all 0.2s;
   height: 100%;
+}
+
+.subject-card-premium.disabled-coming-soon {
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+.subject-card-premium.disabled-coming-soon:hover {
+  transform: none;
+  box-shadow: 6px 6px 0px #000;
+  border-color: #333;
+}
+
+.coming-soon-overlay {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: linear-gradient(135deg, rgba(8, 8, 8, 0.96) 0%, rgba(15, 15, 15, 0.98) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+  border: 4px solid #333;
+  transition: all 0.3s ease;
+  gap: 12px;
+  text-align: center;
+  padding: 20px;
+}
+
+.coming-soon-overlay:hover {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 20px rgba(250, 204, 21, 0.15);
+}
+
+.coming-soon-lock {
+  font-size: 2.2rem;
+  color: var(--color-gold);
+  filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.4));
+  transition: all 0.3s ease;
+}
+
+.coming-soon-overlay:hover .coming-soon-lock {
+  transform: scale(1.1) rotate(-5deg);
+  filter: drop-shadow(0 0 12px rgba(250, 204, 21, 0.6));
+}
+
+.coming-soon-text {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--color-gold);
+  border: 2px solid var(--color-gold);
+  padding: 6px 16px;
+  transform: rotate(-3deg);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 4px 4px 0px #000;
+  background: #000;
+}
+
+.coming-soon-subtext {
+  font-size: 0.9rem;
+  color: #64748b;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 /* Specific Border Colors for Micro/Macro */
